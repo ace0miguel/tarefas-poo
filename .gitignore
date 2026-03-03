@@ -1,0 +1,17 @@
+# Arquivos compilados Java
+*.class
+out/
+
+# Arquivos de projeto de IDEs
+.idea/
+*.iml
+.vscode/
+*.project
+*.classpath
+.settings/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
