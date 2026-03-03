@@ -1,5 +1,5 @@
 package Cartas;
-import Bonecos.Personagem;
+import Bonecos.Inimigo;
 public class CartaDano 
 {
     private String nome;
@@ -12,8 +12,8 @@ public class CartaDano
         this.dano = dano;
     }
 
-    public void usar(Personagem heroi){
-        
+    public void usar(Inimigo alvo){
+        alvo.receberDano(this.dano);
     }
     
     public String descricao(){

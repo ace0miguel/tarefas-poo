@@ -1,12 +1,12 @@
 package Bonecos;
-public class Personagem {
+public class Heroi {
     private String nome;
     private int vida;
     private int escudo;
     private int energia;
 
     /* inicializa os atributos */
-    public Personagem(String nome, int vida, int escudo, int energia){
+    public Heroi(String nome, int vida, int escudo, int energia){
         this.escudo = escudo;
         this.nome = nome;
         this.vida = vida;
@@ -32,7 +32,7 @@ public class Personagem {
     }
 
     /* retorna 1 se esta vivo e 0 do contrario */
-    public int estarVivo (){
+    public int estaVivo (){
         return (vida > 0) ? 1 : 0;
     }
 

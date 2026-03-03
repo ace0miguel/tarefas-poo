@@ -1,4 +1,5 @@
 package Cartas;
+import Bonecos.Heroi;
 public class CartaEscudo 
 {
     private String nome;
@@ -11,8 +12,8 @@ public class CartaEscudo
         this.escudo = escudo;
     }
 
-    public int[] usar(){
-        return new int[]{this.custo, this.escudo};
+    public void usar(Heroi alvo){
+        alvo.ganharEscudo(escudo);
     }
     
     public String descricao(){
