@@ -10,18 +10,21 @@ public class Inimigo {
         this.vida = vida;
     }
 
-    public int receberDano(int dano){
-        vida -= dano;
-        return vida;
+    public void receberDano(int dano){
+        this.vida -= dano; 
     }
 
-    public int ganharEscudo(int bonus){
-        escudo+=bonus;
-        return escudo;
+    public void ganharEscudo(int bonus){
+        this.escudo += bonus;
     }
 
     public int estarVivo (){
-        if (vida == 0) return 0;
-        else return 1;
+        return (vida > 0) ? 1 : 0;
+    }
+    
+    public String status(){
+        return (escudo != 0) 
+        ? "Inimigo ("+vida+"/20 de vida) ("+escudo+" de escudo)" 
+        : "Inimigo ("+vida+"/20 de vida)";
     }
 }
