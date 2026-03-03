@@ -24,4 +24,8 @@ public class Personagem {
         if (vida == 0) return 0;
         else return 1;
     }
+
+    public String status(){
+        
+    }
 }

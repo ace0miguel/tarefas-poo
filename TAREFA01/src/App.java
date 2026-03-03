@@ -9,5 +9,10 @@ public class App {
         CartaDano cartaDano = new CartaDano();
         CartaEscudo cartaEscudo = new CartaEscudo();
 
+    while(personagem.estarVivo()!= 0 && inimigo.estarVivo()!=0){
+        System.out.println("=-=");
+        System.out.println();
+        System.out.println();
+    }
     }
 }
