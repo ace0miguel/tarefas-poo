@@ -1,39 +1,24 @@
 package Cartas;
 import Bonecos.Inimigo;
 import Bonecos.Heroi;
-public class CartaDano 
+public class CartaDano extends Carta
 {
-    private String nome;
-    private int custo;
     private int dano;
 
     public CartaDano(String nome, int custo, int dano){
-        this.nome = nome;
-        this.custo = custo;
+        super(nome, custo);
         this.dano = dano;
-    }
-
-    public String getNome(){
-        return this.nome;
     }
 
     public void usar(Inimigo alvo, Heroi heroi){
         int energiaAtual = heroi.getEnergia();
-        if(energiaAtual >= this.custo){
+        if(energiaAtual >= this.getCusto()){
             alvo.receberDano(this.dano);
-            heroi.usarEnergia(this.custo);
+            heroi.usarEnergia(this.getCusto());
         }
-    }
-
-    public boolean podeGastar(Heroi heroi){
-        int energiaAtual = heroi.getEnergia();
-        if(energiaAtual < this.custo){
-            return false;
-        }
-        else return true;
     }
     
     public String descricao(){
-        return "1 -  Usar Tiro (custo: " + custo + ")";
+        return "Usar "+this.getNome()+" [custo: " + this.getCusto() + "]";
     }
 }

@@ -1,38 +1,24 @@
 package Cartas;
 import Bonecos.Heroi;
-public class CartaEscudo 
+public class CartaEscudo extends Carta
 {
-    private String nome;
-    private int custo;
     private int escudo;
 
     public CartaEscudo(String nome, int custo, int escudo){
-        this.nome = nome;
-        this.custo = custo;
+        super(nome, custo);
         this.escudo = escudo;
-    }
-
-    public String getNome(){
-        return this.nome;
     }
 
     public void usar (Heroi heroi){
         int energiaAtual = heroi.getEnergia();
-        if(energiaAtual >= this.custo){
+
+        if(energiaAtual >= this.getCusto()){
             heroi.ganharEscudo(this.escudo);
-            heroi.usarEnergia(this.custo);
+            heroi.usarEnergia(this.getCusto());
         }
     }
 
-    public boolean podeGastar(Heroi heroi){
-        int energiaAtual = heroi.getEnergia();
-        if(energiaAtual < this.custo){
-            return false;
-        }
-        else return true;
-    }
-    
     public String descricao(){
-        return "2 -  Usar Jarro de Terra[escudo] (custo: " + custo + ")";
+        return "Usar "+this.getNome()+" [custo: " + this.getCusto() + "]";
     }
 }
