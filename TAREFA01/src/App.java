@@ -21,6 +21,7 @@ public class App {
             System.out.println();
 
             if (turno == 0){
+                System.out.println(heroi.statusEnergia());
                 System.out.println(cartaDano.descricao());
                 System.out.println(cartaEscudo.descricao());
                 System.out.println("3 - Encerrar turno");
@@ -36,6 +37,7 @@ public class App {
                     }
                     else {
                         System.out.println("Energia Insuficiente");
+                        System.out.println();
                     }
                 }
                 if(opcao == 2){
@@ -44,6 +46,7 @@ public class App {
                     }
                     else {
                         System.out.println("Energia Insuficiente");
+                        System.out.println();
                     }
                 }
                 if(opcao == 3){
@@ -56,9 +59,11 @@ public class App {
         }
         ler.close();
         System.out.println("FIM DE JOGO");
+        System.out.println();
         if(heroi.estaVivo()==0){
             System.out.println("VOCÊ MORREU");
         }
         else System.out.println("INIMIGO DERROTADO");
+        System.out.println();
     }
 }

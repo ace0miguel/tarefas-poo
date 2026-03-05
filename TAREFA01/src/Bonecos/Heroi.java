@@ -31,6 +31,10 @@ public class Heroi {
         return this.energia;
     }
 
+    public String statusEnergia(){
+        return "Energia ("+this.energia+"/"+this.energiaMax+")";
+    }
+
     public String getNome(){
         return this.nome;
     }

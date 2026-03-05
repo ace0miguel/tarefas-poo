@@ -35,7 +35,7 @@ public class Inimigo {
     
     public String status(){
         return (escudo != 0) 
-        ? "Inimigo ("+vida+"/20 de vida) ("+escudo+" de escudo)" 
-        : "Inimigo ("+vida+"/20 de vida)";
+        ? "Inimigo ("+vida+"/10 de vida) ("+escudo+" de escudo)" 
+        : "Inimigo ("+vida+"/10 de vida)";
     }
 }
