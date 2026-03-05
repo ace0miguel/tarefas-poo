@@ -2,6 +2,7 @@ package Bonecos;
 public class Heroi {
     private String nome;
     private int vida;
+    private int vidaMax;
     private int escudo;
     private int energia;
     private int energiaMax;
@@ -11,6 +12,7 @@ public class Heroi {
         this.escudo = escudo;
         this.nome = nome;
         this.vida = vida;
+        this.vidaMax = vida;
         this.energia = energia;
         this.energiaMax = energia;
     }
@@ -44,6 +46,10 @@ public class Heroi {
         this.escudo +=bonus;
     }
 
+    public void resetarEscudo(){
+        this.escudo = 0;
+    }
+
     public void usarEnergia(int custo){
         this.energia -= custo;
     }
@@ -59,7 +65,7 @@ public class Heroi {
 
     public String status(){
         return (escudo != 0) 
-        ? "Héroi ("+vida+"/20 de vida) ("+escudo+" de escudo)" 
-        : "Héroi ("+vida+"/20 de vida)";
+        ? ""+this.nome+" ("+vida+"/"+vidaMax+" de vida) ("+escudo+" de escudo)" 
+        : ""+this.nome+" ("+vida+"/"+vidaMax+" de vida)";
     }
 }

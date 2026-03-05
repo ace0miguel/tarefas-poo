@@ -3,6 +3,7 @@ package Bonecos;
 public class Inimigo {
     private String nome;
     private int vida;
+    private int vidaMax;
     private int escudo;
     private int dano;
 
@@ -10,6 +11,7 @@ public class Inimigo {
         this.escudo = escudo;
         this.nome = nome;
         this.vida = vida;
+        this.vidaMax = vida;
         this.dano = dano;
     }
 
@@ -35,7 +37,7 @@ public class Inimigo {
     
     public String status(){
         return (escudo != 0) 
-        ? "Inimigo ("+vida+"/10 de vida) ("+escudo+" de escudo)" 
-        : "Inimigo ("+vida+"/10 de vida)";
+        ? ""+this.nome+" ("+vida+"/"+this.vidaMax+" de vida) ("+escudo+" de escudo)" 
+        : ""+this.nome+" ("+vida+"/"+this.vidaMax+" de vida)";
     }
 }

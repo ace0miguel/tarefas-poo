@@ -33,6 +33,6 @@ public class CartaEscudo
     }
     
     public String descricao(){
-        return "2 -  Usar Carta de escudo (custo:" + custo + ")";
+        return "2 -  Usar Jarro de Terra[escudo] (custo: " + custo + ")";
     }
 }

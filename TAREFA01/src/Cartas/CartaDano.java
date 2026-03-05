@@ -34,6 +34,6 @@ public class CartaDano
     }
     
     public String descricao(){
-        return "1 -  Usar Carta de Dano (custo:" + custo + ")";
+        return "1 -  Usar Tiro (custo: " + custo + ")";
     }
 }
