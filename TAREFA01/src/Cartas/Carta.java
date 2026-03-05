@@ -1,6 +1,6 @@
 package Cartas;
 
-import Bonecos.Heroi;
+import Bonecos.*;
 
 public abstract class Carta {
 
@@ -27,5 +27,7 @@ public abstract class Carta {
         }
         else return true;
     }
+
+    public abstract void usar(Heroi heroi, Inimigo inimigo);
 
 }

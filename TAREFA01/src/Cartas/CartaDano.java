@@ -10,7 +10,8 @@ public class CartaDano extends Carta
         this.dano = dano;
     }
 
-    public void usar(Inimigo alvo, Heroi heroi){
+    @Override
+    public void usar(Heroi heroi, Inimigo alvo){
         int energiaAtual = heroi.getEnergia();
         if(energiaAtual >= this.getCusto()){
             alvo.receberDano(this.dano);

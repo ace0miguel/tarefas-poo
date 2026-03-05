@@ -1,5 +1,5 @@
 package Cartas;
-import Bonecos.Heroi;
+import Bonecos.*;
 public class CartaEscudo extends Carta
 {
     private int escudo;
@@ -9,7 +9,8 @@ public class CartaEscudo extends Carta
         this.escudo = escudo;
     }
 
-    public void usar (Heroi heroi){
+    @Override
+    public void usar (Heroi heroi, Inimigo inimigo){
         int energiaAtual = heroi.getEnergia();
 
         if(energiaAtual >= this.getCusto()){

@@ -1,22 +1,25 @@
 package Cartas;
+import java.util.ArrayList;
+
 import Cartas.Deck;
 
 public class Mao {
     private int quant;
     private int quantMax;
-    private Carta[] cartas;
+    private ArrayList<Carta> cartas; 
 
     public Mao(int quantMax){
         this.quant = 0;
         this.quantMax = quantMax;
-        this.cartas = new Carta[quantMax];
+        this.cartas = new ArrayList<>(); ;
     }
 
-    public void addCarta(){
+    public void addCarta(Deck deck){
         if(quant<quantMax){
-            cartas.add() Deck.puxaCarta();
+            cartas.add(deck.puxaCarta());
         }
-        
     }
+
+        
 
 }
