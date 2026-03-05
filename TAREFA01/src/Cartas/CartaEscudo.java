@@ -12,8 +12,24 @@ public class CartaEscudo
         this.escudo = escudo;
     }
 
-    public void usar(Heroi alvo){
-        alvo.ganharEscudo(escudo);
+    public String getNome(){
+        return this.nome;
+    }
+
+    public void usar (Heroi heroi){
+        int energiaAtual = heroi.getEnergia();
+        if(energiaAtual >= this.custo){
+            heroi.ganharEscudo(this.escudo);
+            heroi.usarEnergia(this.custo);
+        }
+    }
+
+    public boolean podeGastar(Heroi heroi){
+        int energiaAtual = heroi.getEnergia();
+        if(energiaAtual < this.custo){
+            return false;
+        }
+        else return true;
     }
     
     public String descricao(){

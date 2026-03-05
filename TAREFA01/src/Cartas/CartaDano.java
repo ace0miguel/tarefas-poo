@@ -1,5 +1,6 @@
 package Cartas;
 import Bonecos.Inimigo;
+import Bonecos.Heroi;
 public class CartaDano 
 {
     private String nome;
@@ -12,8 +13,24 @@ public class CartaDano
         this.dano = dano;
     }
 
-    public void usar(Inimigo alvo){
-        alvo.receberDano(this.dano);
+    public String getNome(){
+        return this.nome;
+    }
+
+    public void usar(Inimigo alvo, Heroi heroi){
+        int energiaAtual = heroi.getEnergia();
+        if(energiaAtual >= this.custo){
+            alvo.receberDano(this.dano);
+            heroi.usarEnergia(this.custo);
+        }
+    }
+
+    public boolean podeGastar(Heroi heroi){
+        int energiaAtual = heroi.getEnergia();
+        if(energiaAtual < this.custo){
+            return false;
+        }
+        else return true;
     }
     
     public String descricao(){

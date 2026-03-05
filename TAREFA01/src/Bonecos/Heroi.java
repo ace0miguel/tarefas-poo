@@ -4,6 +4,7 @@ public class Heroi {
     private int vida;
     private int escudo;
     private int energia;
+    private int energiaMax;
 
     /* inicializa os atributos */
     public Heroi(String nome, int vida, int escudo, int energia){
@@ -11,6 +12,7 @@ public class Heroi {
         this.nome = nome;
         this.vida = vida;
         this.energia = energia;
+        this.energiaMax = energia;
     }
 
     /* recebe dano */
@@ -25,15 +27,30 @@ public class Heroi {
         }
     }
 
+    public int getEnergia(){
+        return this.energia;
+    }
+
+    public String getNome(){
+        return this.nome;
+    }
+
     /* ganha escudo */
     public void ganharEscudo(int bonus){
-        this.escudo +=
-         bonus;
+        this.escudo +=bonus;
+    }
+
+    public void usarEnergia(int custo){
+        this.energia -= custo;
     }
 
     /* retorna 1 se esta vivo e 0 do contrario */
     public int estaVivo (){
         return (vida > 0) ? 1 : 0;
+    }
+
+    public void resetarEnergia(){
+        energia = energiaMax;
     }
 
     public String status(){

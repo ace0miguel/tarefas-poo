@@ -1,5 +1,5 @@
 package Bonecos;
-import Bonecos.Heroi;
+//import Bonecos.Heroi;
 public class Inimigo {
     private String nome;
     private int vida;
@@ -11,6 +11,10 @@ public class Inimigo {
         this.nome = nome;
         this.vida = vida;
         this.dano = dano;
+    }
+
+    public String getNome(){
+        return this.nome;
     }
 
     public void receberDano(int dano){
