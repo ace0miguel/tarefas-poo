@@ -52,7 +52,7 @@ public class App {
                 System.out.println();
                 if(opcao == 1){
                     if(cartaDano.podeGastar(heroi)) {
-                        cartaDano.usar(inimigo, heroi);
+                        //cartaDano.usar(inimigo, heroi);
                     }
                     else {
                         System.out.println("Energia Insuficiente");
@@ -61,7 +61,7 @@ public class App {
                 }
                 if(opcao == 2){
                     if(cartaEscudo.podeGastar(heroi)){
-                        cartaEscudo.usar(heroi);
+                        //cartaEscudo.usar(heroi);
                     }
                     else {
                         System.out.println("Energia Insuficiente.");
