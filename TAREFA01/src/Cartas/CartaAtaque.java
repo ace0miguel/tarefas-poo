@@ -8,7 +8,6 @@ public class CartaAtaque extends Carta
 {
     private int dano;
     
-
     public CartaAtaque(String nome, int custo, int dano){
         super(nome, custo);
         this.dano = dano;

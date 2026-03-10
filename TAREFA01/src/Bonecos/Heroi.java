@@ -1,32 +1,12 @@
 package Bonecos;
-public class Heroi {
-    private String nome;
-    private int vida;
-    private int vidaMax;
-    private int escudo;
+public class Heroi extends Entidade {
     private int energia;
     private int energiaMax;
 
     /* inicializa os atributos */
-    public Heroi(String nome, int vida, int escudo, int energia){
-        this.escudo = escudo;
-        this.nome = nome;
-        this.vida = vida;
-        this.vidaMax = vida;
-        this.energia = energia;
-        this.energiaMax = energia;
-    }
-
-    /* recebe dano */
-    public void receberDano(int dano){
-        if (this.escudo >= dano){
-            this.escudo -= dano;
-        }
-        else{
-            dano -= this.escudo;
-            this.escudo = 0;
-            this.vida-= dano;
-        }
+    public Heroi(String nome, int vida, int vidaMax, int escudo, int energiaMax){
+        super(nome, vida, vidaMax, escudo);
+        this.energiaMax = energiaMax;
     }
 
     public int getEnergia(){
@@ -37,35 +17,18 @@ public class Heroi {
         return "Energia ("+this.energia+"/"+this.energiaMax+")";
     }
 
-    public String getNome(){
-        return this.nome;
-    }
-
-    /* ganha escudo */
-    public void ganharEscudo(int bonus){
-        this.escudo +=bonus;
-    }
-
-    public void resetarEscudo(){
-        this.escudo = 0;
-    }
-
     public void usarEnergia(int custo){
         this.energia -= custo;
-    }
-
-    /* retorna 1 se esta vivo e 0 do contrario */
-    public int estaVivo (){
-        return (vida > 0) ? 1 : 0;
     }
 
     public void resetarEnergia(){
         energia = energiaMax;
     }
 
+    @Override
     public String status(){
-        return (escudo != 0) 
-        ? ""+this.nome+" ("+vida+"/"+vidaMax+" de vida) ("+escudo+" de escudo)" 
-        : ""+this.nome+" ("+vida+"/"+vidaMax+" de vida)";
+        return (getEscudo() != 0) 
+        ? " "+this.getNome()+"("+getVida()+"/"+this.getVidaMax()+" de vida) ("+this.getEscudo()+" de escudo)" 
+        : ""+this.getNome()+" ("+this.getVida()+"/"+this.getVidaMax()+" de vida)";
     }
 }
