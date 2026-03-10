@@ -19,7 +19,10 @@ public class Deck {
         cartas.remove(c);
     }
 
-    public void deckReset(){
+    public void reShuffleDeck(){ // utilizar 
+        ArrayList<Carta> temp = new ArrayList<>(pilhaCartas);
+        
+        cartas.addAll(pilhaCartas);
         shuffleDeck();
         pilhaCartas.addAll(cartas);
     }

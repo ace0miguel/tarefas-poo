@@ -1,11 +1,15 @@
 package Cartas;
-import Bonecos.Inimigo;
-import Bonecos.Heroi;
-public class CartaDano extends Carta
+import Bonecos.*;
+
+/* 
+Cartas que causam dano direto e podem aplicar efeitos secundários.
+ */
+public class CartaAtaque extends Carta
 {
     private int dano;
+    
 
-    public CartaDano(String nome, int custo, int dano){
+    public CartaAtaque(String nome, int custo, int dano){
         super(nome, custo);
         this.dano = dano;
     }

@@ -6,8 +6,8 @@ public class App {
     public static void main(String[] args) throws Exception {
         Heroi heroi = new Heroi("Capitão Jack Sparrow", 20, 0, 3);
         Inimigo inimigo = new Inimigo("Capitão Barbossa", 10, 0, 2);
-        CartaDano cartaDano = new CartaDano("Tiro", 1, 2);
-        CartaEscudo cartaEscudo = new CartaEscudo("Jarro de terra", 1, 3);
+        CartaAtaque cartaDano = new CartaAtaque("Tiro", 1, 2);
+        CartaHabilidade cartaEscudo = new CartaHabilidade("Jarro de terra", 1, 3);
         Scanner ler = new Scanner(System.in);
         for (int i = 0; i < 100; ++i)  
             System.out.println();
