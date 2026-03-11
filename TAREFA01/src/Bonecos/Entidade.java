@@ -49,8 +49,8 @@ public abstract class Entidade {
     }
 
     /* retorna 1 se esta vivo e 0 do contrario */
-    public int estaVivo (){
-        return (vida > 0) ? 1 : 0;
+    public boolean estaVivo (){
+        return (vida > 0) ? true : false;
     }
 
     public abstract String status();

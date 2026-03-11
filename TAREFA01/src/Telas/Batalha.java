@@ -1,6 +1,7 @@
 package Telas;
 import Bonecos.*;
 import Cartas.*;
+import Deck.*;
 import java.util.*;
 
 

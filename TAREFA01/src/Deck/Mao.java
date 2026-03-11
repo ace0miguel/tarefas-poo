@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import Cartas.Carta;
 
 public class Mao {
-    private int quantMax;
+    private static int quantMax = 5;
     private static ArrayList<Carta> cartas = new ArrayList<>(); 
 
-    public Mao(int quantMax){
-        this.quantMax = quantMax;
-    }
+    // public Mao(int quantMax){
+    //     this.quantMax = quantMax;
+    // }
 
-    public void addCarta(PilhaCompra deck){
+    public static void addCarta(){
         if(cartas.size() < quantMax){
-            cartas.add(deck.puxaCarta());
+            cartas.add(PilhaCompra.puxaCarta());
         }
         else{
             System.out.println("Máximo de cartas na mão atingido.");
@@ -32,7 +32,7 @@ public class Mao {
         return ultimoNumero + 1;
     }
 
-    public Carta escolheCarta(int n){
+    public static Carta escolheCarta(int n){
         while (n >= cartas.size() || n < 0){ // nao sei se seria mais correto colocar essa logica aqui ou no app?
             System.out.println("Valor inválido. Escolha novamente.");
             mostrar(); 
