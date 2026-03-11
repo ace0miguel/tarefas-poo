@@ -1,10 +1,14 @@
 package Cartas;
 import Bonecos.*;
-public class CartaEscudo extends Carta
+
+/*
+Cartas que aplicam efeitos; não causam dano direto.
+*/
+public class CartaHabilidade extends Carta
 {
     private int escudo;
 
-    public CartaEscudo(String nome, int custo, int escudo){
+    public CartaHabilidade(String nome, int custo, int escudo){
         super(nome, custo);
         this.escudo = escudo;
     }

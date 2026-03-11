@@ -1,5 +1,7 @@
-package Cartas;
+package Deck;
 import java.util.ArrayList;
+
+import Cartas.Carta;
 
 public class Mao {
     private int quantMax;
@@ -9,7 +11,7 @@ public class Mao {
         this.quantMax = quantMax;
     }
 
-    public void addCarta(Deck deck){
+    public void addCarta(PilhaCompra deck){
         if(cartas.size() < quantMax){
             cartas.add(deck.puxaCarta());
         }
