@@ -1,4 +1,4 @@
-package Bonecos;
+package Entidades;
 //import Bonecos.Heroi;
 public class Inimigo extends Entidade{
 

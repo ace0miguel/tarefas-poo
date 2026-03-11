@@ -1,5 +1,5 @@
-import Bonecos.*;
 import Cartas.*;
+import Entidades.*;
 import Telas.*;
 //import java.util.Scanner;
 

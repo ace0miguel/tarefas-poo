@@ -1,5 +1,5 @@
 package Cartas;
-import Bonecos.*;
+import Entidades.*;
 
 /*
 Cartas que aplicam efeitos; não causam dano direto.

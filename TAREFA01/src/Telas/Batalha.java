@@ -1,7 +1,8 @@
 package Telas;
-import Bonecos.*;
 import Cartas.*;
 import Deck.*;
+import Entidades.*;
+
 import java.util.*;
 
 
@@ -29,11 +30,11 @@ public class Batalha {
 
                 // ---------> CODIGO VELHO, APAGAR DEPOIS QUE VERSIONAR O LAB 1 <----------------------------------------------------------------------------------
 
-                System.out.println("3 - Encerrar turno");
-                System.out.println();
                 System.out.println("Escolha:");
                 int opcao = ler.nextInt();
                 ler.nextLine();
+
+                Mao.escolheCarta(opcao);
                 System.out.println("=-=");
                 System.out.println();
                 if(opcao == 1){

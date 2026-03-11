@@ -1,5 +1,5 @@
 package Telas;
-import Bonecos.*;
+import Entidades.*;
 
 public class Titulo {
     static String titulo = """

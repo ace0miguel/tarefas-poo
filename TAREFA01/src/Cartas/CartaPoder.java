@@ -1,5 +1,5 @@
 package Cartas;
-import Bonecos.*;
+import Entidades.*;
 
 /*
 Aplica melhoria permanente para todo o encontro de combate.

@@ -1,4 +1,4 @@
-package Bonecos;
+package Entidades;
 public class Heroi extends Entidade {
     private int energia;
     private int energiaMax;

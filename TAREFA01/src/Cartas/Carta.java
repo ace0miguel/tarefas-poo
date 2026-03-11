@@ -1,6 +1,6 @@
 package Cartas;
 
-import Bonecos.*;
+import Entidades.*;
 
 public abstract class Carta {
 

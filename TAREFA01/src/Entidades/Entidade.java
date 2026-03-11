@@ -1,4 +1,4 @@
-package Bonecos;
+package Entidades;
 
 public abstract class Entidade {
     private String nome;
