@@ -55,8 +55,8 @@ public class Heroi {
     }
 
     /* retorna 1 se esta vivo e 0 do contrario */
-    public int estaVivo (){
-        return (vida > 0) ? 1 : 0;
+    public Boolean estaVivo (){
+        return (vida > 0) ? true : false;
     }
 
     public void resetarEnergia(){

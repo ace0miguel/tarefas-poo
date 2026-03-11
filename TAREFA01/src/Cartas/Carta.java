@@ -30,4 +30,5 @@ public abstract class Carta {
 
     public abstract void usar(Heroi heroi, Inimigo inimigo);
 
+    public abstract String descricao();
 }

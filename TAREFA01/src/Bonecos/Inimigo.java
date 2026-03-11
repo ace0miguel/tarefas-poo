@@ -31,8 +31,8 @@ public class Inimigo {
         alvo.receberDano(this.dano);
     }
 
-    public int estaVivo (){
-        return (vida > 0) ? 1 : 0;
+    public boolean estaVivo (){
+        return (vida > 0) ? true : false;
     }
     
     public String status(){
