@@ -13,19 +13,19 @@ public class Batalha {
 
         Scanner ler = new Scanner(System.in);
 
-        //<-- AQUI: FALTA CRIAR A MÃO, EMBARALHAR E TALS
+        //<-- AQUI: FALTA EMBARALHAR E TALS
 
         while(heroi.estaVivo() == true && inimigos.stream().anyMatch(i -> i.estaVivo() == true)){ // checa se o heroi ou ao menos um inimigo esta vivo
                 
-            Titulo.sleep(500);
+            Titulo.sleep(500); // delay no começo do turno
 
-            int turno = 0; // 0: turno do heroi (talvez em algum momento o heroi possa nao começar, talvez tenha que ser ajustado)
+            int turno = 0; // 0: turno do heroi (talvez em algum momento o heroi possa não começar primeiro, talvez tenha que ser ajustado)
             
             Titulo.batalha(heroi, _inimigos);
 
             if (turno == 0){
                 System.out.println(heroi.statusEnergia());
-                int aux = Mao.mostrar(); // VAI FUNCIONAR DPS QUE CRIAR A MÃO
+                Mao.mostrar(); // VAI FUNCIONAR DPS QUE CRIAR A MÃO
 
                 // ---------> CODIGO VELHO, APAGAR DEPOIS QUE VERSIONAR O LAB 1 <----------------------------------------------------------------------------------
 

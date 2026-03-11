@@ -20,7 +20,7 @@ public class Mao {
         }
     }
 
-    public static int mostrar(){ // retorna o ultimo numero, para utilizaçao no menu no app.
+    public static void mostrar(){ // retorna o ultimo numero, para utilizaçao no menu no app.
         System.out.println("Mão atual:");
         int ultimoNumero = 0;
         for (int i = 0; i < cartas.size(); i++){
@@ -28,8 +28,7 @@ public class Mao {
             System.out.println("["+i+"] - "+cartaAtual.getNome()+" [Custo: "+cartaAtual.getCusto()+"]");
             ultimoNumero = i;
         }
-
-        return ultimoNumero + 1;
+        System.out.println("["+ultimoNumero+"] - Encerrar turno");
     }
 
     public static Carta escolheCarta(int n){
