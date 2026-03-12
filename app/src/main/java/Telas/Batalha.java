@@ -8,9 +8,9 @@ import java.util.*;
 
 public class Batalha {
 
-    public static void iniciar(Heroi heroi, Carta cartaDano, Carta cartaEscudo, Inimigo... inimigos){
+    public static void iniciar(Heroi heroi, Carta cartaDano, Carta cartaEscudo, Inimigo... _inimigos){
 
-        List<Inimigo> inimigos = new ArrayList<>(Arrays.asList(inimigos)); // converte o array inimigos em arraylist para facilitar a manipulação.
+        List<Inimigo> inimigos = new ArrayList<>(Arrays.asList(_inimigos)); // converte o array inimigos em arraylist para facilitar a manipulação.
 
         Scanner ler = new Scanner(System.in);
 
@@ -22,7 +22,7 @@ public class Batalha {
 
             int turno = 0; // 0: turno do heroi 
             
-            Titulo.batalha(heroi, inimigos);
+            Titulo.batalha(heroi, _inimigos);
 
             if (turno == 0){
                 System.out.println(heroi.statusEnergia());
