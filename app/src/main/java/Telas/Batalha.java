@@ -26,7 +26,23 @@ public class Batalha {
 
             if (turno == 0){
                 System.out.println(heroi.statusEnergia());
-                Mao.mostrar(); // VAI FUNCIONAR DPS QUE CRIAR A MÃO
+                int escolha = Mao.mostrar(); // VAI FUNCIONAR DPS QUE CRIAR A MÃO
+
+                while(true){
+                    if (escolha < 5 && escolha >= 0){
+                        Mao.escolheCarta(escolha);
+                        break;
+                    } else if (escolha == 5) {
+                        turno++;
+                            break;
+                    } 
+                    
+                    System.out.println("Valor inválido. Escolha novamente.");
+                    
+                    Telas.Titulo.sleep(700);
+                }
+                
+            }
 
             }
         }
