@@ -1,11 +1,16 @@
 package Entidades;
+
+import java.util.ArrayList;
+
+import EfeitosDeStatus.Efeito;
+
 public class Heroi extends Entidade {
     private int energia;
     private int energiaMax;
 
     /* inicializa os atributos */
-    public Heroi(String nome, int vida, int vidaMax, int escudo, int energiaMax){
-        super(nome, vida, vidaMax, escudo);
+    public Heroi(String nome, int vida, int vidaMax, int escudo, int energiaMax, ArrayList<Efeito> efeitosAplicados){
+        super(nome, vida, vidaMax, escudo, efeitosAplicados);
         this.energiaMax = energiaMax;
     }
 

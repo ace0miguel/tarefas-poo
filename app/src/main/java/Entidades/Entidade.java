@@ -61,9 +61,20 @@ public abstract class Entidade {
 
     public void passaTurno(){
         for(int i = 0; i < efeitosAplicados.size(); i++){
-            efeitosAplicados.get(i).aplicar(this);
+            Efeito efeito = efeitosAplicados.get(i);
+            if (efeito.getDur() > 0){
+            efeito.aplicar(this);
+             } else removeEfeito(efeito);
         }
-            
+        
+    }
+
+    public void addEfeito(Efeito e){
+        this.efeitosAplicados.add(e);
+    }
+
+    public void removeEfeito(Efeito e){
+        this.efeitosAplicados.remove(e);
     }
 
     public abstract String status();

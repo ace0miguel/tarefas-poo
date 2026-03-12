@@ -38,5 +38,6 @@ public abstract class Efeito {
         if (this.dur > 0) 
             this.dur--;
         else if (this.dur < 0) this.dur = 0; // else pra evitar possiveis bugs
+        
     }
 }
