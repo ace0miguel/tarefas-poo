@@ -8,15 +8,13 @@ public abstract class Entidade {
     private String nome;
     private int vida;
     private int vidaMax;
-    private int escudo;
+    private int escudo = 0;
     private ArrayList<Efeito> efeitosAplicados;
 
-    public Entidade(String nome, int vida, int vidaMax, int escudo, ArrayList<Efeito> ea){
+    public Entidade(String nome, int vida){
         this.vida = vida;
-        this.escudo = escudo;
         this.nome = nome;
-        this.vidaMax = vidaMax;
-        this.efeitosAplicados = ea;
+        this.vidaMax = vida;
     }
 
     public String getNome(){

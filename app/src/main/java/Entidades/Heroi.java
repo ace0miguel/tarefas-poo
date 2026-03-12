@@ -9,9 +9,8 @@ public class Heroi extends Entidade {
     private int energiaMax;
 
     /* inicializa os atributos */
-    public Heroi(String nome, int vida, int vidaMax, int escudo, int energiaMax, ArrayList<Efeito> efeitosAplicados){
-        super(nome, vida, vidaMax, escudo, efeitosAplicados);
-        this.energiaMax = energiaMax;
+    public Heroi(String nome, int vida, int energiaMax){
+        super(nome, vida);
     }
 
     public int getEnergia(){

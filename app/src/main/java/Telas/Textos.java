@@ -1,7 +1,7 @@
 package Telas;
 import Entidades.*;
 
-public class Titulo {
+public class Textos {
     static String titulo = """
          ██▓███   ██▓ ██▀███   ▄▄▄     ▄▄▄█████▓ ▄▄▄        ██████    ▓█████▄  ▒█████      ▄████▄   ▄▄▄       ██▀███   ██▓ ▄▄▄▄   ▓█████ 
         ▓██░  ██▒▓██▒▓██ ▒ ██▒▒████▄   ▓  ██▒ ▓▒▒████▄    ▒██    ▒    ▒██▀ ██▌▒██▒  ██▒   ▒██▀ ▀█  ▒████▄    ▓██ ▒ ██▒▓██▒▓█████▄ ▓█   ▀ 
@@ -14,6 +14,10 @@ public class Titulo {
                   ░     ░           ░  ░              ░  ░      ░        ░        ░ ░     ░ ░            ░  ░   ░      ░   ░         ░  ░
                                                                        ░                  ░                                     ░       
         """;
+
+    public static void limpaTela(){
+        for(int i = 0; i < 60; i++) System.out.println();
+    }
 
     public static void sleep(int time){ // tempo em ms
         try {
@@ -31,6 +35,8 @@ public class Titulo {
     }
 
     public static void batalha(Heroi heroi, Inimigo... inimigos){
+        limpaTela();
+        
         System.out.println("=-=");
         System.out.println();
         System.out.println(heroi.status());

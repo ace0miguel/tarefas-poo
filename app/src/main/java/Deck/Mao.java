@@ -2,6 +2,7 @@ package Deck;
 import java.util.ArrayList;
 
 import Cartas.Carta;
+import Telas.Textos;
 
 public class Mao {
     private static int quantMax = 5;
@@ -21,7 +22,7 @@ public class Mao {
     }
 
     public static int mostrar(){ // retorna a opção escolhida em forma de numero
-        Titulo.limpaTela();
+        Textos.limpaTela();
         
         System.out.println("Mão atual:");
         int ultimoNumero = 0;
