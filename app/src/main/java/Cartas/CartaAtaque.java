@@ -22,6 +22,10 @@ public class CartaAtaque extends Carta
         }
     }
     
+    public int getDano() {
+        return dano;
+    }
+
     public String descricao(){
         return "Usar "+this.getNome()+" [custo: " + this.getCusto() + "]";
     }

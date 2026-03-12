@@ -6,11 +6,13 @@ public abstract class Efeito {
     private String nome;
     private String desc;
     private int dur;
+    private boolean selfApply;
 
-    public Efeito(String nome, String desc, int dur) {
+    public Efeito(String nome, String desc, int dur, boolean selfApply) {
         this.nome = nome;
         this.desc = desc;
         this.dur = dur;
+        this.selfApply = selfApply;
     }
 
     // importante: lembrar de chamar passa turno sempre no final do aplicar
@@ -26,6 +28,10 @@ public abstract class Efeito {
 
     public int getDur() {
         return this.dur;
+    }
+
+    public boolean getSelfApply() {
+        return this.selfApply;
     }
 
     public void passaTurno() {
