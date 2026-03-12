@@ -63,6 +63,7 @@ public class Heroi {
         energia = energiaMax;
     }
 
+    // printa a vida atual e escudo se houver
     public String status(){
         return (escudo != 0) 
         ? ""+this.nome+" ("+vida+"/"+vidaMax+" de vida) ("+escudo+" de escudo)" 

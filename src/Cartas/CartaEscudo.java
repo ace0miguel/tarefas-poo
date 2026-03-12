@@ -16,6 +16,7 @@ public class CartaEscudo
         return this.nome;
     }
 
+
     public void usar (Heroi heroi){
         int energiaAtual = heroi.getEnergia();
         if(energiaAtual >= this.custo){

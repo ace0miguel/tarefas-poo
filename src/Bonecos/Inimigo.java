@@ -35,6 +35,7 @@ public class Inimigo {
         return (vida > 0) ? 1 : 0;
     }
     
+    // printa a vida atual e escudo se houver
     public String status(){
         return (escudo != 0) 
         ? ""+this.nome+" ("+vida+"/"+this.vidaMax+" de vida) ("+escudo+" de escudo)" 
