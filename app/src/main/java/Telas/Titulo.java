@@ -1,0 +1,44 @@
+package Telas;
+import Entidades.*;
+
+public class Titulo {
+    static String titulo = """
+         ██▓███   ██▓ ██▀███   ▄▄▄     ▄▄▄█████▓ ▄▄▄        ██████    ▓█████▄  ▒█████      ▄████▄   ▄▄▄       ██▀███   ██▓ ▄▄▄▄   ▓█████ 
+        ▓██░  ██▒▓██▒▓██ ▒ ██▒▒████▄   ▓  ██▒ ▓▒▒████▄    ▒██    ▒    ▒██▀ ██▌▒██▒  ██▒   ▒██▀ ▀█  ▒████▄    ▓██ ▒ ██▒▓██▒▓█████▄ ▓█   ▀ 
+        ▓██░ ██▓▒▒██▒▓██ ░▄█ ▒▒██  ▀█▄ ▒ ▓██░ ▒░▒██  ▀█▄  ░ ▓██▄      ░██   █▌▒██░  ██▒   ▒▓█    ▄ ▒██  ▀█▄  ▓██ ░▄█ ▒▒██▒▒██▒ ▄██▒███   
+        ▒██▄█▓▒ ▒░██░▒██▀▀█▄  ░██▄▄▄▄██░ ▓██▓ ░ ░██▄▄▄▄██   ▒   ██▒   ░▓█▄   ▌▒██   ██░   ▒▓▓▄ ▄██▒░██▄▄▄▄██ ▒██▀▀█▄  ░██░▒██░█▀  ▒▓█  ▄ 
+        ▒██▒ ░  ░░██░░██▓ ▒██▒ ▓█   ▓██▒ ▒██▒ ░  ▓█   ▓██▒▒██████▒▒   ░▒████▓ ░ ████▓▒░   ▒ ▓███▀ ░ ▓█   ▓██▒░██▓ ▒██▒░██░░▓█  ▀█▓░▒████▒
+        ▒▓▒░ ░  ░░▓  ░ ▒▓ ░▒▓░ ▒▒   ▓▒█░ ▒ ░░    ▒▒   ▓▒█░▒ ▒▓▒ ▒ ░    ▒▒▓  ▒ ░ ▒░▒░▒░    ░ ░▒ ▒  ░ ▒▒   ▓▒█░░ ▒▓ ░▒▓░░▓  ░▒▓███▀▒░░ ▒░ ░
+        ░▒ ░      ▒ ░  ░▒ ░ ▒░  ▒   ▒▒ ░   ░      ▒   ▒▒ ░░ ░▒  ░ ░    ░ ▒  ▒   ░ ▒ ▒░      ░  ▒     ▒   ▒▒ ░  ░▒ ░ ▒░ ▒ ░▒░▒   ░  ░ ░  ░
+        ░░        ▒ ░  ░░   ░   ░   ▒    ░        ░   ▒   ░  ░  ░      ░ ░  ░ ░ ░ ░ ▒     ░          ░   ▒     ░░   ░  ▒ ░ ░    ░    ░   
+                  ░     ░           ░  ░              ░  ░      ░        ░        ░ ░     ░ ░            ░  ░   ░      ░   ░         ░  ░
+                                                                       ░                  ░                                     ░       
+        """;
+
+    public static void sleep(int time){ // tempo em ms
+        try {
+            Thread.sleep(time);
+        } catch(InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    public static void principal(){
+        for (int i = 0; i < 50; ++i)  
+            System.out.println(); // limpa a tela
+
+        System.out.println(titulo); // fonte: Bloody / site: https://patorjk.com/software/taag/
+    }
+
+    public static void batalha(Heroi heroi, Inimigo... inimigos){
+        System.out.println("=-=");
+        System.out.println();
+        System.out.println(heroi.status());
+        System.out.println("vs");
+        for(int i = 0; i < inimigos.length; i++){
+            System.out.println(inimigos[i].status());
+            System.out.println();   
+        }
+        System.out.println("=-=");
+    }
+}
