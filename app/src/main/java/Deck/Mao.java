@@ -1,27 +1,28 @@
 package Deck;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import Cartas.Carta;
 import Telas.Textos;
 
 public class Mao {
-    private static int quantMax = 5;
-    private static ArrayList<Carta> cartas = new ArrayList<>(); 
+    private int quantMax = 5;
+    private ArrayList<Carta> cartas = new ArrayList<>(); 
 
     // public Mao(int quantMax){
     //     this.quantMax = quantMax;
     // }
 
-    public static void addCarta(){
+    public void addCarta(PilhaCompra pilhaCompra){
         if(cartas.size() < quantMax){
-            cartas.add(PilhaCompra.puxaCarta());
+            cartas.add(pilhaCompra.puxaCarta());
         }
         else{
             System.out.println("Máximo de cartas na mão atingido.");
         }
     }
 
-    public static int mostrar(){ // retorna a opção escolhida em forma de numero
+    public int mostrar(){ // retorna a opção escolhida em forma de numero
         Textos.limpaTela();
         
         System.out.println("Mão atual:");
@@ -41,7 +42,7 @@ public class Mao {
         return opcao;
     }
 
-    public static Carta escolheCarta(int opcao){ // retorna a opçao escolhida em forma de carta
+    public Carta escolheCarta(int opcao){ // retorna a opçao escolhida em forma de carta
         Carta carta = cartas.get(opcao);
         cartas.remove(opcao);
         return carta;

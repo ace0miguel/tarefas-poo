@@ -8,13 +8,14 @@ public class Batalha {
 
     // receber pilha de compra(deck atual), heroi e inimigos
     public static void iniciar(Heroi heroi, PilhaCompra pilhaCompra, Inimigo... _inimigos){
+        Mao mao = new Mao();
 
         List<Inimigo> inimigos = new ArrayList<Inimigo>(Arrays.asList(_inimigos)); // converte o array inimigos em arraylist para facilitar a manipulação.
         Scanner ler = new Scanner(System.in);
         int turno = 0; // 0: turno do heroi 
 
         for (int i = 0; i < 5; i++) // adiciona 5 cartas à mão no começo da batalha
-            Mao.addCarta();
+            mao.addCarta(pilhaCompra);
 
         while(heroi.estaVivo() == true && inimigos.stream().anyMatch(i -> i.estaVivo() == true)){ // checa se o heroi ou ao menos um inimigo esta vivo
                 
@@ -24,11 +25,11 @@ public class Batalha {
             
             if (turno == 0){
                 System.out.println(heroi.statusEnergia());
-                int escolha = Mao.mostrar(); 
+                int escolha = mao.mostrar(); 
 
                 while(true){
                     if (escolha < 5 && escolha >= 0){
-                        Mao.escolheCarta(escolha);
+                        mao.escolheCarta(escolha);
                         Textos.batalha(heroi, _inimigos);
                         break;
                     } else if (escolha == 5) {

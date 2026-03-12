@@ -1,14 +1,12 @@
 package Entidades;
 
-import EfeitosDeStatus.Efeito;
-
 //import Bonecos.Heroi;
 public class Inimigo extends Entidade{
 
     private int dano;
 
-    public Inimigo(String nome, int vida, int vidaMax, int escudo, int dano, ArrayList<Efeito> efeitosAplicados){
-        super(nome, vida, vidaMax, escudo, efeitosAplicados);
+    public Inimigo(String nome, int vida, int dano){
+        super(nome, vida);
         this.dano = dano;
     }
 

@@ -1,9 +1,5 @@
 package Entidades;
 
-import java.util.ArrayList;
-
-import EfeitosDeStatus.Efeito;
-
 public class Heroi extends Entidade {
     private int energia;
     private int energiaMax;
@@ -11,6 +7,7 @@ public class Heroi extends Entidade {
     /* inicializa os atributos */
     public Heroi(String nome, int vida, int energiaMax){
         super(nome, vida);
+        this.energiaMax = energiaMax;
     }
 
     public int getEnergia(){
