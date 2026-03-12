@@ -44,7 +44,6 @@ public class Batalha {
                 
             }
 
-            }
         }
         ler.close();
         System.out.println("DUELO ENCERRADO!");
