@@ -20,7 +20,9 @@ public class Mao {
         }
     }
 
-    public static void mostrar(){ // retorna o ultimo numero, para utilizaçao no menu no app.
+    public static int mostrar(){ // retorna a opção escolhida em forma de numero
+        Titulo.limpaTela();
+        
         System.out.println("Mão atual:");
         int ultimoNumero = 0;
         for (int i = 0; i < cartas.size(); i++){
@@ -29,16 +31,18 @@ public class Mao {
             ultimoNumero = i;
         }
         System.out.println("["+ultimoNumero+"] - Encerrar turno");
+
+        Scanner ler = new Scanner(System.in);
+        int opcao = ler.nextInt();
+        ler.nextLine();
+        ler.close();
+
+        return opcao;
     }
 
-    public static Carta escolheCarta(int n){
-        while (n >= cartas.size() || n < 0){ // nao sei se seria mais correto colocar essa logica aqui ou no app?
-            System.out.println("Valor inválido. Escolha novamente.");
-            mostrar(); 
-            // falta fazer a parte de ler, nao lembro como faz, talvez seja melhor no app
-        }
-        Carta carta = cartas.get(n);
-        cartas.remove(n);
+    public static Carta escolheCarta(int opcao){ // retorna a opçao escolhida em forma de carta
+        Carta carta = cartas.get(opcao);
+        cartas.remove(opcao);
         return carta;
     }
 
