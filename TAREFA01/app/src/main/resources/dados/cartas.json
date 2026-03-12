@@ -1,4 +1,6 @@
 {
+    "_comment": "Esse json representa uma lista com as cartas em posse do jogador",
+
     "CartaAtaque": [
         {
             "nome": "Tiro",

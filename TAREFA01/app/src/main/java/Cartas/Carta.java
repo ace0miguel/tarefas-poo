@@ -2,6 +2,7 @@ package Cartas;
 
 import Entidades.*;
 
+// as classes filhas representam os diferentes tipos de carta, baseados nos tipos do jogo slay the spire.
 public abstract class Carta {
 
     private String nome;

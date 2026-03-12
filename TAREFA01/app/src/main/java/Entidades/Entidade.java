@@ -1,16 +1,22 @@
 package Entidades;
 
+import java.util.ArrayList;
+
+import EfeitosDeStatus.Efeito;
+
 public abstract class Entidade {
     private String nome;
     private int vida;
     private int vidaMax;
     private int escudo;
+    private ArrayList<Efeito> efeitosAplicados;
 
-    public Entidade(String nome, int vida, int vidaMax, int escudo){
+    public Entidade(String nome, int vida, int vidaMax, int escudo, ArrayList<Efeito> ea){
         this.vida = vida;
         this.escudo = escudo;
         this.nome = nome;
         this.vidaMax = vidaMax;
+        this.efeitosAplicados = ea;
     }
 
     public String getNome(){
@@ -51,6 +57,13 @@ public abstract class Entidade {
     /* retorna 1 se esta vivo e 0 do contrario */
     public boolean estaVivo (){
         return (vida > 0) ? true : false;
+    }
+
+    public void passaTurno(){
+        for(int i = 0; i < efeitosAplicados.size(); i++){
+            efeitosAplicados.get(i).aplicar(this);
+        }
+            
     }
 
     public abstract String status();
