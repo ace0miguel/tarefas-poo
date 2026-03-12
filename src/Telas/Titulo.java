@@ -23,6 +23,10 @@ public class Titulo {
         }
     }
 
+    public static void limpaTela(){
+        for(int i = 0 ; i < 50 ; i++) System.out.println();
+    }
+
     public static void principal(){
         for (int i = 0; i < 50; ++i)  
             System.out.println(); // limpa a tela

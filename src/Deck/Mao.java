@@ -1,15 +1,13 @@
 package Deck;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import Cartas.Carta;
+import Telas.Titulo;
 
 public class Mao {
     private static int quantMax = 5;
     private static ArrayList<Carta> cartas = new ArrayList<>(); 
-
-    // public Mao(int quantMax){
-    //     this.quantMax = quantMax;
-    // }
 
     public static void addCarta(){
         if(cartas.size() < quantMax){
@@ -20,7 +18,9 @@ public class Mao {
         }
     }
 
-    public static void mostrar(){ // retorna o ultimo numero, para utilizaçao no menu no app.
+    public static int mostrar(){ // retorna o ultimo numero, para utilizaçao no menu no app.
+        Titulo.limpaTela();
+        
         System.out.println("Mão atual:");
         int ultimoNumero = 0;
         for (int i = 0; i < cartas.size(); i++){
@@ -29,16 +29,18 @@ public class Mao {
             ultimoNumero = i;
         }
         System.out.println("["+ultimoNumero+"] - Encerrar turno");
+
+        Scanner ler = new Scanner(System.in);
+        int opcao = ler.nextInt();
+        ler.nextLine();
+        ler.close();
+
+        return opcao;
     }
 
-    public static Carta escolheCarta(int n){
-        while (n >= cartas.size() || n < 0){ // nao sei se seria mais correto colocar essa logica aqui ou no app?
-            System.out.println("Valor inválido. Escolha novamente.");
-            mostrar(); 
-            // falta fazer a parte de ler, nao lembro como faz, talvez seja melhor no app
-        }
-        Carta carta = cartas.get(n);
-        cartas.remove(n);
+    public static Carta escolheCarta(int opcao){
+        Carta carta = cartas.get(opcao);
+        cartas.remove(opcao);
         return carta;
     }
 
