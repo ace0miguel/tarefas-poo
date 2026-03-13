@@ -20,6 +20,7 @@ public class Batalha {
             mao.addCarta(pilhaCompra);
 
         while(heroi.estaVivo() == true && inimigos.stream().anyMatch(i -> i.estaVivo() == true)){ // checa se o heroi ou ao menos um inimigo esta vivo
+            
             heroi.resetarEnergia();
             Textos.sleep(500); // delay no começo do turno
             Textos.batalha(heroi, _inimigos);

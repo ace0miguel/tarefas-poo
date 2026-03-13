@@ -30,6 +30,7 @@ public class Mao {
             System.out.println("["+i+"] - "+cartaAtual.getNome()+" [Custo: "+cartaAtual.getCusto()+"]");
             ultimoNumero = i;
         }
+        ultimoNumero++;
         System.out.println("["+ultimoNumero+"] - Encerrar turno");
 
         Scanner ler = new Scanner(System.in);
