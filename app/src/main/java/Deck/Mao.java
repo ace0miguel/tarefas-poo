@@ -23,8 +23,6 @@ public class Mao {
     }
 
     public int mostrar(){ // retorna a opção escolhida em forma de numero
-        Textos.limpaTela();
-        
         System.out.println("Mão atual:");
         int ultimoNumero = 0;
         for (int i = 0; i < cartas.size(); i++){

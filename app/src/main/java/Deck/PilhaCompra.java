@@ -27,20 +27,20 @@ public class PilhaCompra {
         pilhaCartas.addAll(temp);
     }
 
-    public void shuffleAll(ArrayList<Carta> pilhaDescarte){ // reembaralha todas as cartas (mao, compra e descarte)
-        cartas.addAll(pilhaDescarte);
+    public void shuffleAll(PilhaDescarte pilhaDescarte){ // reembaralha todas as cartas (mao, compra e descarte)
+        cartas.addAll(pilhaDescarte.getPilha());
         Collections.shuffle(cartas);
         pilhaCartas.clear();
+        pilhaDescarte.clear();
         pilhaCartas.addAll(cartas);
     }
 
-    public void deckReset(){ // embaralha todas as cartas da pilha de descarte e adiciona a pilha de compra
-        ArrayList<Carta> temp = PilhaDescarte.reset();
-        pilhaCartas.addAll(temp);  
+    public void deckReset(PilhaDescarte pilhaDescarte){ // embaralha todas as cartas da pilha de descarte e adiciona a pilha de compra
+        ArrayList<Carta> temp = pilhaDescarte.reset();
+        this.pilhaCartas.addAll(temp);  
     }
 
     public Carta puxaCarta(){ //falta adicionar checagem se está vazio
-        
         return pilhaCartas.pop();
     }
 }

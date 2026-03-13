@@ -10,6 +10,7 @@ public class Heroi extends Entidade {
         this.energiaMax = energiaMax;
     }
 
+
     public int getEnergia(){
         return this.energia;
     }

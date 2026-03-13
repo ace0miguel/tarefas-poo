@@ -35,7 +35,6 @@ public class Textos {
     }
 
     public static void batalha(Heroi heroi, Inimigo... inimigos){
-        limpaTela();
         
         System.out.println("=-=");
         System.out.println();

@@ -6,7 +6,7 @@ import java.util.Collections;
 import Cartas.Carta;
 
 public class PilhaDescarte {
-    private static ArrayList<Carta> cartas = new ArrayList<>();  
+    private ArrayList<Carta> cartas = new ArrayList<>();  
 
     public void descarta(Carta c){
         cartas.add(c);
@@ -17,14 +17,18 @@ public class PilhaDescarte {
         cartas.remove(c);
     }
 
-    public static ArrayList<Carta> getPilha(){
+    public ArrayList<Carta> getPilha(){
         return cartas;
     }
 
-    public static ArrayList<Carta> reset(){
+    public ArrayList<Carta> reset(){
         Collections.shuffle(cartas);
         ArrayList<Carta> temp = cartas;
         cartas.clear();
         return temp;
+    }
+
+    public void clear(){
+        cartas.clear();
     }
 }
