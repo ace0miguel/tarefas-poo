@@ -46,8 +46,10 @@ public class Batalha {
                         break;
                     } else if (escolha == 5) {
                         turno = 1;
+                        Textos.sleep(500);
                         System.out.println();
                         System.out.println("O inimigo te atacou!");
+                        System.out.println();
                         //Textos.batalha(heroi, _inimigos);
                         break;
                     } 
