@@ -25,12 +25,9 @@ public class Heroi extends Entidade {
     }
 
     public void resetarEnergia(){
-        energia = energiaMax;
+        this.energia = energiaMax;
     }
 
-    public void resetarEscudo(){
-        resetarEscudo();
-    }
 
     @Override
     public String status(){

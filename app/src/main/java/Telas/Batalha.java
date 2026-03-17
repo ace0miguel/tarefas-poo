@@ -24,7 +24,7 @@ public class Batalha {
         
         while(heroi.estaVivo() == true && inimigos.stream().anyMatch(i -> i.estaVivo() == true)){ // checa se o heroi ou ao menos um inimigo esta vivo
             
-            heroi.resetarEnergia();
+            //heroi.resetarEnergia();
             Textos.sleep(500); // delay no começo do turno
             Textos.batalha(heroi, _inimigos);
             
@@ -38,6 +38,9 @@ public class Batalha {
                         if (cartaEscolhida.podeGastar(heroi)){//confere se tem energia
                             cartaEscolhida.usar(heroi, inimigos.getFirst()); // tem q ver isso aqui, qual inimigo atacar, botei sempre o primeiro
                             mao.addCarta(pilhaCompra);
+                        }
+                        else {
+                            System.out.println("Energia insuficiente");
                         }
                         //Textos.batalha(heroi, _inimigos);  //esse nao precisa eu acho, no terminal fica duplicado
                         break;
@@ -56,7 +59,8 @@ public class Batalha {
             } 
             else {
                 for (int i = 0 ; i < inimigos.size() ; i++) inimigos.get(i).atacar(heroi); // por enquanto eles so atacam
-                //heroi.resetarEscudo();
+                heroi.resetarEscudo();
+                heroi.resetarEnergia();
                 turno = 0;
             }
         }

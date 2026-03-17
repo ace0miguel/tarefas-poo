@@ -62,7 +62,7 @@ public abstract class Entidade {
             Efeito efeito = efeitosAplicados.get(i);
             if (efeito.getDur() > 0){
             efeito.aplicar(this);
-             } else removeEfeito(efeito);
+            } else removeEfeito(efeito);
         }
         
     }

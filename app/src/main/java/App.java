@@ -16,7 +16,7 @@ public class App {
         Inimigo inimigo = new Inimigo("Capitão Barbossa", 10, 3);
 
         //cartas padrao pra teste por enquanto
-        for (int i = 0; i < 5; i++){
+        for (int i = 0; i < 100; i++){
             pilhaCompra.addCarta( new CartaAtaque("Tiro", 1, 2) );
             pilhaCompra.addCarta( new CartaHabilidade("Jarro de terra", 1, 3) );
         }
