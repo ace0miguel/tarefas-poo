@@ -36,11 +36,13 @@ public class Batalha {
                     if (escolha < 5 && escolha >= 0){
                         Carta cartaEscolhida = mao.escolheCarta(escolha); //aqui ja remove a carta
                         if (cartaEscolhida.podeGastar(heroi)){//confere se tem energia
+                            mao.removeCarta(escolha);
                             cartaEscolhida.usar(heroi, inimigos.getFirst()); // tem q ver isso aqui, qual inimigo atacar, botei sempre o primeiro
                             mao.addCarta(pilhaCompra);
                         }
                         else {
                             System.out.println("Energia insuficiente");
+                            continue;
                         }
                         //Textos.batalha(heroi, _inimigos);  //esse nao precisa eu acho, no terminal fica duplicado
                         break;

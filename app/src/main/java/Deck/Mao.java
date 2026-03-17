@@ -45,8 +45,12 @@ public class Mao {
 
     public Carta escolheCarta(int opcao){ // retorna a opçao escolhida em forma de carta
         Carta carta = cartas.get(opcao);
-        cartas.remove(opcao);
+        //cartas.remove(opcao);
         return carta;
+    }
+
+    public void removeCarta(int opcao){
+        cartas.remove(opcao);
     }
 
 }
