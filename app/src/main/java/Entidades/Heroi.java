@@ -8,6 +8,7 @@ public class Heroi extends Entidade {
     public Heroi(String nome, int vida, int energiaMax){
         super(nome, vida);
         this.energiaMax = energiaMax;
+        this.energia = energiaMax;
     }
 
 
@@ -25,6 +26,10 @@ public class Heroi extends Entidade {
 
     public void resetarEnergia(){
         energia = energiaMax;
+    }
+
+    public void resetarEscudo(){
+        resetarEscudo();
     }
 
     @Override

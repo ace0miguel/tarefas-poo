@@ -3,15 +3,19 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import Cartas.Carta;
-import Telas.Textos;
+//import Telas.Textos;
 
 public class Mao {
     private int quantMax = 5;
     private ArrayList<Carta> cartas = new ArrayList<>(); 
+    private Scanner ler;
 
     // public Mao(int quantMax){
     //     this.quantMax = quantMax;
     // }
+    public Mao(Scanner ler){  // Construtor que recebe o Scanner
+        this.ler = ler;
+    }
 
     public void addCarta(PilhaCompra pilhaCompra){
         if(cartas.size() < quantMax){
@@ -33,10 +37,8 @@ public class Mao {
         ultimoNumero++;
         System.out.println("["+ultimoNumero+"] - Encerrar turno");
 
-        Scanner ler = new Scanner(System.in);
         int opcao = ler.nextInt();
         ler.nextLine();
-        ler.close();
 
         return opcao;
     }
