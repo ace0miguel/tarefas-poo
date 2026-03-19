@@ -15,6 +15,7 @@ public abstract class Entidade {
         this.vida = vida;
         this.nome = nome;
         this.vidaMax = vida;
+        this.efeitosAplicados = new ArrayList<>();
     }
 
     public String getNome(){

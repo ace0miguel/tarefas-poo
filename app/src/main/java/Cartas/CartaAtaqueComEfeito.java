@@ -20,8 +20,9 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
             heroi.usarEnergia(this.getCusto());
 
             if (this.efeito.getSelfApply() == true){ 
-            heroi.addEfeito(efeito);
-            } else alvo.addEfeito(efeito);
+            heroi.addEfeito(this.efeito);
+            } 
+            else alvo.addEfeito(this.efeito);
             
         }
     }

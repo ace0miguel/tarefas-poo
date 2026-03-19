@@ -44,7 +44,7 @@ public class Mao {
         } catch (Exception e) {
             ler.nextLine();
             System.out.println();
-            System.out.println("Tem que ser um número, capitão!!");
+            System.out.println("Tem que ser um número de 0 a 5, capitão!!");
             System.out.println();
         }
 

@@ -29,9 +29,9 @@ public class Batalha {
             Textos.batalha(heroi, _inimigos);
             
             if (turno == 0){
-                System.out.println(heroi.statusEnergia()); 
                 
                 while(true){
+                    System.out.println(heroi.statusEnergia()); 
                     int escolha = mao.mostrar(); 
                     if (escolha < 5 && escolha >= 0){
                         Carta cartaEscolhida = mao.escolheCarta(escolha); 
