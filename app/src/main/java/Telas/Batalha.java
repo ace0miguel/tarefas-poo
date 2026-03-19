@@ -31,7 +31,7 @@ public class Batalha {
                 
                 Textos.batalha(heroi, _inimigos);
                 while(true){
-                    System.out.println("o Inimigo te dara 3 de dano");
+                    inimigos.getFirst().anunciarAtaque(); //fala a intencao
                     System.out.println();
                     System.out.println(heroi.statusEnergia()); 
                     System.out.println();

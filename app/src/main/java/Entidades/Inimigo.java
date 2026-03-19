@@ -37,4 +37,8 @@ public class Inimigo extends Entidade{
         ?" "+this.getNome()+"("+getVida() +"/"+this.getVidaMax()+" de vida) ("+this.getEscudo()+" de escudo)" 
         : ""+this.getNome()+" ("+this.getVida()+"/"+this.getVidaMax()+" de vida)";
     }
+
+    public void anunciarAtaque(){
+        System.out.println("o Inimigo te dara 3 de dano");
+    }
 }
