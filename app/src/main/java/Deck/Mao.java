@@ -36,16 +36,24 @@ public class Mao {
         }
         ultimoNumero++;
         System.out.println("["+ultimoNumero+"] - Encerrar turno");
+        int opcao = -1;
 
-        int opcao = ler.nextInt();
-        ler.nextLine();
+        try {
+            opcao = ler.nextInt();
+            ler.nextLine();
+        } catch (Exception e) {
+            ler.nextLine();
+            System.out.println();
+            System.out.println("Tem que ser um número, capitão!!");
+            System.out.println();
+        }
 
         return opcao;
     }
 
     public Carta escolheCarta(int opcao){ // retorna a opçao escolhida em forma de carta
         Carta carta = cartas.get(opcao);
-        //cartas.remove(opcao);
+        //cartas.remove(opcao);  //remover aqui nao funciona, da bosta quando nao tem energia suficiente 
         return carta;
     }
 

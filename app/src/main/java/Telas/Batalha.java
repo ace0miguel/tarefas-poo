@@ -34,7 +34,7 @@ public class Batalha {
                 while(true){
                     int escolha = mao.mostrar(); 
                     if (escolha < 5 && escolha >= 0){
-                        Carta cartaEscolhida = mao.escolheCarta(escolha); //aqui ja remove a carta
+                        Carta cartaEscolhida = mao.escolheCarta(escolha); 
                         if (cartaEscolhida.podeGastar(heroi)){//confere se tem energia
                             mao.removeCarta(escolha);
                             cartaEscolhida.usar(heroi, inimigos.getFirst()); // tem q ver isso aqui, qual inimigo atacar, botei sempre o primeiro
