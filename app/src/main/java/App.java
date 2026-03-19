@@ -19,7 +19,7 @@ public class App {
 
         //cartas padrao pra teste por enquanto
         for (int i = 0; i < 100; i++){
-            Efeito sangramento = new Efeito("Sangramento", "Da dano por 3 turnos", 3, false) {
+            Efeito sangramento = new Efeito("Sangramento", "Seu inimigo está sangrando!! ele perdera 1 de vida por turno.", 3, false) {
                 @Override
                 public void aplicar(Entidade alvo) {
                     alvo.receberDano(1);
@@ -28,7 +28,8 @@ public class App {
             };
             pilhaCompra.addCarta( new CartaAtaqueComEfeito("Espada", 3, 3, sangramento ));
             pilhaCompra.addCarta( new CartaAtaque("Tiro", 1, 2) );
-            pilhaCompra.addCarta( new CartaHabilidade("Jarro de terra", 1, 3) );
+            pilhaCompra.addCarta( new CartaHabilidade("Escudo de madeira", 1, 2));
+            pilhaCompra.addCarta( new CartaHabilidade("Escudo de ferro", 2, 5));
         }
 
         for(int i=0; i < 20; i++){

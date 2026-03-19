@@ -35,15 +35,19 @@ public class Textos {
     }
 
     public static void batalha(Heroi heroi, Inimigo... inimigos){
-        
+        System.out.println();
         System.out.println("=-=");
         System.out.println();
         System.out.println(heroi.status());
         System.out.println("vs");
         for(int i = 0; i < inimigos.length; i++){
             System.out.println(inimigos[i].status());
+            /*if (inimigos[i].temEfeito()){
+                System.out.println(inimigos[i].descEfeito(null));
+            }*/
             System.out.println();   
         }
         System.out.println("=-=");
+        System.out.println();
     }
 }

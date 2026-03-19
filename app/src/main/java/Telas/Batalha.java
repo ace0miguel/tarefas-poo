@@ -3,7 +3,7 @@ import Deck.*;
 import Entidades.*;
 
 import java.util.*;
-
+//import EfeitosDeStatus.Efeito;
 import Cartas.Carta;
 
 public class Batalha {
@@ -26,12 +26,15 @@ public class Batalha {
             
             //heroi.resetarEnergia();
             Textos.sleep(500); // delay no começo do turno
-            Textos.batalha(heroi, _inimigos);
             
             if (turno == 0){
                 
+                Textos.batalha(heroi, _inimigos);
                 while(true){
+                    System.out.println("o Inimigo te dara 3 de dano");
+                    System.out.println();
                     System.out.println(heroi.statusEnergia()); 
+                    System.out.println();
                     int escolha = mao.mostrar(); 
                     if (escolha < 5 && escolha >= 0){
                         Carta cartaEscolhida = mao.escolheCarta(escolha); 
@@ -41,7 +44,9 @@ public class Batalha {
                             mao.addCarta(pilhaCompra);
                         }
                         else {
+                            System.out.println();
                             System.out.println("Energia insuficiente");
+                            System.out.println();
                             continue;
                         }
                         //Textos.batalha(heroi, _inimigos);  //esse nao precisa eu acho, no terminal fica duplicado
@@ -52,12 +57,18 @@ public class Batalha {
                         System.out.println();
                         System.out.println("O inimigo te atacou!");
                         System.out.println();
+                        for(Inimigo inimigo : inimigos){
+                            inimigo.passaTurno();
+                        }    
                         //Textos.batalha(heroi, _inimigos);
                         break;
                     } 
                     
-                    else System.out.println("Valor inválido. Escolha novamente.");
-                    
+                    else {
+                        System.out.println();
+                        System.out.println("Valor inválido. Escolha novamente.");
+                        System.out.println();
+                    }
                     Telas.Textos.sleep(700);
                 }
             } 
@@ -69,7 +80,7 @@ public class Batalha {
             }
         }
 
-        
+        System.out.println();
         System.out.println("DUELO ENCERRADO!");
         System.out.println();
         Textos.sleep(1500);
