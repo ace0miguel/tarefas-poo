@@ -6,6 +6,7 @@ import Entidades.*;
 public abstract class Carta {
 
     private String nome;
+    private String descricao;
     private int custo;
 
     public Carta(String nome, int custo){
@@ -21,6 +22,10 @@ public abstract class Carta {
         return this.custo;
     }
 
+    public String getDescricao() {
+        return descricao;
+    }
+    
     public boolean podeGastar(Heroi heroi){
         int energiaAtual = heroi.getEnergia();
         if(energiaAtual < this.custo){

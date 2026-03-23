@@ -4,7 +4,7 @@ import Entidades.*;
 /*
 Cartas que aplicam efeitos; não causam dano direto.
 */
-public class CartaHabilidade extends Carta
+public class CartaHabilidade extends Carta // no momento ela só da escudo, falta generalizar
 {
     private int escudo;
 
@@ -24,6 +24,6 @@ public class CartaHabilidade extends Carta
     }
 
     public String descricao(){
-        return "Usar "+this.getNome()+" [custo: " + this.getCusto() + "]";
+        return "Usar "+this.getNome()+" ("+this.escudo+" pontos de escudo) [custo: " + this.getCusto() + "]";
     }
 }
