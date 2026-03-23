@@ -2,6 +2,7 @@ package Deck;
 import java.util.*;
 
 import Cartas.Carta;
+import Telas.Textos;
 
 public class PilhaCompra {
     private ArrayList<Carta> cartas = new ArrayList<>();  
@@ -40,7 +41,19 @@ public class PilhaCompra {
         this.pilhaCartas.addAll(temp);  
     }
 
-    public Carta puxaCarta(){ //falta adicionar checagem se está vazio
+    public Carta puxaCarta(PilhaDescarte pd){ //falta adicionar checagem se está vazio
+        if (pilhaCartas.size() <= 0){
+            deckReset(pd);
+            System.out.println("Embaralhando deck");
+            Textos.sleep(200);
+        }
         return pilhaCartas.pop();
+    }
+
+    public void printDeck(){
+        System.out.println("Deck completo: --------");
+        for(int i = 0; i < cartas.size(); i++) System.out.println(cartas.get(i));
+        System.out.println("-----------------------");
+        Textos.sleep(200);
     }
 }

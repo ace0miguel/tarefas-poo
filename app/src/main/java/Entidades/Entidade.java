@@ -73,6 +73,10 @@ public abstract class Entidade {
         
     }
 
+    public ArrayList<Efeito> getEfeitosAplicados() {
+        return efeitosAplicados;
+    }
+    
     public void addEfeito(Efeito e){
         this.efeitosAplicados.add(e);
     }

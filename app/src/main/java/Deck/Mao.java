@@ -5,6 +5,9 @@ import java.util.Scanner;
 import Cartas.Carta;
 //import Telas.Textos;
 
+/* Início do turno : puxa 5 carta;
+ tudo que voce nao usar vai pra pilha de descarte;
+acabou a pilha de compra: reembaralha a pilha de descarte */
 public class Mao {
     private int quantMax = 5;
     private ArrayList<Carta> cartas = new ArrayList<>(); 
@@ -17,13 +20,18 @@ public class Mao {
         this.ler = ler;
     }
 
-    public void addCarta(PilhaCompra pilhaCompra){
+    public void addCarta(PilhaCompra pilhaCompra, PilhaDescarte pilhaDescarte){
         if(cartas.size() < quantMax){
-            cartas.add(pilhaCompra.puxaCarta());
+            cartas.add(pilhaCompra.puxaCarta(pilhaDescarte));
         }
         else{
             System.out.println("Máximo de cartas na mão atingido.");
         }
+    }
+
+    public void addCinco(PilhaCompra pilhaCompra, PilhaDescarte pilhaDescarte){
+        for (int i = 0; i < 5; i++) // adiciona 5 cartas à mão
+            this.addCarta(pilhaCompra, pilhaDescarte);
     }
 
     public int mostrar(){ // retorna a opção escolhida em forma de numero
@@ -51,14 +59,26 @@ public class Mao {
         return opcao;
     }
 
+    public void removeCarta(int opcao, PilhaDescarte pilhaDescarte){
+        pilhaDescarte.descarta(cartas.get(opcao));
+        cartas.remove(opcao);   
+    }
+
+    public void limpa(PilhaDescarte pilhaDescarte){
+        for (Carta carta : cartas) {
+            pilhaDescarte.descarta(carta);
+        }
+        
+        cartas.clear();
+    }
+
     public Carta escolheCarta(int opcao){ // retorna a opçao escolhida em forma de carta
         Carta carta = cartas.get(opcao);
-        //cartas.remove(opcao);  //remover aqui nao funciona, da bosta quando nao tem energia suficiente 
+        // removeCarta(opcao, pilhaDescarte);  
         return carta;
     }
 
-    public void removeCarta(int opcao){
-        cartas.remove(opcao);
+    public int getSize(){
+        return cartas.size();
     }
-
 }

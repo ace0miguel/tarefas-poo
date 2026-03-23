@@ -1,6 +1,7 @@
 package Telas;
 import Deck.*;
 import Entidades.*;
+import Handlers.InputHandler;
 
 import java.util.*;
 //import EfeitosDeStatus.Efeito;
@@ -13,12 +14,10 @@ public class Batalha {
         PilhaDescarte pilhaDescarte = new PilhaDescarte();
         
         List<Inimigo> inimigos = new ArrayList<Inimigo>(Arrays.asList(_inimigos)); // converte o array inimigos em arraylist para facilitar a manipulação.
-        Scanner ler = new Scanner(System.in);
+        Scanner ler = InputHandler.getLeitor();
         Mao mao = new Mao(ler);
         
         pilhaCompra.shuffleAll(pilhaDescarte);
-        for (int i = 0; i < 5; i++) // adiciona 5 cartas à mão no começo da batalha
-            mao.addCarta(pilhaCompra);
         
         int turno = 0; // 0: turno do heroi 
         
@@ -28,39 +27,45 @@ public class Batalha {
             Textos.sleep(500); // delay no começo do turno
             
             if (turno == 0){
-                
                 Textos.batalha(heroi, _inimigos);
-                while(true){
-                    inimigos.getFirst().anunciarAtaque(); //fala a intencao
+
+                mao.addCinco(pilhaCompra, pilhaDescarte);
+
+                while(true){ // loop da escolha de ação
+                    
+                    inimigos.getFirst().anunciarAtaque(); // anuncia a intencao
+
                     System.out.println();
                     System.out.println(heroi.statusEnergia()); 
                     System.out.println();
+
                     int escolha = mao.mostrar(); 
-                    if (escolha < 5 && escolha >= 0){
+                    if (escolha < mao.getSize() && escolha >= 0){
                         Carta cartaEscolhida = mao.escolheCarta(escolha); 
                         if (cartaEscolhida.podeGastar(heroi)){//confere se tem energia
-                            mao.removeCarta(escolha);
-                            cartaEscolhida.usar(heroi, inimigos.getFirst()); // tem q ver isso aqui, qual inimigo atacar, botei sempre o primeiro
-                            mao.addCarta(pilhaCompra);
-                        }
-                        else {
+                            mao.removeCarta(escolha, pilhaDescarte);
+                            cartaEscolhida.usar(heroi, inimigos.getFirst()); // por enquanto só tem um inimigo
+                            
+                            if (mao.getSize() == 0) mao.addCinco(pilhaCompra, pilhaDescarte);
+
+                        } else {
                             System.out.println();
                             System.out.println("Energia insuficiente");
                             System.out.println();
                             continue;
                         }
-                        //Textos.batalha(heroi, _inimigos);  //esse nao precisa eu acho, no terminal fica duplicado
-                        break;
-                    } else if (escolha == 5) {
+
+                    } else if (escolha == mao.getSize()) {
                         turno = 1;
                         Textos.sleep(500);
-                        System.out.println();
+                        System.out.println();   
                         System.out.println("O inimigo te atacou!");
                         System.out.println();
                         for(Inimigo inimigo : inimigos){
                             inimigo.passaTurno();
                         }    
-                        //Textos.batalha(heroi, _inimigos);
+
+                        mao.limpa(pilhaDescarte);
                         break;
                     } 
                     
@@ -69,11 +74,19 @@ public class Batalha {
                         System.out.println("Valor inválido. Escolha novamente.");
                         System.out.println();
                     }
+
                     Telas.Textos.sleep(700);
                 }
             } 
             else {
-                for (int i = 0 ; i < inimigos.size() ; i++) inimigos.get(i).atacar(heroi); // por enquanto eles so atacam
+                for (int i = 0 ; i < inimigos.size() ; i++) {
+                    Inimigo inimigoAtual = inimigos.get(i);
+                    inimigoAtual.escolheAcao();
+                    if (inimigoAtual.getNextAcao() == 0) {
+                        inimigoAtual.atacar(heroi);   
+                    } else inimigoAtual.setUsaEscudo(true);
+                }
+
                 heroi.resetarEscudo();
                 heroi.resetarEnergia();
                 turno = 0;

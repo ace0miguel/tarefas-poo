@@ -23,7 +23,7 @@ public class PilhaDescarte {
 
     public ArrayList<Carta> reset(){
         Collections.shuffle(cartas);
-        ArrayList<Carta> temp = cartas;
+        ArrayList<Carta> temp = new ArrayList<>(this.cartas);
         cartas.clear();
         return temp;
     }
