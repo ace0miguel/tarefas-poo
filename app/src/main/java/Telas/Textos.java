@@ -36,7 +36,8 @@ public class Textos {
 
     public static void batalha(Heroi heroi, Inimigo... inimigos){
         System.out.println();
-        System.out.println("=-=");
+        System.out.println();
+        System.out.println("=-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-=");
         System.out.println();
         System.out.println(heroi.status());
         System.out.println("vs");
@@ -47,7 +48,8 @@ public class Textos {
             }*/
             System.out.println();   
         }
-        System.out.println("=-=");
+        System.out.println("=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=");
+        System.out.println();
         System.out.println();
     }
 }

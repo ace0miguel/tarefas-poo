@@ -19,7 +19,7 @@ public class App {
 
         //cartas padrao pra teste por enquanto
         for (int i = 0; i < 3; i++){
-            Efeito sangramento = new Efeito("Sangramento", "Seu inimigo está sangrando!! ele perdera 1 de vida por turno.", 3, false) {
+            Efeito sangramento = new Efeito("Sangramento", "O inimigo perdeu 1 ponto de vida por sangramento !", 3, false) {
                 @Override
                 public void aplicar(Entidade alvo) {
                     alvo.receberDano(1);
@@ -37,7 +37,7 @@ public class App {
         }
 
         Textos.principal();
-        Thread.sleep(2000);
+        Thread.sleep(1500);
 
         Batalha.iniciar(heroi, pilhaCompra, inimigo);
         

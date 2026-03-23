@@ -27,12 +27,12 @@ public class Batalha {
             Textos.sleep(500); // delay no começo do turno
             
             if (turno == 0){
-                Textos.batalha(heroi, _inimigos);
 
                 mao.addCinco(pilhaCompra, pilhaDescarte);
 
                 while(true){ // loop da escolha de ação
-                    
+                    Textos.batalha(heroi, _inimigos);
+
                     inimigos.getFirst().anunciarAtaque(); // anuncia a intencao
 
                     System.out.println();
@@ -52,12 +52,12 @@ public class Batalha {
                             System.out.println();
                             System.out.println("Energia insuficiente");
                             System.out.println();
+
                             continue;
                         }
 
                     } else if (escolha == mao.getSize()) {
                         turno = 1;
-                        Textos.sleep(500);
                         System.out.println();   
                         System.out.println("O inimigo te atacou!");
                         System.out.println();
@@ -66,6 +66,7 @@ public class Batalha {
                         }    
 
                         mao.limpa(pilhaDescarte);
+                        Textos.sleep(500);
                         break;
                     } 
                     
