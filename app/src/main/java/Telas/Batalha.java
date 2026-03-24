@@ -33,6 +33,10 @@ public class Batalha {
                 while(true){ // loop da escolha de ação
                     Textos.batalha(heroi, _inimigos);
 
+                    for (Inimigo inimigo : inimigos) {
+                        inimigo.escolheAcao();
+                    }
+                    
                     inimigos.getFirst().anunciarAtaque(); // anuncia a intencao
 
                     System.out.println();
@@ -58,12 +62,13 @@ public class Batalha {
 
                     } else if (escolha == mao.getSize()) {
                         turno = 1;
-                        System.out.println();   
-                        System.out.println("O inimigo te atacou!");
                         System.out.println();
-                        for(Inimigo inimigo : inimigos){
-                            inimigo.passaTurno();
-                        }    
+                        int a = inimigos.getFirst().getNextAcao();
+                    
+                        if(a==0) System.out.println("O inimigo te atacou!");
+                        else if (a==1) System.out.println("O inimigo usou escudo!");
+                        System.out.println();
+                        heroi.passaTurno();
 
                         mao.limpa(pilhaDescarte);
                         Textos.sleep(500);
@@ -82,12 +87,17 @@ public class Batalha {
             else {
                 for (int i = 0 ; i < inimigos.size() ; i++) {
                     Inimigo inimigoAtual = inimigos.get(i);
-                    inimigoAtual.escolheAcao();
+                    //inimigoAtual.escolheAcao();
                     if (inimigoAtual.getNextAcao() == 0) {
                         inimigoAtual.atacar(heroi);   
-                    } else inimigoAtual.setUsaEscudo(true);
+                    } 
+                    else {
+                        inimigoAtual.setUsaEscudo(true);
+                    }
+                    inimigoAtual.passaTurno();
                 }
 
+                heroi.passaTurno();
                 heroi.resetarEscudo();
                 heroi.resetarEnergia();
                 turno = 0;

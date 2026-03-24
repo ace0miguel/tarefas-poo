@@ -41,7 +41,7 @@ public class Inimigo extends Entidade{
     @Override
     public String status(){
         return (getEscudo() != 0) 
-        ?" "+this.getNome()+"("+getVida() +"/"+this.getVidaMax()+" de vida) ("+this.getEscudo()+" de escudo)" 
+        ?""+this.getNome()+"("+getVida() +"/"+this.getVidaMax()+" de vida) ("+this.getEscudo()+" de escudo)" 
         : ""+this.getNome()+" ("+this.getVida()+"/"+this.getVidaMax()+" de vida)";
     }
 
@@ -69,6 +69,7 @@ public class Inimigo extends Entidade{
                 System.out.println();
             } else removeEfeito(efeito);
         }
+        this.resetarEscudo();
         if (usaEscudo == true) {
             this.ganharEscudo(3);
             usaEscudo = false;

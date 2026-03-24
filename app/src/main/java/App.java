@@ -18,7 +18,7 @@ public class App {
         Inimigo inimigo = new Inimigo("Capitão Barbossa", 20, 3);
 
         //cartas padrao pra teste por enquanto
-        for (int i = 0; i < 3; i++){
+        for (int i = 0; i < 10; i++){
             Efeito sangramento = new Efeito("Sangramento", "O inimigo perdeu 1 ponto de vida por sangramento !", 3, false) {
                 @Override
                 public void aplicar(Entidade alvo) {
