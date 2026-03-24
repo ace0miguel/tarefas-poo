@@ -13,7 +13,7 @@ public class Batalha {
     public static void iniciar(Heroi heroi, PilhaCompra pilhaCompra, Inimigo... _inimigos){
         PilhaDescarte pilhaDescarte = new PilhaDescarte();
         
-        List<Inimigo> inimigos = new ArrayList<Inimigo>(Arrays.asList(_inimigos)); // converte o array inimigos em arraylist para facilitar a manipulação.
+        List<Inimigo> inimigos = new ArrayList<>(Arrays.asList(_inimigos)); // converte o array inimigos em arraylist para facilitar a manipulação.
         Scanner ler = InputHandler.getLeitor();
         Mao mao = new Mao(ler);
         
@@ -33,7 +33,9 @@ public class Batalha {
                 while(true){ // loop da escolha de ação
                     Textos.batalha(heroi, _inimigos);
 
-                    inimigos.getFirst().anunciarAtaque(); // anuncia a intencao
+                    for (Inimigo inimigo : inimigos) {
+                        inimigo.anunciarAtaque();
+                    }
 
                     System.out.println();
                     System.out.println(heroi.statusEnergia()); 
@@ -52,6 +54,7 @@ public class Batalha {
                             System.out.println();
                             System.out.println("Energia insuficiente");
                             System.out.println();
+                            Telas.Textos.sleep(500);
 
                             continue;
                         }

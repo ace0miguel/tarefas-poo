@@ -8,10 +8,7 @@ import EfeitosDeStatus.Efeito;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        GerenciadorCartas gerenciadorCartas = new GerenciadorCartas();
         PilhaCompra pilhaCompra = new PilhaCompra();
-
-        gerenciadorCartas.carregarCartas(false);
 
         //instancias padrao pra teste por enquanto
         Heroi heroi = new Heroi("Capitão Jack Sparrow", 20, 5 );
