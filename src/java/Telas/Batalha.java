@@ -85,7 +85,9 @@ public class Batalha {
             else {
                 for (int i = 0 ; i < inimigos.size() ; i++) {
                     Inimigo inimigoAtual = inimigos.get(i);
+                    
                     inimigoAtual.escolheAcao();
+                    
                     if (inimigoAtual.getNextAcao() == 0) {
                         inimigoAtual.atacar(heroi);   
                     } else inimigoAtual.setUsaEscudo(true);

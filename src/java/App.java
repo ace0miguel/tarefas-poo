@@ -1,10 +1,7 @@
 import Cartas.*;
+import Deck.*;
 import Entidades.*;
 import Telas.*;
-import Deck.*;
-//import java.util.Scanner;
-//import EfeitosDeStatus.DanoConstante;
-import EfeitosDeStatus.Efeito;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -16,14 +13,7 @@ public class App {
 
         //cartas padrao pra teste por enquanto
         for (int i = 0; i < 3; i++){
-            Efeito sangramento = new Efeito("Sangramento", "O inimigo perdeu 1 ponto de vida por sangramento !", 3, false) {
-                @Override
-                public void aplicar(Entidade alvo) {
-                    alvo.receberDano(1);
-                    this.passaTurno();
-                }
-            };
-            pilhaCompra.addCarta( new CartaAtaqueComEfeito("Espada", 1, 2, sangramento ));
+            pilhaCompra.addCarta( new CartaAtaque("Espada", 1, 2 ));
             pilhaCompra.addCarta( new CartaAtaque("Tiro", 2, 3) );
             pilhaCompra.addCarta( new CartaHabilidade("Escudo de madeira", 1, 2));
             pilhaCompra.addCarta( new CartaHabilidade("Escudo de ferro", 3, 5));

@@ -22,7 +22,7 @@ public class Inimigo extends Entidade{
 
 //fazer add do efeito(add sangramento) e o sangrar (receber dANO e verificar duracao)
 
-    public void atacar(Heroi alvo){
+    public void atacar(Entidade alvo){
         alvo.receberDano(this.dano);
     }
 
@@ -34,8 +34,8 @@ public class Inimigo extends Entidade{
 
     }*/
 
-    public void escolheAcao(){ // no momento simplificado para 0 = ataque 1 = escudo
-        nextAcao = RNGHandler.getGen().nextInt(2);
+    public void escolheAcao(){ // no momento ele só ataca msm
+        nextAcao = RNGHandler.getGen().nextInt(1);
     }
     
     @Override
@@ -69,6 +69,9 @@ public class Inimigo extends Entidade{
                 System.out.println();
             } else removeEfeito(efeito);
         }
+
+        this.resetarEscudo();
+
         if (usaEscudo == true) {
             this.ganharEscudo(3);
             usaEscudo = false;
