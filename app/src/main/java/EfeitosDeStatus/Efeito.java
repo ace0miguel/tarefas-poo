@@ -7,19 +7,24 @@ public abstract class Efeito {
     private String nome;
     private String desc;
     private int dur;
-    private boolean selfApply;
-    private static List<Efeito> listaEfeitos = new ArrayList<>();
+    private Entidade alvo;
 
-    public Efeito(String nome, String desc, int dur, boolean selfApply) {
+    public Efeito(String nome, String desc, int dur) {
         this.nome = nome;
         this.desc = desc;
         this.dur = dur;
-        this.selfApply = selfApply;
+    }
+
+    public Efeito(Efeito copiado){
+        this.nome = copiado.getNome();
+        this.desc = copiado.getDesc();
+        this.dur = copiado.getDur();
     }
 
     // importante: lembrar de chamar passa turno sempre no final do aplicar
     public abstract void aplicar(Entidade alvo);
     
+    // getters ------------
     public String getNome() {
         return this.nome;
     }
@@ -32,13 +37,35 @@ public abstract class Efeito {
         return this.dur;
     }
 
-    public boolean getSelfApply() {
-        return this.selfApply;
+    public Entidade getAlvo() {
+        return this.alvo;
     }
 
-    public void passaTurno() {
-        if (this.dur > 0) 
+    // setters ------------
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+    
+    public void setDur(int dur) {
+        this.dur = dur;
+    }
+    
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+    
+    public void setAlvo(Entidade alvo) {
+        this.alvo = alvo;
+    }
+    
+    // ----------------
+
+    public boolean passaTurno() { // retorna true se ainda nao tiver acabado a duraçao
+        if (this.dur > 0){ 
             this.dur--;
-        else if (this.dur < 0) this.dur = 0; // else pra evitar possiveis bugs
+            return true;
+        }
+        return false;
     }
 }

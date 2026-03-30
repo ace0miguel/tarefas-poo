@@ -49,6 +49,15 @@ public class Batalha {
         turno = (turno == 0) ? 1 : 0;
         if (turno == 0) passaRodada();
     }
+
+    public int selecionarAlvo(){
+        int i = 0;
+        for (Inimigo inimigo : inimigos) {
+            System.out.println((""+i+" - "+inimigo.getNome()+""));
+            i++;
+        }
+        return ler.nextInt();
+    }
     
     public void turnoHeroi(){
         mao.addCinco(pilhaCompra, pilhaDescarte);
@@ -79,7 +88,8 @@ public class Batalha {
                     } 
                     // energia suficiente -> executa a carta
                     mao.removeCarta(escolha, pilhaDescarte);
-                    cartaEscolhida.usar(heroi, inimigos.getFirst()); // por enquanto só tem um inimigo
+
+                    cartaEscolhida.usar(heroi, inimigos.get(selecionarAlvo())); // por enquanto só tem um inimigo
                     if (mao.getSize() == 0) mao.addCinco(pilhaCompra, pilhaDescarte); // se a mão esvaziar compra 5
 
                 } else if (escolha == mao.getSize()) break;
