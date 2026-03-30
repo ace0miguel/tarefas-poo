@@ -1,6 +1,7 @@
 package Deck;
 import java.util.ArrayList;
 import java.util.Scanner;
+import Handlers.InputHandler;
 
 import Cartas.Carta;
 //import Telas.Textos;
@@ -11,14 +12,8 @@ acabou a pilha de compra: reembaralha a pilha de descarte */
 public class Mao {
     private int quantMax = 5;
     private ArrayList<Carta> cartas = new ArrayList<>(); 
-    private Scanner ler;
 
-    // public Mao(int quantMax){
-    //     this.quantMax = quantMax;
-    // }
-    public Mao(Scanner ler){  // Construtor que recebe o Scanner
-        this.ler = ler;
-    }
+    Scanner ler = InputHandler.getLeitor();
 
     public void addCarta(PilhaCompra pilhaCompra, PilhaDescarte pilhaDescarte){
         if(cartas.size() < quantMax){

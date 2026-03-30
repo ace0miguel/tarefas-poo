@@ -9,6 +9,7 @@ public abstract class Entidade {
     private int vida;
     private int vidaMax;
     private int escudo = 0;
+    private int danoExtra = 0;
     private ArrayList<Efeito> efeitosAplicados;
 
     public Entidade(String nome, int vida){
@@ -53,6 +54,11 @@ public abstract class Entidade {
         this.escudo = 0;
     }
 
+    public void resetarBonus(){
+        this.escudo = 0;
+        this.danoExtra = 0;
+    }
+
     /* retorna 1 se esta vivo e 0 do contrario */
     public boolean estaVivo (){
         return (vida > 0) ? true : false;
@@ -61,14 +67,20 @@ public abstract class Entidade {
     public void passaTurno(){
         for(int i = efeitosAplicados.size() - 1; i >= 0; i--){
             Efeito efeito = efeitosAplicados.get(i);
+            efeito.passaTurno();
             if (efeito.getDur() > 0){
+
                 efeito.aplicar(this);
                 System.out.println();
                 System.out.println(efeito.getDesc());
                 System.out.println();
                 System.out.println("Efeito aplicado por mais "+ efeito.getDur()+ " turnos");
                 System.out.println();
+
             } else removeEfeito(efeito);
+
+            resetarBonus();
+            
         }
         
     }
@@ -92,6 +104,10 @@ public abstract class Entidade {
 
     public String descEfeito(Efeito e){
         return e.getDesc();
+    }
+
+    public void aumentaDano(int valor){
+        danoExtra = valor;
     }
 
     public abstract String status();

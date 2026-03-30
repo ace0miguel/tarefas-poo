@@ -1,6 +1,7 @@
 package Telas;
 import Deck.*;
 import Entidades.*;
+import EfeitosDeStatus.*;
 import Handlers.InputHandler;
 
 import java.util.*;
@@ -9,100 +10,102 @@ import Cartas.Carta;
 
 public class Batalha {
 
-    // receber pilha de compra(deck atual), heroi e inimigos
-    public static void iniciar(Heroi heroi, PilhaCompra pilhaCompra, Inimigo... _inimigos){
-        PilhaDescarte pilhaDescarte = new PilhaDescarte();
+    private List<Efeito> efeitos = new ArrayList<>(); // age como subscriber
+    private int turno;
+    private Heroi heroi;
+    private Mao mao;
+    private PilhaCompra pilhaCompra;
+    private Inimigo[] arrayInimigos; // inimigos em forma de array pq infelizmente as vezes precisa
+    private List<Inimigo> inimigos; // inimigos em forma de lista pq é bom
+    private PilhaDescarte pilhaDescarte = new PilhaDescarte();
+    Scanner ler = InputHandler.getLeitor();
+
+    // recebe pilha de compra(deck atual), heroi e inimigos, define as variáveis e chama a classe principal.
+    public void iniciar(Heroi _heroi, PilhaCompra _pilhaCompra, Inimigo... _inimigos){
         
-        List<Inimigo> inimigos = new ArrayList<Inimigo>(Arrays.asList(_inimigos)); // converte o array inimigos em arraylist para facilitar a manipulação.
-        Scanner ler = InputHandler.getLeitor();
-        Mao mao = new Mao(ler);
+        arrayInimigos = _inimigos;
+        inimigos = new ArrayList<Inimigo>(Arrays.asList(_inimigos)); // converte o array inimigos em arraylist para facilitar a manipulação.
+        heroi = _heroi;
+        pilhaCompra = _pilhaCompra;
+        mao = new Mao();
         
         pilhaCompra.shuffleAll(pilhaDescarte);
         
-        int turno = 0; // 0: turno do heroi 
+        turno = 0; // 0: turno do heroi 
         
-        while(heroi.estaVivo() == true && inimigos.stream().anyMatch(i -> i.estaVivo() == true)){ // checa se o heroi ou ao menos um inimigo esta vivo
-            
-            //heroi.resetarEnergia();
-            Textos.sleep(500); // delay no começo do turno
-            
-            if (turno == 0){
+        batalha();
+    }
 
-                mao.addCinco(pilhaCompra, pilhaDescarte);
-
-                while(true){ // loop da escolha de ação
-                    Textos.batalha(heroi, _inimigos);
-
-                    for (Inimigo inimigo : inimigos) {
-                        inimigo.escolheAcao();
-                    }
-                    
-                    inimigos.getFirst().anunciarAtaque(); // anuncia a intencao
-
-                    System.out.println();
-                    System.out.println(heroi.statusEnergia()); 
-                    System.out.println();
-
-                    int escolha = mao.mostrar(); 
-                    if (escolha < mao.getSize() && escolha >= 0){
-                        Carta cartaEscolhida = mao.escolheCarta(escolha); 
-                        if (cartaEscolhida.podeGastar(heroi)){//confere se tem energia
-                            mao.removeCarta(escolha, pilhaDescarte);
-                            cartaEscolhida.usar(heroi, inimigos.getFirst()); // por enquanto só tem um inimigo
-                            
-                            if (mao.getSize() == 0) mao.addCinco(pilhaCompra, pilhaDescarte);
-
-                        } else {
-                            System.out.println();
-                            System.out.println("Energia insuficiente");
-                            System.out.println();
-
-                            continue;
-                        }
-
-                    } else if (escolha == mao.getSize()) {
-                        turno = 1;
-                        System.out.println();
-                        int a = inimigos.getFirst().getNextAcao();
-                    
-                        if(a==0) System.out.println("O inimigo te atacou!");
-                        else if (a==1) System.out.println("O inimigo usou escudo!");
-                        System.out.println();
-                        heroi.passaTurno();
-
-                        mao.limpa(pilhaDescarte);
-                        Textos.sleep(500);
-                        break;
-                    } 
-                    
-                    else {
-                        System.out.println();
-                        System.out.println("Valor inválido. Escolha novamente.");
-                        System.out.println();
-                    }
-
-                    Telas.Textos.sleep(700);
-                }
-            } 
-            else {
-                for (int i = 0 ; i < inimigos.size() ; i++) {
-                    Inimigo inimigoAtual = inimigos.get(i);
-                    //inimigoAtual.escolheAcao();
-                    if (inimigoAtual.getNextAcao() == 0) {
-                        inimigoAtual.atacar(heroi);   
-                    } 
-                    else {
-                        inimigoAtual.setUsaEscudo(true);
-                    }
-                    inimigoAtual.passaTurno();
-                }
-
-                heroi.passaTurno();
-                heroi.resetarEscudo();
-                heroi.resetarEnergia();
-                turno = 0;
-            }
+    public void passaRodada(){
+        for (Efeito efeito : efeitos) { // notifica os efeitos
+            efeito.passaTurno(); 
         }
+        mao.limpa(pilhaDescarte);
+        heroi.resetarEnergia();
+        heroi.resetarEscudo();
+    }
+
+    public void passaTurno(){
+        turno = (turno == 0) ? 1 : 0;
+        if (turno == 0) passaRodada();
+    }
+    
+    public void turnoHeroi(){
+        mao.addCinco(pilhaCompra, pilhaDescarte);
+
+            while(true){ // loop da escolha de ação
+                Textos.limpaTela();
+                Textos.batalha(heroi, arrayInimigos);
+
+                for (Inimigo inimigo : inimigos) {
+                    inimigo.escolheAcao();
+                    inimigo.anunciarAtaque();
+                }
+
+                System.out.println();
+                System.out.println(heroi.statusEnergia()); 
+                System.out.println();
+
+                int escolha = mao.mostrar(); 
+
+                // carta válida -> confere se não tem energia suficiente
+                if (escolha < mao.getSize() && escolha >= 0){
+                    Carta cartaEscolhida = mao.escolheCarta(escolha); 
+                    if (!cartaEscolhida.podeGastar(heroi)){
+                        System.out.println();
+                        System.out.println("Energia insuficiente");
+                        System.out.println();
+                        continue;
+                    } 
+                    // energia suficiente -> executa a carta
+                    mao.removeCarta(escolha, pilhaDescarte);
+                    cartaEscolhida.usar(heroi, inimigos.getFirst()); // por enquanto só tem um inimigo
+                    if (mao.getSize() == 0) mao.addCinco(pilhaCompra, pilhaDescarte); // se a mão esvaziar compra 5
+
+                } else if (escolha == mao.getSize()) break;
+            }                
+        passaTurno();
+    }
+
+    public void turnoInimigos(){
+        for (Inimigo inimigo : arrayInimigos) {
+            int acao = inimigo.getNextAcao();
+            if (acao == 1) inimigo.atacar(heroi);
+            //else aplicar efeito
+
+            inimigo.escolheAcao(); // escolhe prox ação
+        }
+        passaTurno();
+    }
+
+    public void batalha(){
+        // loop principal: checa se o heroi ou ao menos um inimigo esta vivo
+        while(heroi.estaVivo() == true && inimigos.stream().anyMatch(i -> i.estaVivo() == true)){
+
+            if (turno == 0) turnoHeroi();
+            else turnoInimigos();
+        }
+        // fim de batalha
 
         System.out.println();
         System.out.println("DUELO ENCERRADO!");
@@ -113,7 +116,5 @@ public class Batalha {
         
         else System.out.println("VOCÊ RECUPEROU O PÉROLA NEGRA!");
         System.out.println();
-
-        ler.close();
     }
 }

@@ -1,5 +1,6 @@
 package EfeitosDeStatus;
 
+import java.util.*;
 import Entidades.Entidade;
 
 public abstract class Efeito {
@@ -7,6 +8,7 @@ public abstract class Efeito {
     private String desc;
     private int dur;
     private boolean selfApply;
+    private static List<Efeito> listaEfeitos = new ArrayList<>();
 
     public Efeito(String nome, String desc, int dur, boolean selfApply) {
         this.nome = nome;
@@ -38,6 +40,5 @@ public abstract class Efeito {
         if (this.dur > 0) 
             this.dur--;
         else if (this.dur < 0) this.dur = 0; // else pra evitar possiveis bugs
-        
     }
 }

@@ -34,7 +34,7 @@ public class Inimigo extends Entidade{
 
     }*/
 
-    public void escolheAcao(){ // no momento simplificado para 0 = ataque 1 = escudo
+    public void escolheAcao(){ // no momento simplificado para 0 = ataque 1 = buff
         nextAcao = RNGHandler.getGen().nextInt(2);
     }
     
@@ -49,7 +49,7 @@ public class Inimigo extends Entidade{
         System.out.print("o Inimigo ");
         System.out.println((nextAcao == 0) 
         ? "irá te atacar causando "+this.dano+" pontos de dano" 
-        : "irá aplicar 3 pontos de escudo");
+        : "irá se fortalacer, recebendo dano extra"); 
     }
 
     public int getNextAcao() {

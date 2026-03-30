@@ -39,7 +39,8 @@ public class App {
         Textos.principal();
         Thread.sleep(1500);
 
-        Batalha.iniciar(heroi, pilhaCompra, inimigo);
+        Batalha batalha = new Batalha();
+        batalha.iniciar(heroi, pilhaCompra, inimigo);
         
     }
 }
