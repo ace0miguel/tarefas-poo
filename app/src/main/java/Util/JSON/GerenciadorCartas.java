@@ -1,17 +1,12 @@
 package Util.JSON;
-import java.util.*;
 
-import java.io.FileNotFoundException;
+import java.util.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
 import com.google.gson.*;
 
-import Cartas.Carta;
-import Cartas.CartaAtaque;
-import Cartas.CartaHabilidade;
-import Cartas.CartaPoder;
+import Cartas.*;
 
 public class GerenciadorCartas {
     public static class cartaList{

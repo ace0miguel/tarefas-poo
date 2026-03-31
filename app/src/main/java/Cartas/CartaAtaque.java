@@ -1,6 +1,5 @@
 package Cartas;
-import Entidades.Heroi;
-import Entidades.Inimigo;
+import Entidades.*;
 import Telas.Batalha;
 
 /* 
@@ -16,7 +15,7 @@ public class CartaAtaque extends Carta
     }
 
     @Override
-    public void usar(Heroi heroi, Inimigo alvo, Batalha batalha){
+    public void usar(Heroi heroi, Entidade alvo, Batalha batalha){
         int energiaAtual = heroi.getEnergia();
         if(energiaAtual >= this.getCusto()){
             alvo.receberDano(this.dano);

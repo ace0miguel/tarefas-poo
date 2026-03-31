@@ -1,31 +1,33 @@
 package Cartas;
-import Entidades.Heroi;
-import Entidades.Inimigo;
+import Entidades.*;
+import EfeitosDeStatus.*;
 import Telas.Batalha;
 
 /*
 Cartas que aplicam efeitos; não causam dano direto.
 */
-public class CartaHabilidade extends Carta // no momento ela só da escudo, falta generalizar
+public class CartaHabilidade extends Carta // aplica um efeito em um alvo
 {
-    private int escudo;
+    private Efeito efeito;
 
-    public CartaHabilidade(String nome, int custo, int escudo){
+    public CartaHabilidade(String nome, int custo, Efeito efeito, boolean _selfCast){
         super(nome, custo);
-        this.escudo = escudo;
+        this.efeito = efeito;
+        this.setSelfCast(_selfCast);
     }
 
     @Override
-    public void usar (Heroi heroi, Inimigo inimigo, Batalha batalha){
+    public void usar (Heroi heroi, Entidade alvo, Batalha batalha){
         int energiaAtual = heroi.getEnergia();
 
         if(energiaAtual >= this.getCusto()){
-            heroi.ganharEscudo(this.escudo);
-            heroi.usarEnergia(this.getCusto());
+            Efeito e = efeito.criaCopia();
+            e.setAlvo(alvo);
+            batalha.adicionarEfeito(e);
         }
     }
 
     public String descricao(){
-        return "Usar "+this.getNome()+" ("+this.escudo+" pontos de escudo) [custo: " + this.getCusto() + "]";
+        return "Usar "+this.getNome()+" ("+this.efeito.getNome()+") [custo: " + this.getCusto() + "]";
     }
 }

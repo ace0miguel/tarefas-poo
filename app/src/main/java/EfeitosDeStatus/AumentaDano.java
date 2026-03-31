@@ -16,7 +16,7 @@ public class AumentaDano extends Efeito {
 
     @Override
     public void aplicar(){
-        this.getAlvo().setDanoExtra(valor);
+        this.getAlvo().setDanoExtra(this.getAlvo().getDanoExtra() + this.valor);
     }
 
     @Override
@@ -26,6 +26,12 @@ public class AumentaDano extends Efeito {
     @Override
     public Efeito criaCopia() {
         return new AumentaDano(this);
+    }
+
+    @Override
+    public String status() {
+        return " [" + this.getNome() + " " + this.valor + " dano extra" + " - (" + this.getDur() + " Rodadas)]"; 
+        
     }
     
 }

@@ -2,7 +2,7 @@ package Deck;
 import java.util.*;
 
 import Cartas.Carta;
-import Telas.Textos;
+import Util.Textos;
 
 public class PilhaCompra {
     private ArrayList<Carta> cartas = new ArrayList<>();  

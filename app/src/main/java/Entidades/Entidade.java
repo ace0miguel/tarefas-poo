@@ -6,6 +6,7 @@ public abstract class Entidade {
     private int vidaMax;
     private int escudo = 0;
     private int danoExtra = 0;
+    private boolean purificar = false;
 
     public Entidade(String nome, int vida){
         this.vida = vida;
@@ -34,6 +35,16 @@ public abstract class Entidade {
     public int getDanoExtra() {
         return danoExtra;
     }
+    
+    public boolean getPurificar(){
+        return this.purificar;
+    }
+
+    public void setPurificar(boolean purificar) {
+        this.purificar = purificar;
+    }
+
+    
 
     
     public void receberDano(int dano){
@@ -69,10 +80,10 @@ public abstract class Entidade {
         resetarBonus();
     }
 
+
     public void setDanoExtra(int valor){
         danoExtra = valor;
     }
 
     public abstract String status();
-
 }

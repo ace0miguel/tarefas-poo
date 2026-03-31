@@ -8,6 +8,7 @@ public abstract class Efeito {
     private String desc;
     private int dur;
     private Entidade alvo;
+    protected boolean insta = false;
 
     public Efeito(String nome, String desc, int dur) {
         this.nome = nome;
@@ -26,6 +27,8 @@ public abstract class Efeito {
     public abstract void onHit(Carta carta);
 
     public abstract Efeito criaCopia();
+
+    public abstract String status();
     
     // getters ------------
     public String getNome() {
@@ -44,6 +47,10 @@ public abstract class Efeito {
         return this.alvo;
     }
 
+    public boolean getInsta() {
+        return this.insta;
+    }
+
     // setters ------------
 
     public void setDesc(String desc) {
@@ -60,6 +67,10 @@ public abstract class Efeito {
     
     public void setAlvo(Entidade alvo) {
         this.alvo = alvo;
+    }
+
+    public void setInsta(boolean insta) {
+        this.insta = insta;
     }
     
     // ----------------

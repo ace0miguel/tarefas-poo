@@ -3,9 +3,16 @@
 
     "CartaAtaque": [
         {
-            "nome": "Tiro",
+            "nome": "pistolão",
+            "descricao": "dispara um tiro na CABEÇA do alvo escolhido",
+            "custo": 2,
+            "dano":5
+        },
+        {
+            "nome": "bicuda",
+            "descricao": "da um CHUTÃO no peito do alvo escolhido",
             "custo": 1,
-            "dano":2
+            "dano": 2
         }
     ],
     

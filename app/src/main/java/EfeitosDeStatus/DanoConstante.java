@@ -28,5 +28,10 @@ public class DanoConstante extends Efeito {
         return new DanoConstante(this);
     }
 
+    @Override
+    public String status() {
+        return " [" + this.getNome() + " - " + this.dano + " pontos de dano" + " - (" + this.getDur() + " Rodadas)]"; 
+        
+    }
     
 }

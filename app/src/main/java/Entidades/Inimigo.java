@@ -10,28 +10,35 @@ public class Inimigo extends Entidade{
 
     private int dano;
     private int nextAcao;
+    private int tier = 0; // 0 : randola, 1 : elite, 2 : boss
 
     Efeito sangramento = new DanoConstante("Sangramento", "Causa 1 de dano por rodada ao alvo", 3, 1);
 
     public Inimigo(String nome, int vida, int dano){
         super(nome, vida);
         this.dano = dano;
-
     }
 
     public void atacar(Heroi alvo){
         alvo.receberDano(this.dano + this.getDanoExtra());
     }
 
-    public void atacarEfeito(Heroi alvo, Batalha batalha){ // falta generalizar, no momento ele só aplica sangramento
-        alvo.receberDano(this.dano - 2 + this.getDanoExtra());
-        Efeito e = sangramento.criaCopia();
+    public void atacarEfeito(Heroi alvo, Batalha batalha, Efeito efeito){
+        alvo.receberDano(this.dano / 2 + this.getDanoExtra());
+        Efeito e = efeito.criaCopia();
         e.setAlvo(alvo);
         batalha.adicionarEfeito(e);
     }
 
-    public void escolheAcao(){ // no momento simplificado para 0 = ataque 1 = ataque com efeito(menos dano mas aplica um status)
-        nextAcao = RNGHandler.getGen().nextInt(2);
+    public void receberEfeito(Batalha batalha, Efeito efeito){
+        Efeito e = efeito.criaCopia();
+        e.setDur(e.getDur() + 1); // resolve o bug de 1 rodada ser comida instantaneamente nos efeitos dos inimigos
+        e.setAlvo(this);
+        batalha.adicionarEfeito(e);
+    }
+
+    public void escolheAcao(){
+        nextAcao = RNGHandler.getGen().nextInt(3);
     }
     
     @Override
@@ -42,13 +49,23 @@ public class Inimigo extends Entidade{
     }
 
     public void anunciarAtaque(){
-        System.out.print(" "+this.getNome()+" ");
-        System.out.println((nextAcao == 0) 
-        ? "irá te atacar causando "+this.dano+" pontos de dano" 
-        : "irá te atacar causando 1 ponto de dano e te deixar sangrando"); 
+        System.out.print(this.getNome()+" ");
+        switch (nextAcao) {
+            case 0 -> System.out.println("irá te atacar causando "+(this.dano + this.getDanoExtra())+" pontos de dano" );
+            case 1 -> System.out.println("irá te atacar causando "+(this.dano / 2 + this.getDanoExtra())+" e te deixar sangrando");
+            case 2 -> System.out.println("está prestes a realizar um PACTO SINISTRO");
+        }
     }
 
     public int getNextAcao() {
         return nextAcao;
+    }
+    
+    public int getTier() {
+        return tier;
+    }
+
+    public void setTier(int tier) {
+        this.tier = tier;
     }
 }

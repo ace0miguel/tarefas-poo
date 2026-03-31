@@ -27,6 +27,11 @@ public class Heroi extends Entidade {
         return "Energia ("+this.energia+"/"+this.energiaMax+")";
     }
 
+    public void passaRodada(){
+        resetarBonus();
+        resetarEnergia();
+    }
+
     @Override
     public String status(){
         return (getEscudo() != 0) 
