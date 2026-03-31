@@ -1,7 +1,6 @@
 import Cartas.CartaAtaque;
 import Cartas.CartaAtaqueComEfeito;
 import Cartas.CartaHabilidade;
-import Cartas.GerenciadorCartas;
 import Deck.PilhaCompra;
 import EfeitosDeStatus.AumentaDano;
 import EfeitosDeStatus.DanoConstante;
@@ -13,10 +12,7 @@ import Telas.Textos;
 
 public class App {
     public static void main(String[] args) throws Exception {
-        GerenciadorCartas gerenciadorCartas = new GerenciadorCartas();
         PilhaCompra pilhaCompra = new PilhaCompra();
-
-        gerenciadorCartas.carregarCartas(false);
 
         //instancias padrao pra teste por enquanto
         Heroi heroi = new Heroi("Capitão Jack Sparrow", 20, 5 );
