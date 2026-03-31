@@ -1,7 +1,7 @@
 package Deck;
 import java.util.ArrayList;
 import java.util.Scanner;
-import Handlers.InputHandler;
+import Util.InputHandler;
 
 import Cartas.Carta;
 //import Telas.Textos;
