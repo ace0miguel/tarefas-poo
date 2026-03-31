@@ -13,6 +13,12 @@ public class CartaAtaque extends Carta
         super(nome, custo);
         this.dano = dano;
     }
+    
+    public CartaAtaque(String nome, int custo, int tipo, int dano){
+        super(nome, custo, tipo);
+        this.dano = dano;
+    }
+
 
     @Override
     public void usar(Heroi heroi, Entidade alvo, Batalha batalha){

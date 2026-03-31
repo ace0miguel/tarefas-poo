@@ -1,7 +1,9 @@
 package Telas;
 import Deck.*;
 import Entidades.*;
+import Poderes.Poder;
 import EfeitosDeStatus.*;
+import Util.Art;
 import Util.InputHandler;
 import Util.Textos;
 
@@ -18,7 +20,11 @@ public class Batalha {
     Efeito escudinho = new Escudo("Escudinho", "3 pontos de escudo", 0, 3);
     Efeito escudao = new Escudo("Escudinho", "7 pontos de escudo", 0, 7);
 
-    private List<Efeito> listaEfeitos = new ArrayList<>(); // age como subscriber
+    // subscribers --------
+    private List<Efeito> listaEfeitos = new ArrayList<>(); 
+    private List<Poder> listaPoderes = new ArrayList<>();
+    // -------------
+
     private int turno;
     private Heroi heroi;
     private Mao mao;
@@ -53,6 +59,9 @@ public class Batalha {
             efeito.passaTurno(); 
         }
         listaEfeitos.removeIf(efeito -> efeito.getDur() <= 0);
+
+        for (Poder poder : listaPoderes) // notifica os poderes
+            poder.aplicar();
     }
 
     public void passaTurno(){
@@ -81,6 +90,16 @@ public class Batalha {
             }
         }
         this.listaEfeitos.add(efeito);
+    }
+
+    public void adicionarPoder(Poder poder){
+        for (Poder e : listaPoderes) {
+            if (e.getNome().equals(poder.getNome())){
+                e.stackar();
+                return;
+            }
+        }
+        this.listaPoderes.add(poder);
     }
 
     public void turnoHeroi(){
@@ -117,11 +136,16 @@ public class Batalha {
                     for (Efeito efeito : listaEfeitos)
                         if (efeito.getAlvo() == heroi) efeito.onHit(cartaEscolhida); */
                     
-                    // se for carta ataque ele pede pra escolher um inimigo, falta generalizar tambem.
+                    // se não for selfcast pergunta o alvo
                     if (cartaEscolhida.getSelfCast())
                         cartaEscolhida.usar(heroi, heroi, this);
                     else{
-                        cartaEscolhida.usar(heroi, inimigos.get(selecionarAlvo()), this); 
+                        int alvo = selecionarAlvo();
+                        Inimigo alvoSelecionado = inimigos.get(alvo);
+                        cartaEscolhida.usar(heroi, alvoSelecionado, this); 
+
+                        for (Poder poder : listaPoderes) // notifica os poderes
+                            poder.onHit(cartaEscolhida, heroi, alvoSelecionado, this); 
                     }
 
                     // lida com efeitos de uso instantaneo, como escudo.
@@ -170,8 +194,10 @@ public class Batalha {
         System.out.println("DUELO ENCERRADO!");
         System.out.println();
         Textos.sleep(1500);
-        if(heroi.estaVivo() == false)
+        if(heroi.estaVivo() == false){
             System.out.println("VOCÊ MORREU");
+            Art.printSans();
+        }
         
         else System.out.println("VOCÊ RECUPEROU O PÉROLA NEGRA!");
         System.out.println();

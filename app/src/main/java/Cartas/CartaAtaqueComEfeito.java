@@ -12,6 +12,11 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
         this.efeito = efeito;
     }
 
+    public CartaAtaqueComEfeito(String nome, int custo, int tipo, int dano, Efeito efeito){
+        super(nome, custo, tipo, dano);
+        this.efeito = efeito;
+    }
+
     @Override
     public void usar(Heroi heroi, Entidade alvo, Batalha batalha){
         int energiaAtual = heroi.getEnergia();

@@ -11,14 +11,30 @@ public abstract class Carta {
     private int custo;
     private boolean selfCast;
 
+    /*  -------------------------------------------------
+    dicionario de tipos de ação:
+    0 - nenhum
+    1 - disparo
+    2 - corte 
+    ----------------------------------------------------- */
+    protected int tipo = 0; 
+
     public Carta(String nome, int custo){
         this.nome = nome;
         this.custo = custo;
     }
 
+    public Carta(String nome, int custo, int tipo){
+        this.nome = nome;
+        this.custo = custo;
+        this.tipo = tipo;
+    }
+
     public String getNome(){
         return this.nome;
     }
+
+    // Getters --------------------------------------
 
     public int getCusto(){
         return this.custo;
@@ -31,10 +47,22 @@ public abstract class Carta {
     public boolean getSelfCast(){
         return selfCast;
     }
+
+    public int getTipo() {
+        return tipo;
+    }
+
+    // Setters --------------------------------------
     
     public void setSelfCast(boolean selfCast) {
         this.selfCast = selfCast;
     }
+
+    public void setTipo(int tipo) {
+        this.tipo = tipo;
+    }
+
+    // ---------------------------------------------
     
     public boolean podeGastar(Heroi heroi){
         return (heroi.getEnergia() > this.custo);

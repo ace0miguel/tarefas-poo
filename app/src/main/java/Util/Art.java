@@ -79,4 +79,9 @@ public class Art {
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠉⠉⠉⠉⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠉⠉⠉⠉⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
             """;
 
+        public static void printSans(){
+            Textos.limpaTela();
+
+            System.out.println(sans); // fonte: Bloody / site: https://patorjk.com/software/taag/
+        }
 }

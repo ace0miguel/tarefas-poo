@@ -1,29 +1,27 @@
 package Cartas;
 import Entidades.*;
 import Telas.Batalha;
-
+import Poderes.Poder;
 /*
-Aplica melhoria permanente para todo o encontro de combate.
+Aplica um efeito permanente para todo o encontro de combate, normalmente stackam
 */
-
-// TEMPORARIAMENTE COPIEI O CARTAHABILIDADE COMO PLACEHOLDER
 
 public class CartaPoder extends Carta
 {
-    private int escudo;
+    private Poder poder;
 
-    public CartaPoder(String nome, int custo, int escudo){
+    public CartaPoder(String nome, int custo, Poder escudo){
         super(nome, custo);
-        this.escudo = escudo;
+        this.poder = poder;
     }
 
     @Override
-    public void usar (Heroi heroi, Entidade inimigo, Batalha batalha){
+    public void usar (Heroi heroi, Entidade alvo, Batalha batalha){
         int energiaAtual = heroi.getEnergia();
 
         if(energiaAtual >= this.getCusto()){
-            heroi.ganharEscudo(this.escudo);
-            heroi.usarEnergia(this.getCusto());
+            Poder p = poder.criaCopia();
+            batalha.adicionarPoder(p);
         }
     }
 
@@ -31,3 +29,4 @@ public class CartaPoder extends Carta
         return "Usar "+this.getNome()+" [custo: " + this.getCusto() + "]";
     }
 }
+

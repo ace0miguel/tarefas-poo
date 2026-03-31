@@ -16,6 +16,12 @@ public class CartaHabilidade extends Carta // aplica um efeito em um alvo
         this.setSelfCast(_selfCast);
     }
 
+    public CartaHabilidade(String nome, int custo, int tipo, Efeito efeito, boolean _selfCast){
+        super(nome, custo, tipo);
+        this.efeito = efeito;
+        this.setSelfCast(_selfCast);
+    }
+
     @Override
     public void usar (Heroi heroi, Entidade alvo, Batalha batalha){
         int energiaAtual = heroi.getEnergia();
