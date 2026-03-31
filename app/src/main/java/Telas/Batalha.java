@@ -6,11 +6,13 @@ import Handlers.InputHandler;
 
 import java.util.*;
 //import EfeitosDeStatus.Efeito;
+
 import Cartas.Carta;
+import Cartas.CartaAtaque;
 
 public class Batalha {
 
-    private List<Efeito> efeitos = new ArrayList<>(); // age como subscriber
+    private List<Efeito> listaEfeitos = new ArrayList<>(); // age como subscriber
     private int turno;
     private Heroi heroi;
     private Mao mao;
@@ -37,12 +39,15 @@ public class Batalha {
     }
 
     public void passaRodada(){
-        for (Efeito efeito : efeitos) { // notifica os efeitos
+        heroi.resetarEnergia();
+        heroi.resetarBonus();
+        mao.limpa(pilhaDescarte);
+
+        for (Efeito efeito : listaEfeitos) {  // notifica os efeitos
+            efeito.aplicar();
             efeito.passaTurno(); 
         }
-        mao.limpa(pilhaDescarte);
-        heroi.resetarEnergia();
-        heroi.resetarEscudo();
+        listaEfeitos.removeIf(efeito -> efeito.getDur() <= 0);
     }
 
     public void passaTurno(){
@@ -50,15 +55,23 @@ public class Batalha {
         if (turno == 0) passaRodada();
     }
 
-    public int selecionarAlvo(){
+    public int selecionarAlvo(){ // falta adicionar checagem se ta selecionando um alvo valido
         int i = 0;
+        System.out.println();
+        System.out.println("Selecione o alvo:");
+        System.out.println();
+
         for (Inimigo inimigo : inimigos) {
             System.out.println((""+i+" - "+inimigo.getNome()+""));
             i++;
         }
         return ler.nextInt();
     }
-    
+
+    public void adicionarEfeito(Efeito efeito) {
+        this.listaEfeitos.add(efeito);
+    }
+
     public void turnoHeroi(){
         mao.addCinco(pilhaCompra, pilhaDescarte);
 
@@ -86,10 +99,21 @@ public class Batalha {
                         System.out.println();
                         continue;
                     } 
-                    // energia suficiente -> executa a carta
+                    // energia suficiente -> notifica os efeitos no heroi -> executa a carta
                     mao.removeCarta(escolha, pilhaDescarte);
 
-                    cartaEscolhida.usar(heroi, inimigos.get(selecionarAlvo())); // por enquanto só tem um inimigo
+                    /*  fiz nao vai servir agora mas talvez seja util em algum momento
+                    for (Efeito efeito : listaEfeitos)
+                        if (efeito.getAlvo() == heroi) efeito.onHit(cartaEscolhida); */
+                    
+                    // se for carta ataque ele pede pra escolher um inimigo, falta generalizar tambem.
+                    if (cartaEscolhida instanceof CartaAtaque)
+                        cartaEscolhida.usar(heroi, inimigos.get(selecionarAlvo()), this); 
+                    else
+                         cartaEscolhida.usar(heroi, inimigos.getFirst() , this);
+                    
+                    inimigos.removeIf(inimigo -> inimigo.estaVivo() == false);
+
                     if (mao.getSize() == 0) mao.addCinco(pilhaCompra, pilhaDescarte); // se a mão esvaziar compra 5
 
                 } else if (escolha == mao.getSize()) break;
@@ -100,8 +124,8 @@ public class Batalha {
     public void turnoInimigos(){
         for (Inimigo inimigo : arrayInimigos) {
             int acao = inimigo.getNextAcao();
-            if (acao == 1) inimigo.atacar(heroi);
-            //else aplicar efeito
+            if (acao == 0) inimigo.atacar(heroi);
+            else inimigo.atacarEfeito(heroi, this);
 
             inimigo.escolheAcao(); // escolhe prox ação
         }

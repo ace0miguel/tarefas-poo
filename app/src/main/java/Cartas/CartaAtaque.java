@@ -1,5 +1,7 @@
 package Cartas;
-import Entidades.*;
+import Entidades.Heroi;
+import Entidades.Inimigo;
+import Telas.Batalha;
 
 /* 
 Cartas que causam dano direto e podem aplicar efeitos secundários.
@@ -14,7 +16,7 @@ public class CartaAtaque extends Carta
     }
 
     @Override
-    public void usar(Heroi heroi, Inimigo alvo){
+    public void usar(Heroi heroi, Inimigo alvo, Batalha batalha){
         int energiaAtual = heroi.getEnergia();
         if(energiaAtual >= this.getCusto()){
             alvo.receberDano(this.dano);

@@ -1,7 +1,8 @@
 package Cartas;
 
-import Entidades.*;
-
+import Entidades.Heroi;
+import Entidades.Inimigo;
+import Telas.Batalha;
 // as classes filhas representam os diferentes tipos de carta, baseados nos tipos do jogo slay the spire.
 public abstract class Carta {
 
@@ -27,14 +28,10 @@ public abstract class Carta {
     }
     
     public boolean podeGastar(Heroi heroi){
-        int energiaAtual = heroi.getEnergia();
-        if(energiaAtual < this.custo){
-            return false;
-        }
-        else return true;
+        return (heroi.getEnergia() > this.custo);
     }
 
-    public abstract void usar(Heroi heroi, Inimigo inimigo);
+    public abstract void usar(Heroi heroi, Inimigo inimigo, Batalha batalha);
 
     public abstract String descricao();
 }

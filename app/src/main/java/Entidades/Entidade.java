@@ -10,7 +10,7 @@ public abstract class Entidade {
     private int vidaMax;
     private int escudo = 0;
     private int danoExtra = 0;
-    private ArrayList<Efeito> efeitosAplicados;
+    private ArrayList<Efeito> efeitosAplicados; // nao ta mais sendo usado depois tirar
 
     public Entidade(String nome, int vida){
         this.vida = vida;
@@ -65,50 +65,18 @@ public abstract class Entidade {
     }
 
     public void passaTurno(){
-        for(int i = efeitosAplicados.size() - 1; i >= 0; i--){
-            Efeito efeito = efeitosAplicados.get(i);
-            efeito.passaTurno();
-            if (efeito.getDur() > 0){
-
-                efeito.aplicar(this);
-                System.out.println();
-                System.out.println(efeito.getDesc());
-                System.out.println();
-                System.out.println("Efeito aplicado por mais "+ efeito.getDur()+ " turnos");
-                System.out.println();
-
-            } else removeEfeito(efeito);
-
-            resetarBonus();
-            
-        }
-        
+        resetarBonus();
     }
 
-    public ArrayList<Efeito> getEfeitosAplicados() {
-        return efeitosAplicados;
-    }
-    
-    public void addEfeito(Efeito e){
-        this.efeitosAplicados.add(e);
-    }
-
-    public void removeEfeito(Efeito e){
-        this.efeitosAplicados.remove(e);
-    }
-
-    public boolean temEfeito(){
-        if (efeitosAplicados.size() == 0) return false; 
-        else return true;
-    }
-
-    public String descEfeito(Efeito e){
-        return e.getDesc();
-    }
 
     public void aumentaDano(int valor){
         danoExtra = valor;
     }
+
+    public int getDanoExtra() {
+        return danoExtra;
+    }
+
 
     public abstract String status();
 

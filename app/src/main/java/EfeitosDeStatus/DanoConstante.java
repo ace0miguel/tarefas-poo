@@ -1,5 +1,5 @@
 package EfeitosDeStatus;
-import Entidades.Entidade;
+import Cartas.Carta;
 
 /* efeitos de dano constante, dano depende do efeito especifico */
 public class DanoConstante extends Efeito {
@@ -9,7 +9,24 @@ public class DanoConstante extends Efeito {
         this.dano = dano;
     }
 
-    public void aplicar(Entidade alvo){
-        alvo.receberDano(dano);
+    public DanoConstante(DanoConstante copiado){
+        super(copiado);
+        this.dano = copiado.dano;
     }
+
+    @Override
+    public void aplicar(){
+        this.getAlvo().receberDano(dano);
+    }
+
+    @Override
+    public void onHit(Carta carta) {
+    }
+
+    @Override
+    public Efeito criaCopia() {
+        return new DanoConstante(this);
+    }
+
+    
 }

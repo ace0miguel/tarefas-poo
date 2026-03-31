@@ -1,5 +1,7 @@
 package Cartas;
-import Entidades.*;
+import Entidades.Heroi;
+import Entidades.Inimigo;
+import Telas.Batalha;
 
 /*
 Aplica melhoria permanente para todo o encontro de combate.
@@ -17,7 +19,7 @@ public class CartaPoder extends Carta
     }
 
     @Override
-    public void usar (Heroi heroi, Inimigo inimigo){
+    public void usar (Heroi heroi, Inimigo inimigo, Batalha batalha){
         int energiaAtual = heroi.getEnergia();
 
         if(energiaAtual >= this.getCusto()){

@@ -1,5 +1,7 @@
 package Cartas;
-import Entidades.*;
+import Entidades.Heroi;
+import Entidades.Inimigo;
+import Telas.Batalha;
 
 /*
 Cartas que aplicam efeitos; não causam dano direto.
@@ -14,7 +16,7 @@ public class CartaHabilidade extends Carta // no momento ela só da escudo, falt
     }
 
     @Override
-    public void usar (Heroi heroi, Inimigo inimigo){
+    public void usar (Heroi heroi, Inimigo inimigo, Batalha batalha){
         int energiaAtual = heroi.getEnergia();
 
         if(energiaAtual >= this.getCusto()){

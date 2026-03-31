@@ -1,6 +1,6 @@
 package EfeitosDeStatus;
 
-import java.util.*;
+import Cartas.Carta;
 import Entidades.Entidade;
 
 public abstract class Efeito {
@@ -21,8 +21,11 @@ public abstract class Efeito {
         this.dur = copiado.getDur();
     }
 
-    // importante: lembrar de chamar passa turno sempre no final do aplicar
-    public abstract void aplicar(Entidade alvo);
+    public abstract void aplicar();
+
+    public abstract void onHit(Carta carta);
+
+    public abstract Efeito criaCopia();
     
     // getters ------------
     public String getNome() {

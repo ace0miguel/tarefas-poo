@@ -3,6 +3,7 @@ package Cartas;
 import EfeitosDeStatus.Efeito;
 import Entidades.Heroi;
 import Entidades.Inimigo;
+import Telas.Batalha;
 
 public class CartaAtaqueComEfeito extends CartaAtaque {
     private Efeito efeito;
@@ -13,17 +14,16 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
     }
 
     @Override
-    public void usar(Heroi heroi, Inimigo alvo){
+    public void usar(Heroi heroi, Inimigo alvo, Batalha batalha){
         int energiaAtual = heroi.getEnergia();
         if(energiaAtual >= this.getCusto()){
             alvo.receberDano(this.getDano());
             heroi.usarEnergia(this.getCusto());
 
-            if (this.efeito.getSelfApply() == true){ 
-            heroi.addEfeito(this.efeito);
-            } 
-            else alvo.addEfeito(this.efeito);
-            
+            Efeito e = efeito.criaCopia();
+            e.setAlvo(alvo);
+            batalha.adicionarEfeito(e);
+    
         }
     }
 

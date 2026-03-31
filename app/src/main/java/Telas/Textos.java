@@ -1,5 +1,6 @@
 package Telas;
-import Entidades.*;
+import Entidades.Heroi;
+import Entidades.Inimigo;
 
 public class Textos {
     static String titulo = """
@@ -42,7 +43,10 @@ public class Textos {
         System.out.println(heroi.status());
         System.out.println("vs");
         for(int i = 0; i < inimigos.length; i++){
-            System.out.println(inimigos[i].status());
+            if (inimigos[i].estaVivo()){
+                System.out.println();
+                System.out.println(inimigos[i].status());
+            }
         }
         System.out.println();
         System.out.println("=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=");

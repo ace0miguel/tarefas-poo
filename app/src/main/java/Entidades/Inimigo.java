@@ -1,9 +1,9 @@
 package Entidades;
 
+import EfeitosDeStatus.DanoConstante;
 import EfeitosDeStatus.Efeito;
 import Handlers.RNGHandler;
-//import EfeitosDeStatus.Efeito;
-//import Cartas.CartaAtaqueComEfeito;
+import Telas.Batalha;
 
 
 public class Inimigo extends Entidade{
@@ -11,6 +11,7 @@ public class Inimigo extends Entidade{
     private int dano;
     private int nextAcao;
     boolean usaEscudo;
+    Efeito sangramento = new DanoConstante("Sangramento", "Causa 1 de dano por rodada ao alvo", 3, 1);
     //private ArrayList<Efeito> sangramentoAcumulado;
 
     public Inimigo(String nome, int vida, int dano){
@@ -20,10 +21,16 @@ public class Inimigo extends Entidade{
 
     }
 
-//fazer add do efeito(add sangramento) e o sangrar (receber dANO e verificar duracao)
 
     public void atacar(Heroi alvo){
-        alvo.receberDano(this.dano);
+        alvo.receberDano(this.dano + this.getDanoExtra());
+    }
+
+    public void atacarEfeito(Heroi alvo, Batalha batalha){ // falta generalizar, no momento ele só aplica sangramento
+        alvo.receberDano(this.dano - 2 + this.getDanoExtra());
+        Efeito e = sangramento.criaCopia();
+        e.setAlvo(alvo);
+        batalha.adicionarEfeito(e);
     }
 
     /*public void addSangramento(){
@@ -34,7 +41,7 @@ public class Inimigo extends Entidade{
 
     }*/
 
-    public void escolheAcao(){ // no momento simplificado para 0 = ataque 1 = buff
+    public void escolheAcao(){ // no momento simplificado para 0 = ataque 1 = ataque com efeito(menos dano mas aplica um status)
         nextAcao = RNGHandler.getGen().nextInt(2);
     }
     
@@ -46,35 +53,35 @@ public class Inimigo extends Entidade{
     }
 
     public void anunciarAtaque(){
-        System.out.print("o Inimigo ");
+        System.out.print(" "+this.getNome()+" ");
         System.out.println((nextAcao == 0) 
         ? "irá te atacar causando "+this.dano+" pontos de dano" 
-        : "irá se fortalacer, recebendo dano extra"); 
+        : "irá te atacar causando 1 ponto de dano e te deixar sangrando"); 
     }
 
     public int getNextAcao() {
         return nextAcao;
     }
 
-    @Override
-    public void passaTurno(){
-        for(int i = getEfeitosAplicados().size() - 1; i >= 0; i--){
-            Efeito efeito = getEfeitosAplicados().get(i);
-            if (efeito.getDur() > 0){
-                efeito.aplicar(this);
-                System.out.println();
-                System.out.println(efeito.getDesc());
-                System.out.println();
-                System.out.println("Efeito aplicado por mais "+ efeito.getDur()+ " turnos");
-                System.out.println();
-            } else removeEfeito(efeito);
-        }
-        this.resetarEscudo();
-        if (usaEscudo == true) {
-            this.ganharEscudo(3);
-            usaEscudo = false;
-        }
-    }
+    // @Override
+    // public void passaTurno(){
+    //     for(int i = getEfeitosAplicados().size() - 1; i >= 0; i--){
+    //         Efeito efeito = getEfeitosAplicados().get(i);
+    //         if (efeito.getDur() > 0){
+    //             efeito.aplicar(this);
+    //             System.out.println();
+    //             System.out.println(efeito.getDesc());
+    //             System.out.println();
+    //             System.out.println("Efeito aplicado por mais "+ efeito.getDur()+ " turnos");
+    //             System.out.println();
+    //         } else removeEfeito(efeito);
+    //     }
+    //     this.resetarEscudo();
+    //     if (usaEscudo == true) {
+    //         this.ganharEscudo(3);
+    //         usaEscudo = false;
+    //     }
+    // }
 
     public void setUsaEscudo(boolean usaEscudo) {
         this.usaEscudo = usaEscudo;
