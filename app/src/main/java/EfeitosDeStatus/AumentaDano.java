@@ -1,7 +1,7 @@
 package EfeitosDeStatus;
 import Cartas.Carta;
 
-// amplia algum dos status do alvo em algum valor
+// altera o dano causado por ataques do alvo pelo valor passado (positivo aumenta, negativo reduz)
 public class AumentaDano extends Efeito {
     private int valor;
     public AumentaDano(String nome, String desc, int dur, int valor){
@@ -16,7 +16,7 @@ public class AumentaDano extends Efeito {
 
     @Override
     public void aplicar(){
-        this.getAlvo().aumentaDano(valor);
+        this.getAlvo().setDanoExtra(valor);
     }
 
     @Override

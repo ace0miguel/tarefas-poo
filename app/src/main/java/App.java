@@ -1,15 +1,11 @@
-import Cartas.CartaAtaque;
-import Cartas.CartaAtaqueComEfeito;
-import Cartas.CartaHabilidade;
-import Cartas.GerenciadorCartas;
+import Cartas.*;
 import Deck.PilhaCompra;
-import EfeitosDeStatus.AumentaDano;
-import EfeitosDeStatus.DanoConstante;
-import EfeitosDeStatus.Efeito;
-import Entidades.Heroi;
-import Entidades.Inimigo;
+import EfeitosDeStatus.*;
+import Entidades.*;
 import Telas.Batalha;
-import Telas.Textos;
+import Util.Art;
+import Util.JSON.GerenciadorCartas;
+
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -38,7 +34,7 @@ public class App {
             pilhaCompra.addCarta( new CartaAtaqueComEfeito("DESPREZO - causa muito dano porém irrita seu adversario (1 de dano extra por 3 rodadas)", 3, 10, odioPuro));
         }
 
-        Textos.principal();
+        Art.printTitulo();
         Thread.sleep(1500);
 
         Batalha batalha = new Batalha();

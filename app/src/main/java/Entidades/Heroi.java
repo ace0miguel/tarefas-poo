@@ -11,13 +11,8 @@ public class Heroi extends Entidade {
         this.energia = energiaMax;
     }
 
-
     public int getEnergia(){
         return this.energia;
-    }
-
-    public String statusEnergia(){
-        return "Energia ("+this.energia+"/"+this.energiaMax+")";
     }
 
     public void usarEnergia(int custo){
@@ -28,6 +23,9 @@ public class Heroi extends Entidade {
         this.energia = energiaMax;
     }
 
+    public String statusEnergia(){
+        return "Energia ("+this.energia+"/"+this.energiaMax+")";
+    }
 
     @Override
     public String status(){

@@ -1,23 +1,19 @@
 package Entidades;
 
-import java.util.ArrayList;
-
-import EfeitosDeStatus.Efeito;
-
 public abstract class Entidade {
     private String nome;
     private int vida;
     private int vidaMax;
     private int escudo = 0;
     private int danoExtra = 0;
-    private ArrayList<Efeito> efeitosAplicados; // nao ta mais sendo usado depois tirar
 
     public Entidade(String nome, int vida){
         this.vida = vida;
         this.nome = nome;
         this.vidaMax = vida;
-        this.efeitosAplicados = new ArrayList<>();
     }
+
+    //getters ------
 
     public String getNome(){
         return this.nome;
@@ -34,6 +30,11 @@ public abstract class Entidade {
     public int getEscudo(){
         return this.escudo;
     }
+
+    public int getDanoExtra() {
+        return danoExtra;
+    }
+
     
     public void receberDano(int dano){
         if (this.escudo >= dano){
@@ -68,15 +69,9 @@ public abstract class Entidade {
         resetarBonus();
     }
 
-
-    public void aumentaDano(int valor){
+    public void setDanoExtra(int valor){
         danoExtra = valor;
     }
-
-    public int getDanoExtra() {
-        return danoExtra;
-    }
-
 
     public abstract String status();
 

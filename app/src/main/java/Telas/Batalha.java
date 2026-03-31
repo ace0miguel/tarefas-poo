@@ -2,7 +2,8 @@ package Telas;
 import Deck.*;
 import Entidades.*;
 import EfeitosDeStatus.*;
-import Handlers.InputHandler;
+import Util.InputHandler;
+import Util.Textos;
 
 import java.util.*;
 //import EfeitosDeStatus.Efeito;
