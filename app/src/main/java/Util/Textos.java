@@ -1,8 +1,10 @@
 package Util;
+import java.util.List;
+
+import EfeitosDeStatus.Efeito;
 import Entidades.Heroi;
 import Entidades.Inimigo;
-import EfeitosDeStatus.Efeito;
-import java.util.*;
+import Poderes.Poder;
 
 public class Textos {
 
@@ -10,6 +12,8 @@ public class Textos {
         try  {
             new ProcessBuilder("clear").inheritIO().start().waitFor();
         } catch (Exception e){}
+
+        for(int i = 0; i < 100; i++) System.out.println();
     }
 
     public static void sleep(int time){ // tempo em ms
@@ -20,9 +24,8 @@ public class Textos {
         }
     }
 
-    public static void batalha(Heroi heroi, List<Efeito> listaEfeitos, Inimigo... inimigos){
-        System.out.println();
-        System.out.println();
+    public static void batalha(Heroi heroi, List<Efeito> listaEfeitos, List<Poder> listaPoderes,  Inimigo... inimigos){
+        limpaTela();
 
         System.out.println("=-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-=");
         System.out.println();
@@ -30,6 +33,11 @@ public class Textos {
         for (Efeito efeito : listaEfeitos) {
             if (efeito.getAlvo() == heroi)
                 System.out.print(" >" + efeito.status());
+        }
+        if (listaPoderes.size() > 0)
+            System.out.print(" |");
+        for (Poder poder : listaPoderes) {
+            System.out.print(" > " + poder.getNome() + " ["+poder.getStacks()+"]");
         }
         System.out.println("\n");
 

@@ -1,5 +1,7 @@
 package Deck;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Stack;
 
 import Cartas.Carta;
 import Util.Textos;
@@ -29,6 +31,8 @@ public class PilhaCompra {
     }
 
     public void shuffleAll(PilhaDescarte pilhaDescarte){ // reembaralha todas as cartas (mao, compra e descarte)
+        System.out.println("Embaralhando!");
+        Textos.sleep(300);
         cartas.addAll(pilhaDescarte.getPilha());
         Collections.shuffle(cartas);
         pilhaCartas.clear();
@@ -37,16 +41,15 @@ public class PilhaCompra {
     }
 
     public void deckReset(PilhaDescarte pilhaDescarte){ // embaralha todas as cartas da pilha de descarte e adiciona a pilha de compra
+        System.out.println("Embaralhando!");
+        Textos.sleep(300);
         ArrayList<Carta> temp = pilhaDescarte.reset();
         this.pilhaCartas.addAll(temp);  
     }
 
     public Carta puxaCarta(PilhaDescarte pd){ //falta adicionar checagem se está vazio
-        if (pilhaCartas.size() <= 0){
+        if (pilhaCartas.size() <= 0)
             deckReset(pd);
-            System.out.println("Embaralhando deck");
-            Textos.sleep(200);
-        }
         return pilhaCartas.pop();
     }
 

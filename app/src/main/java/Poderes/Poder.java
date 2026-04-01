@@ -1,14 +1,15 @@
 package Poderes;
 
 import Cartas.Carta;
-import Entidades.*;
+import Entidades.Entidade;
+import Entidades.Heroi;
 import Telas.Batalha;
 
 public abstract class Poder {
 
     private String nome;
     private String desc;
-    private int stacks;
+    private int stacks = 1;
 
     public Poder(String nome, String desc) {
         this.nome = nome;

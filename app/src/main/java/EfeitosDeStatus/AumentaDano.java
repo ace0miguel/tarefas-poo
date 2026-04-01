@@ -30,7 +30,7 @@ public class AumentaDano extends Efeito {
 
     @Override
     public String status() {
-        return " [" + this.getNome() + " " + this.valor + " dano extra" + " - (" + this.getDur() + " Rodadas)]"; 
+        return " [" + this.getNome() + " - " + this.valor + " dano extra" + " - (" + this.getDur() + " Rodadas)]"; 
         
     }
     

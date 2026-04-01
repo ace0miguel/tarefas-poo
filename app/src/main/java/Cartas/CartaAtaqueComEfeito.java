@@ -1,7 +1,8 @@
 package Cartas;
 
 import EfeitosDeStatus.Efeito;
-import Entidades.*;
+import Entidades.Entidade;
+import Entidades.Heroi;
 import Telas.Batalha;
 
 public class CartaAtaqueComEfeito extends CartaAtaque {
@@ -12,9 +13,10 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
         this.efeito = efeito;
     }
 
-    public CartaAtaqueComEfeito(String nome, int custo, int tipo, int dano, Efeito efeito){
-        super(nome, custo, tipo, dano);
+    public CartaAtaqueComEfeito(String nome, int custo, int dano, Efeito efeito, int tipo){
+        super(nome, custo, dano);
         this.efeito = efeito;
+        this.tipo = tipo;
     }
 
     @Override
@@ -30,5 +32,15 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
     
         }
     }
+
+    @Override
+    public void aplicarEfeito(Heroi heroi, Entidade alvo, Batalha batalha) {
+        alvo.receberDano(this.getDano());
+        Efeito e = efeito.criaCopia();
+        e.setAlvo(alvo);
+        batalha.adicionarEfeito(e);
+    }
+
+    
 
 }

@@ -11,6 +11,7 @@ import java.util.*;
 //import EfeitosDeStatus.Efeito;
 
 import Cartas.Carta;
+import Cartas.CartaPoder;
 
 public class Batalha {
 
@@ -25,12 +26,12 @@ public class Batalha {
     private List<Poder> listaPoderes = new ArrayList<>();
     // -------------
 
-    private int turno;
+    private int turno; // 0 -> heroi, 1 -> inimigos
     private Heroi heroi;
     private Mao mao;
     private PilhaCompra pilhaCompra;
-    private Inimigo[] arrayInimigos; // inimigos em forma de array pq infelizmente as vezes precisa
-    private List<Inimigo> inimigos; // inimigos em forma de lista pq é bom
+    private Inimigo[] arrayInimigos; // inimigos em forma de array pq infelizmente as vezes precisa :(
+    private List<Inimigo> inimigos; // inimigos em forma de lista pq é bom !
     private PilhaDescarte pilhaDescarte = new PilhaDescarte();
     Scanner ler = InputHandler.getLeitor();
 
@@ -107,7 +108,7 @@ public class Batalha {
 
             while(true){ // loop da escolha de ação
                 Textos.limpaTela();
-                Textos.batalha(heroi, listaEfeitos, arrayInimigos);
+                Textos.batalha(heroi, listaEfeitos, listaPoderes, arrayInimigos);
 
                 for (Inimigo inimigo : inimigos) {
                     inimigo.escolheAcao();
@@ -135,18 +136,18 @@ public class Batalha {
                     /*  fiz nao vai servir agora mas talvez seja util em algum momento
                     for (Efeito efeito : listaEfeitos)
                         if (efeito.getAlvo() == heroi) efeito.onHit(cartaEscolhida); */
-                    
-                    // se não for selfcast pergunta o alvo
-                    if (cartaEscolhida.getSelfCast())
+
+                    Entidade alvoSelecionado = heroi; // se nao mudar é pq é o heroi msm
+                    // se não for selfcast ou poder pergunta o alvo
+                    if (cartaEscolhida.getSelfCast() || cartaEscolhida instanceof CartaPoder)
                         cartaEscolhida.usar(heroi, heroi, this);
                     else{
                         int alvo = selecionarAlvo();
-                        Inimigo alvoSelecionado = inimigos.get(alvo);
+                        alvoSelecionado = inimigos.get(alvo);
                         cartaEscolhida.usar(heroi, alvoSelecionado, this); 
-
+                    }
                         for (Poder poder : listaPoderes) // notifica os poderes
                             poder.onHit(cartaEscolhida, heroi, alvoSelecionado, this); 
-                    }
 
                     // lida com efeitos de uso instantaneo, como escudo.
                     for (Efeito efeito : listaEfeitos) {
@@ -170,11 +171,13 @@ public class Batalha {
     public void turnoInimigos(){
         for (Inimigo inimigo : arrayInimigos) {
             int acao = inimigo.getNextAcao();
-            if (acao == 0) inimigo.atacar(heroi);
-            else if (acao == 1) inimigo.atacarEfeito(heroi, this, sangramento);
-            else if (acao == 2){ 
-                inimigo.receberDano(3);
-                inimigo.receberEfeito(this, pactoSinistro);
+            switch (acao){
+                case 0 -> inimigo.atacar(heroi);
+                case 1 -> inimigo.atacarEfeito(heroi, this, sangramento);
+                case 2 -> {
+                    inimigo.receberDano(3);
+                    inimigo.receberEfeito(this, pactoSinistro);
+                }
             }
             inimigo.escolheAcao(); // escolhe prox ação
         }
