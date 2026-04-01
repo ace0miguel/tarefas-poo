@@ -11,14 +11,14 @@ public class CartaHabilidade extends Carta // aplica um efeito em um alvo
 {
     private Efeito efeito;
 
-    public CartaHabilidade(String nome, int custo, Efeito efeito, boolean _selfCast){
-        super(nome, custo);
+    public CartaHabilidade(String nome, String descricao, int custo, Efeito efeito, boolean _selfCast){
+        super(nome, descricao, custo);
         this.efeito = efeito;
         this.setSelfCast(_selfCast);
     }
 
-    public CartaHabilidade(String nome, int custo, Efeito efeito, boolean _selfCast, int tipo){
-        super(nome, custo);
+    public CartaHabilidade(String nome, String descricao, int custo, Efeito efeito, boolean _selfCast, int tipo){
+        super(nome, descricao, custo);
         this.efeito = efeito;
         this.setSelfCast(_selfCast);
         this.tipo = tipo;
@@ -44,6 +44,6 @@ public class CartaHabilidade extends Carta // aplica um efeito em um alvo
     
 
     public String descricao(){
-        return "Usar "+this.getNome()+" ("+this.efeito.getNome()+") [custo: " + this.getCusto() + "]";
+        return "Usar "+this.getNome()+" - "+this.getDescricao()+" ("+this.efeito.getNome()+") [custo: " + this.getCusto() + "]";
     }
 }

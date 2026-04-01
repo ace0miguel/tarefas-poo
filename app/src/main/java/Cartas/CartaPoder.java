@@ -11,8 +11,8 @@ public class CartaPoder extends Carta
 {
     private Poder poder;
 
-    public CartaPoder(String nome, int custo, Poder poder){
-        super(nome, custo);
+    public CartaPoder(String nome, String descricao, int custo, Poder poder){
+        super(nome, descricao, custo);
         this.poder = poder;
     }
 
@@ -36,7 +36,7 @@ public class CartaPoder extends Carta
     
 
     public String descricao(){
-        return "Usar "+this.getNome()+" [custo: " + this.getCusto() + "]";
+        return "Usar "+this.getNome()+" - "+this.getDescricao()+" [custo: " + this.getCusto() + "]";
     }
 }
 

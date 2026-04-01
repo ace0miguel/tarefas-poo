@@ -1,5 +1,6 @@
 package EfeitosDeStatus;
 import Cartas.Carta;
+import Util.Cor;
 
 /* efeitos de dano constante, dano depende do efeito especifico */
 public class DanoConstante extends Efeito {
@@ -30,7 +31,7 @@ public class DanoConstante extends Efeito {
 
     @Override
     public String status() {
-        return " [" + this.getNome() + " - " + this.dano + " pontos de dano" + " - (" + this.getDur() + " Rodadas)]"; 
+        return Cor.vermelho + " [" + this.getNome() + " - " + this.dano + " pontos de dano" + " - (" + this.getDur() + " Rodadas)]" + Cor.reset; 
         
     }
     

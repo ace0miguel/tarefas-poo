@@ -1,4 +1,6 @@
 package Entidades;
+import Util.Cor;
+import Util.Textos;
 
 public class Heroi extends Entidade {
     private int energia;
@@ -24,18 +26,29 @@ public class Heroi extends Entidade {
     }
 
     public String statusEnergia(){
-        return "Energia ("+this.energia+"/"+this.energiaMax+")";
+        if (this.energia > 3)
+            Cor.setVerde();
+        else if (this.energia > 1)
+            Cor.setAmarelo();
+        else 
+            Cor.setVermelho();
+
+        return "Energia ("+this.energia+"/"+this.energiaMax+")" + Cor.reset;
     }
 
+    @Override
     public void passaRodada(){
         resetarBonus();
         resetarEnergia();
+        setEnvenenado(false);
     }
 
     @Override
     public String status(){
+        coresVida();
+
         return (getEscudo() != 0) 
-        ? ""+this.getNome()+"("+getVida()+"/"+this.getVidaMax()+" de vida) ("+this.getEscudo()+" de escudo)" 
-        : ""+this.getNome()+" ("+this.getVida()+"/"+this.getVidaMax()+" de vida)";
+        ? ""+this.getNome()+ Cor.reset + " " +Textos.desenharBarraVida(this.getVida(), this.getVidaMax())+" "+Cor.azul+" ("+this.getEscudo()+" de escudo)" + Cor.reset 
+        : ""+this.getNome()+ Cor.reset + " " +Textos.desenharBarraVida(this.getVida(), this.getVidaMax())+"" + Cor.reset;
     }
 }

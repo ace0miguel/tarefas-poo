@@ -27,18 +27,20 @@ public class Textos {
     public static void batalha(Heroi heroi, List<Efeito> listaEfeitos, List<Poder> listaPoderes,  Inimigo... inimigos){
         limpaTela();
 
-        System.out.println("=-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-=");
+        Cor.printaAmarelo("=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=");
         System.out.println();
         System.out.print(heroi.status());
+        for (Poder poder : listaPoderes) {
+            System.out.print(" > [" + poder.getNome() +" ("+poder.getStacks()+")]");
+        }
+
+        if (listaPoderes.size() > 0) Cor.printaAmarelo(" |");
+
         for (Efeito efeito : listaEfeitos) {
             if (efeito.getAlvo() == heroi)
                 System.out.print(" >" + efeito.status());
         }
-        if (listaPoderes.size() > 0)
-            System.out.print(" ||");
-        for (Poder poder : listaPoderes) {
-            System.out.print(" > [" + poder.getNome() + " ("+poder.getStacks()+")]");
-        }
+
         System.out.println("\n");
 
         System.out.println("VS");
@@ -55,7 +57,42 @@ public class Textos {
             }
         }
         System.out.println();
-        System.out.println("=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=");
+        Cor.printaAmarelo("=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=");
         System.out.println();
+        System.out.println();
+    }
+
+    public static String desenharBarraVida(int vidaAtual, int vidaMax) {
+        
+        int tamanhoMax = 12; 
+        
+        double porcentagem = (double) vidaAtual / vidaMax;
+        
+        int blocosCheios = (int) Math.round(porcentagem * tamanhoMax);
+        int blocosVazios = tamanhoMax - blocosCheios;
+
+        StringBuilder barra = new StringBuilder();
+        
+        // parte cheia
+        for (int i = 0; i < blocosCheios; i++) {
+            barra.append("⣿"); 
+        }
+
+        // parte vazia
+        for (int i = 0; i < blocosVazios; i++) {
+            barra.append("⠀");
+        }
+
+        String barraFinal = barra.toString();
+        
+        if (porcentagem > 0.6) {
+            barraFinal = Cor.verde + barraFinal + Cor.reset;
+        } else if (porcentagem > 0.3) {
+            barraFinal = Cor.amarelo + barraFinal + Cor.reset;
+        } else {
+            barraFinal = Cor.vermelho + barraFinal + Cor.reset;
+        }
+
+        return "[ " + barraFinal + " " + vidaAtual + "/" + vidaMax + " ]";
     }
 }

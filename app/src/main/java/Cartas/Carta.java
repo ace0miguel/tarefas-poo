@@ -3,6 +3,7 @@ package Cartas;
 import Entidades.Entidade;
 import Entidades.Heroi;
 import Telas.Batalha;
+import Util.Cor;
 import Util.Textos;
 // as classes filhas representam os diferentes tipos de carta, baseados nos tipos do jogo slay the spire.
 public abstract class Carta {
@@ -21,19 +22,28 @@ public abstract class Carta {
     ----------------------------------------------------- */
     protected int tipo = 0; 
 
-    public Carta(String nome, int custo){
+    public Carta(String nome, String descricao, int custo){
         this.nome = nome;
+        this.descricao = descricao;
         this.custo = custo;
     }
 
-    public Carta(String nome, int custo, int tipo){
+    public Carta(String nome, String descricao, int custo, int tipo){
         this.nome = nome;
+        this.descricao = descricao;
         this.custo = custo;
         this.tipo = tipo;
     }
 
     public String getNome(){
-        return this.nome;
+        if (this instanceof CartaAtaque)
+            Cor.setVermelho();
+        else if (this instanceof CartaHabilidade)
+            Cor.setAzul();
+        else if (this instanceof CartaPoder)
+            Cor.setAmarelo();
+    
+        return this.nome + Cor.reset;
     }
 
     // Getters --------------------------------------

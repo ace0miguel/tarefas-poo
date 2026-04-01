@@ -11,13 +11,13 @@ public class CartaAtaque extends Carta
     private int dano;
 
     
-    public CartaAtaque(String nome, int custo, int dano){
-        super(nome, custo);
+    public CartaAtaque(String nome, String descricao, int custo, int dano){
+        super(nome, descricao, custo);
         this.dano = dano;
     }
     
-    public CartaAtaque(String nome, int custo, int dano, int tipo){
-        super(nome, custo);
+    public CartaAtaque(String nome, String descricao, int custo, int dano, int tipo){
+        super(nome, descricao, custo);
         this.dano = dano;
         this.tipo = tipo;
     }
@@ -46,6 +46,6 @@ public class CartaAtaque extends Carta
     }
 
     public String descricao(){
-        return "Usar "+this.getNome()+" ("+this.getDano()+" pontos de dano) [custo: " + this.getCusto() + "]";
+        return "Usar "+this.getNome()+" - "+this.getDescricao()+" ("+this.getDano()+" pontos de dano) [custo: " + this.getCusto() + "]";
     }
 }

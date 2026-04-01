@@ -8,13 +8,13 @@ import Telas.Batalha;
 public class CartaAtaqueComEfeito extends CartaAtaque {
     private Efeito efeito;
 
-    public CartaAtaqueComEfeito(String nome, int custo, int dano, Efeito efeito){
-        super(nome, custo, dano);
+    public CartaAtaqueComEfeito(String nome, String descricao, int custo, int dano, Efeito efeito){
+        super(nome, descricao, custo, dano);
         this.efeito = efeito;
     }
 
-    public CartaAtaqueComEfeito(String nome, int custo, int dano, Efeito efeito, int tipo){
-        super(nome, custo, dano);
+    public CartaAtaqueComEfeito(String nome, String descricao, int custo, int dano, Efeito efeito, int tipo){
+        super(nome, descricao, custo, dano);
         this.efeito = efeito;
         this.tipo = tipo;
     }
@@ -40,7 +40,4 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
         e.setAlvo(alvo);
         batalha.adicionarEfeito(e);
     }
-
-    
-
 }

@@ -3,7 +3,9 @@ package Entidades;
 import EfeitosDeStatus.DanoConstante;
 import EfeitosDeStatus.Efeito;
 import Telas.Batalha;
+import Util.Cor;
 import Util.RNGHandler;
+import Util.Textos;
 
 
 public class Inimigo extends Entidade{
@@ -11,8 +13,6 @@ public class Inimigo extends Entidade{
     private int dano;
     private int nextAcao;
     private int tier = 0; // 0 : randola, 1 : elite, 2 : boss
-
-    Efeito sangramento = new DanoConstante("Feridas", "Causa 1 de dano por rodada ao alvo", 3, 1);
 
     public Inimigo(String nome, int vida, int dano){
         super(nome, vida);
@@ -46,18 +46,25 @@ public class Inimigo extends Entidade{
     
     @Override
     public String status(){
+
+        coresVida();
+
         return (getEscudo() != 0) 
-        ?""+this.getNome()+"("+getVida() +"/"+this.getVidaMax()+" de vida) ("+this.getEscudo()+" de escudo)" 
-        : ""+this.getNome()+" ("+this.getVida()+"/"+this.getVidaMax()+" de vida)";
+        ?""+this.getNome()+ " " + Textos.desenharBarraVida(this.getVida(), this.getVidaMax())+" "+Cor.azul+" ("+this.getEscudo()+" de escudo)" + Cor.reset 
+        : ""+this.getNome()+ " " + Textos.desenharBarraVida(this.getVida(), this.getVidaMax()) + Cor.reset;
+
     }
 
     public void anunciarAtaque(){
+        Cor.setVermelho();
         System.out.print(this.getNome()+" ");
-        switch (nextAcao) {
-            case 0 -> System.out.println("irá te atacar causando "+(this.dano + this.getDanoExtra())+" pontos de dano" );
-            case 1 -> System.out.println("irá te atacar causando "+(this.dano / 2 + this.getDanoExtra())+" e te deixar feriodo");
-            case 2 -> System.out.println("está prestes a realizar um PACTO SINISTRO");
-        }
+        if (this.estaVivo())
+            switch (nextAcao) {
+                case 0 -> System.out.println("irá te atacar causando "+(this.dano + this.getDanoExtra())+" pontos de dano" );
+                case 1 -> System.out.println("irá te atacar causando "+(this.dano / 2 + this.getDanoExtra())+" e te deixar feriodo");
+                case 2 -> System.out.println("está prestes a realizar um PACTO SINISTRO");
+            }
+        Cor.txtReset();
     }
 
     public int getNextAcao() {

@@ -1,5 +1,7 @@
 package Entidades;
 
+import Util.Cor;
+
 public abstract class Entidade {
     private String nome;
     private int vida;
@@ -7,6 +9,7 @@ public abstract class Entidade {
     private int escudo = 0;
     private int danoExtra = 0;
     private boolean purificar = false;
+    private boolean envenenado = false;
 
     public Entidade(String nome, int vida){
         this.vida = vida;
@@ -40,13 +43,30 @@ public abstract class Entidade {
         return this.purificar;
     }
 
+    public boolean getEnvenenado(){
+        return this.envenenado;
+    }
+
     public void setPurificar(boolean purificar) {
         this.purificar = purificar;
     }
-
     
+    public void setEnvenenado(boolean envenenado) {
+        this.envenenado = envenenado;
+    }
 
-    
+    public void coresVida(){
+        if (this.getVida() > this.getVidaMax()/2)
+            Cor.txtReset();
+        else if (this.getVida() > this.getVidaMax()/5)
+            Cor.setAmarelo();
+        else 
+            Cor.setVermelho();
+
+        if (this.envenenado == true)
+            Cor.setVerde();
+    }
+
     public void receberDano(int dano){
         if (this.escudo >= dano){
             this.escudo -= dano;
@@ -58,6 +78,11 @@ public abstract class Entidade {
         }
     }
 
+    public void passaRodada(){
+        resetarBonus();
+        setEnvenenado(false);
+    }
+    
     public void ganharEscudo(int bonus){
         this.escudo += bonus;
     }
