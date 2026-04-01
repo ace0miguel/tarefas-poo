@@ -9,6 +9,7 @@ import EfeitosDeStatus.DanoConstante;
 import EfeitosDeStatus.Efeito;
 import EfeitosDeStatus.Escudo;
 import EfeitosDeStatus.Purificar;
+import EfeitosDeStatus.Sangramento;
 import EfeitosDeStatus.Veneno;
 import Entidades.Heroi;
 import Entidades.Inimigo;
@@ -16,12 +17,12 @@ import Poderes.MaosLeves;
 import Poderes.Poder;
 import Telas.Batalha;
 import Util.Arte;
-// import Util.JSON.GerenciadorCartas;
 import Util.Cor;
-
 
 public class App {
     public static void main(String[] args) throws Exception {
+
+
         // GerenciadorCartas gerenciadorCartas = new GerenciadorCartas();
         PilhaCompra pilhaCompra = new PilhaCompra();
 
@@ -38,13 +39,13 @@ public class App {
         Inimigo inimigo3 = new Inimigo("Figurante random 2", 8, 2);
 
         // efeitos ------------
-        Efeito sangramento = new DanoConstante("Sangramento", "Causa 1 de dano por rodada ao alvo", 3, 1);
-        Efeito veneno = new Veneno("Veneno", "Causa sua duraçao em dano por rodada ao alvo", 2, 2);
-        Efeito odioPuro = new AumentaDano("Odio Puro", "Aumenta o dano causado em 1 por 3 rodadas", 3, 1);
+        Efeito sangramento = new Sangramento("Sangramento", "Causa 1 de dano por rodada ao alvo", 3, 0);
+        Efeito veneno = new Veneno("Veneno", "Causa sua duraçao em dano por rodada ao alvo", 1, 0);
+        Efeito odioPuro = new AumentaDano( Cor.txtVermelho("Ódio Puro"), "Aumenta o dano causado em 1 por 3 rodadas", 3, 1);
         Efeito escudinho = new Escudo("3 pontos de escudo", "3 pontos de escudo", 0, 3);
         Efeito escudao = new Escudo("7 pontos de escudo", "7 pontos de escudo", 0, 7);
         Efeito purificarEfeito = new Purificar("Purificar", "Remove todos os efeitos aplicados em voce (incluindo bons!)", 0);
-        Efeito feridas = new DanoConstante("Feridas", "Causa 1 de dano por rodada ao alvo", 3, 1);
+        Efeito feridas = new DanoConstante("Feridas", "Causa 1 de dano por rodada ao alvo por 3 rodadas", 3, 1);
 
         // poderes -------------
         Poder dedoNervoso = new MaosLeves(("DEDO NERVOSO!"), "Sempre que usar um ataque de disparo, dispare novamente pelo tanto de acumulos desse poder.");
@@ -52,7 +53,7 @@ public class App {
         // cartas -----------
         Carta tiro = new CartaAtaque("Tiro", "dispara uma bala", 2, 3, 1); tiro.setResenha("POW");
         Carta espada = new CartaAtaqueComEfeito("Espada", "aplica sangramento (2 de dano por turno por 3 turnos)", 2, 1, sangramento, 2);
-        Carta corteVenenoso = new CartaAtaqueComEfeito("Corte venenoso", "aplica veneno (causa sua duraçao em dano por rodada ao alvo)", 2, 1, veneno, 2);
+        Carta corteVenenoso = new CartaAtaqueComEfeito("Corte venenoso", "aplica veneno (causa sua duraçao em dano por rodada ao alvo)", 1, 1, veneno, 2);
         Carta escudoMadeira = new CartaHabilidade("Postura de defesa", "da escudo", 1, escudinho, true);
         Carta escudoFerro = new CartaHabilidade("Aura de defesa", "da muito escudo", 2, escudao, true);
         Carta purificar = new CartaHabilidade("Receba!", "Remove todos os efeitos aplicados em voce (incluindo positivos)", 2, purificarEfeito, true);
@@ -61,7 +62,7 @@ public class App {
         
         // -------------------------
 
-        for (int i = 0; i < 2; i++){ // cartas comuns
+        for (int i = 0; i < 4; i++){ // cartas comuns
             pilhaCompra.addCarta( tiro );
             pilhaCompra.addCarta( espada );
             pilhaCompra.addCarta( corteVenenoso );
@@ -70,7 +71,7 @@ public class App {
             pilhaCompra.addCarta( purificar );
         }
 
-        for(int i=0; i < 1; i++){ // cartas meio raras sla
+        for(int i=0; i < 2; i++){ // cartas meio raras sla
             pilhaCompra.addCarta( desprezo );
             pilhaCompra.addCarta( dedoNervosoCarta );
         }

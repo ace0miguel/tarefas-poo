@@ -1,4 +1,5 @@
 package Util;
+import java.util.ArrayList;
 import java.util.List;
 
 import EfeitosDeStatus.Efeito;
@@ -24,42 +25,77 @@ public class Textos {
         }
     }
 
-    public static void batalha(Heroi heroi, List<Efeito> listaEfeitos, List<Poder> listaPoderes,  Inimigo... inimigos){
+    public static void batalha(Heroi heroi, ArrayList<Efeito> listaEfeitos, List<Poder> listaPoderes,  Inimigo... inimigos){
         limpaTela();
+        boolean aux1 = false;
+        boolean aux2 = false;
 
-        Cor.printaAmarelo("=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=");
-        System.out.println();
-        System.out.print(heroi.status());
-        for (Poder poder : listaPoderes) {
-            System.out.print(" > [" + poder.getNome() +" ("+poder.getStacks()+")]");
-        }
+        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-=-==-=-==-=-==-=-==-=-=-==-=-==-\n");
+        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-\n");
+        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-");
 
-        if (listaPoderes.size() > 0) Cor.printaAmarelo(" |");
-
-        for (Efeito efeito : listaEfeitos) {
-            if (efeito.getAlvo() == heroi)
-                System.out.print(" >" + efeito.status());
-        }
+        sleep(100);
 
         System.out.println("\n");
 
-        System.out.println("VS");
+        System.out.print(heroi.status());
+        for (Poder poder : listaPoderes) {
+            System.out.print(" > " + poder.getNome() +" ["+poder.getStacks()+"] " + Cor.txtPreto("|"));
+        }
 
-        for(int i = 0; i < inimigos.length; i++){
-            if (inimigos[i].estaVivo()){
-                System.out.println();
-                System.out.print(inimigos[i].status());
-                for (Efeito efeito : listaEfeitos) {
-                    if (efeito.getAlvo() == inimigos[i])
-                    System.out.print(" > " + efeito.status());
-                }
-                System.out.println();
+        System.out.println();
+
+        for (Efeito efeito : listaEfeitos) {
+            if (efeito.getAlvo() == heroi){
+                System.out.print("(" + efeito.status() + ") ");
+                aux1 = true;
             }
         }
+
         System.out.println();
-        Cor.printaAmarelo("=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=");
+
+        if (aux1) System.out.println();
+
+        Cor.printaCinza("VERSUS!\n");
+
+        System.out.println();
+
+        for (int i = 0; i < inimigos.length; i++){
+            if (inimigos[i].estaVivo()){
+                System.out.println(inimigos[i].status());
+                aux2 = false;
+
+                for (Efeito efeito : listaEfeitos) {
+                    if (efeito.getAlvo() == inimigos[i]){
+                        System.out.print("(" + efeito.status() + ") ");
+                        aux2 = true;
+                    }
+                }
+                if (aux2) System.out.println();
+                System.out.println();
+            }  
+        }
+
+        sleep(100);
+
+        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-\n");
+        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-\n");
+        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-=-==-=-==-=-==-=-==-=-=-==-=-==-");
         System.out.println();
         System.out.println();
+
+        sleep(400);
+
+        for (Inimigo inimigo : inimigos) {
+                inimigo.anunciarAtaque();
+                sleep(300);
+        }
+                
+        System.out.println();
+        System.out.println(heroi.statusEnergia()); 
+        System.out.println();
+
+        sleep(300);
     }
 
     public static String desenharBarraVida(int vidaAtual, int vidaMax) {
@@ -75,12 +111,12 @@ public class Textos {
         
         // parte cheia
         for (int i = 0; i < blocosCheios; i++) {
-            barra.append("⣿"); 
+            barra.append("█"); 
         }
 
         // parte vazia
         for (int i = 0; i < blocosVazios; i++) {
-            barra.append("⠀");
+            barra.append("░");
         }
 
         String barraFinal = barra.toString();
@@ -93,6 +129,6 @@ public class Textos {
             barraFinal = Cor.vermelho + barraFinal + Cor.reset;
         }
 
-        return "[ " + barraFinal + " " + vidaAtual + "/" + vidaMax + " ]";
+        return barraFinal + " " + vidaAtual + "/" + vidaMax;
     }
 }

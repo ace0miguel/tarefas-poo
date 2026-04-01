@@ -2,13 +2,17 @@ package EfeitosDeStatus;
 
 import Cartas.Carta;
 import Entidades.Entidade;
+import Entidades.Heroi;
+import Telas.Batalha;
 
 public abstract class Efeito {
     private String nome;
     private String desc;
     private int dur;
     private Entidade alvo;
+
     protected boolean insta = false;
+    protected boolean onHit = true;
 
     public Efeito(String nome, String desc, int dur) {
         this.nome = nome;
@@ -24,7 +28,7 @@ public abstract class Efeito {
 
     public abstract void aplicar();
 
-    public abstract void onHit(Carta carta);
+    public abstract void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha);
 
     public abstract Efeito criaCopia();
 
@@ -50,6 +54,10 @@ public abstract class Efeito {
     public boolean getInsta() {
         return this.insta;
     }
+    
+    public boolean getOnHit() {
+        return this.onHit;
+    }
 
     // setters ------------
 
@@ -72,7 +80,11 @@ public abstract class Efeito {
     public void setInsta(boolean insta) {
         this.insta = insta;
     }
-    
+
+    public void updateOnHit() { // pra efeitos que causam algo on hit uma vez so manter, se nao dar override na classe especifica
+        this.onHit = false;
+    }
+
     // ----------------
 
     public boolean passaTurno() { // retorna true se ainda nao tiver acabado a duraçao

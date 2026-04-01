@@ -1,30 +1,40 @@
 package Telas;
-import Deck.*;
-import Entidades.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+
+import Cartas.Carta;
+import Cartas.CartaPoder;
+import Deck.Mao;
+import Deck.PilhaCompra;
+import Deck.PilhaDescarte;
+import EfeitosDeStatus.AumentaDano;
+import EfeitosDeStatus.DanoConstante;
+import EfeitosDeStatus.Efeito;
+import EfeitosDeStatus.Escudo;
+import EfeitosDeStatus.Sangramento;
+import EfeitosDeStatus.Veneno;
+import Entidades.Entidade;
+import Entidades.Heroi;
+import Entidades.Inimigo;
 import Poderes.Poder;
-import EfeitosDeStatus.*;
 import Util.Arte;
 import Util.Cor;
 import Util.InputHandler;
 import Util.Textos;
 
-import java.util.*;
-//import EfeitosDeStatus.Efeito;
-
-import Cartas.Carta;
-import Cartas.CartaPoder;
-
 public class Batalha {
 
     //efeitos de molde enquanto nao tem o json (esses aq sao pros inimigos)
-    Efeito feridas = new DanoConstante("Feridas", "Causa 1 de dano por rodada ao alvo", 3, 1);
-    Efeito pactoSinistro = new AumentaDano("Pacto Sinistro", "Aumenta o dano causado em 2 por 2 rodadas", 2, 2);
+    Efeito feridas = new DanoConstante("Feridas", "Causa 1 de dano por rodada ao alvo", 2, 1);
+    Efeito pactoSinistro = new AumentaDano(Cor.txtPreto("Pacto Sinistro"), "Aumenta o dano causado em 2 por 2 rodadas", 2, 2);
     Efeito escudinho = new Escudo("Escudinho", "3 pontos de escudo", 0, 3);
     Efeito escudao = new Escudo("Escudinho", "7 pontos de escudo", 0, 7);
 
     // subscribers --------
-    private List<Efeito> listaEfeitos = new ArrayList<>(); 
-    private List<Poder> listaPoderes = new ArrayList<>();
+    private ArrayList<Efeito> listaEfeitos = new ArrayList<>(); 
+    private ArrayList<Poder> listaPoderes = new ArrayList<>();
     // -------------
 
     private int turno; // 0 -> heroi, 1 -> inimigos
@@ -50,32 +60,47 @@ public class Batalha {
         
         turno = 0; // 0: turno do heroi 
         
+        for (Inimigo inimigo : inimigos) 
+            inimigo.escolheAcao();
+
         batalha();
     }
 
     public void passaRodada(){
         heroi.passaRodada(); // remove os bonus que acabam (escudo, etc) e reseta energia
+        heroi.resetEfeitos();
 
         for (Inimigo inimigo : arrayInimigos) {
             inimigo.passaRodada();
+            inimigo.resetEfeitos();
         }
-
-        mao.limpa(pilhaDescarte);
+        
+        limpaEfeitos();
         
         for (Efeito efeito : listaEfeitos) {  // notifica os efeitos
             efeito.aplicar();
             efeito.passaTurno(); 
         }
-        listaEfeitos.removeIf(efeito -> efeito.getDur() <= 0);
+        
+        notificaMorte();
+
+        limpaEfeitos();
 
         for (Poder poder : listaPoderes) // notifica os poderes
             poder.aplicar();
+
+        mao.limpa(pilhaDescarte);
     }
 
     public void passaTurno(){
         turno = (turno == 0) ? 1 : 0;
         notificaMorte();
         if (turno == 0) passaRodada();
+    }
+
+    public void limpaEfeitos(){
+        listaEfeitos.removeIf(efeito -> efeito.getDur() <= 0);
+        listaEfeitos.removeIf(efeito -> efeito instanceof Sangramento && ((Sangramento) efeito).getStacks() <= 0);
     }
 
     public int selecionarAlvo(){ // falta adicionar checagem se ta selecionando um alvo valido
@@ -96,6 +121,12 @@ public class Batalha {
     public void adicionarEfeito(Efeito efeito){
         for (Efeito e : listaEfeitos) {
             if (e.getNome().equals(efeito.getNome()) && e.getAlvo() == efeito.getAlvo()){
+                // aqui entram os efeitos que so resetam a duraçao, nao somam ( ou outras excessoes especificas )
+                if (e instanceof Sangramento s){ 
+                    s.setDur(efeito.getDur());
+                    s.addStack();                
+                    return;
+                }
                 e.setDur(e.getDur() + efeito.getDur());
                 return;
             }
@@ -147,16 +178,8 @@ public class Batalha {
 
             while(true){ // loop da escolha de ação
                 Textos.limpaTela();
+
                 Textos.batalha(heroi, listaEfeitos, listaPoderes, arrayInimigos);
-
-                for (Inimigo inimigo : inimigos) {
-                    inimigo.escolheAcao();
-                    inimigo.anunciarAtaque();
-                }
-
-                System.out.println();
-                System.out.println(heroi.statusEnergia()); 
-                System.out.println();
 
                 int escolha = mao.mostrar(); 
 
@@ -176,10 +199,6 @@ public class Batalha {
                     else 
                         mao.removeCarta(escolha, pilhaDescarte);
 
-                    /*  fiz nao vai servir agora mas talvez seja util em algum momento
-                    for (Efeito efeito : listaEfeitos)
-                        if (efeito.getAlvo() == heroi) efeito.onHit(cartaEscolhida); */
-
                     Entidade alvoSelecionado = heroi; // se nao mudar é pq é o heroi msm
 
                     // se não for selfcast ou poder pergunta o alvo
@@ -190,6 +209,12 @@ public class Batalha {
                         alvoSelecionado = inimigos.get(alvo);
                         cartaEscolhida.usar(heroi, alvoSelecionado, this); 
                     }
+
+                    for (Efeito efeito : listaEfeitos)
+                        if (efeito.getOnHit()){
+                            efeito.onHit(cartaEscolhida, heroi, alvoSelecionado, this);
+                            efeito.updateOnHit();
+                        }
 
                     for (Poder poder : listaPoderes) // notifica os poderes
                         poder.onHit(cartaEscolhida, heroi, alvoSelecionado, this); 
@@ -220,7 +245,7 @@ public class Batalha {
                 case 0 -> inimigo.atacar(heroi);
                 case 1 -> inimigo.atacarEfeito(heroi, this, feridas);
                 case 2 -> {
-                    inimigo.receberDano(3);
+                    inimigo.receberDano(2);
                     inimigo.receberEfeito(this, pactoSinistro);
                 }
             }

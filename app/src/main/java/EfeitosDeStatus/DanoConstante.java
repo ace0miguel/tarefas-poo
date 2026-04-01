@@ -1,5 +1,8 @@
 package EfeitosDeStatus;
 import Cartas.Carta;
+import Entidades.Entidade;
+import Entidades.Heroi;
+import Telas.Batalha;
 import Util.Cor;
 
 /* efeitos de dano constante, dano depende do efeito especifico */
@@ -18,10 +21,14 @@ public class DanoConstante extends Efeito {
     @Override
     public void aplicar(){
         this.getAlvo().receberDano(dano);
+        
+        if (this.getDur() > 1)
+            this.getAlvo().setSangrando(true);
     }
 
     @Override
-    public void onHit(Carta carta) {
+    public void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha) {
+        this.getAlvo().setSangrando(true);
     }
 
     @Override
@@ -31,7 +38,7 @@ public class DanoConstante extends Efeito {
 
     @Override
     public String status() {
-        return Cor.vermelho + " [" + this.getNome() + " - " + this.dano + " pontos de dano" + " - (" + this.getDur() + " Rodadas)]" + Cor.reset; 
+        return Cor.vermelho + this.getNome() + " > " + this.getDur() + Cor.reset; 
         
     }
     

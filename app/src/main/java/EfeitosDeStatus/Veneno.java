@@ -1,5 +1,9 @@
 package EfeitosDeStatus;
 
+import Cartas.Carta;
+import Entidades.Entidade;
+import Entidades.Heroi;
+import Telas.Batalha;
 import Util.Cor;
 
 /* Causa dano igual a duraçao restante;
@@ -17,6 +21,13 @@ public class Veneno extends DanoConstante{
     @Override
     public void aplicar(){
         this.getAlvo().receberDano(this.getDur());
+        
+        if (this.getDur() > 1)
+            this.getAlvo().setEnvenenado(true);
+    }
+
+    @Override
+    public void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha) {
         this.getAlvo().setEnvenenado(true);
     }
 
@@ -27,6 +38,6 @@ public class Veneno extends DanoConstante{
 
     @Override
     public String status() {
-        return Cor.verde + " [" + this.getNome() + " - (" +  this.getDur() + " Pontos de dano/Rodadas)]" + Cor.reset; 
+        return Cor.verde + this.getNome() + " > " + this.getDur() + Cor.reset; 
     }
 }

@@ -46,6 +46,6 @@ public class CartaAtaque extends Carta
     }
 
     public String descricao(){
-        return "Usar "+this.getNome()+" - "+this.getDescricao()+" ("+this.getDano()+" pontos de dano) [custo: " + this.getCusto() + "]";
+        return ""+this.getNome()+" - "+this.getDescricao()+" ("+this.getDano()+" pontos de dano) [custo: " + this.getCusto() + "]";
     }
 }

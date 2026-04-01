@@ -1,5 +1,8 @@
 package EfeitosDeStatus;
 import Cartas.Carta;
+import Entidades.Entidade;
+import Entidades.Heroi;
+import Telas.Batalha;
 
 // limpa todos os efeitos (incluindo positivos)
 public class Purificar extends Efeito {
@@ -19,7 +22,7 @@ public class Purificar extends Efeito {
     }
 
     @Override
-    public void onHit(Carta carta) {
+    public void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha) {
     }
 
     @Override

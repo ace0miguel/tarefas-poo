@@ -38,10 +38,12 @@ public abstract class Carta {
     public String getNome(){
         if (this instanceof CartaAtaque)
             Cor.setVermelho();
+
         else if (this instanceof CartaHabilidade)
             Cor.setAzul();
+
         else if (this instanceof CartaPoder)
-            Cor.setAmarelo();
+            Cor.setRoxo();
     
         return this.nome + Cor.reset;
     }

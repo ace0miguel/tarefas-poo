@@ -40,15 +40,12 @@ public class Heroi extends Entidade {
     public void passaRodada(){
         resetarBonus();
         resetarEnergia();
-        setEnvenenado(false);
     }
 
     @Override
     public String status(){
-        coresVida();
-
         return (getEscudo() != 0) 
-        ? ""+this.getNome()+ Cor.reset + " " +Textos.desenharBarraVida(this.getVida(), this.getVidaMax())+" "+Cor.azul+" ("+this.getEscudo()+" de escudo)" + Cor.reset 
-        : ""+this.getNome()+ Cor.reset + " " +Textos.desenharBarraVida(this.getVida(), this.getVidaMax())+"" + Cor.reset;
+        ? ""+this.getNome()+ Cor.reset + " | " + Textos.desenharBarraVida(this.getVida(), this.getVidaMax()) + " "+Cor.azul+" ("+this.getEscudo()+" de escudo)" + Cor.reset 
+        : ""+this.getNome()+ Cor.reset + " | " + Textos.desenharBarraVida(this.getVida(), this.getVidaMax()) + Cor.reset;
     }
 }

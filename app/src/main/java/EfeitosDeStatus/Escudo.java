@@ -1,6 +1,9 @@
 package EfeitosDeStatus;
 
 import Cartas.Carta;
+import Entidades.Entidade;
+import Entidades.Heroi;
+import Telas.Batalha;
 
 public class Escudo extends Efeito {
 
@@ -24,7 +27,7 @@ public class Escudo extends Efeito {
     }
 
     @Override
-    public void onHit(Carta carta) {
+    public void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha) {
     }
 
     @Override

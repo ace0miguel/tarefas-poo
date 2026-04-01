@@ -1,5 +1,8 @@
 package EfeitosDeStatus;
 import Cartas.Carta;
+import Entidades.Entidade;
+import Entidades.Heroi;
+import Telas.Batalha;
 
 // altera o dano causado por ataques do alvo pelo valor passado (positivo aumenta, negativo reduz)
 public class AumentaDano extends Efeito {
@@ -20,7 +23,7 @@ public class AumentaDano extends Efeito {
     }
 
     @Override
-    public void onHit(Carta carta) {
+    public void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha) {
     }
 
     @Override
@@ -30,8 +33,7 @@ public class AumentaDano extends Efeito {
 
     @Override
     public String status() {
-        return " [" + this.getNome() + " - " + this.valor + " dano extra" + " - (" + this.getDur() + " Rodadas)]"; 
-        
+        return this.getNome() + " > " + this.getDur(); 
     }
     
 }

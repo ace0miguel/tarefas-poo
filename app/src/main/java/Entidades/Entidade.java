@@ -9,7 +9,9 @@ public abstract class Entidade {
     private int escudo = 0;
     private int danoExtra = 0;
     private boolean purificar = false;
+
     private boolean envenenado = false;
+    private boolean sangrando = false;
 
     public Entidade(String nome, int vida){
         this.vida = vida;
@@ -20,7 +22,8 @@ public abstract class Entidade {
     //getters ------
 
     public String getNome(){
-        return this.nome;
+        corStatus();
+        return this.nome + Cor.reset;
     }
 
     public int getVida(){
@@ -47,6 +50,11 @@ public abstract class Entidade {
         return this.envenenado;
     }
 
+    public boolean getSangrando(){
+        return this.sangrando;
+    }
+
+
     public void setPurificar(boolean purificar) {
         this.purificar = purificar;
     }
@@ -55,16 +63,21 @@ public abstract class Entidade {
         this.envenenado = envenenado;
     }
 
-    public void coresVida(){
-        if (this.getVida() > this.getVidaMax()/2)
-            Cor.txtReset();
-        else if (this.getVida() > this.getVidaMax()/5)
-            Cor.setAmarelo();
-        else 
-            Cor.setVermelho();
+    public void setSangrando(boolean sangrando) {
+        this.sangrando = sangrando;
+    }
 
+    public void resetEfeitos(){
+        this.envenenado = false;
+        this.sangrando = false;
+    }
+
+    public void corStatus(){
         if (this.envenenado == true)
             Cor.setVerde();
+
+        if (this.sangrando == true)
+            Cor.setVermelho();
     }
 
     public void receberDano(int dano){
@@ -80,7 +93,6 @@ public abstract class Entidade {
 
     public void passaRodada(){
         resetarBonus();
-        setEnvenenado(false);
     }
     
     public void ganharEscudo(int bonus){

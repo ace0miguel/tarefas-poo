@@ -36,7 +36,7 @@ public class CartaPoder extends Carta
     
 
     public String descricao(){
-        return "Usar "+this.getNome()+" - "+this.getDescricao()+" [custo: " + this.getCusto() + "]";
+        return ""+this.getNome()+" - "+this.getDescricao()+" [custo: " + this.getCusto() + "]";
     }
 }
 

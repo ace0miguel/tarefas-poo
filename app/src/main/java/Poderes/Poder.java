@@ -4,6 +4,7 @@ import Cartas.Carta;
 import Entidades.Entidade;
 import Entidades.Heroi;
 import Telas.Batalha;
+import Util.Cor;
 
 public abstract class Poder {
 
@@ -31,7 +32,7 @@ public abstract class Poder {
     
     // getters ------------
     public String getNome() {
-        return this.nome;
+        return Cor.txtAmarelo(this.nome);
     }
     
     public String getDesc() {
