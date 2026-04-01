@@ -4,6 +4,7 @@ import Cartas.Carta;
 import Entidades.Entidade;
 import Entidades.Heroi;
 import Telas.Batalha;
+import Util.Arte;
 import Util.Textos;
 
 // se a carta for um tiro usa [stacks] vezes a mais.
@@ -25,9 +26,9 @@ public class MaosLeves extends Poder {
     public void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha) {
         if (carta.getTipo() == 1)  {
             for(int i = 0; i < this.getStacks(); i++){         
-                System.out.println("MAIS UM!" );
+                System.out.println(Arte.MAISUM);
                 System.out.println();
-                Textos.sleep(200);
+                Textos.sleep(500);
                 carta.aplicarEfeito(heroi, alvo, batalha);
             } 
         }

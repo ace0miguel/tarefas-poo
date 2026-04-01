@@ -32,7 +32,7 @@ public abstract class Poder {
     
     // getters ------------
     public String getNome() {
-        return Cor.txtAmarelo(this.nome);
+        return Cor.txtRoxo(this.nome);
     }
     
     public String getDesc() {

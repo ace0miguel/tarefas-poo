@@ -51,7 +51,7 @@ public class App {
         Poder dedoNervoso = new MaosLeves(("DEDO NERVOSO!"), "Sempre que usar um ataque de disparo, dispare novamente pelo tanto de acumulos desse poder.");
 
         // cartas -----------
-        Carta tiro = new CartaAtaque("Tiro", "dispara uma bala", 2, 3, 1); tiro.setResenha("POW");
+        Carta tiro = new CartaAtaque("Tiro", "dispara uma bala", 2, 3, 1); tiro.setResenha(Arte.POW);
         Carta espada = new CartaAtaqueComEfeito("Espada", "aplica sangramento (2 de dano por turno por 3 turnos)", 2, 1, sangramento, 2);
         Carta corteVenenoso = new CartaAtaqueComEfeito("Corte venenoso", "aplica veneno (causa sua duraçao em dano por rodada ao alvo)", 1, 1, veneno, 2);
         Carta escudoMadeira = new CartaHabilidade("Postura de defesa", "da escudo", 1, escudinho, true);
@@ -71,7 +71,7 @@ public class App {
             pilhaCompra.addCarta( purificar );
         }
 
-        for(int i=0; i < 2; i++){ // cartas meio raras sla
+        for(int i=0; i < 5; i++){ // cartas meio raras sla
             pilhaCompra.addCarta( desprezo );
             pilhaCompra.addCarta( dedoNervosoCarta );
         }

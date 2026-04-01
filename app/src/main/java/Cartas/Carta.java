@@ -43,7 +43,7 @@ public abstract class Carta {
             Cor.setAzul();
 
         else if (this instanceof CartaPoder)
-            Cor.setRoxo();
+            Cor.setRosa();
     
         return this.nome + Cor.reset;
     }
@@ -97,9 +97,9 @@ public abstract class Carta {
 
     public void printaResenha(){
         if (!this.getResenha().equals("")){
-                Textos.sleep(300);
+                Textos.sleep(500);
                 System.out.println(this.getResenha());
-                Textos.sleep(300);
+                Textos.sleep(700);
                 System.out.println();
             }
     }

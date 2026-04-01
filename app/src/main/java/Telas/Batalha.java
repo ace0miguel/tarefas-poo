@@ -175,11 +175,17 @@ public class Batalha {
 
     public void turnoHeroi(){
         mao.addCinco(pilhaCompra, pilhaDescarte);
+        boolean primeiroLoop = true;
 
             while(true){ // loop da escolha de ação
                 Textos.limpaTela();
 
-                Textos.batalha(heroi, listaEfeitos, listaPoderes, arrayInimigos);
+                if (primeiroLoop){
+                    Textos.batalha(heroi, listaEfeitos, listaPoderes, arrayInimigos);
+                    primeiroLoop = false;
+                } else {
+                    Textos.batalhaSemDelay(heroi, listaEfeitos, listaPoderes, arrayInimigos);
+                }
 
                 int escolha = mao.mostrar(); 
 

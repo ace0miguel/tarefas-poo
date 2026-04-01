@@ -98,6 +98,70 @@ public class Textos {
         sleep(300);
     }
 
+    public static void batalhaSemDelay(Heroi heroi, ArrayList<Efeito> listaEfeitos, List<Poder> listaPoderes,  Inimigo... inimigos){
+        limpaTela();
+        boolean aux1 = false;
+        boolean aux2 = false;
+
+        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-=-==-=-==-=-==-=-==-=-=-==-=-==-\n");
+        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-\n");
+        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-");
+
+        System.out.println("\n");
+
+        System.out.print(heroi.status());
+        for (Poder poder : listaPoderes) {
+            System.out.print(" > " + poder.getNome() +" ["+poder.getStacks()+"] " + Cor.txtPreto("|"));
+        }
+
+        System.out.println();
+
+        for (Efeito efeito : listaEfeitos) {
+            if (efeito.getAlvo() == heroi){
+                System.out.print("(" + efeito.status() + ") ");
+                aux1 = true;
+            }
+        }
+
+        System.out.println();
+
+        if (aux1) System.out.println();
+
+        Cor.printaCinza("VERSUS!\n");
+
+        System.out.println();
+
+        for (int i = 0; i < inimigos.length; i++){
+            if (inimigos[i].estaVivo()){
+                System.out.println(inimigos[i].status());
+                aux2 = false;
+
+                for (Efeito efeito : listaEfeitos) {
+                    if (efeito.getAlvo() == inimigos[i]){
+                        System.out.print("(" + efeito.status() + ") ");
+                        aux2 = true;
+                    }
+                }
+                if (aux2) System.out.println();
+                System.out.println();
+            }  
+        }
+
+        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-\n");
+        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-\n");
+        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-=-==-=-==-=-==-=-==-=-=-==-=-==-");
+        System.out.println();
+        System.out.println();
+
+        for (Inimigo inimigo : inimigos) {
+                inimigo.anunciarAtaque();
+        }
+                
+        System.out.println();
+        System.out.println(heroi.statusEnergia()); 
+        System.out.println();
+    }
+
     public static String desenharBarraVida(int vidaAtual, int vidaMax) {
         
         int tamanhoMax = 12; 
