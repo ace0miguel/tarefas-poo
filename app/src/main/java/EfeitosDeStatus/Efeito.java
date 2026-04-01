@@ -4,6 +4,7 @@ import Cartas.Carta;
 import Entidades.Entidade;
 import Entidades.Heroi;
 import Telas.Batalha;
+import Util.Cor;
 
 public abstract class Efeito {
     private String nome;
@@ -36,6 +37,9 @@ public abstract class Efeito {
     
     // getters ------------
     public String getNome() {
+        if (this instanceof Veneno) return Cor.verde + this.nome + Cor.reset;
+        else if (this instanceof Sangramento) return Cor.vermelho + this.nome + Cor.reset;
+        else if (this instanceof AumentaDano) return Cor.txtRosa(this.nome);
         return this.nome;
     }
     

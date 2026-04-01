@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Stack;
 
 import Cartas.Carta;
+import Util.Cor;
 import Util.Textos;
 
 public class PilhaCompra {
@@ -31,7 +32,6 @@ public class PilhaCompra {
     }
 
     public void shuffleAll(PilhaDescarte pilhaDescarte){ // reembaralha todas as cartas (mao, compra e descarte)
-        System.out.println("Embaralhando!");
         Textos.sleep(300);
         cartas.addAll(pilhaDescarte.getPilha());
         Collections.shuffle(cartas);
@@ -41,8 +41,8 @@ public class PilhaCompra {
     }
 
     public void deckReset(PilhaDescarte pilhaDescarte){ // embaralha todas as cartas da pilha de descarte e adiciona a pilha de compra
-        System.out.println("Embaralhando!");
-        Textos.sleep(300);
+        Cor.printaLaranja("Embaralhando as cartas!");
+        Textos.sleep(500);
         ArrayList<Carta> temp = pilhaDescarte.reset();
         this.pilhaCartas.addAll(temp);  
     }

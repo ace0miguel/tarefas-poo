@@ -30,24 +30,24 @@ public class Textos {
         boolean aux1 = false;
         boolean aux2 = false;
 
-        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-=-==-=-==-=-==-=-==-=-=-==-=-==-\n");
-        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-\n");
-        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-");
+        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-=-==-=-==-\n"); sleep(50);
+        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-=-==-=-==-=-==-=-==-=-=-==-=-==-\n"); sleep(50);
+        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-\n"); sleep(50);
+        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-"); sleep(50); 
 
-        sleep(100);
 
         System.out.println("\n");
 
         System.out.print(heroi.status());
         for (Poder poder : listaPoderes) {
-            System.out.print(" > " + poder.getNome() +" ["+poder.getStacks()+"] " + Cor.txtPreto("|"));
+            System.out.print(" > " + poder.getNome() +" ["+poder.getStacks()+"] " + Cor.txtCinza("|")); sleep(50);
         }
 
         System.out.println();
 
         for (Efeito efeito : listaEfeitos) {
             if (efeito.getAlvo() == heroi){
-                System.out.print("(" + efeito.status() + ") ");
+                System.out.print("(" + efeito.status() + ") "); sleep(50);
                 aux1 = true;
             }
         }
@@ -56,18 +56,18 @@ public class Textos {
 
         if (aux1) System.out.println();
 
-        Cor.printaCinza("VERSUS!\n");
+        Cor.printaCinza("VERSUS!\n"); sleep(50);
 
         System.out.println();
 
         for (int i = 0; i < inimigos.length; i++){
             if (inimigos[i].estaVivo()){
-                System.out.println(inimigos[i].status());
+                System.out.println(inimigos[i].status()); sleep(50);
                 aux2 = false;
 
                 for (Efeito efeito : listaEfeitos) {
                     if (efeito.getAlvo() == inimigos[i]){
-                        System.out.print("(" + efeito.status() + ") ");
+                        System.out.print("(" + efeito.status() + ") "); sleep(50);
                         aux2 = true;
                     }
                 }
@@ -76,11 +76,12 @@ public class Textos {
             }  
         }
 
-        sleep(100);
+        sleep(50);
 
-        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-\n");
-        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-\n");
-        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-=-==-=-==-=-==-=-==-=-=-==-=-==-");
+        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-\n"); sleep(50);
+        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-\n"); sleep(50);
+        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-=-==-=-==-=-==-=-==-=-=-==-=-==-\n"); sleep(50);
+        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-=-==-=-==-"); sleep(50);
         System.out.println();
         System.out.println();
 
@@ -88,9 +89,10 @@ public class Textos {
 
         for (Inimigo inimigo : inimigos) {
                 inimigo.anunciarAtaque();
-                sleep(300);
         }
-                
+
+        sleep(300);
+
         System.out.println();
         System.out.println(heroi.statusEnergia()); 
         System.out.println();
@@ -103,6 +105,7 @@ public class Textos {
         boolean aux1 = false;
         boolean aux2 = false;
 
+        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-=-==-=-==-\n");
         Cor.printaMarrom("=-==-=-==-=-==-=-==-=-=-==-=-==-=-==-=-==-=-=-==-=-==-\n");
         Cor.printaMarrom("=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-\n");
         Cor.printaMarrom("=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-");
@@ -111,7 +114,7 @@ public class Textos {
 
         System.out.print(heroi.status());
         for (Poder poder : listaPoderes) {
-            System.out.print(" > " + poder.getNome() +" ["+poder.getStacks()+"] " + Cor.txtPreto("|"));
+            System.out.print(" > " + poder.getNome() +" ["+poder.getStacks()+"] " + Cor.txtCinza("|"));
         }
 
         System.out.println();
@@ -149,7 +152,8 @@ public class Textos {
 
         Cor.printaMarrom("=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-\n");
         Cor.printaMarrom("=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-\n");
-        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-=-==-=-==-=-==-=-==-=-=-==-=-==-");
+        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-=-==-=-==-=-==-=-==-=-=-==-=-==-\n");
+        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-=-==-=-==-");
         System.out.println();
         System.out.println();
 
@@ -194,5 +198,19 @@ public class Textos {
         }
 
         return barraFinal + " " + vidaAtual + "/" + vidaMax;
+    }
+
+    public static void printaLinhaDevagar(String texto) {
+        int tempoBase = 45; 
+        int taxaReducao = 2; 
+        int tempoMinimo = 5; 
+
+        String[] linhas = texto.split("\n");
+        int tempo = Math.max(tempoMinimo, tempoBase - (linhas.length * taxaReducao));
+        
+        for (String linha : linhas) {
+            System.out.println(linha);
+            sleep(tempo);
+        }
     }
 }

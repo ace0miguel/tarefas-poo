@@ -11,12 +11,14 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
     public CartaAtaqueComEfeito(String nome, String descricao, int custo, int dano, Efeito efeito){
         super(nome, descricao, custo, dano);
         this.efeito = efeito;
+        setDescricao("Aplica " + efeito.getNome());
     }
 
     public CartaAtaqueComEfeito(String nome, String descricao, int custo, int dano, Efeito efeito, int tipo){
         super(nome, descricao, custo, dano);
         this.efeito = efeito;
         this.tipo = tipo;
+        setDescricao("Aplica " + this.efeito.getNome());
     }
 
     @Override
@@ -30,6 +32,7 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
             e.setAlvo(alvo);
             batalha.adicionarEfeito(e);
     
+            printaResenha();
         }
     }
 
@@ -39,5 +42,7 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
         Efeito e = efeito.criaCopia();
         e.setAlvo(alvo);
         batalha.adicionarEfeito(e);
+
+        printaResenha();
     }
 }

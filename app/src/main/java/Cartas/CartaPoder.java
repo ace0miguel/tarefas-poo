@@ -3,9 +3,7 @@ import Entidades.Entidade;
 import Entidades.Heroi;
 import Poderes.Poder;
 import Telas.Batalha;
-/*
-Aplica um efeito permanente para todo o encontro de combate, normalmente stackam, so pode ser usada uma vez por copia. (falta implementar essa parte)
-*/
+import Util.Cor;
 
 public class CartaPoder extends Carta
 {
@@ -24,6 +22,8 @@ public class CartaPoder extends Carta
             Poder p = poder.criaCopia();
             batalha.adicionarPoder(p);
             heroi.usarEnergia(this.getCusto());
+
+            printaResenha();
         }
     }
 
@@ -31,12 +31,12 @@ public class CartaPoder extends Carta
     public void aplicarEfeito(Heroi heroi, Entidade alvo, Batalha batalha) {
         Poder p = poder.criaCopia();
         batalha.adicionarPoder(p);
+        
+        printaResenha();
     }
 
-    
-
     public String descricao(){
-        return ""+this.getNome()+" - "+this.getDescricao()+" [custo: " + this.getCusto() + "]";
+        return ""+this.getNome()+" - "+this.getDescricao()+" " + Cor.txtAmarelo(" [custo: " + this.getCusto() + "]");
     }
 }
 

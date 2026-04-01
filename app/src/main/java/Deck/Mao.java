@@ -1,10 +1,10 @@
 package Deck;
 import java.util.ArrayList;
 import java.util.Scanner;
-import Util.InputHandler;
 
 import Cartas.Carta;
-//import Telas.Textos;
+import Util.InputHandler;
+import Util.Textos;
 
 /* Início do turno : puxa 5 carta;
  tudo que voce nao usar vai pra pilha de descarte;
@@ -34,7 +34,7 @@ public class Mao {
         int ultimoNumero = 0;
         for (int i = 0; i < cartas.size(); i++){
             Carta cartaAtual = cartas.get(i);
-            System.out.println("["+i+"] - "+cartaAtual.descricao()+"");
+            System.out.println("["+i+"] - "+cartaAtual.descricao()+""); Textos.sleep(50);
             ultimoNumero = i;
         }
         ultimoNumero++;

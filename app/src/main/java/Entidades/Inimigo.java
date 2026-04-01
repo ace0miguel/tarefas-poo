@@ -52,14 +52,15 @@ public class Inimigo extends Entidade{
     }
 
     public void anunciarAtaque(){
-        Cor.setPreto();
-        System.out.print("> " + this.getNome() + " ");
-        if (this.estaVivo())
+        Cor.setCinza();
+        if (this.estaVivo()){
+            System.out.print("> " + this.getNome() + " ");
             switch (nextAcao) {
                 case 0 -> System.out.println("irá te atacar causando "+(this.dano + this.getDanoExtra())+" pontos de dano" );
                 case 1 -> System.out.println("irá te atacar causando "+(this.dano / 2 + this.getDanoExtra())+" e te deixar ferido");
                 case 2 -> System.out.println("está prestes a realizar um PACTO SINISTRO");
             }
+        }
         Cor.txtReset();
     }
 

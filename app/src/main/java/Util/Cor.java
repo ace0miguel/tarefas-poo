@@ -15,6 +15,8 @@ public class Cor {
     public static String laranja = "\u001B[38;5;208m"; 
     public static String marrom = "\u001B[38;5;130m";
 
+    // ----------------------------------------------------------------------------------------
+
     public static void printaVerde(String printa) {
         System.out.print(verde + printa + reset);
     }
@@ -55,6 +57,8 @@ public class Cor {
         System.out.print(marrom + printa + reset);
     }
 
+    // ----------------------------------------------------------------------------------------
+
     public static void setVerde() {
         System.out.print(verde);
     }
@@ -94,6 +98,8 @@ public class Cor {
     public static void setMarrom() {
         System.out.print(marrom);
     }
+
+    // ----------------------------------------------------------------------------------------
 
     public static void txtReset() {
         System.out.print(reset);

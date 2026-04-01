@@ -2,6 +2,7 @@ package Cartas;
 import Entidades.Entidade;
 import Entidades.Heroi;
 import Telas.Batalha;
+import Util.Cor;
 
 /* 
 Cartas que causam dano direto e podem aplicar efeitos secundários.
@@ -46,6 +47,6 @@ public class CartaAtaque extends Carta
     }
 
     public String descricao(){
-        return ""+this.getNome()+" - "+this.getDescricao()+" ("+this.getDano()+" pontos de dano) [custo: " + this.getCusto() + "]";
+        return ""+this.getNome()+" - "+this.getDescricao()+" ("+this.getDano()+" pontos de dano)" + Cor.txtAmarelo(" [custo: " + this.getCusto() + "]");
     }
 }

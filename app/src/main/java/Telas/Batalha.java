@@ -26,9 +26,12 @@ import Util.Textos;
 
 public class Batalha {
 
+    // Carta generica
+    Carta c;
+
     //efeitos de molde enquanto nao tem o json (esses aq sao pros inimigos)
     Efeito feridas = new DanoConstante("Feridas", "Causa 1 de dano por rodada ao alvo", 2, 1);
-    Efeito pactoSinistro = new AumentaDano(Cor.txtPreto("Pacto Sinistro"), "Aumenta o dano causado em 2 por 2 rodadas", 2, 2);
+    Efeito pactoSinistro = new AumentaDano(Cor.txtCinza("Pacto Sinistro"), "Aumenta o dano causado em 2 por 2 rodadas", 2, 2);
     Efeito escudinho = new Escudo("Escudinho", "3 pontos de escudo", 0, 3);
     Efeito escudao = new Escudo("Escudinho", "7 pontos de escudo", 0, 7);
 
@@ -119,12 +122,29 @@ public class Batalha {
     }
 
     public void adicionarEfeito(Efeito efeito){
+            // ESPAÇO PRA SETAR AS FLAGS!
+
+            if (efeito instanceof Sangramento s){ // se for sangramento deixa o nomezinho vermelho
+                s.getAlvo().setSangrando(true);
+            }
+
+            if (efeito instanceof Veneno v){ // se for veneno deixa o nomezinho verde
+                v.getAlvo().setEnvenenado(true);
+            }
+
+            // FIM DO ESPAÇO PARA SETAR AS FLAGS
+            
         for (Efeito e : listaEfeitos) {
-            if (e.getNome().equals(efeito.getNome()) && e.getAlvo() == efeito.getAlvo()){
-                // aqui entram os efeitos que so resetam a duraçao, nao somam ( ou outras excessoes especificas )
+
+            // se tiver outro efeito q espalha ou passa copia sozinho bota uma checagem aq tb pra nao duplicar
+            boolean doisVeneno = e instanceof Veneno && efeito instanceof Veneno; 
+
+            if ((e.getNome().equals(efeito.getNome()) || doisVeneno) && e.getAlvo() == efeito.getAlvo()){
+                // aqui entram os efeitos que possuem excessoes especificas no momento de aplicar repetidamente
                 if (e instanceof Sangramento s){ 
                     s.setDur(efeito.getDur());
-                    s.addStack();                
+                    s.addStack();     
+                    s.getAlvo().setSangrando(true);           
                     return;
                 }
                 e.setDur(e.getDur() + efeito.getDur());
@@ -155,10 +175,11 @@ public class Batalha {
                         for (Inimigo inimigo2 : inimigos) {
                             if (inimigo2.estaVivo()) {
                                 Efeito copia = efeito.criaCopia();
+                                efeito.onHit(c, heroi, inimigo2, this); // usei uma carta generica pq nao importa pro onhit mas precisa passar
                                 copia.setAlvo(inimigo2);
                                 tempEfeitos.add(copia);
-                                Cor.printaVerde("O veneno se espalhou!");
-                                Textos.sleep(300);
+                                Cor.printaVerde("> O VENENO SE ESPALHOU! < ");
+                                Textos.sleep(1000);
                             }
                         }
                     }
@@ -216,16 +237,18 @@ public class Batalha {
                         cartaEscolhida.usar(heroi, alvoSelecionado, this); 
                     }
 
+                    // notifica os efeitos com on hit
                     for (Efeito efeito : listaEfeitos)
                         if (efeito.getOnHit()){
                             efeito.onHit(cartaEscolhida, heroi, alvoSelecionado, this);
                             efeito.updateOnHit();
                         }
 
-                    for (Poder poder : listaPoderes) // notifica os poderes
+                    // notifica os poderes com on hit
+                    for (Poder poder : listaPoderes) 
                         poder.onHit(cartaEscolhida, heroi, alvoSelecionado, this); 
 
-                    // lida com efeitos de uso instantaneo, como escudo.
+                    // lida com efeitos de uso instantaneo, como escudo ou purificar.
                     for (Efeito efeito : listaEfeitos) {
                         if (efeito.getInsta()){
                                 efeito.aplicar(); 
@@ -236,6 +259,8 @@ public class Batalha {
                     listaEfeitos.removeIf(efeito -> efeito.getDur() <= 0 || efeito.getAlvo().getPurificar() == true);
 
                     notificaMorte();
+
+                    if (!inimigos.stream().anyMatch(i -> i.estaVivo() == true)) break;
 
                     if (mao.getSize() == 0) mao.addCinco(pilhaCompra, pilhaDescarte); // se a mão esvaziar compra 5
 
@@ -276,9 +301,10 @@ public class Batalha {
         if(heroi.estaVivo() == false){
             System.out.println("VOCÊ MORREU");
             Arte.printSans();
+        } else {
+            Textos.printaLinhaDevagar(Cor.txtRosa("VOCÊ RECUPEROU O PÉROLA NEGRA!"));
+            Textos.printaLinhaDevagar(Arte.PEROLANEGRA);
         }
-        
-        else System.out.println("VOCÊ RECUPEROU O PÉROLA NEGRA!");
         System.out.println();
     }
 }

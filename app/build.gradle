@@ -43,3 +43,16 @@ tasks.named('test') {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
 }
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'App' 
+    }
+    
+    // Isso aqui garante que se você usar bibliotecas externas no futuro, 
+    // elas vão ser "espremidas" junto no mesmo arquivo (Fat JAR)
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}

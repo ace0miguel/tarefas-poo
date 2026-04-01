@@ -31,7 +31,7 @@ public class Sangramento extends DanoConstante{
         if (this.stacks >= 5){
             int danoAcumulado = this.getDur() * this.stacks;
 
-            Cor.printaVermelho("O sangramento explodiu causando >" + danoAcumulado + "< pontos de dano!!" );
+            Cor.printaVermelho("O SANGRAMENTO EXPLODIU CAUSANDO >" + danoAcumulado + "< PONTOS DE DANO!!\n" );
             Textos.sleep(3000);
 
             this.getAlvo().receberDano(danoAcumulado);

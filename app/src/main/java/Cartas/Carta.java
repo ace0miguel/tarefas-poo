@@ -35,20 +35,21 @@ public abstract class Carta {
         this.tipo = tipo;
     }
 
+    // Getters --------------------------------------
+
     public String getNome(){
         if (this instanceof CartaAtaque)
-            Cor.setVermelho();
+            return Cor.vermelho + this.nome + Cor.reset;
 
         else if (this instanceof CartaHabilidade)
-            Cor.setAzul();
+            return Cor.azul + this.nome + Cor.reset;
 
         else if (this instanceof CartaPoder)
-            Cor.setRosa();
-    
+            return Cor.rosa + this.nome + Cor.reset;
+
         return this.nome + Cor.reset;
     }
 
-    // Getters --------------------------------------
 
     public int getCusto(){
         return this.custo;
@@ -88,6 +89,10 @@ public abstract class Carta {
         this.resenha = resenha;
     }
 
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
 
     // ---------------------------------------------
     
@@ -97,9 +102,9 @@ public abstract class Carta {
 
     public void printaResenha(){
         if (!this.getResenha().equals("")){
-                Textos.sleep(500);
-                System.out.println(this.getResenha());
-                Textos.sleep(700);
+                Textos.sleep(400);
+                Textos.printaLinhaDevagar(this.getResenha());
+                Textos.sleep(400);
                 System.out.println();
             }
     }
