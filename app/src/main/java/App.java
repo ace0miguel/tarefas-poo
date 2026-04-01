@@ -9,6 +9,7 @@ import EfeitosDeStatus.DanoConstante;
 import EfeitosDeStatus.Efeito;
 import EfeitosDeStatus.Escudo;
 import EfeitosDeStatus.Purificar;
+import EfeitosDeStatus.Veneno;
 import Entidades.Heroi;
 import Entidades.Inimigo;
 import Poderes.MaosLeves;
@@ -26,19 +27,24 @@ public class App {
         // gerenciadorCartas.carregarCartas(false);
 
         //instancias padrao pra teste por enquanto
-        Heroi heroi = new Heroi("Capitão Jack Sparrow", 232340, 5 );
+        Heroi heroi = new Heroi("Capitão Jack Sparrow", 30, 5 );
+
         Inimigo inimigo = new Inimigo("Capitão Barbossa", 20, 3);
         Inimigo inimigo2 = new Inimigo("Figurante randola 1", 8, 1);    
         Inimigo inimigo3 = new Inimigo("Figurante randola 2", 8, 1);
+
         Efeito sangramento = new DanoConstante("Sangramento", "Causa 1 de dano por rodada ao alvo", 3, 2);
+        Efeito veneno = new Veneno("Veneno", "Causa sua duraçao em dano por rodada ao alvo", 2, 2);
         Efeito odioPuro = new AumentaDano("Odio Puro", "Aumenta o dano causado em 1 por 3 rodadas", 3, 1);
         Efeito escudinho = new Escudo("Escudinho", "3 pontos de escudo", 0, 3);
         Efeito escudao = new Escudo("Escudao", "7 pontos de escudo", 0, 7);
         Efeito purificarEfeito = new Purificar("Purificar", "Remove todos os efeitos aplicados em voce (incluindo bons!)", 0);
+
         Poder dedoNervoso = new MaosLeves("dedo nervoso","Sempre que usar um ataque de disparo, dispare novamente pelo tanto de acumulos desse poder.");
-        Carta tiro = new CartaAtaque("Tiro", 2, 3, 1);
-        tiro.setResenha("POW");
-        Carta espada = new CartaAtaqueComEfeito("Espada - aplica sangramento (2 de dano por turno por 3 turnos)", 1, 2, sangramento, 2);
+
+        Carta tiro = new CartaAtaque("Tiro", 2, 3, 1); tiro.setResenha("POW");
+        Carta espada = new CartaAtaqueComEfeito("Espada - aplica sangramento (2 de dano por turno por 3 turnos)", 2, 1, sangramento, 2);
+        Carta corteVenenoso = new CartaAtaqueComEfeito("Corte venenoso - aplica veneno (causa sua duraçao em dano por rodada ao alvo)", 2, 1, veneno, 2);
         Carta escudoMadeira = new CartaHabilidade("Escudo de madeira", 1, escudinho, true);
         Carta escudoFerro = new CartaHabilidade("Escudo de ferro", 2, escudao, true);
         Carta purificar = new CartaHabilidade("Purificar", 2, purificarEfeito, true);
@@ -47,6 +53,7 @@ public class App {
         for (int i = 0; i < 3; i++){
             pilhaCompra.addCarta( tiro );
             pilhaCompra.addCarta( espada );
+            pilhaCompra.addCarta( corteVenenoso );
             pilhaCompra.addCarta( escudoMadeira );
             pilhaCompra.addCarta( escudoFerro );
             pilhaCompra.addCarta( purificar );
