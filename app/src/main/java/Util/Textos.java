@@ -35,9 +35,9 @@ public class Textos {
                 System.out.print(" >" + efeito.status());
         }
         if (listaPoderes.size() > 0)
-            System.out.print(" |");
+            System.out.print(" ||");
         for (Poder poder : listaPoderes) {
-            System.out.print(" > " + poder.getNome() + " ["+poder.getStacks()+"]");
+            System.out.print(" > [" + poder.getNome() + " ("+poder.getStacks()+")]");
         }
         System.out.println("\n");
 
