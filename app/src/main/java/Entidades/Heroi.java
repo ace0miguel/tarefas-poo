@@ -30,8 +30,10 @@ public class Heroi extends Entidade {
             Cor.setVerde();
         else if (this.energia > 1)
             Cor.setAmarelo();
-        else 
+        else if (this.energia == 1) 
             Cor.setVermelho();
+        else 
+            Cor.setCinza();
 
         return "Energia ("+this.energia+"/"+this.energiaMax+")" + Cor.reset;
     }
