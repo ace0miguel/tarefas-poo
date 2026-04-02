@@ -13,7 +13,7 @@ import Util.Textos;
 Ao atingir 5 acumulos de sangramento, causa todo o dano restante e remove o efeito*/
 
 public class Sangramento extends DanoConstante{
-    private int stacks = 4;
+    private int stacks = 1;
 
     public Sangramento(String nome, String desc, int dur, int dano){
         super(nome, desc, dur, dano);
