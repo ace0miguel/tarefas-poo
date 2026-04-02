@@ -1,0 +1,21 @@
+{
+    "cartaAtaque": [
+        {
+            "nome": "Tiro",
+            "custo": 1,
+            "dano":2
+        }
+    ],
+    
+    "CartaHabilidade": [
+        {
+            "nome": "Jarro de terra",
+            "custo": 1,
+            "escudo": 3
+        }
+    ],
+
+    "CartaPoder": [
+        
+    ]
+}

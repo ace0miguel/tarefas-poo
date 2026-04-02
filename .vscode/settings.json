@@ -1,4 +1,11 @@
 {
+<<<<<<< HEAD
+    "java.project.sourcePaths": ["src"],
+    "java.project.outputPath": "bin",
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar"
+    ]
+=======
     "java.project.sourcePaths": [
         "src",
         "."
@@ -8,4 +15,5 @@
     "java.dependency.packagePresentation": "hierarchical",
     "java.project.explorer.showNonJavaResources": true,
     "java.compile.nullAnalysis.mode": "automatic"
+>>>>>>> 81c424e00b68407cf26804e8e4a1dd7fcc4cd6dd
 }
