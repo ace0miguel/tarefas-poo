@@ -331,14 +331,15 @@ public class Batalha {
         // fim de batalha
 
         System.out.println();
-        System.out.println("DUELO ENCERRADO!");
+        Cor.printaAmarelo("DUELO ENCERRADO!");
         System.out.println();
         Textos.sleep(1500);
         if(!heroi.estaVivo() == false){
             Textos.printaLinhaDevagar(Cor.txtRosa("VOCÊ RECUPEROU O PÉROLA NEGRA!"));
             Textos.printaLinhaDevagar(Arte.PEROLANEGRA);
         } else {
-            System.out.println("VOCÊ MORREU");
+            Cor.printaVermelho("VOCÊ MORREU");
+            System.out.println();
             Arte.printSans();
         }
         System.out.println();

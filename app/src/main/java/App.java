@@ -26,10 +26,10 @@ public class App {
 
         // gerenciadorCartas.carregarCartas(false);
 
-        //instancias padrao pra teste por enquanto
+        // instancias padrao pra teste por enquanto
 
         // heroi -----------
-        Heroi heroi = new Heroi("Capitão Jack Sparrow", 40, 5 );
+        Heroi heroi = new Heroi("Capitão Jack Sparrow", 4, 5 );
 
         // inimigos -------------
         Inimigo inimigo = new Inimigo("Capitão Barbossa", 30, 4);
@@ -50,11 +50,13 @@ public class App {
         Poder mestreLaminas = new MaosLeves(("MESTRE DAS LÂMINAS"), "Sempre que cortar, CORTE NOVAMENTE! pelo tanto de acumulos desse poder.", 2);
 
         // cartas -----------
-        Carta tiro = new CartaAtaque("Tiro", "dispara uma bala", 2, 3, 1); tiro.setResenha(Arte.POW);
-        Carta espada = new CartaAtaqueComEfeito("Espada", "", 2, 1, sangramento, 2); espada.setResenha(Arte.CORTE);
-        Carta corteVenenoso = new CartaAtaqueComEfeito("Corte venenoso", "", 1, 1, veneno, 2); corteVenenoso.setResenha(Arte.CORTEVERDE);
+        Carta tiro = new CartaAtaque("Tiro de revolver", "dispara uma bala", 2, 3, 1); tiro.setResenha(Arte.POW);
+        Carta tiroEscopeta = new CartaAtaque("Tiro de escopeta", "dispara uma bala de 12", 4, 7, 1); tiroEscopeta.setResenha(Arte.POW);
+        Carta tiroCanhao = new CartaAtaque("Tiro de canhão", "dispara uma bala de canhão", 5, 9, 1); tiroCanhao.setResenha(Arte.POW);
+        Carta espada = new CartaAtaqueComEfeito("Lamina afiada", "", 2, 1, sangramento, 2); espada.setResenha(Arte.CORTE);
+        Carta corteVenenoso = new CartaAtaqueComEfeito("Lamina venenosa", "", 1, 1, veneno, 2); corteVenenoso.setResenha(Arte.CORTEVERDE);
         Carta escudoMadeira = new CartaHabilidade("Postura de defesa", "da escudo", 1, escudinho, true);
-        Carta escudoFerro = new CartaHabilidade("Aura de defesa", "da muito escudo", 2, escudao, true);
+        Carta escudoFerro = new CartaHabilidade("Aura de defesa", "da MUITO escudo", 2, escudao, true);
         Carta purificar = new CartaHabilidade("Receba!", "Remove todos os efeitos aplicados em voce (incluindo positivos)", 2, purificarEfeito, true);
         Carta desprezo = new CartaAtaqueComEfeito("DESPREZO", "causa muito dano porém irrita seu adversario", 3, 10, odioPuro); desprezo.setResenha(Arte.DESPREZO);
         Carta dedoNervosoCarta = new CartaPoder("Dedo nervoso", "Para cada acúmulo, atire novamente sempre que usar uma carta de tiro!", 2, dedoNervoso);
@@ -72,6 +74,8 @@ public class App {
         }
 
         for(int i=0; i < 5; i++){ // cartas meio raras sla
+            pilhaCompra.addCarta( tiroEscopeta );
+            pilhaCompra.addCarta( tiroCanhao );
             pilhaCompra.addCarta( mestreLaminasCarta );
             pilhaCompra.addCarta( desprezo );
             pilhaCompra.addCarta( dedoNervosoCarta );
