@@ -43,11 +43,11 @@ public class App {
         Efeito sangramento = new Sangramento("Sangramento", "Causa 1 de dano por rodada ao alvo", 3, 0);
         Efeito veneno = new Veneno("Veneno", "Causa sua duraçao em dano por rodada ao alvo", 2, 0);
         Efeito odioPuro = new AumentaDano("Ódio Puro", "Aumenta o dano causado em 1 por 3 rodadas", 3, 1);
-        Efeito escudinho = new Escudo("Ganho de escudo(3)", "3 pontos de escudo", 0, 3);
-        Efeito escudao = new Escudo("Ganho de escudo(7)", "7 pontos de escudo", 0, 7);
+        Efeito escudinho = new Escudo("Ganho de escudo (3)", "3 pontos de escudo", 0, 3);
+        Efeito escudao = new Escudo("Ganho de escudo (7)", "7 pontos de escudo", 0, 7);
         Efeito purificarEfeito = new Purificar("Purificar", "Remove todos os efeitos aplicados em voce (incluindo bons!)", 0);
         Efeito feridas = new DanoConstante("Feridas", "Causa 1 de dano por rodada ao alvo por 2 rodadas", 2, 1);
-        Efeito ganhaEnergia2 = new GanhaEnergia("Ganho de energia(2)", "Ganha 2 ponto de energia", 0, 2);
+        Efeito ganhaEnergia2 = new GanhaEnergia("Ganho de energia (2)", "Ganha 2 ponto de energia", 0, 2);
 
         // poderes -------------
         Poder dedoNervoso = new MaosLeves(("JOHN WICK!"), "Sempre que atirar, ATIRE NOVAMENTE! pelo tanto de acumulos desse poder.", 1);
