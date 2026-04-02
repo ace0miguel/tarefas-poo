@@ -102,9 +102,9 @@ public abstract class Carta {
 
     public void printaResenha(){
         if (!this.getResenha().equals("")){
-                Textos.sleep(400);
+                Textos.sleep(600);
                 Textos.printaLinhaDevagar(this.getResenha());
-                Textos.sleep(400);
+                Textos.sleep(600);
                 System.out.println();
             }
     }

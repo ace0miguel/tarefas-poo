@@ -5,12 +5,12 @@ import Cartas.CartaHabilidade;
 import Cartas.CartaPoder;
 import Deck.PilhaCompra;
 import EfeitosDeStatus.AumentaDano;
-import EfeitosDeStatus.DanoConstante;
+import EfeitosDeStatus.DanosConstantes.DanoConstante;
+import EfeitosDeStatus.DanosConstantes.Sangramento;
+import EfeitosDeStatus.DanosConstantes.Veneno;
 import EfeitosDeStatus.Efeito;
 import EfeitosDeStatus.Escudo;
 import EfeitosDeStatus.Purificar;
-import EfeitosDeStatus.Sangramento;
-import EfeitosDeStatus.Veneno;
 import Entidades.Heroi;
 import Entidades.Inimigo;
 import Poderes.MaosLeves;
@@ -20,7 +20,6 @@ import Util.Arte;
 
 public class App {
     public static void main(String[] args) throws Exception {
-
 
         // GerenciadorCartas gerenciadorCartas = new GerenciadorCartas();
         PilhaCompra pilhaCompra = new PilhaCompra();
@@ -34,7 +33,7 @@ public class App {
 
         // inimigos -------------
         Inimigo inimigo = new Inimigo("Capitão Barbossa", 30, 4);
-        Inimigo inimigo2 = new Inimigo("LOUD Coringa", 8, 3);    
+        Inimigo inimigo2 = new Inimigo("LOUD Coringa", 10, 3);    
         Inimigo inimigo3 = new Inimigo("Endrick", 15, 4);
 
         // efeitos ------------

@@ -47,8 +47,9 @@ public class Mao {
         } catch (Exception e) {
             ler.nextLine();
             System.out.println();
-            System.out.println("Tem que ser um número de 0 a 5, capitão!!");
+            System.out.println("Tem que ser um número de 0 a "+this.quantMax+", capitão!!");
             System.out.println();
+            InputHandler.esperar();
         }
 
         return opcao;
@@ -69,7 +70,6 @@ public class Mao {
 
     public Carta escolheCarta(int opcao){ // retorna a opçao escolhida em forma de carta
         Carta carta = cartas.get(opcao);
-        // removeCarta(opcao, pilhaDescarte);  
         return carta;
     }
 

@@ -87,11 +87,11 @@ public class Textos {
 
         // parte de baixo do barco ---------------------------
         
-        System.out.println(Cor.txtMarromClaro("/".repeat(68)) + Cor.txtMarrom("/")); sleep(25);
+        System.out.println(Cor.txtMarromClaro("/".repeat(68)) + Cor.txtMarrom("////")); sleep(25);
         
-        System.out.println(Cor.txtMarromClaro("/".repeat(63)) + Cor.txtMarrom("/")); sleep(25);
+        System.out.println(Cor.txtMarromClaro("/".repeat(63)) + Cor.txtMarrom("////")); sleep(25);
         
-        System.out.println(Cor.txtMarromClaro("/".repeat(52)) + Cor.txtMarrom("/")); sleep(25);
+        System.out.println(Cor.txtMarromClaro("/".repeat(52)) + Cor.txtMarrom("////")); sleep(25);
         
         System.out.println(Cor.txtMarrom("/".repeat(32))); sleep(25);
 
@@ -175,11 +175,11 @@ public class Textos {
         }
 
         // parte de baixo do barco
-        System.out.println(Cor.txtMarromClaro("/".repeat(68)) + Cor.txtMarrom("/"));
+        System.out.println(Cor.txtMarromClaro("/".repeat(68)) + Cor.txtMarrom("////"));
         
-        System.out.println(Cor.txtMarromClaro("/".repeat(63)) + Cor.txtMarrom("/"));
+        System.out.println(Cor.txtMarromClaro("/".repeat(63)) + Cor.txtMarrom("////"));
         
-        System.out.println(Cor.txtMarromClaro("/".repeat(52)) + Cor.txtMarrom("/"));
+        System.out.println(Cor.txtMarromClaro("/".repeat(52)) + Cor.txtMarrom("////"));
         
         System.out.println(Cor.txtMarrom("/".repeat(32)));
 

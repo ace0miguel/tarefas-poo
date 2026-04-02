@@ -1,6 +1,8 @@
 package EfeitosDeStatus;
 
 import Cartas.Carta;
+import EfeitosDeStatus.DanosConstantes.Sangramento;
+import EfeitosDeStatus.DanosConstantes.Veneno;
 import Entidades.Entidade;
 import Entidades.Heroi;
 import Telas.Batalha;
@@ -41,7 +43,7 @@ public abstract class Efeito {
         return this.nome;
     }
 
-    public String getUpperNome() { // retorna em uppercase sem cor pq buga
+    public String getUpperNome() { 
         return this.nome.toUpperCase();
     }
     

@@ -10,11 +10,11 @@ import Deck.Mao;
 import Deck.PilhaCompra;
 import Deck.PilhaDescarte;
 import EfeitosDeStatus.AumentaDano;
-import EfeitosDeStatus.DanoConstante;
+import EfeitosDeStatus.DanosConstantes.DanoConstante;
+import EfeitosDeStatus.DanosConstantes.Sangramento;
+import EfeitosDeStatus.DanosConstantes.Veneno;
 import EfeitosDeStatus.Efeito;
 import EfeitosDeStatus.Escudo;
-import EfeitosDeStatus.Sangramento;
-import EfeitosDeStatus.Veneno;
 import Entidades.Entidade;
 import Entidades.Heroi;
 import Entidades.Inimigo;
@@ -113,7 +113,7 @@ public class Batalha {
         listaEfeitos.removeIf(efeito -> efeito instanceof Sangramento && ((Sangramento) efeito).getStacks() <= 0);
     }
 
-    public int selecionarAlvo(){ // falta adicionar checagem se ta selecionando um alvo valido
+    public int selecionarAlvo(){  // falta cuidar pra caso digitem um bagulho q nao seja int ta crashando
         int opcao = -1;
         while (true) { 
             int i = 0;
@@ -128,11 +128,24 @@ public class Batalha {
                     i++;
                 }
             }
-            opcao = ler.nextInt();
+
+            try {
+                opcao = ler.nextInt();
+                ler.nextLine();
+            } catch (Exception e) {
+                ler.nextLine();  
+            }
 
             if (opcao >= 0 && opcao < inimigos.size() && inimigos.get(opcao).estaVivo()) 
                 break;
-            Textos.apagarLinhas(i + 4);
+
+            System.out.println();
+            System.out.println("Tem que ser um número de 0 a "+i+", capitão!!");
+            System.out.println();
+
+            InputHandler.esperar();
+
+            Textos.apagarLinhas(i + 10);
         }
         return opcao;
     }
