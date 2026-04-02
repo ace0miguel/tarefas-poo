@@ -34,8 +34,8 @@ public class App {
 
         // inimigos -------------
         Inimigo inimigo = new Inimigo("Capitão Barbossa", 30, 4);
-        Inimigo inimigo2 = new Inimigo("Figurante random 1", 8, 3);    
-        Inimigo inimigo3 = new Inimigo("Figurante random 2", 8, 3);
+        Inimigo inimigo2 = new Inimigo("LOUD Coringa", 8, 3);    
+        Inimigo inimigo3 = new Inimigo("Endrick", 15, 4);
 
         // efeitos ------------
         Efeito sangramento = new Sangramento("Sangramento", "Causa 1 de dano por rodada ao alvo", 3, 0);

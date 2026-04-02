@@ -81,9 +81,11 @@ public class Batalha {
         limpaEfeitos();
         
         for (Efeito efeito : listaEfeitos) {  // notifica os efeitos
-            efeito.aplicar();
-            efeito.passaTurno(); 
-            if (efeito instanceof DanoConstante) efeitoPrintado = true; // no momento so os efeito danoconstante tao printando, se mudar atualizar aqui!
+            if (efeito.getAlvo().estaVivo()){
+                efeito.aplicar();
+                efeito.passaTurno(); 
+                if (efeito instanceof DanoConstante) efeitoPrintado = true; // no momento so os efeito danoconstante tao printando, se mudar atualizar aqui!
+            }
         }
 
         if (efeitoPrintado){
@@ -319,12 +321,12 @@ public class Batalha {
         System.out.println("DUELO ENCERRADO!");
         System.out.println();
         Textos.sleep(1500);
-        if(heroi.estaVivo() == false){
-            System.out.println("VOCÊ MORREU");
-            Arte.printSans();
-        } else {
+        if(!heroi.estaVivo() == false){
             Textos.printaLinhaDevagar(Cor.txtRosa("VOCÊ RECUPEROU O PÉROLA NEGRA!"));
             Textos.printaLinhaDevagar(Arte.PEROLANEGRA);
+        } else {
+            System.out.println("VOCÊ MORREU");
+            Arte.printSans();
         }
         System.out.println();
     }

@@ -1,10 +1,15 @@
 package Entidades;
+import java.util.ArrayList;
+import java.util.List;
+
+import Cartas.Carta;
 import Util.Cor;
 import Util.Textos;
 
 public class Heroi extends Entidade {
     private int energia;
     private int energiaMax;
+    private List<Carta> deck = new ArrayList<>();
 
     /* inicializa os atributos */
     public Heroi(String nome, int vida, int energiaMax){
@@ -15,6 +20,14 @@ public class Heroi extends Entidade {
 
     public int getEnergia(){
         return this.energia;
+    }
+
+    public List<Carta> getDeck() {
+        return deck;
+    }
+
+    public void setDeck(List<Carta> deck) {
+        this.deck = deck;
     }
 
     public void usarEnergia(int custo){
