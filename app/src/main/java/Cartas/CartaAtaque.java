@@ -37,7 +37,6 @@ public class CartaAtaque extends Carta
     @Override
     public void aplicarEfeito(Heroi heroi, Entidade alvo, Batalha batalha) {
         alvo.receberDano(this.dano);
-
         printaResenha();
     }
     

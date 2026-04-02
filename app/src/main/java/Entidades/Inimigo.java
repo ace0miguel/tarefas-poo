@@ -46,19 +46,32 @@ public class Inimigo extends Entidade{
     @Override
     public String status(){
         return (getEscudo() != 0) 
-        ?""+this.getNome()+ " | " + Textos.desenharBarraVida(this.getVida(), this.getVidaMax())+" "+Cor.azul+" ("+this.getEscudo()+" de escudo)" + Cor.reset 
-        : ""+this.getNome()+ " | " + Textos.desenharBarraVida(this.getVida(), this.getVidaMax()) + Cor.reset;
+        ? ""+this.getNomeColorido()+ " | " + Textos.desenharBarraVida(this.getVida(), this.getVidaMax())+" "+Cor.azul+" ("+this.getEscudo()+" de escudo)" + Cor.reset 
+        : ""+this.getNomeColorido()+ " | " + Textos.desenharBarraVida(this.getVida(), this.getVidaMax()) + Cor.reset;
 
     }
 
     public void anunciarAtaque(){
         Cor.setCinza();
         if (this.estaVivo()){
-            System.out.print("> " + this.getNome() + " ");
+            System.out.print(Cor.reset + "> " + this.getNome() + " ");
             switch (nextAcao) {
                 case 0 -> System.out.println("irá te atacar causando "+(this.dano + this.getDanoExtra())+" pontos de dano" );
                 case 1 -> System.out.println("irá te atacar causando "+(this.dano / 2 + this.getDanoExtra())+" e te deixar ferido");
                 case 2 -> System.out.println("está prestes a realizar um PACTO SINISTRO");
+            }
+        }
+        Cor.txtReset();
+    }
+
+    public void ataqueRealizado(){
+        if (this.estaVivo()){
+            System.out.print(Cor.reset + "> " + this.getNomeColorido() + Cor.txtAmarelo(" -> "));
+            Cor.setVermelho();
+            switch (nextAcao) {
+                case 0 -> { System.out.println("Causou "+(this.dano + this.getDanoExtra())+" pontos de dano!" ); Textos.sleep(300); }
+                case 1 -> { System.out.println("Causou "+(this.dano / 2 + this.getDanoExtra())+" pontos de dano e te deixou ferido!" ); Textos.sleep(300); }
+                case 2 -> { System.out.println("REALIZOU UM PACTO SINISTRO! Está mais forte, mas a que custo..." ); Textos.sleep(300); }
             }
         }
         Cor.txtReset();

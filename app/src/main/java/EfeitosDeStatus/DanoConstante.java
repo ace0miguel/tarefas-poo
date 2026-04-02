@@ -24,6 +24,8 @@ public class DanoConstante extends Efeito {
         
         if (this.getDur() > 1)
             this.getAlvo().setSangrando(true);
+
+        Cor.printaVermelho(this.getAlvo().getNome() + " sofreu " + this.dano + " pontos de dano de " + this.getNome() + "!\n\n");
     }
 
     @Override

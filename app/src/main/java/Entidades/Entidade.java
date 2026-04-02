@@ -22,8 +22,11 @@ public abstract class Entidade {
     //getters ------
 
     public String getNome(){
-        corStatus();
         return this.nome + Cor.reset;
+    }
+
+    public String getNomeColorido(){
+        return corStatus() + this.nome + Cor.reset;
     }
 
     public int getVida(){
@@ -72,12 +75,14 @@ public abstract class Entidade {
         this.sangrando = false;
     }
 
-    public void corStatus(){
-        if (this.envenenado == true)
-            Cor.setVerde();
-
-        if (this.sangrando == true)
-            Cor.setVermelho();
+    public String corStatus() {
+        if (this.sangrando) {
+            return Cor.vermelho; 
+        }
+        else if (this.envenenado) {
+            return Cor.verde;
+        }
+        return Cor.reset;
     }
 
     public void receberDano(int dano){

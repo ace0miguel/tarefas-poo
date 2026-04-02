@@ -72,7 +72,7 @@ public class Batalha {
     public void passaRodada(){
         heroi.passaRodada(); // remove os bonus que acabam (escudo, etc) e reseta energia
         heroi.resetEfeitos();
-
+        boolean efeitoPrintado = false;
         for (Inimigo inimigo : arrayInimigos) {
             inimigo.passaRodada();
             inimigo.resetEfeitos();
@@ -83,10 +83,15 @@ public class Batalha {
         for (Efeito efeito : listaEfeitos) {  // notifica os efeitos
             efeito.aplicar();
             efeito.passaTurno(); 
+            if (efeito instanceof DanoConstante) efeitoPrintado = true; // no momento so os efeito danoconstante tao printando, se mudar atualizar aqui!
         }
-        
-        notificaMorte();
 
+        if (efeitoPrintado){
+        Textos.apagarLinhas(1); // apaga uma linha pq o efeito printa 2 linha vazia pra ficar bonito ai tem q apaga pra fica simetrico
+        InputHandler.esperar();
+        }
+
+        notificaMorte();
         limpaEfeitos();
 
         for (Poder poder : listaPoderes) // notifica os poderes
@@ -107,18 +112,27 @@ public class Batalha {
     }
 
     public int selecionarAlvo(){ // falta adicionar checagem se ta selecionando um alvo valido
-        int i = 0;
-        System.out.println();
-        System.out.println("Selecione o alvo:");
-        System.out.println();
+        int opcao = -1;
+        while (true) { 
+            int i = 0;
+            System.out.println();
+            System.out.println("Selecione o alvo:");
+            System.out.println();
 
-        for (Inimigo inimigo : inimigos) {
-            if (inimigo.estaVivo()){
-                System.out.println((""+i+" - "+inimigo.getNome()+""));
-                i++;
+            for (Inimigo inimigo : inimigos) {
+                if (inimigo.estaVivo()){
+                    Textos.sleep(30);
+                    System.out.println((""+i+" - "+inimigo.getNomeColorido()+""));
+                    i++;
+                }
             }
+            opcao = ler.nextInt();
+
+            if (opcao >= 0 && opcao < inimigos.size() && inimigos.get(opcao).estaVivo()) 
+                break;
+            Textos.apagarLinhas(i + 4);
         }
-        return ler.nextInt();
+        return opcao;
     }
 
     public void adicionarEfeito(Efeito efeito){
@@ -270,6 +284,9 @@ public class Batalha {
     }
 
     public void turnoInimigos(){
+        Textos.limpaTela();
+        Cor.printaLaranja("- = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = -\n \n"); Textos.sleep(50);
+
         for (Inimigo inimigo : arrayInimigos) {
             int acao = inimigo.getNextAcao();
             switch (acao){
@@ -280,8 +297,12 @@ public class Batalha {
                     inimigo.receberEfeito(this, pactoSinistro);
                 }
             }
+            inimigo.ataqueRealizado();
             inimigo.escolheAcao(); // escolhe prox ação
         }
+        
+        Cor.printaLaranja("\n- = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = -\n");
+        InputHandler.esperar();
         passaTurno();
     }
 

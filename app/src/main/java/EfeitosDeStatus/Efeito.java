@@ -27,7 +27,8 @@ public abstract class Efeito {
         this.dur = copiado.getDur();
     }
 
-    public abstract void aplicar();
+    public void aplicar(){ // era abstract nao e mais pq eu tentei fazer um negocio mas resolvi deixa assim msm se precisar pode bota abstract dnv q nao vai da BO nenhum
+    }
 
     public abstract void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha);
 
@@ -37,9 +38,22 @@ public abstract class Efeito {
     
     // getters ------------
     public String getNome() {
+        return this.nome;
+    }
+
+    public String getUpperNome() { // retorna em uppercase sem cor pq buga
+        return this.nome.toUpperCase();
+    }
+    
+    public String getNomeColorido() {
         if (this instanceof Veneno) return Cor.verde + this.nome + Cor.reset;
+
         else if (this instanceof Sangramento) return Cor.vermelho + this.nome + Cor.reset;
+
         else if (this instanceof AumentaDano) return Cor.txtRosa(this.nome);
+
+        else if (this instanceof Purificar && this instanceof Escudo) return Cor.azul + this.nome + Cor.reset;
+        
         return this.nome;
     }
     

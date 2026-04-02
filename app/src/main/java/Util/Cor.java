@@ -7,13 +7,14 @@ public class Cor {
     public static String verde = "\u001B[32m";
     public static String azul = "\u001B[34m";
     public static String amarelo = "\u001B[33m";
-    
+
     public static String preto = "\u001B[30m";
     public static String cinza = "\u001B[90m"; 
     public static String roxo = "\u001B[35m"; 
     public static String rosa = "\u001B[95m"; 
     public static String laranja = "\u001B[38;5;208m"; 
     public static String marrom = "\u001B[38;5;130m";
+    public static String marromClaro = "\u001B[38;5;137m";
 
     // ----------------------------------------------------------------------------------------
 
@@ -55,6 +56,10 @@ public class Cor {
 
     public static void printaMarrom(String printa) {
         System.out.print(marrom + printa + reset);
+    }
+
+    public static void printaMarromClaro(String printa) {
+        System.out.print(marromClaro + printa + reset);
     }
 
     // ----------------------------------------------------------------------------------------
@@ -99,12 +104,19 @@ public class Cor {
         System.out.print(marrom);
     }
 
-    // ----------------------------------------------------------------------------------------
+    public static void setMarromClaro() {
+        System.out.print(marromClaro);
+    }
 
-    public static void txtReset() {
+    public static void reset() {
         System.out.print(reset);
     }
 
+    // ----------------------------------------------------------------------------------------
+
+    public static String txtReset() {
+        return reset;
+    }
     public static String txtVerde(String txt) {
         return verde + txt + reset;
     }
@@ -143,5 +155,9 @@ public class Cor {
 
     public static String txtMarrom(String txt) {
         return marrom + txt + reset;
+    }
+
+    public static String txtMarromClaro(String txt) {
+        return marromClaro + txt + reset;
     }
 }

@@ -45,7 +45,7 @@ public class Heroi extends Entidade {
     @Override
     public String status(){
         return (getEscudo() != 0) 
-        ? ""+this.getNome()+ Cor.reset + " | " + Textos.desenharBarraVida(this.getVida(), this.getVidaMax()) + " "+Cor.azul+" ("+this.getEscudo()+" de escudo)" + Cor.reset 
-        : ""+this.getNome()+ Cor.reset + " | " + Textos.desenharBarraVida(this.getVida(), this.getVidaMax()) + Cor.reset;
+        ? ""+this.getNomeColorido()+ Cor.reset + " | " + Textos.desenharBarraVida(this.getVida(), this.getVidaMax()) + " "+Cor.azul+" ("+this.getEscudo()+" de escudo)" + Cor.reset 
+        : ""+this.getNomeColorido()+ Cor.reset + " | " + Textos.desenharBarraVida(this.getVida(), this.getVidaMax()) + Cor.reset;
     }
 }

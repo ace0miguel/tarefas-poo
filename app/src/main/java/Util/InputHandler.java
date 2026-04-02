@@ -1,11 +1,23 @@
 package Util;
-import java.util.*;
+import java.util.Scanner;
 
 public class InputHandler {
     private static Scanner leitor = new Scanner(System.in);
 
     public static Scanner getLeitor() {
         return leitor;
+    }
+
+    public static void esperar() {
+        System.out.println(Cor.txtCinza("\n[ Pressione ENTER para continuar ]"));
+        
+        try {
+            System.in.read();          
+            while (System.in.available() > 0) {
+                System.in.read();
+            }
+        } catch (Exception e) {
+        }
     }
 
     /* selecionar recebe uma lista, exibe no terminal em forma de um menu de escolha

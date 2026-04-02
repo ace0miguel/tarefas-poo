@@ -24,6 +24,8 @@ public class Veneno extends DanoConstante{
         
         if (this.getDur() > 1)
             this.getAlvo().setEnvenenado(true);
+
+        Cor.printaVerde(this.getAlvo().getNome() + " sofreu " + this.getDur() + " pontos de dano de veneno!\n\n"); 
     }
 
     @Override

@@ -32,7 +32,6 @@ public class PilhaCompra {
     }
 
     public void shuffleAll(PilhaDescarte pilhaDescarte){ // reembaralha todas as cartas (mao, compra e descarte)
-        Textos.sleep(300);
         cartas.addAll(pilhaDescarte.getPilha());
         Collections.shuffle(cartas);
         pilhaCartas.clear();
@@ -42,7 +41,7 @@ public class PilhaCompra {
 
     public void deckReset(PilhaDescarte pilhaDescarte){ // embaralha todas as cartas da pilha de descarte e adiciona a pilha de compra
         Cor.printaLaranja("Embaralhando as cartas!");
-        Textos.sleep(500);
+        Textos.sleep(1200);
         ArrayList<Carta> temp = pilhaDescarte.reset();
         this.pilhaCartas.addAll(temp);  
     }

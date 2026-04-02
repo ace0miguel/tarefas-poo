@@ -30,24 +30,31 @@ public class Textos {
         boolean aux1 = false;
         boolean aux2 = false;
 
-        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-=-==-=-==-\n"); sleep(50);
-        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-=-==-=-==-=-==-=-==-=-=-==-=-==-\n"); sleep(50);
-        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-\n"); sleep(50);
-        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-"); sleep(50); 
+        // parte de cima do barco 
+        System.out.println(Cor.txtMarrom("/".repeat(18))); sleep(25);
 
+        System.out.println(Cor.txtMarrom("/".repeat(32))); sleep(25);
+        
+        System.out.println(Cor.txtMarromClaro("/".repeat(30)) + Cor.txtMarrom("/".repeat(24))); sleep(25);
+        
+        System.out.println(Cor.txtMarromClaro("/".repeat(52)) + Cor.txtMarrom("/".repeat(13))); sleep(25);
 
-        System.out.println("\n");
+        System.out.println(Cor.txtMarromClaro("/".repeat(63)) + Cor.txtMarrom("/".repeat(7))); sleep(25);
+
+        System.out.println(" ".repeat(67) + Cor.txtMarrom("////")); sleep(25);
+
+        // ---------------------------------
 
         System.out.print(heroi.status());
         for (Poder poder : listaPoderes) {
-            System.out.print(" > " + poder.getNome() +" ["+poder.getStacks()+"] " + Cor.txtCinza("|")); sleep(50);
+            System.out.print(" > " + poder.getNome() +" ["+poder.getStacks()+"] " + Cor.txtCinza("|")); sleep(25);
         }
 
         System.out.println();
 
         for (Efeito efeito : listaEfeitos) {
             if (efeito.getAlvo() == heroi){
-                System.out.print("(" + efeito.status() + ") "); sleep(50);
+                System.out.print("(" + efeito.status() + ") "); sleep(25);
                 aux1 = true;
             }
         }
@@ -56,18 +63,18 @@ public class Textos {
 
         if (aux1) System.out.println();
 
-        Cor.printaCinza("VERSUS!\n"); sleep(50);
+        Cor.printaCinza("VERSUS!\n"); sleep(25);
 
         System.out.println();
 
         for (int i = 0; i < inimigos.length; i++){
             if (inimigos[i].estaVivo()){
-                System.out.println(inimigos[i].status()); sleep(50);
+                System.out.println(inimigos[i].status()); sleep(25);
                 aux2 = false;
 
                 for (Efeito efeito : listaEfeitos) {
                     if (efeito.getAlvo() == inimigos[i]){
-                        System.out.print("(" + efeito.status() + ") "); sleep(50);
+                        System.out.print("(" + efeito.status() + ") "); sleep(25);
                         aux2 = true;
                     }
                 }
@@ -76,14 +83,23 @@ public class Textos {
             }  
         }
 
-        sleep(50);
+        sleep(25);
 
-        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-\n"); sleep(50);
-        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-\n"); sleep(50);
-        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-=-==-=-==-=-==-=-==-=-=-==-=-==-\n"); sleep(50);
-        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-=-==-=-==-"); sleep(50);
+        // parte de baixo do barco ---------------------------
+        
+        System.out.println(Cor.txtMarromClaro("/".repeat(68)) + Cor.txtMarrom("/")); sleep(25);
+        
+        System.out.println(Cor.txtMarromClaro("/".repeat(63)) + Cor.txtMarrom("/")); sleep(25);
+        
+        System.out.println(Cor.txtMarromClaro("/".repeat(52)) + Cor.txtMarrom("/")); sleep(25);
+        
+        System.out.println(Cor.txtMarrom("/".repeat(32))); sleep(25);
+
+        System.out.println(Cor.txtMarrom("/".repeat(18))); sleep(25);
+
         System.out.println();
-        System.out.println();
+
+        // ---------------------------------
 
         sleep(400);
 
@@ -105,12 +121,20 @@ public class Textos {
         boolean aux1 = false;
         boolean aux2 = false;
 
-        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-=-==-=-==-\n");
-        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-=-==-=-==-=-==-=-==-=-=-==-=-==-\n");
-        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-\n");
-        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-");
+        // parte de cima do barco 
+        System.out.println(Cor.txtMarrom("/".repeat(18)));
 
-        System.out.println("\n");
+        System.out.println(Cor.txtMarrom("/".repeat(32)));
+        
+        System.out.println(Cor.txtMarromClaro("/".repeat(30)) + Cor.txtMarrom("/".repeat(24)));
+        
+        System.out.println(Cor.txtMarromClaro("/".repeat(52)) + Cor.txtMarrom("/".repeat(13)));
+
+        System.out.println(Cor.txtMarromClaro("/".repeat(63)) + Cor.txtMarrom("/".repeat(7)));
+
+        System.out.println(" ".repeat(67) + Cor.txtMarrom("////"));
+
+        // ---------------------------------
 
         System.out.print(heroi.status());
         for (Poder poder : listaPoderes) {
@@ -150,12 +174,20 @@ public class Textos {
             }  
         }
 
-        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-\n");
-        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-=-==-\n");
-        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-=-==-=-==-=-==-=-==-=-=-==-=-==-\n");
-        Cor.printaMarrom("=-==-=-==-=-==-=-==-=-=-==-=-==-");
+        // parte de baixo do barco
+        System.out.println(Cor.txtMarromClaro("/".repeat(68)) + Cor.txtMarrom("/"));
+        
+        System.out.println(Cor.txtMarromClaro("/".repeat(63)) + Cor.txtMarrom("/"));
+        
+        System.out.println(Cor.txtMarromClaro("/".repeat(52)) + Cor.txtMarrom("/"));
+        
+        System.out.println(Cor.txtMarrom("/".repeat(32)));
+
+        System.out.println(Cor.txtMarrom("/".repeat(18)));
+
         System.out.println();
-        System.out.println();
+
+        // ---------------------------------
 
         for (Inimigo inimigo : inimigos) {
                 inimigo.anunciarAtaque();
@@ -212,5 +244,12 @@ public class Textos {
             System.out.println(linha);
             sleep(tempo);
         }
+    }
+
+    public static void apagarLinhas(int quantidade) {
+        for (int i = 0; i < quantidade; i++) {
+            System.out.print("\u001B[1A\u001B[2K");
+        }
+        System.out.flush(); 
     }
 }

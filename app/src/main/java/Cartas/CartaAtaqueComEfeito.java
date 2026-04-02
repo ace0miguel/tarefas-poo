@@ -18,7 +18,7 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
         super(nome, descricao, custo, dano);
         this.efeito = efeito;
         this.tipo = tipo;
-        setDescricao("Aplica " + this.efeito.getNome());
+        setDescricao("Aplica " + this.efeito.getNomeColorido());
     }
 
     @Override
@@ -26,23 +26,21 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
         int energiaAtual = heroi.getEnergia();
         if(energiaAtual >= this.getCusto()){
             alvo.receberDano(this.getDano());
+            printaResenha();
             heroi.usarEnergia(this.getCusto());
 
             Efeito e = efeito.criaCopia();
             e.setAlvo(alvo);
             batalha.adicionarEfeito(e);
-    
-            printaResenha();
         }
     }
 
     @Override
     public void aplicarEfeito(Heroi heroi, Entidade alvo, Batalha batalha) {
         alvo.receberDano(this.getDano());
+        printaResenha();
         Efeito e = efeito.criaCopia();
         e.setAlvo(alvo);
         batalha.adicionarEfeito(e);
-
-        printaResenha();
     }
 }
