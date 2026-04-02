@@ -45,13 +45,14 @@ public class Inimigo extends Entidade{
 
     public void anunciarAtaque(){
         if (this.estaVivo()){
-            System.out.print(Cor.reset + "> " + this.getNome() + " ");
+            System.out.print(Cor.amarelo + "> " + Cor.reset + this.getNome() + " ");
             Cor.setCinza();
             switch (nextAcao) {
                 case 0 -> System.out.println("irá te atacar causando "+(this.dano + this.getDanoExtra())+" pontos de dano" );
                 case 1 -> System.out.println("irá te atacar causando "+(this.dano / 2 + this.getDanoExtra())+" e te deixar ferido");
                 case 2 -> System.out.println("está prestes a realizar um PACTO SINISTRO");
             }
+            Textos.sleep(50);
         }
         Cor.txtReset();
     }

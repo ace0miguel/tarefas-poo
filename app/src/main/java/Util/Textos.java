@@ -29,6 +29,8 @@ public class Textos {
         limpaTela();
         boolean aux1 = false;
         boolean aux2 = false;
+        sleep(500);
+        printaLinhaDevagar(Cor.txtCinza(Arte.titulo)); sleep(700);
 
         // parte de cima do barco 
         System.out.println(Cor.txtMarrom("/".repeat(18))); sleep(25);
@@ -45,31 +47,29 @@ public class Textos {
 
         // ---------------------------------
 
-        System.out.print(heroi.status());
+        String linhaStatus = heroi.status();
         for (Poder poder : listaPoderes) {
-            System.out.print(" > " + poder.getNome() +" ["+poder.getStacks()+"] " + Cor.txtCinza("|")); sleep(25);
+            linhaStatus += " > " + poder.getNome() + " [" + poder.getStacks() + "] " + Cor.txtCinza("|");
         }
 
-        System.out.println();
-
+        printaColunaDevagar(linhaStatus,8);
+        sleep(25);
+        
         for (Efeito efeito : listaEfeitos) {
             if (efeito.getAlvo() == heroi){
                 System.out.print("(" + efeito.status() + ") "); sleep(25);
                 aux1 = true;
             }
-        }
-
+        }        
         System.out.println();
 
         if (aux1) System.out.println();
 
-        Cor.printaCinza("VERSUS!\n"); sleep(25);
-
-        System.out.println();
+        System.out.println(Cor.txtCinza("VERSUS!\n")); sleep(25);
 
         for (int i = 0; i < inimigos.length; i++){
             if (inimigos[i].estaVivo()){
-                System.out.println(inimigos[i].status()); sleep(25);
+                printaColunaDevagar(inimigos[i].status(), 8); sleep(25);
                 aux2 = false;
 
                 for (Efeito efeito : listaEfeitos) {
@@ -101,25 +101,27 @@ public class Textos {
 
         // ---------------------------------
 
-        sleep(400);
+        sleep(700);
 
         for (Inimigo inimigo : inimigos) {
                 inimigo.anunciarAtaque();
         }
 
-        sleep(300);
+        sleep(500);
 
         System.out.println();
         System.out.println(heroi.statusEnergia()); 
         System.out.println();
 
-        sleep(300);
+        sleep(500);
     }
 
     public static void batalhaSemDelay(Heroi heroi, ArrayList<Efeito> listaEfeitos, List<Poder> listaPoderes,  Inimigo... inimigos){
         limpaTela();
         boolean aux1 = false;
         boolean aux2 = false;
+
+        System.out.println(Cor.txtCinza(Arte.titulo));
 
         // parte de cima do barco 
         System.out.println(Cor.txtMarrom("/".repeat(18)));
@@ -243,6 +245,48 @@ public class Textos {
         for (String linha : linhas) {
             System.out.println(linha);
             sleep(tempo);
+        }
+    }
+
+    public static void printaColunaDevagar(String texto, int tempoMs) {
+        String[] linhas = texto.split("\n");
+        int maxCols = 0;
+
+        for (String linha : linhas) {
+            if (linha.length() > maxCols) {
+                maxCols = linha.length();
+            }
+        }
+
+        StringBuilder[] telaAtual = new StringBuilder[linhas.length];
+        for (int i = 0; i < linhas.length; i++) {
+            telaAtual[i] = new StringBuilder();
+            System.out.println();
+        }
+
+        for (int col = 0; col < maxCols; col++) {           
+            System.out.print("\u001B[" + linhas.length + "A");
+            for (int row = 0; row < linhas.length; row++) {          
+                if (col < linhas[row].length()) {
+                    telaAtual[row].append(linhas[row].charAt(col));
+                }
+                System.out.println("\u001B[2K\r" + telaAtual[row].toString());
+            }
+            sleep(tempoMs);
+        }
+    }
+
+    public static void printaBonito(String texto, int tempoLetra, int tempoLinha) {       
+        String[] linhas = texto.split("\n");
+
+        for (String linha : linhas) {
+            for (int i = 0; i < linha.length(); i++) {                
+                System.out.print(linha.charAt(i)); 
+                Textos.sleep(tempoLetra); 
+            }
+            
+            System.out.println();
+            Textos.sleep(tempoLinha);
         }
     }
 

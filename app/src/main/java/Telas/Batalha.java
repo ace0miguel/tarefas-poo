@@ -200,7 +200,7 @@ public class Batalha {
     }
 
     public void notificaMorte(){
-        
+
         // ve se morreu todo mundo e ja retorna
         boolean todosMortos = true;
         for (Inimigo inimigo : inimigos) {
@@ -339,6 +339,7 @@ public class Batalha {
 
         for (Inimigo inimigo : arrayInimigos) {
             int acao = inimigo.getNextAcao();
+            inimigo.ataqueRealizado();
             switch (acao){
                 case 0 -> inimigo.atacar(heroi);
                 case 1 -> inimigo.atacarEfeito(heroi, this, feridas);
@@ -347,7 +348,6 @@ public class Batalha {
                     inimigo.receberEfeito(this, pactoSinistro);
                 }
             }
-            inimigo.ataqueRealizado();
             inimigo.escolheAcao(); // escolhe prox ação
         }
         
@@ -371,12 +371,13 @@ public class Batalha {
         Textos.sleep(1500);
         Textos.limpaTela();
         if(!heroi.estaVivo() == false){
-            Textos.printaLinhaDevagar(Cor.txtRosa("VOCÊ RECUPEROU O PÉROLA NEGRA!"));
             Textos.printaLinhaDevagar(Arte.PEROLANEGRA);
         } else {
-            Cor.printaVermelho("VOCÊ MORREU");
             System.out.println();
-            Arte.printSans();
+            Cor.printaCinza(Arte.sans2);
+            System.out.println();
+            System.out.println();
+            Cor.printaVermelho(Arte.VOCEMORREU);
         }
         System.out.println();
     }

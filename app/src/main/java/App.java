@@ -18,6 +18,8 @@ import Poderes.MaosLeves;
 import Poderes.Poder;
 import Telas.Batalha;
 import Util.Arte;
+import Util.Cor;
+import Util.Textos;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -56,11 +58,11 @@ public class App {
         Carta tiroEscopeta = new CartaAtaque("Tiro de escopeta", "dispara uma bala de 12", 4, 7, 1); tiroEscopeta.setResenha(Arte.POW);
 
         Carta tiroCanhao = new CartaAtaqueComEfeito("Tiro de canhão", "dispara uma bala de canhão", 5, 9, feridas, 1); tiroCanhao.setResenha(Arte.POW);
-        Carta espada = new CartaAtaqueComEfeito("Lamina afiada", "", 1, 1, sangramento, 2); espada.setResenha(Arte.CORTE);
+        Carta espada = new CartaAtaqueComEfeito("Lamina afiada", "", 1, 1, sangramento, 2); espada.setResenha(Arte.CORTEVERMELHO);
         Carta corteVenenoso = new CartaAtaqueComEfeito("Lamina venenosa", "", 1, 1, veneno, 2); corteVenenoso.setResenha(Arte.CORTEVERDE);
         Carta desprezo = new CartaAtaqueComEfeito("DESPREZO", "causa muito dano porém irrita seu adversario", 4, 10, odioPuro); desprezo.setResenha(Arte.DESPREZO);
-        Carta corteDefensivo = new CartaAtaqueComEfeito("Corte defensivo", "bate e ganha escudo!", 1, 1, escudinho, 2); corteDefensivo.setResenha(Arte.CORTE); corteDefensivo.setSelfCast(true);
-        Carta corteRapido = new CartaAtaqueComEfeito("Corte rapido", "bate e ganha 2 pontos de energia!", 1, 1, ganhaEnergia2, 2); corteRapido.setResenha(Arte.CORTE); corteRapido.setSelfCast(true);
+        Carta corteDefensivo = new CartaAtaqueComEfeito("Corte defensivo", "bate e ganha escudo!", 1, 1, escudinho, 2); corteDefensivo.setResenha(Cor.txtAzul(Arte.CORTE)); corteDefensivo.setSelfCast(true);
+        Carta corteRapido = new CartaAtaqueComEfeito("Corte rapido", "bate e ganha 2 pontos de energia!", 1, 1, ganhaEnergia2, 2); corteRapido.setResenha(Cor.txtAmareloClaro(Arte.CORTE)); corteRapido.setSelfCast(true);
 
         Carta escudoMadeira = new CartaHabilidade("Postura de defesa", "da escudo", 1, escudinho, true);
         Carta escudoFerro = new CartaHabilidade("Aura de defesa", "da MUITO escudo", 2, escudao, true);
@@ -90,9 +92,11 @@ public class App {
             pilhaCompra.addCarta( desprezo );
             pilhaCompra.addCarta( dedoNervosoCarta );
         }
-
-        Arte.printTitulo();
         
+        Textos.limpaTela();
+        Textos.printaBonito((Arte.titulo + "\n"), 2, 0);
+        System.out.println();
+
         Thread.sleep(1500);
 
         Batalha batalha = new Batalha();
