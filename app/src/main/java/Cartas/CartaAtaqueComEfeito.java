@@ -18,7 +18,7 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
         super(nome, descricao, custo, dano);
         this.efeito = efeito;
         this.tipo = tipo;
-        setDescricao("Aplica " + this.efeito.getNomeColorido());
+        setDescricao("Aplica [ " + this.efeito.getNomeColorido() + " ]");
     }
 
     @Override
@@ -30,7 +30,7 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
             heroi.usarEnergia(this.getCusto());
 
             Efeito e = efeito.criaCopia();
-            e.setAlvo(alvo);
+            e.setAlvo(this.getSelfCast() ? heroi : alvo); // selfcast: ataca o inimigo e aplica um efeito em si mesmo
             batalha.adicionarEfeito(e);
         }
     }
@@ -40,7 +40,7 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
         alvo.receberDano(this.getDano());
         printaResenha();
         Efeito e = efeito.criaCopia();
-        e.setAlvo(alvo);
+        e.setAlvo(this.getSelfCast() ? heroi : alvo); // selfcast: ataca o inimigo e aplica um efeito em si mesmo
         batalha.adicionarEfeito(e);
     }
 }

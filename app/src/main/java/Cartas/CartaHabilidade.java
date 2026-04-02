@@ -48,6 +48,6 @@ public class CartaHabilidade extends Carta // aplica um efeito em um alvo
     }
     
     public String descricao(){
-        return ""+this.getNome()+" - "+this.getDescricao()+" ("+this.efeito.getNomeColorido()+")" + Cor.txtAmarelo(" [custo: " + this.getCusto() + "]");
+        return ""+this.getNome()+" - "+this.getDescricao()+ " - [ " +this.efeito.getNomeColorido()+" ]" + Cor.txtAmareloClaro(" < custo: " + this.getCusto());
     }
 }

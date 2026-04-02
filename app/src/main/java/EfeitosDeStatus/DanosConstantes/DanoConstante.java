@@ -41,7 +41,7 @@ public class DanoConstante extends Efeito {
 
     @Override
     public String status() {
-        return Cor.vermelho + this.getNome() + " > " + this.getDur() + Cor.reset; 
+        return Cor.amarelo + this.getNome() + Cor.reset + " > " + this.getDur() ; 
         
     }
     

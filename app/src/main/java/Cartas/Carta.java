@@ -71,6 +71,10 @@ public abstract class Carta {
         return resenha;
     }
 
+    public boolean temResenha() {
+        return !this.resenha.equals("");
+     }
+
     // Setters --------------------------------------
     
     public void setSelfCast(boolean selfCast) {
@@ -102,7 +106,7 @@ public abstract class Carta {
 
     public void printaResenha(){
         if (!this.getResenha().equals("")){
-                Textos.sleep(600);
+                Textos.sleep(200);
                 Textos.printaLinhaDevagar(this.getResenha());
                 Textos.sleep(600);
                 System.out.println();

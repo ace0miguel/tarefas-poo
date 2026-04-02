@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import Cartas.Carta;
+import Cartas.CartaAtaqueComEfeito;
 import Cartas.CartaPoder;
 import Deck.Mao;
 import Deck.PilhaCompra;
@@ -30,7 +31,7 @@ public class Batalha {
     Carta c;
 
     //efeitos de molde enquanto nao tem o json (esses aq sao pros inimigos)
-    Efeito feridas = new DanoConstante("Feridas", "Causa 1 de dano por rodada ao alvo", 2, 1);
+    Efeito feridas = new DanoConstante("Feridas", "Causa 1 de dano por rodada ao alvo por 2 rodadas", 2, 1);
     Efeito pactoSinistro = new AumentaDano(Cor.txtCinza("Pacto Sinistro"), "Aumenta o dano causado em 2 por 2 rodadas", 2, 2);
     Efeito escudinho = new Escudo("Escudinho", "3 pontos de escudo", 0, 3);
     Efeito escudao = new Escudo("Escudinho", "7 pontos de escudo", 0, 7);
@@ -113,12 +114,12 @@ public class Batalha {
         listaEfeitos.removeIf(efeito -> efeito instanceof Sangramento && ((Sangramento) efeito).getStacks() <= 0);
     }
 
-    public int selecionarAlvo(){  // falta cuidar pra caso digitem um bagulho q nao seja int ta crashando
+    public int selecionarAlvo(){  // falta fazer uma opçao pra voltar caso ele mude de ideia sobre a carta!
         int opcao = -1;
         while (true) { 
             int i = 0;
             System.out.println();
-            System.out.println("Selecione o alvo:");
+            Cor.printaAmarelo("Selecione o alvo:");
             System.out.println();
 
             for (Inimigo inimigo : inimigos) {
@@ -140,12 +141,11 @@ public class Batalha {
                 break;
 
             System.out.println();
-            System.out.println("Tem que ser um número de 0 a "+i+", capitão!!");
-            System.out.println();
+            System.out.println("Tem que ser um número de 0 a "+(i-1)+", capitão!!");
 
             InputHandler.esperar();
 
-            Textos.apagarLinhas(i + 10);
+            Textos.apagarLinhas(i + 8);
         }
         return opcao;
     }
@@ -168,7 +168,7 @@ public class Batalha {
             // se tiver outro efeito q espalha ou passa copia sozinho bota uma checagem aq tb pra nao duplicar
             boolean doisVeneno = e instanceof Veneno && efeito instanceof Veneno; 
 
-            if ((e.getNome().equals(efeito.getNome()) || doisVeneno) && e.getAlvo() == efeito.getAlvo()){
+            if ((e.getNome().equals(efeito.getNome()) || doisVeneno) && e.getAlvo() == efeito.getAlvo() && !e.getInsta()){
                 // aqui entram os efeitos que possuem excessoes especificas no momento de aplicar repetidamente
                 if (e instanceof Sangramento s){ 
                     s.setDur(efeito.getDur());
@@ -226,6 +226,7 @@ public class Batalha {
     public void turnoHeroi(){
         mao.addCinco(pilhaCompra, pilhaDescarte);
         boolean primeiroLoop = true;
+        boolean escolhaInvalida = false;
 
             while(true){ // loop da escolha de ação
                 Textos.limpaTela();
@@ -234,12 +235,23 @@ public class Batalha {
                     Textos.batalha(heroi, listaEfeitos, listaPoderes, arrayInimigos);
                     primeiroLoop = false;
                 } else {
+                    if (escolhaInvalida){
+                        System.out.println();
+                        System.out.println("Tem que ser um número de 0 a "+mao.getSize()+", capitão!!");
+                        InputHandler.esperar();
+                        Textos.limpaTela();
+                        escolhaInvalida = false;  
+                    }
                     Textos.batalhaSemDelay(heroi, listaEfeitos, listaPoderes, arrayInimigos);
                 }
 
                 int escolha = mao.mostrar(); 
+                if (escolha > mao.getSize() || escolha < 0){ 
+                    escolhaInvalida = true;
+                    continue;
+                }
 
-                // carta válida -> confere se não tem energia suficiente
+                // chegou aqui -> opçao de carta válida -> confere se não tem energia suficiente ( mas vou deixa essa linha conferindo ai msm pra evita bug sla )
                 if (escolha < mao.getSize() && escolha >= 0){
                     Carta cartaEscolhida = mao.escolheCarta(escolha); 
                     if (!cartaEscolhida.podeGastar(heroi)){
@@ -257,12 +269,16 @@ public class Batalha {
 
                     Entidade alvoSelecionado = heroi; // se nao mudar é pq é o heroi msm
 
-                    // se não for selfcast ou poder pergunta o alvo
-                    if (cartaEscolhida.getSelfCast() || cartaEscolhida instanceof CartaPoder)
+                    // se não for selfcast ou poder pergunta o alvo, ataque com efeito selfcast ataca o alvo e aplica o efeito em si mesmo.
+                    if ((cartaEscolhida.getSelfCast() || cartaEscolhida instanceof CartaPoder) && !(cartaEscolhida instanceof CartaAtaqueComEfeito)) {
+                        if (cartaEscolhida.temResenha())
+                            Textos.limpaTela();
                         cartaEscolhida.usar(heroi, heroi, this);
-                    else {
+                    } else {
                         int alvo = selecionarAlvo();
                         alvoSelecionado = inimigos.get(alvo);
+                        if (cartaEscolhida.temResenha())
+                            Textos.limpaTela();
                         cartaEscolhida.usar(heroi, alvoSelecionado, this); 
                     }
 
@@ -331,7 +347,7 @@ public class Batalha {
         // fim de batalha
 
         System.out.println();
-        Cor.printaAmarelo("DUELO ENCERRADO!");
+        Cor.printaAmarelo("DUELO ENCERRADO!\n");
         System.out.println();
         Textos.sleep(1500);
         if(!heroi.estaVivo() == false){

@@ -7,7 +7,7 @@ public class Cor {
     public static String verde = "\u001B[32m";
     public static String azul = "\u001B[34m";
     public static String amarelo = "\u001B[33m";
-
+    public static String amareloClaro = "\u001B[93m";
     public static String preto = "\u001B[30m";
     public static String cinza = "\u001B[90m"; 
     public static String roxo = "\u001B[35m"; 
@@ -16,7 +16,7 @@ public class Cor {
     public static String marrom = "\u001B[38;5;130m";
     public static String marromClaro = "\u001B[38;5;137m";
 
-    // ----------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------
 
     public static void printaVerde(String printa) {
         System.out.print(verde + printa + reset);
@@ -28,6 +28,10 @@ public class Cor {
 
     public static void printaAmarelo(String printa) {
         System.out.print(amarelo + printa + reset);
+    }
+
+    public static void printaAmareloClaro(String printa) {
+        System.out.print(amareloClaro + printa + reset);
     }
 
     public static void printaAzul(String printa) {
@@ -62,7 +66,7 @@ public class Cor {
         System.out.print(marromClaro + printa + reset);
     }
 
-    // ----------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------
 
     public static void setVerde() {
         System.out.print(verde);
@@ -74,6 +78,10 @@ public class Cor {
 
     public static void setAmarelo() {
         System.out.print(amarelo);
+    }
+
+    public static void setAmareloClaro() {
+        System.out.print(amareloClaro);
     }
 
     public static void setAzul() {
@@ -112,11 +120,12 @@ public class Cor {
         System.out.print(reset);
     }
 
-    // ----------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------
 
     public static String txtReset() {
         return reset;
     }
+
     public static String txtVerde(String txt) {
         return verde + txt + reset;
     }
@@ -127,6 +136,10 @@ public class Cor {
 
     public static String txtAmarelo(String txt) {
         return amarelo + txt + reset;
+    }
+
+    public static String txtAmareloClaro(String txt) {
+        return amareloClaro + txt + reset;
     }
 
     public static String txtAzul(String txt) {

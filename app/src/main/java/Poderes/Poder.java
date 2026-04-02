@@ -6,6 +6,7 @@ import Entidades.Heroi;
 import Telas.Batalha;
 import Util.Cor;
 
+/* aplica um efeito no heroi, duraçao infinita, nao volta pra pilha descarte ao ser usado. Normalmente stacka */
 public abstract class Poder {
 
     private String nome;

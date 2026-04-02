@@ -1,6 +1,7 @@
 package Entidades;
 
 import Util.Cor;
+import Util.Textos;
 
 public abstract class Entidade {
     private String nome;
@@ -57,6 +58,11 @@ public abstract class Entidade {
         return this.sangrando;
     }
 
+    public boolean estaVivo (){
+        return vida > 0;
+    }
+
+    //setters -------
 
     public void setPurificar(boolean purificar) {
         this.purificar = purificar;
@@ -69,6 +75,8 @@ public abstract class Entidade {
     public void setSangrando(boolean sangrando) {
         this.sangrando = sangrando;
     }
+
+    // ----------   
 
     public void resetEfeitos(){
         this.envenenado = false;
@@ -113,11 +121,6 @@ public abstract class Entidade {
         this.danoExtra = 0;
     }
 
-    /* retorna 1 se esta vivo e 0 do contrario */
-    public boolean estaVivo (){
-        return (vida > 0) ? true : false;
-    }
-
     public void passaTurno(){
         resetarBonus();
     }
@@ -127,5 +130,9 @@ public abstract class Entidade {
         danoExtra = valor;
     }
 
-    public abstract String status();
+    public String status(){
+        return (getEscudo() != 0) 
+        ? ""+this.getNomeColorido()+ Cor.reset + " | " + Textos.desenharBarraVida(this.getVida(), this.getVidaMax()) + " "+Cor.azul+" ("+this.getEscudo()+" de escudo)" + Cor.reset + " |" + Cor.reset
+        : ""+this.getNomeColorido()+ Cor.reset + " | " + Textos.desenharBarraVida(this.getVida(), this.getVidaMax()) + Cor.reset + " |" + Cor.reset ;
+    }
 }

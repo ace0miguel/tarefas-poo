@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import Cartas.Carta;
+import Util.Cor;
 import Util.InputHandler;
 import Util.Textos;
 
@@ -24,6 +25,11 @@ public class Mao {
         }
     }
 
+    public int getQuantMax() {
+        return quantMax;
+    }
+    
+
     public void addCinco(PilhaCompra pilhaCompra, PilhaDescarte pilhaDescarte){
         for (int i = 0; i < 5; i++) // adiciona 5 cartas à mão
             this.addCarta(pilhaCompra, pilhaDescarte);
@@ -38,7 +44,7 @@ public class Mao {
             ultimoNumero = i;
         }
         ultimoNumero++;
-        System.out.println("["+ultimoNumero+"] - Encerrar turno");
+        Cor.printaCinza("["+ultimoNumero+"] - Encerrar turno\n");
         int opcao = -1;
 
         try {
@@ -46,12 +52,7 @@ public class Mao {
             ler.nextLine();
         } catch (Exception e) {
             ler.nextLine();
-            System.out.println();
-            System.out.println("Tem que ser um número de 0 a "+this.quantMax+", capitão!!");
-            System.out.println();
-            InputHandler.esperar();
         }
-
         return opcao;
     }
 

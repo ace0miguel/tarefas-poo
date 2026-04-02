@@ -21,6 +21,18 @@ public class Heroi extends Entidade {
     public int getEnergia(){
         return this.energia;
     }
+    
+    public void usarEnergia(int custo){
+        this.energia -= custo;
+    }
+
+    public void resetarEnergia(){
+        this.energia = energiaMax;
+    }
+
+    public void ganhaEnergia(int valor){
+        this.energia += valor;
+    }
 
     public List<Carta> getDeck() {
         return deck;
@@ -30,16 +42,12 @@ public class Heroi extends Entidade {
         this.deck = deck;
     }
 
-    public void usarEnergia(int custo){
-        this.energia -= custo;
-    }
-
-    public void resetarEnergia(){
-        this.energia = energiaMax;
-    }
+    
 
     public String statusEnergia(){
-        if (this.energia > 3)
+        if (this.energia > 5) // da pra passar de 5 por meio de cartas!
+            Cor.setRosa();
+        else if (this.energia > 3)
             Cor.setVerde();
         else if (this.energia > 1)
             Cor.setAmarelo();
@@ -55,12 +63,5 @@ public class Heroi extends Entidade {
     public void passaRodada(){
         resetarBonus();
         resetarEnergia();
-    }
-
-    @Override
-    public String status(){
-        return (getEscudo() != 0) 
-        ? ""+this.getNomeColorido()+ Cor.reset + " | " + Textos.desenharBarraVida(this.getVida(), this.getVidaMax()) + " "+Cor.azul+" ("+this.getEscudo()+" de escudo)" + Cor.reset 
-        : ""+this.getNomeColorido()+ Cor.reset + " | " + Textos.desenharBarraVida(this.getVida(), this.getVidaMax()) + Cor.reset;
     }
 }

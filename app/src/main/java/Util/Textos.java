@@ -229,7 +229,7 @@ public class Textos {
             barraFinal = Cor.vermelho + barraFinal + Cor.reset;
         }
 
-        return barraFinal + " " + vidaAtual + "/" + vidaMax;
+        return barraFinal + Cor.cinza + " " + vidaAtual + Cor.reset + " / " + Cor.reset + vidaMax + Cor.reset;
     }
 
     public static void printaLinhaDevagar(String texto) {

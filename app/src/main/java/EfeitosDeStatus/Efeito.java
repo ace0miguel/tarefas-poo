@@ -1,6 +1,7 @@
 package EfeitosDeStatus;
 
 import Cartas.Carta;
+import EfeitosDeStatus.DanosConstantes.DanoConstante;
 import EfeitosDeStatus.DanosConstantes.Sangramento;
 import EfeitosDeStatus.DanosConstantes.Veneno;
 import Entidades.Entidade;
@@ -47,14 +48,16 @@ public abstract class Efeito {
         return this.nome.toUpperCase();
     }
     
-    public String getNomeColorido() {
-        if (this instanceof Veneno) return Cor.verde + this.nome + Cor.reset;
+    public String getNomeColorido() { // define aqui a cor pra cada efeito ai se quiser
+        if (this.getClass() == DanoConstante.class) return Cor.txtAmarelo(this.nome);
+
+        else if (this instanceof Veneno) return Cor.verde + this.nome + Cor.reset;
 
         else if (this instanceof Sangramento) return Cor.vermelho + this.nome + Cor.reset;
 
         else if (this instanceof AumentaDano) return Cor.txtRosa(this.nome);
 
-        else if (this instanceof Purificar && this instanceof Escudo) return Cor.azul + this.nome + Cor.reset;
+        else if (this instanceof Purificar || this instanceof Escudo) return Cor.azul + this.nome + Cor.reset;
         
         return this.nome;
     }
