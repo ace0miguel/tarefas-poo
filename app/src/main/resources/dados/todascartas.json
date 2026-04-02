@@ -1,0 +1,23 @@
+{
+    "_comment": "Esse json representa uma lista com TODAS as cartas do jogo",
+
+    "CartaAtaque": [
+        {
+            "nome": "Tiro",
+            "custo": 1,
+            "dano":2
+        }
+    ],
+    
+    "CartaHabilidade": [
+        {
+            "nome": "Jarro de terra",
+            "custo": 1,
+            "escudo": 3
+        }
+    ],
+
+    "CartaPoder": [
+        
+    ]
+}
