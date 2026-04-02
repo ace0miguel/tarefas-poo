@@ -5,6 +5,7 @@ import Cartas.CartaHabilidade;
 import Cartas.CartaPoder;
 import Deck.PilhaCompra;
 import EfeitosDeStatus.AumentaDano;
+import EfeitosDeStatus.AumentaResistencia;
 import EfeitosDeStatus.DanosConstantes.DanoConstante;
 import EfeitosDeStatus.DanosConstantes.Sangramento;
 import EfeitosDeStatus.DanosConstantes.Veneno;
@@ -44,6 +45,7 @@ public class App {
         Efeito sangramento = new Sangramento("Sangramento", "Causa 1 de dano por rodada ao alvo", 3, 0);
         Efeito veneno = new Veneno("Veneno", "Causa sua duraçao em dano por rodada ao alvo", 2, 0);
         Efeito odioPuro = new AumentaDano("Ódio Puro", "Aumenta o dano causado em 1 por 3 rodadas", 3, 1);
+        Efeito aumentaResistencia = new AumentaResistencia("Armadura", "Reduz o dano recebido", 3, 2);
         Efeito escudinho = new Escudo("Ganho de escudo (3)", "3 pontos de escudo", 0, 3);
         Efeito escudao = new Escudo("Ganho de escudo (7)", "7 pontos de escudo", 0, 7);
         Efeito purificarEfeito = new Purificar("Purificar", "Remove todos os efeitos aplicados em voce (incluindo bons!)", 0);
@@ -65,6 +67,7 @@ public class App {
         Carta corteDefensivo = new CartaAtaqueComEfeito("Corte defensivo", "bate e ganha escudo!", 1, 1, escudinho, 2); corteDefensivo.setResenha(Cor.txtAzul(Arte.CORTE)); corteDefensivo.setSelfCast(true);
         Carta corteRapido = new CartaAtaqueComEfeito("Corte rapido", "bate e ganha 2 pontos de energia!", 1, 1, ganhaEnergia2, 2); corteRapido.setResenha(Cor.txtAmareloClaro(Arte.CORTE)); corteRapido.setSelfCast(true);
 
+        Carta armadura = new CartaHabilidade("armadura", "reduz o dano recebido", 2, aumentaResistencia, true);
         Carta escudoMadeira = new CartaHabilidade("Postura de defesa", "da escudo", 1, escudinho, true);
         Carta escudoFerro = new CartaHabilidade("Aura de defesa", "da MUITO escudo", 2, escudao, true);
         Carta purificar = new CartaHabilidade("Receba!", "Remove todos os efeitos aplicados em voce (incluindo positivos)", 2, purificarEfeito, true);
@@ -85,6 +88,12 @@ public class App {
             pilhaCompra.addCarta( purificar );
             pilhaCompra.addCarta( corteDefensivo );
             pilhaCompra.addCarta( corteRapido );
+            pilhaCompra.addCarta( armadura );
+            pilhaCompra.addCarta( armadura );
+            pilhaCompra.addCarta( armadura );
+            pilhaCompra.addCarta( armadura );
+            pilhaCompra.addCarta( armadura );
+            pilhaCompra.addCarta( armadura );
         }
 
         for(int i=0; i < 2; i++){ // cartas meio raras sla

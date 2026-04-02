@@ -11,6 +11,7 @@ import Deck.Mao;
 import Deck.PilhaCompra;
 import Deck.PilhaDescarte;
 import EfeitosDeStatus.AumentaDano;
+import EfeitosDeStatus.AumentaResistencia;
 import EfeitosDeStatus.DanosConstantes.DanoConstante;
 import EfeitosDeStatus.DanosConstantes.Sangramento;
 import EfeitosDeStatus.DanosConstantes.Veneno;
@@ -116,6 +117,12 @@ public class Batalha {
     }
 
     public void limpaEfeitos(){
+        for (Efeito efeito : listaEfeitos) {
+            if (efeito.getDur() <= 0 || (efeito instanceof Sangramento && ((Sangramento) efeito).getStacks() <= 0)){
+                efeito.acabar();
+            }
+        }
+
         listaEfeitos.removeIf(efeito -> efeito.getDur() <= 0);
         listaEfeitos.removeIf(efeito -> efeito instanceof Sangramento && ((Sangramento) efeito).getStacks() <= 0);
     }
@@ -176,6 +183,13 @@ public class Batalha {
 
             if ((e.getNome().equals(efeito.getNome()) || doisVeneno) && e.getAlvo() == efeito.getAlvo() && !e.getInsta()){
                 // aqui entram os efeitos que possuem excessoes especificas no momento de aplicar repetidamente
+                
+                if (e instanceof AumentaResistencia r){ 
+                    r.setDur(efeito.getDur());
+                    r.addStack();               
+                    return;
+                }
+
                 if (e instanceof Sangramento s){ 
                     s.setDur(efeito.getDur());
                     s.addStack();     
@@ -317,8 +331,14 @@ public class Batalha {
                                 efeito.aplicar(); 
                                 efeito.setInsta(false);
                         }
+
+                        // notifica o acabar pros que vao ser removidos agr
+                        if (efeito.getDur() <= 0 || efeito.getAlvo().getPurificar() == true){
+                            efeito.acabar();
+                        }
                     }
 
+                    // limpa efeitos instantaneos e limpa todos se tiver purificar    
                     listaEfeitos.removeIf(efeito -> efeito.getDur() <= 0 || efeito.getAlvo().getPurificar() == true);
 
                     notificaMorte();

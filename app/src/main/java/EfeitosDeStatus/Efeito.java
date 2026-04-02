@@ -29,17 +29,8 @@ public abstract class Efeito {
         this.desc = copiado.getDesc();
         this.dur = copiado.getDur();
     }
-
-    public void aplicar(){ // era abstract nao e mais pq eu tentei fazer um negocio mas resolvi deixa assim msm se precisar pode bota abstract dnv q nao vai da BO nenhum
-    }
-
-    public abstract void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha);
-
-    public abstract Efeito criaCopia();
-
-    public abstract String status();
     
-    // getters ------------
+    // ------------ getters
     public String getNome() {
         return this.nome;
     }
@@ -84,7 +75,7 @@ public abstract class Efeito {
         return this.onHit;
     }
 
-    // setters ------------
+    // ------------ setters
 
     public void setDesc(String desc) {
         this.desc = desc;
@@ -110,7 +101,7 @@ public abstract class Efeito {
         this.onHit = false;
     }
 
-    // ----------------
+    // ---------------- 
 
     public boolean passaTurno() { // retorna true se ainda nao tiver acabado a duraçao
         if (this.dur > 0){ 
@@ -119,4 +110,16 @@ public abstract class Efeito {
         }
         return false;
     }
+
+    // ----------- abstratos
+  
+    public abstract void aplicar();
+
+    public abstract void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha);
+
+    public abstract Efeito criaCopia();
+
+    public abstract String status();
+
+    public abstract void acabar();
 }

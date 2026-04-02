@@ -43,7 +43,10 @@ public class DanoConstante extends Efeito {
     @Override
     public String status() {
         return Cor.amarelo + this.getNome() + Cor.reset + " > " + this.getDur() ; 
-        
+    }
+
+    @Override
+    public void acabar() {
     }
     
 }

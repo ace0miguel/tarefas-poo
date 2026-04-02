@@ -5,21 +5,33 @@ import Entidades.Heroi;
 import Telas.Batalha;
 
 // altera o dano causado por ataques do alvo pelo valor passado (positivo aumenta, negativo reduz)
-public class AumentaDano extends Efeito {
+public class AumentaResistencia extends Efeito {
     private int valor;
-    public AumentaDano(String nome, String desc, int dur, int valor){
+    private int stacks = 1;
+
+    public AumentaResistencia(String nome, String desc, int dur, int valor){
         super(nome, desc, dur);
         this.valor = valor;
+        this.setInsta(true);
     }
 
-    public AumentaDano(AumentaDano copiado){
+    public AumentaResistencia(AumentaResistencia copiado){
         super(copiado);
         this.valor = copiado.valor;
+        this.setInsta(true);
+    }
+
+    public int getStacks() {
+        return stacks;
+    }
+
+    public void addStack(){
+        this.stacks++;
     }
 
     @Override
     public void aplicar(){
-        this.getAlvo().setDanoExtra(this.getAlvo().getDanoExtra() + this.valor);
+        this.getAlvo().somaResistencia(this.valor * this.stacks);
     }
 
     @Override
@@ -28,15 +40,16 @@ public class AumentaDano extends Efeito {
 
     @Override
     public Efeito criaCopia() {
-        return new AumentaDano(this);
+        return new AumentaResistencia(this);
     }
 
     @Override
     public String status() {
-        return this.getNome() + " > " + this.getDur(); 
+        return this.getNome() + " (" + this.valor * this.stacks + ") > " + this.getDur(); 
     }
     
     @Override
     public void acabar() {
+        this.getAlvo().somaResistencia(((this.valor * this.stacks) * -1));
     }
 }

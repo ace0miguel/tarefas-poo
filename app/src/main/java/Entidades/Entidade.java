@@ -9,6 +9,7 @@ public abstract class Entidade {
     private int vidaMax;
     private int escudo = 0;
     private int danoExtra = 0;
+    private int resistencia = 0; // todo dano recebido subtrai isso aqui
     private boolean purificar = false;
 
     private boolean envenenado = false;
@@ -58,6 +59,10 @@ public abstract class Entidade {
         return this.sangrando;
     }
 
+    public int getResistencia() {
+        return resistencia;
+    }
+
     public boolean estaVivo (){
         return vida > 0;
     }
@@ -75,6 +80,14 @@ public abstract class Entidade {
     public void setSangrando(boolean sangrando) {
         this.sangrando = sangrando;
     }
+    
+    public void setResistencia(int resistencia) {
+        this.resistencia = resistencia;
+    }
+
+    public void somaResistencia(int valor) {
+        this.resistencia += valor;
+    }
 
     // ----------   
 
@@ -87,20 +100,22 @@ public abstract class Entidade {
         if (this.sangrando) {
             return Cor.vermelho; 
         }
+
         else if (this.envenenado) {
             return Cor.verde;
         }
+
         return Cor.reset;
     }
 
     public void receberDano(int dano){
-        if (this.escudo >= dano){
-            this.escudo -= dano;
-        }
-        else{
-            dano -= this.escudo;
+        int danoEfetivo = dano - this.resistencia;
+        if (this.escudo >= danoEfetivo){
+            this.escudo -= danoEfetivo;
+        } else {
+            danoEfetivo -= this.escudo;
             this.escudo = 0;
-            this.vida-= dano;
+            this.vida-= danoEfetivo;
         }
     }
 

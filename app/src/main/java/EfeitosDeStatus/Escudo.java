@@ -37,7 +37,10 @@ public class Escudo extends Efeito {
 
     @Override
     public String status() {
-        return " [" + this.getNome() + this.valor + " pontos de escudo]"; 
-        
+        return " [" + this.getNome() + this.valor + " pontos de escudo]";    
+    }
+
+    @Override
+    public void acabar() {
     }
 }

@@ -35,4 +35,7 @@ public class Purificar extends Efeito {
         return "";      
     }
     
+    @Override
+    public void acabar() {
+    }
 }

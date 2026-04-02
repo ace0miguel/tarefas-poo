@@ -43,7 +43,11 @@ public class GanhaEnergia extends Efeito {
 
     @Override
     public String status() {
-        return " [" + this.getNome() + this.valor + " pontos de energia (pode ultrapassar o limite!) ]"; 
-        
+        return " [" + this.getNome() + this.valor + " pontos de energia (pode ultrapassar o limite!) ]";    
     }
+
+    @Override
+    public void acabar() {
+    }
+    
 }
