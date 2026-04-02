@@ -66,6 +66,10 @@ public class Cor {
         System.out.print(marromClaro + printa + reset);
     }
 
+    public static void printaReset(String printa) {
+        System.out.println(reset + printa + reset);
+    }
+
     // ----------------------------------------------------------------------------
 
     public static void setVerde() {

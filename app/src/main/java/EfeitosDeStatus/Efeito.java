@@ -59,6 +59,8 @@ public abstract class Efeito {
 
         else if (this instanceof Purificar || this instanceof Escudo) return Cor.azul + this.nome + Cor.reset;
         
+        else if (this instanceof GanhaEnergia) return Cor.txtAmarelo(this.nome);
+        
         return this.nome;
     }
     

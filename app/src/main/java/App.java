@@ -24,6 +24,7 @@ import Util.Textos;
 public class App {
     public static void main(String[] args) throws Exception {
 
+        // GERENCIADOR DE CARTAS Q ERA PRA CUIDAR DO JSON MAS NAO FUNCIONA ENTAO TA COMENTADO AI E TEM Q FICAR DANDO NEW
         // GerenciadorCartas gerenciadorCartas = new GerenciadorCartas();
         PilhaCompra pilhaCompra = new PilhaCompra();
 
@@ -54,12 +55,12 @@ public class App {
         Poder mestreLaminas = new MaosLeves(("MESTRE DAS LÂMINAS"), "Sempre que cortar, CORTE NOVAMENTE! pelo tanto de acumulos desse poder.", 2);
 
         // cartas -----------
-        Carta tiro = new CartaAtaque("Tiro de revolver", "dispara uma bala", 2, 3, 1); tiro.setResenha(Arte.POW);
-        Carta tiroEscopeta = new CartaAtaque("Tiro de escopeta", "dispara uma bala de 12", 4, 7, 1); tiroEscopeta.setResenha(Arte.POW);
+        Carta tiro = new CartaAtaque("Tiro de revolver", "", 2, 3, 1); tiro.setResenha(Arte.POW);
+        Carta tiroEscopeta = new CartaAtaque("Tiro de escopeta", "", 4, 7, 1); tiroEscopeta.setResenha(Arte.POW);
 
         Carta tiroCanhao = new CartaAtaqueComEfeito("Tiro de canhão", "dispara uma bala de canhão", 5, 9, feridas, 1); tiroCanhao.setResenha(Arte.POW);
-        Carta espada = new CartaAtaqueComEfeito("Lamina afiada", "", 1, 1, sangramento, 2); espada.setResenha(Arte.CORTEVERMELHO);
-        Carta corteVenenoso = new CartaAtaqueComEfeito("Lamina venenosa", "", 1, 1, veneno, 2); corteVenenoso.setResenha(Arte.CORTEVERDE);
+        Carta espada = new CartaAtaqueComEfeito("Corte profundo", "", 1, 1, sangramento, 2); espada.setResenha(Arte.CORTEVERMELHO);
+        Carta corteVenenoso = new CartaAtaqueComEfeito("Corte venenoso", "", 1, 1, veneno, 2); corteVenenoso.setResenha(Arte.CORTEVERDE);
         Carta desprezo = new CartaAtaqueComEfeito("DESPREZO", "causa muito dano porém irrita seu adversario", 4, 10, odioPuro); desprezo.setResenha(Arte.DESPREZO);
         Carta corteDefensivo = new CartaAtaqueComEfeito("Corte defensivo", "bate e ganha escudo!", 1, 1, escudinho, 2); corteDefensivo.setResenha(Cor.txtAzul(Arte.CORTE)); corteDefensivo.setSelfCast(true);
         Carta corteRapido = new CartaAtaqueComEfeito("Corte rapido", "bate e ganha 2 pontos de energia!", 1, 1, ganhaEnergia2, 2); corteRapido.setResenha(Cor.txtAmareloClaro(Arte.CORTE)); corteRapido.setSelfCast(true);

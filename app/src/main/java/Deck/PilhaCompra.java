@@ -40,8 +40,11 @@ public class PilhaCompra {
     }
 
     public void deckReset(PilhaDescarte pilhaDescarte){ // embaralha todas as cartas da pilha de descarte e adiciona a pilha de compra
-        Cor.printaLaranja("Embaralhando as cartas!");
-        Textos.sleep(1200);
+        Cor.setLaranja(); 
+        System.out.print("Embaralhando as cartas");
+        Textos.printaBonito(" . . . ", 300, 0);
+        Cor.reset();
+        Textos.sleep(200);
         ArrayList<Carta> temp = pilhaDescarte.reset();
         this.pilhaCartas.addAll(temp);  
     }
