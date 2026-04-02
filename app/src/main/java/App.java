@@ -33,7 +33,7 @@ public class App {
         Heroi heroi = new Heroi("Capitão Jack Sparrow", 40, 5 );
 
         // inimigos -------------
-        Inimigo inimigo = new Inimigo("Capitão Barbossa", 30, 4);
+        Inimigo inimigo = new Inimigo("Capitão Hector Barbossa", 30, 4);
         Inimigo inimigo2 = new Inimigo("LOUD Coringa", 10, 3);    
         Inimigo inimigo3 = new Inimigo("Endrick", 15, 4);
 

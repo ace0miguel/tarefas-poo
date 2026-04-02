@@ -5,6 +5,7 @@ import Entidades.Entidade;
 import Entidades.Heroi;
 import Telas.Batalha;
 import Util.Cor;
+import Util.Textos;
 
 /* efeitos de dano constante, dano depende do efeito especifico */
 public class DanoConstante extends Efeito {
@@ -25,8 +26,8 @@ public class DanoConstante extends Efeito {
         
         if (this.getDur() > 1)
             this.getAlvo().setSangrando(true);
-
-        Cor.printaVermelho(this.getAlvo().getNome() + " sofreu " + this.dano + " pontos de dano de " + this.getNome() + "!\n\n");
+ 
+        System.out.println("> " +this.getAlvo().getNome() + Cor.cinza + " sofreu " + this.dano + " pontos de dano de " + this.getNomeColorido() + "!"); Textos.sleep(300);
     }
 
     @Override

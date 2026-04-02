@@ -58,7 +58,7 @@ public class Inimigo extends Entidade{
 
     public void ataqueRealizado(){
         if (this.estaVivo()){
-            System.out.print(Cor.reset + "> " + this.getNome() + Cor.txtAmarelo(" -> "));
+            System.out.print(Cor.reset + "> " + this.getNome() + Cor.txtAmarelo(" "));
             Cor.setVermelho();
             switch (nextAcao) {
                 case 0 -> { System.out.println("Causou "+(this.dano + this.getDanoExtra())+" pontos de dano!" ); Textos.sleep(300); }

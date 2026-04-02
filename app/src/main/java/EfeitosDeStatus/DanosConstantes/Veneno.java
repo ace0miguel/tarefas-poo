@@ -6,6 +6,7 @@ import Entidades.Entidade;
 import Entidades.Heroi;
 import Telas.Batalha;
 import Util.Cor;
+import Util.Textos;
 
 /* Causa dano igual a duraçao restante;
 ao colocar veneno denovo soma a duraçao;
@@ -26,7 +27,7 @@ public class Veneno extends DanoConstante{
         if (this.getDur() > 1)
             this.getAlvo().setEnvenenado(true);
 
-        Cor.printaVerde(this.getAlvo().getNome() + " sofreu " + this.getDur() + " pontos de dano de veneno!\n\n"); 
+        System.out.println("> " +this.getAlvo().getNome() + Cor.cinza  + " sofreu " + this.getDur() + " pontos de dano de " + this.getNomeColorido() + "!"); Textos.sleep(300);
     }
 
     @Override

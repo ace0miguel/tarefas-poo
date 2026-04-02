@@ -23,7 +23,7 @@ public abstract class Entidade {
     //getters ------
 
     public String getNome(){
-        return this.nome + Cor.reset;
+        return this.nome;
     }
 
     public String getNomeColorido(){

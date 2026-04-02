@@ -14,7 +14,7 @@ import Util.Textos;
 Ao atingir 5 acumulos de sangramento, causa todo o dano restante e remove o efeito*/
 
 public class Sangramento extends DanoConstante{
-    private int stacks = 1;
+    private int stacks = 5;
 
     public Sangramento(String nome, String desc, int dur, int dano){
         super(nome, desc, dur, dano);
@@ -34,7 +34,7 @@ public class Sangramento extends DanoConstante{
         if (this.stacks >= 5){
             int danoAcumulado = this.getDur() * this.stacks;
 
-            Textos.printaLinhaDevagar("\n" + Arte.SANGUE + Cor.amarelo + "\nO sangramento atingiu o limite de acumulos! " + danoAcumulado + " pontos de dano!" + Cor.reset);
+            Textos.printaLinhaDevagar("\n" + Arte.SANGUE + Cor.amarelo + this.getAlvo().getNome() + " recebeu " + danoAcumulado + " pontos de dano!" + Cor.reset);
 
             InputHandler.esperar();
 
@@ -52,7 +52,7 @@ public class Sangramento extends DanoConstante{
         if (this.getDur() > 1)
             this.getAlvo().setSangrando(true);
 
-        Cor.printaVermelho(this.getAlvo().getNome() + " sofreu " + this.stacks + " pontos de dano de sangramento!\n\n");
+        System.out.println("> " +this.getAlvo().getNome() + Cor.cinza  + " sofreu " + this.stacks + " pontos de dano de " + this.getNomeColorido() + "!"); Textos.sleep(300);
     }
 
     @Override

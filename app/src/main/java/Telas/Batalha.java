@@ -74,6 +74,7 @@ public class Batalha {
         heroi.passaRodada(); // remove os bonus que acabam (escudo, etc) e reseta energia
         heroi.resetEfeitos();
         boolean efeitoPrintado = false;
+        boolean linhaCimaPrintada = false;
         for (Inimigo inimigo : arrayInimigos) {
             inimigo.passaRodada();
             inimigo.resetEfeitos();
@@ -83,14 +84,19 @@ public class Batalha {
         
         for (Efeito efeito : listaEfeitos) {  // notifica os efeitos
             if (efeito.getAlvo().estaVivo()){
+                if (efeito instanceof DanoConstante) efeitoPrintado = true; // no momento so os efeito danoconstante tao printando, se mudar atualizar aqui!
+                if (efeitoPrintado && !linhaCimaPrintada){
+                    Cor.printaAmarelo("- = - = - = - = - = - = - = - = - = - = - = - = -\n\n"); Textos.sleep(300);
+                    linhaCimaPrintada = true;
+                }
                 efeito.aplicar();
                 efeito.passaTurno(); 
-                if (efeito instanceof DanoConstante) efeitoPrintado = true; // no momento so os efeito danoconstante tao printando, se mudar atualizar aqui!
             }
         }
 
         if (efeitoPrintado){
-        Textos.apagarLinhas(1); // apaga uma linha pq o efeito printa 2 linha vazia pra ficar bonito ai tem q apaga pra fica simetrico
+        Cor.printaAmarelo("\n- = - = - = - = - = - = - = -\n"); Textos.sleep(300);
+        Cor.printaAmarelo("- = - = - = - = - = -\n"); Textos.sleep(300);
         InputHandler.esperar();
         }
 
@@ -194,7 +200,16 @@ public class Batalha {
     }
 
     public void notificaMorte(){
+        
+        // ve se morreu todo mundo e ja retorna
+        boolean todosMortos = true;
+        for (Inimigo inimigo : inimigos) {
+            if (inimigo.estaVivo()) todosMortos = false;
+        }
+        if (todosMortos) return;
+
         // avisa os efeitos com aplicação quando o alvo morre, antes de remover da lista de inimigos
+        boolean venenoPrintado = false;
         List<Efeito> tempEfeitos = new ArrayList<>();
         for (Inimigo i : inimigos) {
             if (!i.estaVivo()){
@@ -206,9 +221,12 @@ public class Batalha {
                                 Efeito copia = efeito.criaCopia();
                                 efeito.onHit(c, heroi, inimigo2, this); // usei uma carta generica pq nao importa pro onhit mas precisa passar
                                 copia.setAlvo(inimigo2);
-                                tempEfeitos.add(copia);
-                                Cor.printaVerde("> O VENENO SE ESPALHOU! < ");
-                                Textos.sleep(1000);
+                                tempEfeitos.add(copia);                                
+                            }
+                            if (!venenoPrintado){
+                                Textos.printaLinhaDevagar(Cor.txtVerde(Arte.TOXICO));
+                                InputHandler.esperar();
+                                venenoPrintado = true;
                             }
                         }
                     }
@@ -316,7 +334,8 @@ public class Batalha {
 
     public void turnoInimigos(){
         Textos.limpaTela();
-        Cor.printaLaranja("- = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = -\n \n"); Textos.sleep(50);
+        Cor.printaAmareloClaro("- = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = -\n"); Textos.sleep(300);
+        Cor.printaAmareloClaro("- = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = -\n \n"); Textos.sleep(300);
 
         for (Inimigo inimigo : arrayInimigos) {
             int acao = inimigo.getNextAcao();
@@ -332,7 +351,7 @@ public class Batalha {
             inimigo.escolheAcao(); // escolhe prox ação
         }
         
-        Cor.printaLaranja("\n- = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = -\n");
+        Cor.printaAmareloClaro("\n- = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = -\n"); Textos.sleep(300);
         InputHandler.esperar();
         passaTurno();
     }
@@ -350,6 +369,7 @@ public class Batalha {
         Cor.printaAmarelo("DUELO ENCERRADO!\n");
         System.out.println();
         Textos.sleep(1500);
+        Textos.limpaTela();
         if(!heroi.estaVivo() == false){
             Textos.printaLinhaDevagar(Cor.txtRosa("VOCÊ RECUPEROU O PÉROLA NEGRA!"));
             Textos.printaLinhaDevagar(Arte.PEROLANEGRA);
