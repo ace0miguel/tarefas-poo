@@ -2,7 +2,7 @@ package Cartas;
 import Entidades.Entidade;
 import Entidades.Heroi;
 import Poderes.Poder;
-import Telas.Batalha;
+import Telas.Eventos.Batalha;
 import Util.Cor;
 
 public class CartaPoder extends Carta

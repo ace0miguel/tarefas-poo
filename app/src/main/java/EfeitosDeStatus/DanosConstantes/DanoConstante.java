@@ -3,13 +3,15 @@ import Cartas.Carta;
 import EfeitosDeStatus.Efeito;
 import Entidades.Entidade;
 import Entidades.Heroi;
-import Telas.Batalha;
+import Telas.Eventos.Batalha;
 import Util.Cor;
 import Util.Textos;
 
-/* efeitos de dano constante, dano depende do efeito especifico */
+/* efeitos de dano constante, dano depende do efeito especifico
+ignoram resistencias(inclusive escudo) */
 public class DanoConstante extends Efeito {
     private int dano;
+
     public DanoConstante(String nome, String desc, int dur, int dano){
         super(nome, desc, dur);
         this.dano = dano;
@@ -20,19 +22,24 @@ public class DanoConstante extends Efeito {
         this.dano = copiado.dano;
     }
 
+    public int getDano() {
+        return dano;
+    }
+
+    @Override
+    public int getPrioridade() {
+        return 0;
+    }
+    
     @Override
     public void aplicar(){
-        this.getAlvo().receberDano(dano);
-        
-        if (this.getDur() > 1)
-            this.getAlvo().setSangrando(true);
+        this.getAlvo().receberDanoDireto(dano);
  
         System.out.println("> " +this.getAlvo().getNome() + Cor.cinza + " sofreu " + this.dano + " pontos de dano de " + this.getNomeColorido() + "!"); Textos.sleep(300);
     }
 
     @Override
     public void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha) {
-        this.getAlvo().setSangrando(true);
     }
 
     @Override

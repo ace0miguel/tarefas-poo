@@ -1,9 +1,10 @@
-package EfeitosDeStatus;
+package EfeitosDeStatus.Instantaneos;
 
 import Cartas.Carta;
+import EfeitosDeStatus.Efeito;
 import Entidades.Entidade;
 import Entidades.Heroi;
-import Telas.Batalha;
+import Telas.Eventos.Batalha;
 
 public class Escudo extends Efeito {
 
@@ -11,23 +12,31 @@ public class Escudo extends Efeito {
     public Escudo(String nome, String desc, int dur, int valor){
         super(nome, desc, dur);
         this.valor = valor;
-        this.insta = true;
     }
 
     public Escudo(Escudo copiado){
         super(copiado);
         this.valor = copiado.valor;
-        this.insta = true;
     }
 
     @Override
-    public void aplicar() {
+    public void addStack(){
+        this.stacks++;
         this.getAlvo().ganharEscudo(valor);
-        this.setDur(0);
+    }
+    
+    @Override
+    public void aplicar() {
     }
 
     @Override
     public void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha) {
+    }
+
+    @Override
+    public void onCreate() {
+        this.getAlvo().ganharEscudo(valor);
+        this.setDur(0);
     }
 
     @Override

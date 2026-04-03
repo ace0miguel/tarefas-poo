@@ -1,28 +1,40 @@
-package EfeitosDeStatus;
+package EfeitosDeStatus.Instantaneos;
 import Cartas.Carta;
+import EfeitosDeStatus.Efeito;
 import Entidades.Entidade;
 import Entidades.Heroi;
-import Telas.Batalha;
+import Telas.Eventos.Batalha;
 
 // limpa todos os efeitos (incluindo positivos)
 public class Purificar extends Efeito {
     public Purificar(String nome, String desc, int dur){
         super(nome, desc, dur);
-        this.setInsta(true);
     }
 
     public Purificar(Purificar copiado){
         super(copiado);
-        this.setInsta(true);
+    }
+
+    @Override
+    public void addStack(){
+        this.stacks++;
+        this.getAlvo().setPurificar(true);
+        this.setDur(0);
     }
 
     @Override
     public void aplicar(){
-        this.getAlvo().setPurificar(true);
     }
 
     @Override
     public void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha) {
+    }
+
+    @Override
+    public void onCreate() {
+        this.getAlvo().setPurificar(true);
+        this.getAlvo().setPurificado(true);
+        this.setDur(0);
     }
 
     @Override
@@ -37,5 +49,6 @@ public class Purificar extends Efeito {
     
     @Override
     public void acabar() {
+        this.getAlvo().setPurificar(false);
     }
 }

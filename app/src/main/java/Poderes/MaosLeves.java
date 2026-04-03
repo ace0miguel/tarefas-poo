@@ -3,7 +3,7 @@ package Poderes;
 import Cartas.Carta;
 import Entidades.Entidade;
 import Entidades.Heroi;
-import Telas.Batalha;
+import Telas.Eventos.Batalha;
 import Util.Arte;
 import Util.Textos;
 

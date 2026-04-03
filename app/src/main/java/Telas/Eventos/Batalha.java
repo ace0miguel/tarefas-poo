@@ -1,6 +1,7 @@
-package Telas;
+package Telas.Eventos;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -10,13 +11,14 @@ import Cartas.CartaPoder;
 import Deck.Mao;
 import Deck.PilhaCompra;
 import Deck.PilhaDescarte;
-import EfeitosDeStatus.AumentaDano;
-import EfeitosDeStatus.AumentaResistencia;
+import EfeitosDeStatus.Buffs.AumentaDano;
+import EfeitosDeStatus.Buffs.AumentaResistencia;
 import EfeitosDeStatus.DanosConstantes.DanoConstante;
 import EfeitosDeStatus.DanosConstantes.Sangramento;
 import EfeitosDeStatus.DanosConstantes.Veneno;
 import EfeitosDeStatus.Efeito;
-import EfeitosDeStatus.Escudo;
+import EfeitosDeStatus.Instantaneos.Escudo;
+import EfeitosDeStatus.Instantaneos.Purificar;
 import Entidades.Entidade;
 import Entidades.Heroi;
 import Entidades.Inimigo;
@@ -26,13 +28,14 @@ import Util.Cor;
 import Util.InputHandler;
 import Util.Textos;
 
-public class Batalha {
+public class Batalha extends Evento {
 
     // Carta generica
     Carta c;
 
     //efeitos de molde enquanto nao tem o json (esses aq sao pros inimigos)
     Efeito feridas = new DanoConstante("Feridas", "Causa 1 de dano por rodada ao alvo por 2 rodadas", 2, 1);
+    Efeito sangramento = new Sangramento("Sangramento", "Causa 1 de dano por rodada ao alvo", 3, 1);
     Efeito pactoSinistro = new AumentaDano(Cor.txtCinza("Pacto Sinistro"), "Aumenta o dano causado em 2 por 2 rodadas", 2, 2);
     Efeito escudinho = new Escudo("Escudinho", "3 pontos de escudo", 0, 3);
     Efeito escudao = new Escudo("Escudinho", "7 pontos de escudo", 0, 7);
@@ -71,11 +74,15 @@ public class Batalha {
         batalha();
     }
 
+    /* reseta os bonus do heroi logo no começo, portanto efeitos que aplicam dano ignoram escudo e resistencias.
+    notifica os efeitos, printa eles, notifica possiveis mortes, limpa os efeitos que ja acabaram, notifica os poderes e esvazia a mao. */
     public void passaRodada(){
         heroi.passaRodada(); // remove os bonus que acabam (escudo, etc) e reseta energia
         heroi.resetEfeitos();
+
         boolean efeitoPrintado = false;
         boolean linhaCimaPrintada = false;
+
         for (Inimigo inimigo : arrayInimigos) {
             inimigo.passaRodada();
             inimigo.resetEfeitos();
@@ -116,15 +123,20 @@ public class Batalha {
         if (turno == 0) passaRodada();
     }
 
-    public void limpaEfeitos(){
-        for (Efeito efeito : listaEfeitos) {
-            if (efeito.getDur() <= 0 || (efeito instanceof Sangramento && ((Sangramento) efeito).getStacks() <= 0)){
+    public void limpaEfeitos(){     
+        for (Efeito efeito : listaEfeitos ) {
+            if ((efeito.getDur() <= 0 || efeito.getStacks() <= 0 ||efeito.getAlvo().getPurificar() == true) && !(efeito instanceof Purificar)){
                 efeito.acabar();
             }
         }
+        listaEfeitos.removeIf(efeito -> (efeito.getDur() <= 0 || efeito.getStacks() <= 0 || efeito.getAlvo().getPurificar() == true) && !(efeito instanceof Purificar));
 
-        listaEfeitos.removeIf(efeito -> efeito.getDur() <= 0);
-        listaEfeitos.removeIf(efeito -> efeito instanceof Sangramento && ((Sangramento) efeito).getStacks() <= 0);
+        for (Efeito efeito : listaEfeitos ) {
+            if ((efeito instanceof Purificar)){
+                efeito.acabar();
+            }
+        }
+        listaEfeitos.removeIf(efeito -> (efeito instanceof Purificar));
     }
 
     public int selecionarAlvo(){  // falta fazer uma opçao pra voltar caso ele mude de ideia sobre a carta!
@@ -154,7 +166,7 @@ public class Batalha {
                 break;
 
             System.out.println();
-            System.out.println("Tem que ser um número de 0 a "+(i-1)+", capitão!!");
+            Cor.printaAmarelo("Tem que ser um número de 0 a " +(i-1)+ ", capitão!!\n");
 
             InputHandler.esperar();
 
@@ -164,6 +176,7 @@ public class Batalha {
     }
 
     public void adicionarEfeito(Efeito efeito){
+
             // ESPAÇO PRA SETAR AS FLAGS!
 
             if (efeito instanceof Sangramento s){ // se for sangramento deixa o nomezinho vermelho
@@ -181,26 +194,25 @@ public class Batalha {
             // se tiver outro efeito q espalha ou passa copia sozinho bota uma checagem aq tb pra nao duplicar
             boolean doisVeneno = e instanceof Veneno && efeito instanceof Veneno; 
 
-            if ((e.getNome().equals(efeito.getNome()) || doisVeneno) && e.getAlvo() == efeito.getAlvo() && !e.getInsta()){
-                // aqui entram os efeitos que possuem excessoes especificas no momento de aplicar repetidamente
-                
-                if (e instanceof AumentaResistencia r){ 
-                    r.setDur(efeito.getDur());
-                    r.addStack();               
-                    return;
-                }
+            if ((e.getNome().equals(efeito.getNome()) || doisVeneno) && e.getAlvo() == efeito.getAlvo()){
 
-                if (e instanceof Sangramento s){ 
-                    s.setDur(efeito.getDur());
-                    s.addStack();     
-                    s.getAlvo().setSangrando(true);           
-                    return;
+                // efeitos q resetam duraçao ao inves de somar
+                if (e.getResetDur()){ 
+                    e.setDur(efeito.getDur());      
                 }
-                e.setDur(e.getDur() + efeito.getDur());
+                
+                // efeitos q somam (padrao)
+                else e.setDur(e.getDur() + efeito.getDur());
+
+                e.addStack();
                 return;
             }
         }
         this.listaEfeitos.add(efeito);
+
+        efeito.onCreate();
+
+        this.listaEfeitos.sort(Comparator.comparing(Efeito::getPrioridade)); // ordena os efeitos por prioridade pra sangramento sobrepor resistencia
     }
 
     public void adicionarPoder(Poder poder){
@@ -238,7 +250,7 @@ public class Batalha {
                                 tempEfeitos.add(copia);                                
                             }
                             if (!venenoPrintado){
-                                Textos.printaLinhaDevagar(Cor.txtVerde(Arte.TOXICO));
+                                Textos.printaLinhaDevagar(Cor.txtVerdeEscuro(Arte.TOXICO));
                                 InputHandler.esperar();
                                 venenoPrintado = true;
                             }
@@ -256,6 +268,8 @@ public class Batalha {
     }
 
     public void turnoHeroi(){
+        limpaEfeitos();
+
         mao.addCinco(pilhaCompra, pilhaDescarte);
         boolean primeiroLoop = true;
         boolean escolhaInvalida = false;
@@ -276,6 +290,9 @@ public class Batalha {
                     }
                     Textos.batalhaSemDelay(heroi, listaEfeitos, listaPoderes, arrayInimigos);
                 }
+
+                // System.out.println("resist extra" + heroi.getResistencia());
+                // System.out.println("dano extra" + heroi.getDanoExtra());
 
                 int escolha = mao.mostrar(); 
                 if (escolha > mao.getSize() || escolha < 0){ 
@@ -318,29 +335,14 @@ public class Batalha {
                     for (Efeito efeito : listaEfeitos)
                         if (efeito.getOnHit()){
                             efeito.onHit(cartaEscolhida, heroi, alvoSelecionado, this);
-                            efeito.updateOnHit();
                         }
 
                     // notifica os poderes com on hit
                     for (Poder poder : listaPoderes) 
                         poder.onHit(cartaEscolhida, heroi, alvoSelecionado, this); 
 
-                    // lida com efeitos de uso instantaneo, como escudo ou purificar.
-                    for (Efeito efeito : listaEfeitos) {
-                        if (efeito.getInsta()){
-                                efeito.aplicar(); 
-                                efeito.setInsta(false);
-                        }
-
-                        // notifica o acabar pros que vao ser removidos agr
-                        if (efeito.getDur() <= 0 || efeito.getAlvo().getPurificar() == true){
-                            efeito.acabar();
-                        }
-                    }
-
-                    // limpa efeitos instantaneos e limpa todos se tiver purificar    
-                    listaEfeitos.removeIf(efeito -> efeito.getDur() <= 0 || efeito.getAlvo().getPurificar() == true);
-
+                    // limpeza de efeitos esgotados    
+                    limpaEfeitos();
                     notificaMorte();
 
                     if (!inimigos.stream().anyMatch(i -> i.estaVivo() == true)) break;
@@ -359,10 +361,10 @@ public class Batalha {
 
         for (Inimigo inimigo : arrayInimigos) {
             int acao = inimigo.getNextAcao();
-            inimigo.ataqueRealizado();
+            inimigo.ataqueRealizado(heroi);
             switch (acao){
                 case 0 -> inimigo.atacar(heroi);
-                case 1 -> inimigo.atacarEfeito(heroi, this, feridas);
+                case 1 -> inimigo.atacarEfeito(heroi, this, sangramento);
                 case 2 -> {
                     inimigo.receberDano(2);
                     inimigo.receberEfeito(this, pactoSinistro);
@@ -394,10 +396,10 @@ public class Batalha {
             Textos.printaLinhaDevagar(Arte.PEROLANEGRA);
         } else {
             System.out.println();
-            Cor.printaCinza(Arte.sans2);
+            Textos.printaLinhaDevagar(Cor.txtCinza(Arte.sans2));
             System.out.println();
             System.out.println();
-            Cor.printaVermelho(Arte.VOCEMORREU);
+            Textos.printaLinhaDevagar(Cor.txtVermelho(Arte.VOCEMORREU));
         }
         System.out.println();
     }

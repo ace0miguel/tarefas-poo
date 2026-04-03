@@ -4,7 +4,6 @@ import java.util.List;
 
 import Cartas.Carta;
 import Util.Cor;
-import Util.Textos;
 
 public class Heroi extends Entidade {
     private int energia;
@@ -42,7 +41,6 @@ public class Heroi extends Entidade {
         this.deck = deck;
     }
 
-    
 
     public String statusEnergia(){
         if (this.energia > 5) // da pra passar de 5 por meio de cartas!

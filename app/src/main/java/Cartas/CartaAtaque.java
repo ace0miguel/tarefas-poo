@@ -1,7 +1,7 @@
 package Cartas;
 import Entidades.Entidade;
 import Entidades.Heroi;
-import Telas.Batalha;
+import Telas.Eventos.Batalha;
 import Util.Cor;
 
 /* 

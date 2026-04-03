@@ -1,41 +1,46 @@
-package EfeitosDeStatus;
+package EfeitosDeStatus.Buffs;
 import Cartas.Carta;
+import EfeitosDeStatus.Efeito;
 import Entidades.Entidade;
 import Entidades.Heroi;
-import Telas.Batalha;
+import Telas.Eventos.Batalha;
 
-// altera o dano causado por ataques do alvo pelo valor passado (positivo aumenta, negativo reduz)
+// altera a resistencia ( se quiser diminuir so passar um valor negativo e tals )
 public class AumentaResistencia extends Efeito {
     private int valor;
-    private int stacks = 1;
 
     public AumentaResistencia(String nome, String desc, int dur, int valor){
         super(nome, desc, dur);
         this.valor = valor;
-        this.setInsta(true);
     }
 
     public AumentaResistencia(AumentaResistencia copiado){
         super(copiado);
         this.valor = copiado.valor;
-        this.setInsta(true);
+    }
+    
+    @Override
+    public boolean getResetDur() {
+        return true;
     }
 
-    public int getStacks() {
-        return stacks;
-    }
-
+    @Override
     public void addStack(){
         this.stacks++;
+        this.getAlvo().somaResistencia(this.valor);
     }
 
     @Override
     public void aplicar(){
-        this.getAlvo().somaResistencia(this.valor * this.stacks);
     }
 
     @Override
     public void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha) {
+    }
+
+    @Override
+    public void onCreate() {
+        this.getAlvo().somaResistencia(valor);
     }
 
     @Override
@@ -45,11 +50,11 @@ public class AumentaResistencia extends Efeito {
 
     @Override
     public String status() {
-        return this.getNome() + " (" + this.valor * this.stacks + ") > " + this.getDur(); 
+        return this.getNome() + " [" + this.valor * this.stacks + "] > " + this.getDur(); 
     }
     
     @Override
     public void acabar() {
-        this.getAlvo().somaResistencia(((this.valor * this.stacks) * -1));
+        this.getAlvo().somaResistencia(this.valor * this.stacks * -1);
     }
 }

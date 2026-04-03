@@ -2,7 +2,7 @@ package Cartas;
 import EfeitosDeStatus.Efeito;
 import Entidades.Entidade;
 import Entidades.Heroi;
-import Telas.Batalha;
+import Telas.Eventos.Batalha;
 import Util.Cor;
 
 /*

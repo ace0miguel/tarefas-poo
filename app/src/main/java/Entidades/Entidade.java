@@ -1,5 +1,7 @@
 package Entidades;
 
+import static java.lang.Math.max;
+
 import Util.Cor;
 import Util.Textos;
 
@@ -12,6 +14,8 @@ public abstract class Entidade {
     private int resistencia = 0; // todo dano recebido subtrai isso aqui
     private boolean purificar = false;
 
+    // booleans pra defini a cor do nome
+    private boolean purificado = false;
     private boolean envenenado = false;
     private boolean sangrando = false;
 
@@ -59,12 +63,20 @@ public abstract class Entidade {
         return this.sangrando;
     }
 
+    public boolean getPurificado(){
+        return this.purificado;
+    }
+
     public int getResistencia() {
         return resistencia;
     }
 
     public boolean estaVivo (){
         return vida > 0;
+    }
+
+    public int getDanoEfetivo(int dano){
+        return max((dano - this.resistencia), 0);
     }
 
     //setters -------
@@ -80,7 +92,11 @@ public abstract class Entidade {
     public void setSangrando(boolean sangrando) {
         this.sangrando = sangrando;
     }
-    
+
+    public void setPurificado(boolean purificado) {
+        this.purificado = purificado;
+    }
+
     public void setResistencia(int resistencia) {
         this.resistencia = resistencia;
     }
@@ -89,27 +105,36 @@ public abstract class Entidade {
         this.resistencia += valor;
     }
 
+    public void somaDanoExtra(int valor) {
+        this.danoExtra += valor;
+    }
+
     // ----------   
 
     public void resetEfeitos(){
+        this.purificado = false;
         this.envenenado = false;
         this.sangrando = false;
     }
 
     public String corStatus() {
-        if (this.sangrando) {
+        if (this.purificado) {
+            return Cor.azulClaro;
+        }
+        else if (this.sangrando) {
             return Cor.vermelho; 
         }
-
         else if (this.envenenado) {
-            return Cor.verde;
+            return Cor.verdeEscuro;
         }
 
         return Cor.reset;
     }
 
     public void receberDano(int dano){
-        int danoEfetivo = dano - this.resistencia;
+        int danoEfetivo = max((dano - this.resistencia), 0); // pra evitar o tal do -1 dano
+        // se tiver por ex 1 de escudo e voce tomar 1000 de dano vc nao toma dano so perde o escudo.
+        
         if (this.escudo >= danoEfetivo){
             this.escudo -= danoEfetivo;
         } else {
@@ -117,6 +142,10 @@ public abstract class Entidade {
             this.escudo = 0;
             this.vida-= danoEfetivo;
         }
+    }
+
+    public void receberDanoDireto(int dano){ // danos que ignoram resistencias e escudo
+        this.vida -= dano;
     }
 
     public void passaRodada(){
@@ -131,9 +160,9 @@ public abstract class Entidade {
         this.escudo = 0;
     }
 
-    public void resetarBonus(){
+    public void resetarBonus(){ 
         this.escudo = 0;
-        this.danoExtra = 0;
+        this.purificar = false;
     }
 
     public void passaTurno(){

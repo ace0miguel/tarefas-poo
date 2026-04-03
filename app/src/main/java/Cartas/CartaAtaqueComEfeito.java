@@ -3,7 +3,7 @@ package Cartas;
 import EfeitosDeStatus.Efeito;
 import Entidades.Entidade;
 import Entidades.Heroi;
-import Telas.Batalha;
+import Telas.Eventos.Batalha;
 
 public class CartaAtaqueComEfeito extends CartaAtaque {
     private Efeito efeito;

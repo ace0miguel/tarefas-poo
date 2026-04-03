@@ -4,18 +4,18 @@ import Cartas.Carta;
 import EfeitosDeStatus.Efeito;
 import Entidades.Entidade;
 import Entidades.Heroi;
-import Telas.Batalha;
+import Telas.Eventos.Batalha;
 import Util.Arte;
 import Util.Cor;
 import Util.InputHandler;
 import Util.Textos;
 
 /*  ao aplicar sangramento em um inimigo que ja tem o efeito, reseta a duraçao e aumenta o dano.
+dano causado : dano base * numero de stacks
 Ao atingir 5 acumulos de sangramento, causa todo o dano restante e remove o efeito
 (se de algum jeito passar de 5 acumulos ele ainda calcula o dano certinho)*/
 
 public class Sangramento extends DanoConstante{
-    private int stacks = 1;
 
     public Sangramento(String nome, String desc, int dur, int dano){
         super(nome, desc, dur, dano);
@@ -25,21 +25,23 @@ public class Sangramento extends DanoConstante{
         super(copiado);
     }
 
-    public int getStacks() {
-        return stacks;
+    @Override
+    public boolean getResetDur() {
+        return true;
     }
 
+    @Override
     public void addStack(){
         this.stacks++;
         
         if (this.stacks >= 5){
-            int danoAcumulado = this.getDur() * this.stacks;
+            int danoAcumulado = this.getDur() * this.stacks * this.getDano();
 
             Textos.printaLinhaDevagar("\n" + Arte.SANGUE + Cor.amarelo + this.getAlvo().getNome() + " recebeu " + danoAcumulado + " pontos de dano!" + Cor.reset);
 
             InputHandler.esperar();
 
-            this.getAlvo().receberDano(danoAcumulado);
+            this.getAlvo().receberDanoDireto(danoAcumulado);
             this.getAlvo().setSangrando(false);
             this.setDur(0);
             this.stacks = 0;
@@ -48,16 +50,22 @@ public class Sangramento extends DanoConstante{
 
     @Override
     public void aplicar(){
-        this.getAlvo().receberDano(this.stacks);
+        int danoEfetivo = this.stacks * this.getDano();
+
+        this.getAlvo().receberDanoDireto(danoEfetivo);
         
         if (this.getDur() > 1)
             this.getAlvo().setSangrando(true);
 
-        System.out.println("> " +this.getAlvo().getNome() + Cor.cinza  + " sofreu " + this.stacks + " pontos de dano de " + this.getNomeColorido() + "!"); Textos.sleep(300);
+        System.out.println("> " +this.getAlvo().getNome() + Cor.cinza  + " sofreu " + danoEfetivo + " pontos de dano de " + this.getNomeColorido() + "!"); Textos.sleep(300);
     }
 
     @Override
-    public void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha) {
+    public void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha) {   
+    }
+
+    @Override
+    public void onCreate() {
         this.getAlvo().setSangrando(true);
     }
 
@@ -69,8 +77,8 @@ public class Sangramento extends DanoConstante{
     @Override
     public String status() {
         return (this.stacks < 4) 
-        ? Cor.vermelho + this.getNome() + "!".repeat(this.stacks - 1) + " > " + this.getDur() + Cor.reset
-        : Cor.vermelho + this.getUpperNome() + "!".repeat(this.stacks - 1) + " > " + this.getDur() + Cor.reset; // queria fazer ficar maiusculo com 4 stacks ou mais so q ta bugado 
+        ? Cor.vermelho + this.getNome() + "!".repeat(Math.max(this.stacks - 1, 0)) + " > " + this.getDur() + Cor.reset
+        : Cor.vermelho + this.getUpperNome() + "!".repeat(Math.max(this.stacks - 1, 0)) + " > " + this.getDur() + Cor.reset; 
     }
 
 }

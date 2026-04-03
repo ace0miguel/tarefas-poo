@@ -2,7 +2,7 @@ package Cartas;
 
 import Entidades.Entidade;
 import Entidades.Heroi;
-import Telas.Batalha;
+import Telas.Eventos.Batalha;
 import Util.Cor;
 import Util.Textos;
 // as classes filhas representam os diferentes tipos de carta, baseados nos tipos do jogo slay the spire.

@@ -4,20 +4,20 @@ import Cartas.CartaAtaqueComEfeito;
 import Cartas.CartaHabilidade;
 import Cartas.CartaPoder;
 import Deck.PilhaCompra;
-import EfeitosDeStatus.AumentaDano;
-import EfeitosDeStatus.AumentaResistencia;
+import EfeitosDeStatus.Buffs.AumentaDano;
+import EfeitosDeStatus.Buffs.AumentaResistencia;
 import EfeitosDeStatus.DanosConstantes.DanoConstante;
 import EfeitosDeStatus.DanosConstantes.Sangramento;
 import EfeitosDeStatus.DanosConstantes.Veneno;
 import EfeitosDeStatus.Efeito;
-import EfeitosDeStatus.Escudo;
-import EfeitosDeStatus.GanhaEnergia;
-import EfeitosDeStatus.Purificar;
+import EfeitosDeStatus.Instantaneos.Escudo;
+import EfeitosDeStatus.Instantaneos.GanhaEnergia;
+import EfeitosDeStatus.Instantaneos.Purificar;
 import Entidades.Heroi;
 import Entidades.Inimigo;
 import Poderes.MaosLeves;
 import Poderes.Poder;
-import Telas.Batalha;
+import Telas.Eventos.Batalha;
 import Util.Arte;
 import Util.Cor;
 import Util.Textos;
@@ -38,14 +38,14 @@ public class App {
 
         // inimigos -------------
         Inimigo inimigo = new Inimigo("Capitão Hector Barbossa", 30, 4);
-        Inimigo inimigo2 = new Inimigo("LOUD Coringa", 10, 3);    
-        Inimigo inimigo3 = new Inimigo("Endrick", 15, 4);
+        Inimigo inimigo2 = new Inimigo("LOUD Coringa", 15, 3);    
+        Inimigo inimigo3 = new Inimigo("Endrick", 12, 4);
 
         // efeitos ------------
-        Efeito sangramento = new Sangramento("Sangramento", "Causa 1 de dano por rodada ao alvo", 3, 0);
-        Efeito veneno = new Veneno("Veneno", "Causa sua duraçao em dano por rodada ao alvo", 2, 0);
+        Efeito sangramento = new Sangramento("Sangramento", "Causa 1 de dano por rodada ao alvo", 3, 1);
+        Efeito veneno = new Veneno("Veneno", "Causa sua duraçao em dano por rodada ao alvo", 2, 1);
         Efeito odioPuro = new AumentaDano("Ódio Puro", "Aumenta o dano causado em 1 por 3 rodadas", 3, 1);
-        Efeito aumentaResistencia = new AumentaResistencia("Armadura", "Reduz o dano recebido", 3, 2);
+        Efeito aumentaResistencia = new AumentaResistencia("Armadura", "Reduz o dano recebido", 3, 1);
         Efeito escudinho = new Escudo("Ganho de escudo (3)", "3 pontos de escudo", 0, 3);
         Efeito escudao = new Escudo("Ganho de escudo (7)", "7 pontos de escudo", 0, 7);
         Efeito purificarEfeito = new Purificar("Purificar", "Remove todos os efeitos aplicados em voce (incluindo bons!)", 0);
@@ -57,15 +57,15 @@ public class App {
         Poder mestreLaminas = new MaosLeves(("MESTRE DAS LÂMINAS"), "Sempre que cortar, CORTE NOVAMENTE! pelo tanto de acumulos desse poder.", 2);
 
         // cartas -----------
-        Carta tiro = new CartaAtaque("Tiro de revolver", "", 2, 3, 1); tiro.setResenha(Arte.POW);
-        Carta tiroEscopeta = new CartaAtaque("Tiro de escopeta", "", 4, 7, 1); tiroEscopeta.setResenha(Arte.POW);
+        Carta tiro = new CartaAtaque("Tiro de revolver", "", 2, 3, 1); tiro.setResenha(Arte.TIRO5);
+        Carta tiroEscopeta = new CartaAtaque("Tiro de escopeta", "", 4, 7, 1); tiroEscopeta.setResenha(Arte.TIRO2);
 
-        Carta tiroCanhao = new CartaAtaqueComEfeito("Tiro de canhão", "dispara uma bala de canhão", 5, 9, feridas, 1); tiroCanhao.setResenha(Arte.POW);
-        Carta espada = new CartaAtaqueComEfeito("Corte profundo", "", 1, 1, sangramento, 2); espada.setResenha(Arte.CORTEVERMELHO);
-        Carta corteVenenoso = new CartaAtaqueComEfeito("Corte venenoso", "", 1, 1, veneno, 2); corteVenenoso.setResenha(Arte.CORTEVERDE);
+        Carta tiroCanhao = new CartaAtaqueComEfeito("Tiro de canhão", "dispara uma bala de canhão", 5, 9, feridas, 1); tiroCanhao.setResenha(Arte.TIRO3);
+        Carta espada = new CartaAtaqueComEfeito("Corte profundo", "", 1, 1, sangramento, 2); espada.setResenha(Cor.txtVermelho(Arte.CORTE));
+        Carta corteVenenoso = new CartaAtaqueComEfeito("Corte venenoso", "", 1, 1, veneno, 2); corteVenenoso.setResenha(Cor.txtVerdeClaro(Arte.CORTE2));
         Carta desprezo = new CartaAtaqueComEfeito("DESPREZO", "causa muito dano porém irrita seu adversario", 4, 10, odioPuro); desprezo.setResenha(Arte.DESPREZO);
-        Carta corteDefensivo = new CartaAtaqueComEfeito("Corte defensivo", "bate e ganha escudo!", 1, 1, escudinho, 2); corteDefensivo.setResenha(Cor.txtAzul(Arte.CORTE)); corteDefensivo.setSelfCast(true);
-        Carta corteRapido = new CartaAtaqueComEfeito("Corte rapido", "bate e ganha 2 pontos de energia!", 1, 1, ganhaEnergia2, 2); corteRapido.setResenha(Cor.txtAmareloClaro(Arte.CORTE)); corteRapido.setSelfCast(true);
+        Carta corteDefensivo = new CartaAtaqueComEfeito("Corte defensivo", "bate e ganha escudo!", 1, 1, escudinho, 2); corteDefensivo.setResenha(Cor.txtAzulClaro(Arte.CORTE5)); corteDefensivo.setSelfCast(true);
+        Carta corteRapido = new CartaAtaqueComEfeito("Corte rapido", "bate e ganha 2 pontos de energia!", 1, 1, ganhaEnergia2, 2); corteRapido.setResenha(Cor.txtAmareloClaro(Arte.CORTE6)); corteRapido.setSelfCast(true);
 
         Carta armadura = new CartaHabilidade("armadura", "reduz o dano recebido", 2, aumentaResistencia, true);
         Carta escudoMadeira = new CartaHabilidade("Postura de defesa", "da escudo", 1, escudinho, true);
@@ -78,29 +78,27 @@ public class App {
         
         // -------------------------
 
-        for (int i = 0; i < 3; i++){ // cartas comuns
-            pilhaCompra.addCarta( tiro );
+        for (int i = 0; i < 3; i ++){ // cartas comunzinhas
             pilhaCompra.addCarta( espada );
-            pilhaCompra.addCarta( tiroEscopeta );
-            pilhaCompra.addCarta( corteVenenoso );
-            pilhaCompra.addCarta( escudoMadeira );
-            pilhaCompra.addCarta( escudoFerro );
-            pilhaCompra.addCarta( purificar );
             pilhaCompra.addCarta( corteDefensivo );
             pilhaCompra.addCarta( corteRapido );
-            pilhaCompra.addCarta( armadura );
-            pilhaCompra.addCarta( armadura );
-            pilhaCompra.addCarta( armadura );
-            pilhaCompra.addCarta( armadura );
-            pilhaCompra.addCarta( armadura );
-            pilhaCompra.addCarta( armadura );
+            pilhaCompra.addCarta( corteVenenoso );
+            pilhaCompra.addCarta( tiro );
+            pilhaCompra.addCarta( escudoFerro );
         }
 
-        for(int i=0; i < 2; i++){ // cartas meio raras sla
+        for (int i = 0; i < 2; i++){ // cartas meio raras       
+            pilhaCompra.addCarta( tiroEscopeta );
+            pilhaCompra.addCarta( escudoMadeira );
+            pilhaCompra.addCarta( armadura );
+            pilhaCompra.addCarta( purificar );          
+        }
+
+        for(int i=0; i < 4; i++){ // cartas ultra raras supremas
             pilhaCompra.addCarta( tiroCanhao );
-            pilhaCompra.addCarta( mestreLaminasCarta );
             pilhaCompra.addCarta( desprezo );
             pilhaCompra.addCarta( dedoNervosoCarta );
+            pilhaCompra.addCarta( mestreLaminasCarta );
         }
         
         Textos.limpaTela();

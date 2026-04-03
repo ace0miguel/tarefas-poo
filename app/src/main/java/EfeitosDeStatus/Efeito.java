@@ -1,12 +1,16 @@
 package EfeitosDeStatus;
 
 import Cartas.Carta;
+import EfeitosDeStatus.Buffs.AumentaDano;
 import EfeitosDeStatus.DanosConstantes.DanoConstante;
 import EfeitosDeStatus.DanosConstantes.Sangramento;
 import EfeitosDeStatus.DanosConstantes.Veneno;
+import EfeitosDeStatus.Instantaneos.Escudo;
+import EfeitosDeStatus.Instantaneos.GanhaEnergia;
+import EfeitosDeStatus.Instantaneos.Purificar;
 import Entidades.Entidade;
 import Entidades.Heroi;
-import Telas.Batalha;
+import Telas.Eventos.Batalha;
 import Util.Cor;
 
 public abstract class Efeito {
@@ -14,8 +18,8 @@ public abstract class Efeito {
     private String desc;
     private int dur;
     private Entidade alvo;
+    protected int stacks = 1;
 
-    protected boolean insta = false;
     protected boolean onHit = true;
 
     public Efeito(String nome, String desc, int dur) {
@@ -39,7 +43,7 @@ public abstract class Efeito {
         return this.nome.toUpperCase();
     }
     
-    public String getNomeColorido() { // define aqui a cor pra cada efeito ai se quiser
+    public String getNomeColorido() { // define aqui a cor pra cada efeito ai se quiser, acho que seria mais orientado a objetos ficar dando override filhos mas to com pregs 
         if (this.getClass() == DanoConstante.class) return Cor.txtAmarelo(this.nome);
 
         else if (this instanceof Veneno) return Cor.verde + this.nome + Cor.reset;
@@ -67,12 +71,20 @@ public abstract class Efeito {
         return this.alvo;
     }
 
-    public boolean getInsta() {
-        return this.insta;
-    }
-    
     public boolean getOnHit() {
         return this.onHit;
+    }
+
+    public int getStacks() {
+        return stacks;
+    }
+
+    public int getPrioridade() { // se quiser q um efeito va antes os outros reduz, os danos constantes tao 0.
+        return 1;
+    }
+
+    public boolean getResetDur() { // flag pra efeitos que resetam a duraçao ao inves de somar quando stackam
+        return false;
     }
 
     // ------------ setters
@@ -93,15 +105,15 @@ public abstract class Efeito {
         this.alvo = alvo;
     }
 
-    public void setInsta(boolean insta) {
-        this.insta = insta;
+    public void setOnHit(boolean onHit) {
+        this.onHit = onHit;
     }
 
-    public void updateOnHit() { // pra efeitos que causam algo on hit uma vez so manter, se nao dar override na classe especifica
-        this.onHit = false;
+    public void setStacks(int stacks) {
+        this.stacks = stacks;
     }
 
-    // ---------------- 
+    // ---------------------
 
     public boolean passaTurno() { // retorna true se ainda nao tiver acabado a duraçao
         if (this.dur > 0){ 
@@ -111,6 +123,9 @@ public abstract class Efeito {
         return false;
     }
 
+    public void addStack(){
+        this.stacks++;
+    }
     // ----------- abstratos
   
     public abstract void aplicar();
@@ -122,4 +137,8 @@ public abstract class Efeito {
     public abstract String status();
 
     public abstract void acabar();
+
+    public void onCreate(){
+        
+    };
 }

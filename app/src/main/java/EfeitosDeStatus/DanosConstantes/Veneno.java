@@ -4,7 +4,7 @@ import Cartas.Carta;
 import EfeitosDeStatus.Efeito;
 import Entidades.Entidade;
 import Entidades.Heroi;
-import Telas.Batalha;
+import Telas.Eventos.Batalha;
 import Util.Cor;
 import Util.Textos;
 
@@ -22,7 +22,7 @@ public class Veneno extends DanoConstante{
 
     @Override
     public void aplicar(){
-        this.getAlvo().receberDano(this.getDur());
+        this.getAlvo().receberDanoDireto(this.getDur());
         
         if (this.getDur() > 1)
             this.getAlvo().setEnvenenado(true);
@@ -32,7 +32,11 @@ public class Veneno extends DanoConstante{
 
     @Override
     public void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha) {
-        this.getAlvo().setEnvenenado(true);
+    }
+
+    @Override
+    public void onCreate() {
+        this.getAlvo().setSangrando(true);
     }
 
     @Override
@@ -42,6 +46,6 @@ public class Veneno extends DanoConstante{
 
     @Override
     public String status() {
-        return Cor.verde + this.getNome() + " > " + this.getDur() + Cor.reset; 
+        return Cor.verdeEscuro + this.getNome() + " > " + this.getDur() + Cor.reset; 
     }
 }

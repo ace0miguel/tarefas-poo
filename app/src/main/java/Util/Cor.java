@@ -5,7 +5,11 @@ public class Cor {
     
     public static String vermelho = "\u001B[31m";
     public static String verde = "\u001B[32m";
+    public static String verdeClaro = "\u001B[92m";
+    public static String verdeEscuro = "\u001B[38;5;22m";
     public static String azul = "\u001B[34m";
+    public static String azulClaro = "\u001B[94m";
+    public static String azulEscuro = "\u001B[38;5;18m";
     public static String amarelo = "\u001B[33m";
     public static String amareloClaro = "\u001B[93m";
     public static String preto = "\u001B[30m";
@@ -22,6 +26,14 @@ public class Cor {
         System.out.print(verde + printa + reset);
     }
 
+    public static void printaVerdeClaro(String printa) {
+        System.out.print(verdeClaro + printa + reset);
+    }
+
+    public static void printaVerdeEscuro(String printa) {
+        System.out.print(verdeEscuro + printa + reset);
+    }
+
     public static void printaVermelho(String printa) {
         System.out.print(vermelho + printa + reset);
     }
@@ -36,6 +48,14 @@ public class Cor {
 
     public static void printaAzul(String printa) {
         System.out.print(azul + printa + reset);
+    }
+
+    public static void printaAzulClaro(String printa) {
+        System.out.print(azulClaro + printa + reset);
+    }
+
+    public static void printaAzulEscuro(String printa) {
+        System.out.print(azulEscuro + printa + reset);
     }
 
     public static void printaPreto(String printa) {
@@ -76,6 +96,14 @@ public class Cor {
         System.out.print(verde);
     }
 
+    public static void setVerdeClaro() {
+        System.out.print(verdeClaro);
+    }
+
+    public static void setVerdeEscuro() {
+        System.out.print(verdeEscuro);
+    }
+
     public static void setVermelho() {
         System.out.print(vermelho);
     }
@@ -90,6 +118,14 @@ public class Cor {
 
     public static void setAzul() {
         System.out.print(azul);
+    }
+
+    public static void setAzulClaro() {
+        System.out.print(azulClaro);
+    }
+
+    public static void setAzulEscuro() {
+        System.out.print(azulEscuro);
     }
 
     public static void setPreto() {
@@ -134,6 +170,14 @@ public class Cor {
         return verde + txt + reset;
     }
 
+    public static String txtVerdeClaro(String txt) {
+        return verdeClaro + txt + reset;
+    }
+
+    public static String txtVerdeEscuro(String txt) {
+        return verdeEscuro + txt + reset;
+    }
+
     public static String txtVermelho(String txt) {
         return vermelho + txt + reset;
     }
@@ -148,6 +192,14 @@ public class Cor {
 
     public static String txtAzul(String txt) {
         return azul + txt + reset;
+    }
+
+    public static String txtAzulClaro(String txt) {
+        return azulClaro + txt + reset;
+    }
+
+    public static String txtAzulEscuro(String txt) {
+        return azulEscuro + txt + reset;
     }
 
     public static String txtPreto(String txt) {
