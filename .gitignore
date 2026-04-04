@@ -1,3 +1,9 @@
 bin/**
 *.class
 *.printa
+.DS_Store
+.gradle/
+build/
+app/build/
+*.bin
+*.lock
