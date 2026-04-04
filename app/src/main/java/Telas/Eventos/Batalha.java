@@ -352,7 +352,15 @@ public class Batalha extends Evento {
 
                     if (!inimigos.stream().anyMatch(i -> i.estaVivo() == true)) break;
 
-                    if (mao.getSize() == 0) mao.addCinco(pilhaCompra, pilhaDescarte); // se a mão esvaziar compra 5
+                    // se conseguir usar todas as cartas da mao puxa mais 5 e ganha 2 de energia bonus, injeçao de dopamina assim q vc mantem um jogador
+                    if (mao.getSize() == 0){
+                        Textos.limpaTela();
+                        Textos.printaLinhaDevagar(Cor.amareloClaro + Arte.cincoCartas + Cor.reset);
+                        Textos.printaLinhaDevagar(Cor.amarelo + Arte.doisEnergia + Cor.reset);
+                        heroi.ganhaEnergia(2);
+                        InputHandler.esperar();
+                        mao.addCinco(pilhaCompra, pilhaDescarte);
+                    }
 
                 } else if (escolha == mao.getSize()) break;
             }            

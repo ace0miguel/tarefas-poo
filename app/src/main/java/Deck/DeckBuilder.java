@@ -64,8 +64,8 @@ public class DeckBuilder {
 
 
     public DeckBuilder(){
-        decksPadrao.add("BALISTICO (FOCO EM DANO DIRETO)");
-        decksPadrao.add("ARMAS BRANCAS (FOCO EM STACKAR DEBUFFS E SE DEFENDER)");
+        decksPadrao.add("JOHN WICK (FOCO EM DANO DIRETO)");
+        decksPadrao.add("MESTRE DAS LAMINAS (FOCO EM STACKAR DEBUFFS E COMBOS )");
         decksPadrao.add("BALANCEADO (BALANCEADO)");
 
         tiro = new CartaAtaque("Tiro de revolver", "", 2, 3, 1); tiro.setResenha(Arte.TIRO5);
@@ -109,7 +109,11 @@ public class DeckBuilder {
 
                 heroi.addCarta(dedoNervosoCarta);
                 heroi.addCarta(puroOdio);
+
                 heroi.addCarta(escudoMadeira);
+                heroi.addCarta(escudoMadeira);
+
+                heroi.addCarta(armadura);
             }
             case 1 -> {
                 // 2 de cada corte + 2 mestre laminas pra faze uns combao
@@ -148,6 +152,8 @@ public class DeckBuilder {
                 heroi.addCarta(corteProfundo);
                 heroi.addCarta(corteProfundo);
 
+                heroi.addCarta(desprezo);
+                
                 heroi.addCarta(purificar);
                 heroi.addCarta(purificar);
 
@@ -156,6 +162,7 @@ public class DeckBuilder {
 
                 heroi.addCarta(escudoFerro);
                 heroi.addCarta(escudoFerro);
+
                 heroi.addCarta(escudoMadeira);
                 heroi.addCarta(escudoMadeira);
             }
