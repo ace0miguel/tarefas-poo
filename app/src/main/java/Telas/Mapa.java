@@ -1,5 +1,91 @@
 package Telas;
+import javax.swing.tree.DefaultMutableTreeNode;
+
+import Entidades.Heroi;
+import Telas.Eventos.Evento;
+import Util.Arte;
+import Util.ArvoreEventos;
+import Util.Cor;
+import Util.InputHandler;
+import Util.Textos;
 
 public class Mapa {
+    private Heroi heroi;
 
+    public Mapa(Heroi _heroi){
+        this.heroi = _heroi;
+    }
+
+    ArvoreEventos arvoreEventos = new ArvoreEventos(3, 4, heroi);
+    DefaultMutableTreeNode nodeInicial = arvoreEventos.criarArvore(heroi); // cria arvore e recebe a raiz
+    DefaultMutableTreeNode nodeAtual = nodeInicial; // eu to chamando de node pq noAtual ia ficar muito feio
+    
+    // retorna um menu de seleçao com os filhos da posiçao passada
+    public int escolherCaminho(DefaultMutableTreeNode posicaoAtual){ 
+        return InputHandler.selecionar(arvoreEventos.getEventos(posicaoAtual), Arte.mapa);
+    }
+
+    public int escolherCaminho(){ // se nao passar nada retorna baseado no nó atual
+        return escolherCaminho(nodeAtual);
+    }
+    
+
+    // atualiza o nodeAtual para o filho de indice n do nó passado como argumento
+    public void irPara(DefaultMutableTreeNode posicaoAtual,int n){ 
+        nodeAtual = (DefaultMutableTreeNode) posicaoAtual.getChildAt(n);
+    }
+
+    public void irPara(int n){ // se nao passar nada passa baseado no nó atual
+        irPara(nodeAtual, n);
+    }
+
+    // converte o objeto em evento dentro do no atual e retorna 
+    public Evento getEvento(DefaultMutableTreeNode atual) {
+        return (Evento) atual.getUserObject();
+    }
+
+    public Evento getEvento() {
+        return getEvento(nodeAtual);
+    }
+    
+
+    /* converte o TreeNode(getChildAt retorna TreeNode) em DefaultMutableTreeNode,
+     pega o objeto dentro dele e dps converte em evento e retorna.*/
+    public Evento getProximoEvento(DefaultMutableTreeNode atual, int escolha) {
+        return (Evento) ((DefaultMutableTreeNode) atual.getChildAt(escolha)).getUserObject();
+    }
+
+    public Evento getProximoEvento(int escolha) {
+        return getProximoEvento(nodeAtual, escolha);
+    }
+
+    public void explorar() { // explorar e um nome meio merda se tiver uma ideia melhor atualizar aq 
+
+        boolean primeiroLoop = true; // se quiser pular a primeira luta por motivos de teste so deixar false aqui direto
+
+        while (true) { 
+            Textos.limpaTela();
+
+            if (primeiroLoop){
+                Textos.printaLinhaDevagar(Arte.mapa);
+                InputHandler.esperar("Pressione ENTER para ir para " + getEvento());
+                getEvento().iniciar(heroi);
+                primeiroLoop = false;
+                continue;
+            }
+
+            if (nodeAtual.isLeaf()) { // nao tem mais evento depois, sai do mapa ( mas avisa antes )
+                System.out.println(Cor.txtAmarelo("Parabéns!"));
+                InputHandler.esperar();
+                return;
+            } 
+
+            int escolha = escolherCaminho();
+            InputHandler.esperar("Pressione ENTER para ir para " + getProximoEvento(escolha));
+
+            irPara(escolha);
+
+            getEvento().iniciar(heroi);
+        }
+    }
 }

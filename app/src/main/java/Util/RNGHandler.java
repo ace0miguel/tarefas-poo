@@ -8,4 +8,8 @@ public class RNGHandler {
     public static Random getGen() {
         return gen;
     }
+
+    public static int valorAleatorio(int i){
+        return gen.nextInt(i) + 1;
+    }
 }

@@ -12,7 +12,6 @@ import Deck.Mao;
 import Deck.PilhaCompra;
 import Deck.PilhaDescarte;
 import EfeitosDeStatus.Buffs.AumentaDano;
-import EfeitosDeStatus.Buffs.AumentaResistencia;
 import EfeitosDeStatus.DanosConstantes.DanoConstante;
 import EfeitosDeStatus.DanosConstantes.Sangramento;
 import EfeitosDeStatus.DanosConstantes.Veneno;
@@ -29,8 +28,28 @@ import Util.InputHandler;
 import Util.Textos;
 
 public class Batalha extends Evento {
+    private int turno; // 0 -> heroi, 1 -> inimigos
+    private Inimigo[] arrayInimigos; // inimigos em forma de array pq infelizmente as vezes precisa :(
+    private List<Inimigo> inimigos; // inimigos em forma de lista pq é bom !
 
-    // Carta generica
+    private Mao mao = new Mao();
+    private PilhaCompra pilhaCompra = new PilhaCompra();
+    private PilhaDescarte pilhaDescarte = new PilhaDescarte();
+    private PilhaDescarte pilhaPoderes = new PilhaDescarte(); // <- cartas de poder vem pra cá! (so da pra usar 1 vez por copia)
+
+    // subscribers --------
+    private ArrayList<Efeito> listaEfeitos = new ArrayList<>(); 
+    private ArrayList<Poder> listaPoderes = new ArrayList<>();
+    // -------------
+
+    Scanner ler = InputHandler.getLeitor();
+
+    public Batalha(Inimigo... _inimigos){
+        this.arrayInimigos = _inimigos;
+        inimigos = new ArrayList<>(Arrays.asList(arrayInimigos)); // converte o array inimigos em arraylist para facilitar a manipulação.
+    }
+
+    // Carta generica (ta servindo pro veneno)
     Carta c;
 
     //efeitos de molde enquanto nao tem o json (esses aq sao pros inimigos)
@@ -40,32 +59,19 @@ public class Batalha extends Evento {
     Efeito escudinho = new Escudo("Escudinho", "3 pontos de escudo", 0, 3);
     Efeito escudao = new Escudo("Escudinho", "7 pontos de escudo", 0, 7);
 
-    // subscribers --------
-    private ArrayList<Efeito> listaEfeitos = new ArrayList<>(); 
-    private ArrayList<Poder> listaPoderes = new ArrayList<>();
-    // -------------
+    
 
-    private int turno; // 0 -> heroi, 1 -> inimigos
-    private Heroi heroi;
-    private Mao mao;
-    private PilhaCompra pilhaCompra;
-    private Inimigo[] arrayInimigos; // inimigos em forma de array pq infelizmente as vezes precisa :(
-    private List<Inimigo> inimigos; // inimigos em forma de lista pq é bom !
-    private PilhaDescarte pilhaDescarte = new PilhaDescarte();
-    private PilhaDescarte pilhaPoderes = new PilhaDescarte(); // <- cartas de poder vem pra cá!
-    Scanner ler = InputHandler.getLeitor();
-
-    // recebe pilha de compra(deck atual), heroi e inimigos, define as variáveis e chama a classe principal.
-    public void iniciar(Heroi _heroi, PilhaCompra _pilhaCompra, Inimigo... _inimigos){
-        
-        arrayInimigos = _inimigos;
-        inimigos = new ArrayList<Inimigo>(Arrays.asList(_inimigos)); // converte o array inimigos em arraylist para facilitar a manipulação.
-        heroi = _heroi;
-        pilhaCompra = _pilhaCompra;
-        mao = new Mao();
-        
+    // recebe heroi, define as variáveis e chama a classe principal.
+    @Override
+    public void iniciar(Heroi heroi){
+        this.heroi = heroi;
+        pilhaCompra.addBaralho(heroi.getBaralho()); // pilha de compras recebe o baralho do heroi e embaralha
         pilhaCompra.shuffleAll(pilhaDescarte);
         
+        // resetando os bonus do heroi q possam ter sobrado da rodada passada
+        heroi.passaRodada();
+        heroi.resetEfeitos();
+
         turno = 0; // 0: turno do heroi 
         
         for (Inimigo inimigo : inimigos) 
@@ -74,8 +80,8 @@ public class Batalha extends Evento {
         batalha();
     }
 
-    /* reseta os bonus do heroi logo no começo, portanto efeitos que aplicam dano ignoram escudo e resistencias.
-    notifica os efeitos, printa eles, notifica possiveis mortes, limpa os efeitos que ja acabaram, notifica os poderes e esvazia a mao. */
+    /* reseta os bonus do heroi, notifica os efeitos, printa os q precisarem, notifica possiveis mortes,
+     limpa os efeitos que ja acabaram, notifica os poderes e esvazia a mao. */
     public void passaRodada(){
         heroi.passaRodada(); // remove os bonus que acabam (escudo, etc) e reseta energia
         heroi.resetEfeitos();
@@ -166,7 +172,7 @@ public class Batalha extends Evento {
                 break;
 
             System.out.println();
-            Cor.printaAmarelo("Tem que ser um número de 0 a " +(i-1)+ ", capitão!!\n");
+            Cor.printaAmarelo(Textos.escolhaInvalida(i-1));
 
             InputHandler.esperar();
 
@@ -283,7 +289,7 @@ public class Batalha extends Evento {
                 } else {
                     if (escolhaInvalida){
                         System.out.println();
-                        System.out.println("Tem que ser um número de 0 a "+mao.getSize()+", capitão!!");
+                        System.out.println(Textos.escolhaInvalida(mao.getSize()));
                         InputHandler.esperar();
                         Textos.limpaTela();
                         escolhaInvalida = false;  
@@ -385,15 +391,20 @@ public class Batalha extends Evento {
             if (turno == 0) turnoHeroi();
             else turnoInimigos();
         }
-        // fim de batalha
+        
+        fimBatalha(); 
+    }
 
+    public void fimBatalha(){
         System.out.println();
         Cor.printaAmarelo("DUELO ENCERRADO!\n");
         System.out.println();
+
         Textos.sleep(1500);
         Textos.limpaTela();
+
         if(!heroi.estaVivo() == false){
-            Textos.printaLinhaDevagar(Arte.PEROLANEGRA);
+            Textos.printaLinhaDevagar(Arte.venceu2);
         } else {
             System.out.println();
             Textos.printaLinhaDevagar(Cor.txtCinza(Arte.sans2));
@@ -402,5 +413,17 @@ public class Batalha extends Evento {
             Textos.printaLinhaDevagar(Cor.txtVermelho(Arte.VOCEMORREU));
         }
         System.out.println();
+        InputHandler.esperar();
+    }
+
+    @Override
+    public String toString() {
+        String retorno = Cor.txtVermelho("Batalha") + " >";
+
+        for (Inimigo inimigo : arrayInimigos) {
+            retorno += " [ " + inimigo.getNome() + " ]";
+        }
+        retorno += "\n";
+        return retorno;
     }
 }

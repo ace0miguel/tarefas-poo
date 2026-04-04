@@ -8,7 +8,7 @@ import Util.Cor;
 public class Heroi extends Entidade {
     private int energia;
     private int energiaMax;
-    private List<Carta> deck = new ArrayList<>();
+    private List<Carta> baralho = new ArrayList<>();
 
     /* inicializa os atributos */
     public Heroi(String nome, int vida, int energiaMax){
@@ -33,14 +33,13 @@ public class Heroi extends Entidade {
         this.energia += valor;
     }
 
-    public List<Carta> getDeck() {
-        return deck;
+    public List<Carta> getBaralho() {
+        return baralho;
     }
 
     public void setDeck(List<Carta> deck) {
-        this.deck = deck;
+        this.baralho = deck;
     }
-
 
     public String statusEnergia(){
         if (this.energia > 5) // da pra passar de 5 por meio de cartas!
@@ -55,6 +54,14 @@ public class Heroi extends Entidade {
             Cor.setCinza();
 
         return "Energia ("+this.energia+"/"+this.energiaMax+")" + Cor.reset;
+    }
+
+    public void addCarta(Carta c){
+        baralho.add(c);
+    }
+
+    public void removeCarta(Carta c){
+        baralho.remove(c);
     }
 
     @Override

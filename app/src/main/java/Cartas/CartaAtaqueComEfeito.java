@@ -8,17 +8,25 @@ import Telas.Eventos.Batalha;
 public class CartaAtaqueComEfeito extends CartaAtaque {
     private Efeito efeito;
 
-    public CartaAtaqueComEfeito(String nome, String descricao, int custo, int dano, Efeito efeito){
+    public CartaAtaqueComEfeito(String nome, String descricao, int custo, int dano, Efeito efeito, boolean selfCast){
         super(nome, descricao, custo, dano);
         this.efeito = efeito;
-        setDescricao("Aplica " + efeito.getNome());
+        this.setSelfCast(selfCast);
+        setDescricao(!this.getSelfCast() 
+        ? ("Aplica [ " + this.efeito.getNomeColorido() + " ]")
+        : ("Recebe [ " + this.efeito.getNomeColorido() + " ]")
+        );
     }
 
-    public CartaAtaqueComEfeito(String nome, String descricao, int custo, int dano, Efeito efeito, int tipo){
+    public CartaAtaqueComEfeito(String nome, String descricao, int custo, int dano, Efeito efeito, boolean selfCast, int tipo){
         super(nome, descricao, custo, dano);
         this.efeito = efeito;
         this.tipo = tipo;
-        setDescricao("Aplica [ " + this.efeito.getNomeColorido() + " ]");
+        this.setSelfCast(selfCast);
+        setDescricao(!this.getSelfCast() 
+        ? ("Aplica [ " + this.efeito.getNomeColorido() + " ]")
+        : ("Recebe [ " + this.efeito.getNomeColorido() + " ]")
+        );
     }
 
     @Override
@@ -29,9 +37,8 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
             printaResenha();
             heroi.usarEnergia(this.getCusto());
 
-            Efeito e = efeito.criaCopia();
-            e.setAlvo(this.getSelfCast() ? heroi : alvo); // selfcast: ataca o inimigo e aplica um efeito em si mesmo
-            batalha.adicionarEfeito(e);
+            Entidade trueAlvo = (this.getSelfCast() ? heroi : alvo); // se for selfcast o efeito vai pra si mesmo, se nao vai pro inimigo!
+            efeito.adicionar(trueAlvo, batalha);
         }
     }
 

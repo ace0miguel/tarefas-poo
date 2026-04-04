@@ -1,5 +1,17 @@
 package Telas.Eventos;
 
-public class Evento {
-    
+import Entidades.Heroi;
+import Util.Cor;
+
+public class Evento { // evento generico
+    protected Heroi heroi;
+
+    public void iniciar(Heroi heroi){
+        this.heroi = heroi;
+    };
+
+    public String toString() {
+        String retorno = Cor.txtVermelho("evento") + " ( > ";
+        return retorno;
+    }
 }

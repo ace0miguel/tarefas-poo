@@ -126,19 +126,30 @@ public abstract class Efeito {
     public void addStack(){
         this.stacks++;
     }
+
+    public void adicionar(Entidade alvo, Batalha batalha){ // recebe alvo e batalha e adiciona uma copia do efeito na batalha
+        Efeito e = this.criaCopia();
+        e.setAlvo(alvo); 
+        batalha.adicionarEfeito(e);
+    }
+
     // ----------- abstratos
   
+    //chamado no inicio de cada rodada
     public abstract void aplicar();
 
+    //chamado sempre que uma carta é usada
     public abstract void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha);
 
-    public abstract Efeito criaCopia();
-
-    public abstract String status();
-
+    //chamado sempre que o efeito vai ser removido da batalha
     public abstract void acabar();
 
-    public void onCreate(){
-        
-    };
+    //chamado quando o efeito é adicionado a batalha
+    public abstract void onCreate();
+   
+    //cria copia
+    public abstract Efeito criaCopia();
+
+    //a string que vai ficar na linha de efeitos embaixo do nome da entidade q eles tao afetando
+    public abstract String status();
 }

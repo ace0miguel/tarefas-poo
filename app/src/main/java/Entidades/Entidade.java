@@ -25,6 +25,12 @@ public abstract class Entidade {
         this.vidaMax = vida;
     }
 
+    public Entidade(Entidade copiada){
+        this.vida = copiada.getVida();
+        this.nome = copiada.getNome();
+        this.vidaMax = copiada.getVida();
+    }
+
     //getters ------
 
     public String getNome(){
@@ -81,6 +87,22 @@ public abstract class Entidade {
 
     //setters -------
 
+    public void setEscudo(int escudo) {
+        this.escudo = escudo;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setVida(int vida) {
+        this.vida = vida;
+    }
+
+    public void setVidaMax(int vidaMax) {
+        this.vidaMax = vidaMax;
+    }
+    
     public void setPurificar(boolean purificar) {
         this.purificar = purificar;
     }
@@ -117,7 +139,8 @@ public abstract class Entidade {
         this.sangrando = false;
     }
 
-    public String corStatus() {
+    public String corStatus() { // se quiser adicionar efeitos q mudam de cor colocar aqui!
+
         if (this.purificado) {
             return Cor.azulClaro;
         }
@@ -133,8 +156,8 @@ public abstract class Entidade {
 
     public void receberDano(int dano){
         int danoEfetivo = max((dano - this.resistencia), 0); // pra evitar o tal do -1 dano
-        // se tiver por ex 1 de escudo e voce tomar 1000 de dano vc nao toma dano so perde o escudo.
-        
+
+        // se tiver por ex 1 de escudo e voce tomar 1000 de dano vc nao toma dano so perde o escudo.       
         if (this.escudo >= danoEfetivo){
             this.escudo -= danoEfetivo;
         } else {

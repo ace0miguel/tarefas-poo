@@ -29,9 +29,7 @@ public class CartaHabilidade extends Carta // aplica um efeito em um alvo
     public void usar (Heroi heroi, Entidade alvo, Batalha batalha){
         int energiaAtual = heroi.getEnergia();
         if(energiaAtual >= this.getCusto()){
-            Efeito e = efeito.criaCopia();
-            e.setAlvo(alvo);
-            batalha.adicionarEfeito(e);
+            efeito.adicionar(alvo, batalha);
             heroi.usarEnergia(this.getCusto());
 
             printaResenha();
@@ -40,10 +38,7 @@ public class CartaHabilidade extends Carta // aplica um efeito em um alvo
 
     @Override
     public void aplicarEfeito(Heroi heroi, Entidade alvo, Batalha batalha) {
-        Efeito e = efeito.criaCopia();
-        e.setAlvo(alvo);
-        batalha.adicionarEfeito(e);
-
+        efeito.adicionar(alvo, batalha);
         printaResenha();
     }
     

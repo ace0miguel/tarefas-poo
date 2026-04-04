@@ -1,4 +1,5 @@
 package Util;
+import java.util.List;
 import java.util.Scanner;
 
 public class InputHandler {
@@ -8,8 +9,8 @@ public class InputHandler {
         return leitor;
     }
 
-    public static void esperar() {
-        System.out.println(Cor.txtCinza("\n[ Pressione ENTER para continuar ]"));
+    public static void esperar(String mensagem) {
+        System.out.println(mensagem);
         
         try {
             System.in.read();          
@@ -20,28 +21,70 @@ public class InputHandler {
         }
     }
 
-    /* selecionar recebe uma lista, exibe no terminal em forma de um menu de escolha
-    pelo terminal, e retorna o numero escolhido pelo usuário
-    (NÃO TA FUNCIONANDO AINDA OK)*/
-    /*
-    public static int selecionar(List<String> lista) {
-        int i = 0;
-        for (String item : lista) {
-            System.out.println("["+i+"] - "+item+"");
-            i++;
-        }  
-        int opcao;
-        try {
-            opcao = leitor.nextInt();
-            leitor.nextLine();
-        } catch (Exception e) {
-            leitor.nextLine();
-            System.out.println();
-            System.out.println("Valor inválido. Digite novamente.");
-            System.out.println();
-        }
-        return opcao;
+    public static void esperar(){
+        esperar("\n[ Pressione ENTER para continuar ]");
     }
-    */
-   }
+
+    public static <T> int selecionar(List<T> lista) {
+        return selecionar(lista, false, "");
+    }
+
+    public static <T> int selecionar(List<T> lista, String mensagem) {
+        return selecionar(lista, false, mensagem);
+    }
+
+    public static <T> int selecionar(List<T> lista, boolean exit) {
+        return selecionar(lista, exit, "");
+    }
+
+
+    /* recebe uma lista e printa, se for de objetos ele vai usar o metodo .toString(), se for string ela so printa */
+    public static <T> int selecionar(List<T> lista, boolean exit, String mensagemInicial) { 
+        if (lista.isEmpty() && !exit) { // se a lista vier vazia e nao tiver nada pra voltar retorna
+            Cor.printaVermelho(">> ERRO << LISTA VAZIA E NAO TEM EXIT\n");
+            esperar();
+            return -1;
+        }
+
+        int escolha;
+        int tamanhoEfetivo = lista.size() - 1; // se nao tiver exit a ultima opçao e um a menos q o size, se tiver e igual o size.
+        if (exit) tamanhoEfetivo++;
+
+        // fiz isso aqui por motivo de estetica, toda lista vai ser imprimida em 1 segundo e a velocidade depende da quantidade de itens.
+        int tempoSleep = 1000 / lista.size(); 
+
+        while (true){
+            Textos.limpaTela();
+
+            if (!mensagemInicial.equals(""))
+                Textos.printaLinhaDevagar(mensagemInicial);
+        
+            for(int i = 0; i < lista.size(); i++) {
+                Textos.printaBonito(("[ " + (i) + " ]" + " > " + lista.get(i)),2 ,0); Textos.sleep(tempoSleep);
+                System.out.println();
+            }
+
+            if (exit) {
+                Textos.printaBonito(Cor.txtCinza("[ " + (lista.size()) + " ]" + " > Voltar."), 2, 0); Textos.sleep(tempoSleep);
+                System.out.println();
+            }
+
+            try {
+                escolha = leitor.nextInt();
+            } catch (Exception e) {
+                escolha = -1;
+            }
+
+            leitor.nextLine();
+            System.out.println();
+
+            if (escolha >= 0 && escolha <= tamanhoEfetivo) // valida a escolha
+                break;         
+            
+            System.out.println(Textos.escolhaInvalida(tamanhoEfetivo));
+            esperar();
+        }
+        return escolha;
+    }
+}
 

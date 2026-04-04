@@ -1,6 +1,7 @@
 package Deck;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Stack;
 
 import Cartas.Carta;
@@ -8,7 +9,7 @@ import Util.Cor;
 import Util.Textos;
 
 public class PilhaCompra {
-    private ArrayList<Carta> cartas = new ArrayList<>();  
+    private List<Carta> cartas = new ArrayList<>();  
     private Stack<Carta> pilhaCartas = new Stack<>();
 
     public void addCarta(Carta c){
@@ -19,7 +20,11 @@ public class PilhaCompra {
         cartas.remove(c);
     }
 
-    public void shuffle(){
+    public void addBaralho(List<Carta> baralho){
+        cartas = baralho;
+    }
+
+    public void shuffle(){ // embaralha a lista de cartas, nao sei se vai ser util pra algo
         Collections.shuffle(cartas);
     }
 
@@ -39,7 +44,8 @@ public class PilhaCompra {
         pilhaCartas.addAll(cartas);
     }
 
-    public void deckReset(PilhaDescarte pilhaDescarte){ // embaralha todas as cartas da pilha de descarte e adiciona a pilha de compra
+    // embaralha todas as cartas da pilha de descarte e adiciona a pilha de compra (O PRINCIPAL)
+    public void deckReset(PilhaDescarte pilhaDescarte){
         Cor.setLaranja(); 
         System.out.print("Embaralhando as cartas");
         Textos.printaBonito(" . . . ", 300, 0);
@@ -49,7 +55,7 @@ public class PilhaCompra {
         this.pilhaCartas.addAll(temp);  
     }
 
-    public Carta puxaCarta(PilhaDescarte pd){ //falta adicionar checagem se está vazio
+    public Carta puxaCarta(PilhaDescarte pd){
         if (pilhaCartas.size() <= 0)
             deckReset(pd);
         return pilhaCartas.pop();

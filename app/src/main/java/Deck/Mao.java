@@ -40,7 +40,7 @@ public class Mao {
         int ultimoNumero = 0;
         for (int i = 0; i < cartas.size(); i++){
             Carta cartaAtual = cartas.get(i);
-            System.out.println("["+i+"] - "+cartaAtual.descricao()+""); Textos.sleep(50);
+            System.out.println("["+i+"] > "+cartaAtual.descricao()+""); Textos.sleep(50);
             ultimoNumero = i;
         }
         ultimoNumero++;

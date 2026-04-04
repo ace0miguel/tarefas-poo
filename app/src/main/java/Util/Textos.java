@@ -9,12 +9,16 @@ import Poderes.Poder;
 
 public class Textos {
 
+    public static String escolhaInvalida(int maxEscolha){
+        return "Tem que ser um número de 0 a " + maxEscolha + ", capitao!";
+    }
+
     public static void limpaTela(){
-        try  {
+        try  { // nao ta funcionando isso aqui nao sla
             new ProcessBuilder("clear").inheritIO().start().waitFor();
         } catch (Exception e){}
 
-        for(int i = 0; i < 100; i++) System.out.println();
+        for(int i = 0; i < 200; i++) System.out.println(); // printa 200 linha nunca falha
     }
 
     public static void sleep(int time){ // tempo em ms
@@ -30,20 +34,11 @@ public class Textos {
         boolean aux1 = false;
         boolean aux2 = false;
         sleep(500);
-        printaLinhaDevagar(Cor.txtCinza(Arte.titulo)); sleep(700);
-
-        // parte de cima do barco 
-        System.out.println(Cor.txtMarrom("/".repeat(18))); sleep(25);
-
-        System.out.println(Cor.txtMarrom("/".repeat(32))); sleep(25);
+        printaLinhaDevagar(Arte.tituloSombreado); sleep(700);
+        System.out.println();
+        // parte de cima da hud
         
-        System.out.println(Cor.txtMarromClaro("/".repeat(30)) + Cor.txtMarrom("/".repeat(24))); sleep(25);
-        
-        System.out.println(Cor.txtMarromClaro("/".repeat(52)) + Cor.txtMarrom("/".repeat(13))); sleep(25);
-
-        System.out.println(Cor.txtMarromClaro("/".repeat(63)) + Cor.txtMarrom("/".repeat(7))); sleep(25);
-
-        System.out.println(" ".repeat(67) + Cor.txtMarrom("////")); sleep(25);
+        printaBonito(Cor.txtCinza(Arte.bordaHud1), 2, 0);
 
         // ---------------------------------
 
@@ -85,23 +80,14 @@ public class Textos {
 
         sleep(25);
 
-        // parte de baixo do barco ---------------------------
+        // parte de baixo da hud
         
-        System.out.println(Cor.txtMarromClaro("/".repeat(68)) + Cor.txtMarrom("////")); sleep(25);
-        
-        System.out.println(Cor.txtMarromClaro("/".repeat(63)) + Cor.txtMarrom("////")); sleep(25);
-        
-        System.out.println(Cor.txtMarromClaro("/".repeat(52)) + Cor.txtMarrom("////")); sleep(25);
-        
-        System.out.println(Cor.txtMarrom("/".repeat(32))); sleep(25);
-
-        System.out.println(Cor.txtMarrom("/".repeat(18))); sleep(25);
-
-        System.out.println();
+        printaBonito(Cor.txtCinza(Arte.bordaHud1), 2, 0);
 
         // ---------------------------------
-
+        
         sleep(700);
+        System.out.println();
 
         for (Inimigo inimigo : inimigos) {
                 inimigo.anunciarAtaque();
@@ -121,22 +107,16 @@ public class Textos {
         boolean aux1 = false;
         boolean aux2 = false;
 
-        System.out.println(Cor.txtCinza(Arte.titulo));
+        System.out.println((Arte.tituloSombreado));
+        System.out.println();
 
-        // parte de cima do barco 
-        System.out.println(Cor.txtMarrom("/".repeat(18)));
+        // parte de cima da hud
 
-        System.out.println(Cor.txtMarrom("/".repeat(32)));
-        
-        System.out.println(Cor.txtMarromClaro("/".repeat(30)) + Cor.txtMarrom("/".repeat(24)));
-        
-        System.out.println(Cor.txtMarromClaro("/".repeat(52)) + Cor.txtMarrom("/".repeat(13)));
-
-        System.out.println(Cor.txtMarromClaro("/".repeat(63)) + Cor.txtMarrom("/".repeat(7)));
-
-        System.out.println(" ".repeat(67) + Cor.txtMarrom("////"));
+        System.out.print(Cor.txtCinza(Arte.bordaHud1));
 
         // ---------------------------------
+
+        System.out.println();
 
         System.out.print(heroi.status());
         for (Poder poder : listaPoderes) {
@@ -175,21 +155,14 @@ public class Textos {
                 System.out.println();
             }  
         }
+        // parte de baixo da hud
 
-        // parte de baixo do barco
-        System.out.println(Cor.txtMarromClaro("/".repeat(68)) + Cor.txtMarrom("////"));
-        
-        System.out.println(Cor.txtMarromClaro("/".repeat(63)) + Cor.txtMarrom("////"));
-        
-        System.out.println(Cor.txtMarromClaro("/".repeat(52)) + Cor.txtMarrom("////"));
-        
-        System.out.println(Cor.txtMarrom("/".repeat(32)));
-
-        System.out.println(Cor.txtMarrom("/".repeat(18)));
-
-        System.out.println();
+        System.out.print(Cor.txtCinza(Arte.bordaHud1));
 
         // ---------------------------------
+
+        System.out.println();
+        System.out.println();
 
         for (Inimigo inimigo : inimigos) {
                 inimigo.anunciarAtaque();
@@ -282,13 +255,14 @@ public class Textos {
         for (String linha : linhas) {
             for (int i = 0; i < linha.length(); i++) {                
                 System.out.print(linha.charAt(i)); 
-                Textos.sleep(tempoLetra); 
+                sleep(tempoLetra); 
             }
             
             System.out.println();
-            Textos.sleep(tempoLinha);
+            sleep(tempoLinha);
         }
     }
+
 
     public static void apagarLinhas(int quantidade) {
         for (int i = 0; i < quantidade; i++) {
@@ -296,4 +270,34 @@ public class Textos {
         }
         System.out.flush(); 
     }
+
+    /* BARQUINHO Q EU TINHA FEITO PRA HUD ANTIGA TO COM DÓ DE APAGAR DEU MO TRABALHO :(
+
+    // parte de cima do barco 
+        System.out.println(Cor.txtMarrom("/".repeat(18)));
+
+        System.out.println(Cor.txtMarrom("/".repeat(32)));
+        
+        System.out.println(Cor.txtMarromClaro("/".repeat(30)) + Cor.txtMarrom("/".repeat(24)));
+        
+        System.out.println(Cor.txtMarromClaro("/".repeat(52)) + Cor.txtMarrom("/".repeat(13)));
+
+        System.out.println(Cor.txtMarromClaro("/".repeat(63)) + Cor.txtMarrom("/".repeat(7)));
+
+        System.out.println(" ".repeat(67) + Cor.txtMarrom("////")); 
+     
+    // parte de baixo do barco
+        System.out.println(Cor.txtMarromClaro("/".repeat(68)) + Cor.txtMarrom("////"));
+        
+        System.out.println(Cor.txtMarromClaro("/".repeat(63)) + Cor.txtMarrom("////"));
+        
+        System.out.println(Cor.txtMarromClaro("/".repeat(52)) + Cor.txtMarrom("////"));
+        
+        System.out.println(Cor.txtMarrom("/".repeat(32)));
+
+        System.out.println(Cor.txtMarrom("/".repeat(18)));
+
+        System.out.println();
+     
+    */
 }

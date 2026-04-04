@@ -55,5 +55,8 @@ public class DanoConstante extends Efeito {
     @Override
     public void acabar() {
     }
-    
+
+    @Override
+    public void onCreate() {
+    }  
 }

@@ -18,6 +18,11 @@ public class Inimigo extends Entidade{
         this.dano = dano;
     }
 
+    public Inimigo(Inimigo copiado){
+        super(copiado);
+        this.dano = copiado.dano;
+    }
+
     // aplica seu dano base
     public void atacar(Heroi alvo){
         alvo.receberDano(this.dano + this.getDanoExtra());
@@ -26,9 +31,7 @@ public class Inimigo extends Entidade{
     // aplica metade do dano base + um efeito
     public void atacarEfeito(Heroi alvo, Batalha batalha, Efeito efeito){
         alvo.receberDano(this.dano / 2 + this.getDanoExtra());
-        Efeito e = efeito.criaCopia();
-        e.setAlvo(alvo);
-        batalha.adicionarEfeito(e);
+        efeito.adicionar(alvo, batalha);
     }
 
     // adiciona um efeito a si mesmo
@@ -80,5 +83,9 @@ public class Inimigo extends Entidade{
 
     public void setTier(int tier) {
         this.tier = tier;
+    }
+
+    public Inimigo criaCopia() {
+        return new Inimigo(this);
     }
 }
