@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import Cartas.Carta;
 import Cartas.CartaAtaqueComEfeito;
+import Cartas.CartaMaldicao;
 import Cartas.CartaPoder;
 import Deck.Mao;
 import Deck.PilhaCompra;
@@ -16,6 +17,7 @@ import EfeitosDeStatus.DanosConstantes.DanoConstante;
 import EfeitosDeStatus.DanosConstantes.Sangramento;
 import EfeitosDeStatus.DanosConstantes.Veneno;
 import EfeitosDeStatus.Efeito;
+import EfeitosDeStatus.Energizar;
 import EfeitosDeStatus.Instantaneos.Escudo;
 import EfeitosDeStatus.Instantaneos.Purificar;
 import Entidades.Entidade;
@@ -59,16 +61,28 @@ public class Batalha extends Evento {
     Efeito escudinho = new Escudo("Escudinho", "3 pontos de escudo", 0, 3);
     Efeito escudao = new Escudo("Escudinho", "7 pontos de escudo", 0, 7);
 
+
+    //cartas de molde pros inimigos enquanto nao tem um gerenciador de cartas de vdd 
+    Carta nada = new CartaMaldicao("NADA!", "NAO FAZ NADA!", 1, false);
     
 
     // recebe heroi, define as variáveis e chama a classe principal.
     @Override
     public void iniciar(Heroi heroi){
+        nada.setResenha(Cor.txtCinza(Arte.nada));
+        
         this.heroi = heroi;
+
+        // passa a referencia da mao e das pilhas pro heroi
+        heroi.setMaoAtual(mao); 
+        heroi.setPilhaCompra(pilhaCompra);
+        heroi.setPilhaDescarte(pilhaDescarte);
+
         pilhaCompra.addBaralho(heroi.getBaralho()); // pilha de compras recebe o baralho do heroi e embaralha
         pilhaCompra.shuffleAll(pilhaDescarte);
         
         // resetando os bonus do heroi q possam ter sobrado da rodada passada
+        heroi.passaRodada();
         heroi.passaRodada();
         heroi.resetEfeitos();
 
@@ -83,7 +97,6 @@ public class Batalha extends Evento {
     /* reseta os bonus do heroi, notifica os efeitos, printa os q precisarem, notifica possiveis mortes,
      limpa os efeitos que ja acabaram, notifica os poderes e esvazia a mao. */
     public void passaRodada(){
-        heroi.passaRodada(); // remove os bonus que acabam (escudo, etc) e reseta energia
         heroi.resetEfeitos();
 
         boolean efeitoPrintado = false;
@@ -96,9 +109,9 @@ public class Batalha extends Evento {
         
         limpaEfeitos();
         
-        for (Efeito efeito : listaEfeitos) {  // notifica os efeitos
+        for (Efeito efeito : listaEfeitos) {  // notifica os efeitos APLICAR e DEPOIS reduz a duraçao
             if (efeito.getAlvo().estaVivo()){
-                if (efeito instanceof DanoConstante) efeitoPrintado = true; // no momento so os efeito danoconstante tao printando, se mudar atualizar aqui!
+                if (efeito instanceof DanoConstante) efeitoPrintado = true; // seria ideal fazer uma flag nos efeitos que dizem se vai printar ou nao
                 if (efeitoPrintado && !linhaCimaPrintada){
                     Textos.printaBonito(Cor.txtCinza( "\n" + Arte.bordaHud9), 2,2); Textos.sleep(300);
                     linhaCimaPrintada = true;
@@ -118,6 +131,8 @@ public class Batalha extends Evento {
 
         for (Poder poder : listaPoderes) // notifica os poderes
             poder.aplicar();
+        
+        heroi.passaRodada(); // remove os bonus que acabam (escudo, etc) e reseta energia
     }
 
     public void passaTurno(){
@@ -128,7 +143,7 @@ public class Batalha extends Evento {
 
     public void limpaEfeitos(){     
         for (Efeito efeito : listaEfeitos ) {
-            if ((efeito.getDur() <= 0 || efeito.getStacks() <= 0 ||efeito.getAlvo().getPurificar() == true) && !(efeito instanceof Purificar)){
+            if ((efeito.getDur() <= 0 || efeito.getStacks() <= 0 || efeito.getAlvo().getPurificar() == true) && !(efeito instanceof Purificar)){
                 efeito.acabar();
             }
         }
@@ -199,8 +214,13 @@ public class Batalha extends Evento {
 
             if ((e.getNome().equals(efeito.getNome()) || doisVeneno) && e.getAlvo() == efeito.getAlvo()){
 
+                // efeitos que nao afeta a duraçao ao stackar
+                if (e instanceof Energizar) {
+                    // nao faz nada esse if so serve pra pular o else
+                }
+
                 // efeitos q resetam duraçao ao inves de somar
-                if (e.getResetDur()){ 
+                else if (e.getResetDur()){ 
                     e.setDur(efeito.getDur());      
                 }
                 
@@ -272,7 +292,6 @@ public class Batalha extends Evento {
 
     public void turnoHeroi(){
         limpaEfeitos();
-        heroi.resetarEnergia();
 
         mao.addCinco(pilhaCompra, pilhaDescarte);
         boolean primeiroLoop = true;

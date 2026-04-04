@@ -35,6 +35,7 @@ public class CartaPoder extends Carta
         printaResenha();
     }
 
+    @Override
     public String descricao(){
         return ""+this.getNome()+" - "+this.getDescricao() + Cor.txtAmareloClaro(" < custo: " + this.getCusto());
     }

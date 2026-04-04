@@ -18,6 +18,7 @@ public abstract class Entidade {
     private boolean purificado = false;
     private boolean envenenado = false;
     private boolean sangrando = false;
+    private boolean energizado = false;
 
     public Entidade(String nome, int vida){
         this.vida = vida;
@@ -72,6 +73,10 @@ public abstract class Entidade {
     public boolean getPurificado(){
         return this.purificado;
     }
+    
+    public boolean getEnergizado(){
+        return this.energizado;
+    }
 
     public int getResistencia() {
         return resistencia;
@@ -119,6 +124,10 @@ public abstract class Entidade {
         this.purificado = purificado;
     }
 
+    public void setEnergizado(boolean energizado) {
+        this.energizado = energizado;
+    }
+
     public void setResistencia(int resistencia) {
         this.resistencia = resistencia;
     }
@@ -137,12 +146,16 @@ public abstract class Entidade {
         this.purificado = false;
         this.envenenado = false;
         this.sangrando = false;
+        this.energizado = false;
     }
 
     public String corStatus() { // se quiser adicionar efeitos q mudam de cor colocar aqui!
 
         if (this.purificado) {
             return Cor.azulClaro;
+        }
+        else if (this.energizado) {
+            return Cor.amarelo;
         }
         else if (this.sangrando) {
             return Cor.vermelho; 

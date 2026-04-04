@@ -45,6 +45,7 @@ public class CartaAtaque extends Carta
         return dano;
     }
 
+    @Override
     public String descricao(){
         return (!this.getDescricao().equals("")) 
         ? ""+this.getNome()+ " - " +this.getDescricao() + Cor.cinza +  " - ("  +this.getDano()+ ") " + "DANO" +  Cor.txtAmareloClaro(" < custo: " + this.getCusto())

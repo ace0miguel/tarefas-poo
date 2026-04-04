@@ -1,48 +1,41 @@
 package Cartas;
+
 import EfeitosDeStatus.Efeito;
 import Entidades.Entidade;
 import Entidades.Heroi;
 import Telas.Eventos.Batalha;
 import Util.Cor;
 
-/*
-Cartas que aplicam efeitos; não causam dano direto.
-*/
-public class CartaHabilidade extends Carta // aplica um efeito em um alvo
+/* cartas que te prejudicam ou nao fazem nada (no momento so ta programada pra nao fazer nada) (normalmente inimigos vao colocar ela no seu deck ou vao ser consequencia de algo.) */
+public class CartaMaldicao extends Carta 
 {
     private Efeito efeito;
 
-    public CartaHabilidade(String nome, String descricao, int custo, Efeito efeito, boolean _selfCast){
+    public CartaMaldicao(String nome, String descricao, int custo, Efeito efeito, boolean _selfCast){
         super(nome, descricao, custo);
         this.efeito = efeito;
         this.setSelfCast(_selfCast);
     }
 
-    public CartaHabilidade(String nome, String descricao, int custo, Efeito efeito, boolean _selfCast, int tipo){
+    public CartaMaldicao(String nome, String descricao, int custo, boolean _selfCast){
         super(nome, descricao, custo);
-        this.efeito = efeito;
         this.setSelfCast(_selfCast);
-        this.tipo = tipo;
     }
 
     @Override
     public void usar (Heroi heroi, Entidade alvo, Batalha batalha){
         int energiaAtual = heroi.getEnergia();
         if(energiaAtual >= this.getCusto()){
-            efeito.adicionar(alvo, batalha);
             heroi.usarEnergia(this.getCusto());
-
             printaResenha();
         }
     }
 
     @Override
     public void aplicarEfeito(Heroi heroi, Entidade alvo, Batalha batalha) {
-        efeito.adicionar(alvo, batalha);
         printaResenha();
     }
     
-    @Override
     public String descricao(){
         return ""+this.getNome()+" - "+this.getDescricao()+ " - [ " +this.efeito.getNomeColorido()+" ]" + Cor.txtAmareloClaro(" < custo: " + this.getCusto());
     }
