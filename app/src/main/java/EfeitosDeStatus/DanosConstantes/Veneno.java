@@ -36,7 +36,7 @@ public class Veneno extends DanoConstante{
 
     @Override
     public void onCreate() {
-        this.getAlvo().setSangrando(true);
+        this.getAlvo().setEnvenenado(true);
     }
 
     @Override
