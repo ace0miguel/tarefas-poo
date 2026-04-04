@@ -1,0 +1,3 @@
+@echo off
+java -jar piratas.jar
+pause
