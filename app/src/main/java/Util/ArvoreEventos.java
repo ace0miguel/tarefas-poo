@@ -15,12 +15,13 @@ public class ArvoreEventos {
     int p; // profundidade (QUANTIDADE TOTAL DE BATALHAS: P - 1 PQ COMEÇA DO PROFUNDIDADE 0)
 
     // instancias padrao pra teste por enquanto. talvez seja bom fazer essa classe receber uma lista de inimigos pra ficar mais procedural sla
-    Inimigo inimigo = new Inimigo("Capitão Hector Barbossa", 30, 4);
-    Inimigo inimigo2 = new Inimigo("LOUD Coringa", 15, 3);    
-    Inimigo inimigo3 = new Inimigo("Endrick", 12, 4);
-    Inimigo inimigo4 = new Inimigo("PAUL MUAD'DIB ATREIDES, LISAN AL GAIB", 40, 8); // ESSE AQUI E FORTE VIU
-    Inimigo inimigo5 = new Inimigo("SABRINA CARPENTER", 35, 6); // ELA E FORTE TB
-    Inimigo inimigo6 = new Inimigo("Drake", 10, 2);
+    Inimigo barbossa = new Inimigo("Capitão Hector Barbossa", 25, 3);
+    Inimigo loudCoringa = new Inimigo("LOUD Coringa", 15, 3);    
+    Inimigo endrick = new Inimigo("Endrick", 12, 4);
+    Inimigo drake = new Inimigo("Drake", 10, 2);
+    Inimigo paulAtreides = new Inimigo("PAUL MUAD'DIB ATREIDES, DUKE OF ARRAKIS, LISAN AL GAIB", 35, 8); // ESSE AQUI E FORTE VIU
+    Inimigo sabrinaCarpenter = new Inimigo("SABRINA CARPENTER", 30, 6); // ELA E FORTE TB
+    Inimigo tripleT = new Inimigo("TUNG TUNG TUNG SAHUR", 67, 2); // TANK
 
     public ArvoreEventos(int n, int p, Heroi heroi){
         this.n = n;
@@ -40,20 +41,20 @@ public class ArvoreEventos {
     public Evento escolherEvento(int profundidadeAtual, Heroi heroi) { // da pra da uma personalizadinha aqui dps so fiz o basico
         
         if (profundidadeAtual == p) { // se chegou no maximo vai toma a batalha mais dificil quero nem saber VAI LUTA COM TODO MUNDO
-            return new Batalha(inimigo.criaCopia(), inimigo2.criaCopia(), inimigo3.criaCopia(), inimigo4.criaCopia(), inimigo5.criaCopia(), inimigo6.criaCopia());
+            return new Batalha(barbossa.criaCopia(), loudCoringa.criaCopia(), endrick.criaCopia(), drake.criaCopia(), paulAtreides.criaCopia(), sabrinaCarpenter.criaCopia(), tripleT.criaCopia());
         } else if (profundidadeAtual == 0){
-            return new Batalha(inimigo2.criaCopia(), inimigo3.criaCopia(), inimigo6.criaCopia()); // mas a primeira vai ser facinha pq eu sou bonzinho
+            return new Batalha(loudCoringa.criaCopia(), endrick.criaCopia(), sabrinaCarpenter.criaCopia()); // mas a primeira vai ser facinha pq eu sou bonzinho
         }
 
         int sorteio = RNGHandler.valorAleatorio(100);
 
         // fiz umas variaçoes genericas de batalha ai
         if (sorteio <= 33) {
-            return new Batalha(inimigo4.criaCopia(), inimigo5.criaCopia(), inimigo3.criaCopia());
+            return new Batalha(tripleT.criaCopia(), drake.criaCopia(), endrick.criaCopia());
         } else if (sorteio <= 66) {
-            return new Batalha(inimigo.criaCopia(), inimigo5.criaCopia(), inimigo3.criaCopia());
+            return new Batalha(paulAtreides.criaCopia(), sabrinaCarpenter.criaCopia());
         } else {
-            return new Batalha(inimigo.criaCopia(), inimigo2.criaCopia(), inimigo4.criaCopia()); 
+            return new Batalha(barbossa.criaCopia(), loudCoringa.criaCopia(), endrick.criaCopia()); 
         }
     }
 

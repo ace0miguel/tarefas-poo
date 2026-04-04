@@ -24,7 +24,7 @@ public class PilhaCompra {
         cartas = baralho;
     }
 
-    public void shuffle(){ // embaralha a lista de cartas, nao sei se vai ser util pra algo
+    public void shuffle(){ // embaralha a lista de cartas
         Collections.shuffle(cartas);
     }
 

@@ -199,7 +199,7 @@ public class Textos {
         if (porcentagem > 0.6) {
             barraFinal = Cor.verdeClaro + barraFinal + Cor.reset;
         } else if (porcentagem > 0.3) {
-            barraFinal = Cor.amareloClaro + barraFinal + Cor.reset;
+            barraFinal = Cor.amarelo + barraFinal + Cor.reset;
         } else {
             barraFinal = Cor.vermelho + barraFinal + Cor.reset;
         }

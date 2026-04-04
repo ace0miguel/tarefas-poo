@@ -1,6 +1,7 @@
 package Telas;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import Deck.DeckBuilder;
 import Entidades.Heroi;
 import Telas.Eventos.Evento;
 import Util.Arte;
@@ -19,6 +20,7 @@ public class Mapa {
     ArvoreEventos arvoreEventos = new ArvoreEventos(3, 2, heroi); // QUANTIDADE TOTAL DE BATALHAS: P - 1 (COMEÇA DO PROFUNDIDADE 0)
     DefaultMutableTreeNode nodeInicial = arvoreEventos.criarArvore(heroi); // cria arvore e recebe a raiz
     DefaultMutableTreeNode nodeAtual = nodeInicial; // eu to chamando de node pq noAtual ia ficar muito feio
+    DeckBuilder deckBuilder = new DeckBuilder();
     
     // retorna um menu de seleçao com os filhos da posiçao passada
     public int escolherCaminho(DefaultMutableTreeNode posicaoAtual){ 
@@ -67,6 +69,8 @@ public class Mapa {
             Textos.limpaTela();
 
             if (primeiroLoop){
+                deckBuilder.rodar(heroi);
+                
                 Textos.printaLinhaDevagar(Arte.mapa);
                 InputHandler.esperar("Pressione ENTER para ir para " + getEvento());
                 getEvento().iniciar(heroi);
@@ -88,4 +92,5 @@ public class Mapa {
             getEvento().iniciar(heroi);
         }
     }
+
 }

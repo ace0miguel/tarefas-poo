@@ -119,8 +119,6 @@ public class Batalha extends Evento {
 
         for (Poder poder : listaPoderes) // notifica os poderes
             poder.aplicar();
-
-        mao.limpa(pilhaDescarte);
     }
 
     public void passaTurno(){
@@ -317,7 +315,7 @@ public class Batalha extends Evento {
                         continue;
                     } 
 
-                    // energia suficiente -> notifica os efeitos no heroi -> executa a carta
+                    // poderes nao voltam pra mao depois de usados
                     if (cartaEscolhida instanceof CartaPoder)
                         mao.removeCarta(escolha, pilhaPoderes);
                     else 
@@ -357,7 +355,8 @@ public class Batalha extends Evento {
                     if (mao.getSize() == 0) mao.addCinco(pilhaCompra, pilhaDescarte); // se a mão esvaziar compra 5
 
                 } else if (escolha == mao.getSize()) break;
-            }                
+            }            
+        mao.limpa(pilhaDescarte);    
         passaTurno();
     }
 

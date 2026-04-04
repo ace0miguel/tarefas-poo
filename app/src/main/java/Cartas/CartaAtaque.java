@@ -27,7 +27,7 @@ public class CartaAtaque extends Carta
     public void usar(Heroi heroi, Entidade alvo, Batalha batalha){
         int energiaAtual = heroi.getEnergia();
         if(energiaAtual >= this.getCusto()){
-            alvo.receberDano(this.dano);
+            alvo.receberDano(this.dano + heroi.getDanoExtra());
             heroi.usarEnergia(this.getCusto());
             
             printaResenha();
@@ -36,7 +36,7 @@ public class CartaAtaque extends Carta
 
     @Override
     public void aplicarEfeito(Heroi heroi, Entidade alvo, Batalha batalha) {
-        alvo.receberDano(this.dano);
+        alvo.receberDano(this.dano + heroi.getDanoExtra());
         printaResenha();
     }
     

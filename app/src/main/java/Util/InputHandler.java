@@ -56,17 +56,16 @@ public class InputHandler {
         while (true){
             Textos.limpaTela();
 
-            if (!mensagemInicial.equals(""))
+            if (!mensagemInicial.equals("")){
                 Textos.printaLinhaDevagar(mensagemInicial);
-        
+                System.out.println();   
+            }
             for(int i = 0; i < lista.size(); i++) {
                 Textos.printaBonito(("[ " + (i) + " ]" + " > " + lista.get(i)),2 ,0); Textos.sleep(tempoSleep);
-                System.out.println();
             }
 
             if (exit) {
                 Textos.printaBonito(Cor.txtCinza("[ " + (lista.size()) + " ]" + " > Voltar."), 2, 0); Textos.sleep(tempoSleep);
-                System.out.println();
             }
 
             try {
