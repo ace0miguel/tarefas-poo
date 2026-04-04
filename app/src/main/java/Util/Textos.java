@@ -4,7 +4,7 @@ import java.util.List;
 
 import EfeitosDeStatus.Efeito;
 import Entidades.Heroi;
-import Entidades.Inimigo;
+import Entidades.Inimigos.Inimigo;
 import Poderes.Poder;
 
 public class Textos {
@@ -90,7 +90,7 @@ public class Textos {
         System.out.println();
 
         for (Inimigo inimigo : inimigos) {
-                inimigo.anunciarAtaque();
+                inimigo.anunciarAtaque(heroi);
         }
 
         sleep(500);
@@ -165,7 +165,7 @@ public class Textos {
         System.out.println();
 
         for (Inimigo inimigo : inimigos) {
-                inimigo.anunciarAtaque();
+                inimigo.anunciarAtaque(heroi);
         }
                 
         System.out.println();

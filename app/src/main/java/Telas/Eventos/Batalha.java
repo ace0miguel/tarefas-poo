@@ -20,7 +20,7 @@ import EfeitosDeStatus.Instantaneos.Escudo;
 import EfeitosDeStatus.Instantaneos.Purificar;
 import Entidades.Entidade;
 import Entidades.Heroi;
-import Entidades.Inimigo;
+import Entidades.Inimigos.Inimigo;
 import Poderes.Poder;
 import Util.Arte;
 import Util.Cor;
@@ -100,7 +100,7 @@ public class Batalha extends Evento {
             if (efeito.getAlvo().estaVivo()){
                 if (efeito instanceof DanoConstante) efeitoPrintado = true; // no momento so os efeito danoconstante tao printando, se mudar atualizar aqui!
                 if (efeitoPrintado && !linhaCimaPrintada){
-                    Cor.printaAmarelo("- = - = - = - = - = - = - = - = - = - = - = - = -\n\n"); Textos.sleep(300);
+                    Textos.printaBonito(Cor.txtCinza( "\n" + Arte.bordaHud9), 2,2); Textos.sleep(300);
                     linhaCimaPrintada = true;
                 }
                 efeito.aplicar();
@@ -109,8 +109,7 @@ public class Batalha extends Evento {
         }
 
         if (efeitoPrintado){
-        Cor.printaAmarelo("\n- = - = - = - = - = - = - = -\n"); Textos.sleep(300);
-        Cor.printaAmarelo("- = - = - = - = - = - = -\n"); Textos.sleep(300);
+        Textos.printaBonito(Cor.txtCinza( "\n" + Arte.bordaHud9), 2,2); Textos.sleep(300);
         InputHandler.esperar();
         }
 
@@ -355,8 +354,8 @@ public class Batalha extends Evento {
                     // se conseguir usar todas as cartas da mao puxa mais 5 e ganha 2 de energia bonus, injeçao de dopamina assim q vc mantem um jogador
                     if (mao.getSize() == 0){
                         Textos.limpaTela();
-                        Textos.printaLinhaDevagar(Cor.amareloClaro + Arte.cincoCartas + Cor.reset);
-                        Textos.printaLinhaDevagar(Cor.amarelo + Arte.doisEnergia + Cor.reset);
+                        Textos.printaLinhaDevagar(Cor.rosa + Arte.cincoCartas + Cor.reset);
+                        Textos.printaLinhaDevagar(Cor.rosa + Arte.doisEnergia + Cor.reset);
                         heroi.ganhaEnergia(2);
                         InputHandler.esperar();
                         mao.addCinco(pilhaCompra, pilhaDescarte);
@@ -370,8 +369,7 @@ public class Batalha extends Evento {
 
     public void turnoInimigos(){
         Textos.limpaTela();
-        Cor.printaAmareloClaro("- = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = -\n"); Textos.sleep(300);
-        Cor.printaAmareloClaro("- = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = -\n \n"); Textos.sleep(300);
+        Textos.printaBonito(Cor.txtCinza(Arte.bordaHud9), 2,2); Textos.sleep(300);
 
         for (Inimigo inimigo : arrayInimigos) {
             if (inimigo.estaVivo()){ // adicionei isso pq joguei uma partida aqui e tomei hit de um inimigo morto.
@@ -389,7 +387,7 @@ public class Batalha extends Evento {
             }
         }
         
-        Cor.printaAmareloClaro("\n- = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = -\n"); Textos.sleep(300);
+        Textos.printaBonito(Cor.txtCinza("\n" + Arte.bordaHud9), 2,2); Textos.sleep(300);
         InputHandler.esperar();
         passaTurno();
     }
@@ -431,7 +429,7 @@ public class Batalha extends Evento {
 
     @Override
     public String toString() {
-        String retorno = Cor.txtVermelho("Batalha") + " >";
+        String retorno = Cor.txtVermelho("Batalha") + Cor.txtCinza(" VERSUS");
 
         for (Inimigo inimigo : arrayInimigos) {
             retorno += " [ " + inimigo.getNome() + " ]";

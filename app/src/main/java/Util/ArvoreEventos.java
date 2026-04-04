@@ -6,7 +6,8 @@ import java.util.List;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import Entidades.Heroi;
-import Entidades.Inimigo;
+import Entidades.Inimigos.Assassino;
+import Entidades.Inimigos.Inimigo;
 import Telas.Eventos.Batalha;
 import Telas.Eventos.Evento;
 
@@ -17,7 +18,7 @@ public class ArvoreEventos {
     // instancias padrao pra teste por enquanto. talvez seja bom fazer essa classe receber uma lista de inimigos pra ficar mais procedural sla
     Inimigo barbossa = new Inimigo("Capitão Hector Barbossa", 25, 3);
     Inimigo loudCoringa = new Inimigo("LOUD Coringa", 15, 3);    
-    Inimigo endrick = new Inimigo("Endrick", 12, 4);
+    Inimigo endrick = new Assassino("Endrick", 12, 4);
     Inimigo drake = new Inimigo("Drake", 10, 2);
     Inimigo paulAtreides = new Inimigo("PAUL MUAD'DIB ATREIDES, DUKE OF ARRAKIS, LISAN AL GAIB", 35, 8); // ESSE AQUI E FORTE VIU
     Inimigo sabrinaCarpenter = new Inimigo("SABRINA CARPENTER", 30, 6); // ELA E FORTE TB

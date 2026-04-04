@@ -25,6 +25,7 @@ public class InputHandler {
         esperar("\n[ Pressione ENTER para continuar ]");
     }
 
+    // versoes do selecionar pra vc poder passar so a lista ou so lista e msg ou so lista e exit.
     public static <T> int selecionar(List<T> lista) {
         return selecionar(lista, false, "");
     }
@@ -36,7 +37,6 @@ public class InputHandler {
     public static <T> int selecionar(List<T> lista, boolean exit) {
         return selecionar(lista, exit, "");
     }
-
 
     /* recebe uma lista e printa, se for de objetos ele vai usar o metodo .toString(), se for string ela so printa */
     public static <T> int selecionar(List<T> lista, boolean exit, String mensagemInicial) { 
@@ -61,11 +61,11 @@ public class InputHandler {
                 System.out.println();   
             }
             for(int i = 0; i < lista.size(); i++) {
-                Textos.printaBonito(("[ " + (i) + " ]" + " > " + lista.get(i)),2 ,0); Textos.sleep(tempoSleep);
+                Textos.printaBonito(((i) + " > " + lista.get(i)),2 ,0); Textos.sleep(tempoSleep);
             }
 
             if (exit) {
-                Textos.printaBonito(Cor.txtCinza("[ " + (lista.size()) + " ]" + " > Voltar."), 2, 0); Textos.sleep(tempoSleep);
+                Textos.printaBonito(Cor.txtCinza((lista.size()) + " > Voltar."), 2, 0); Textos.sleep(tempoSleep);
             }
 
             try {

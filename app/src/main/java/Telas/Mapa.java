@@ -24,7 +24,7 @@ public class Mapa {
     
     // retorna um menu de seleçao com os filhos da posiçao passada
     public int escolherCaminho(DefaultMutableTreeNode posicaoAtual){ 
-        return InputHandler.selecionar(arvoreEventos.getEventos(posicaoAtual), Arte.mapa);
+        return InputHandler.selecionar(arvoreEventos.getEventos(posicaoAtual), Arte.mapa + "\n" + Cor.txtAzul(Arte.bordaHud4));
     }
 
     public int escolherCaminho(){ // se nao passar nada retorna baseado no nó atual
@@ -72,7 +72,9 @@ public class Mapa {
                 deckBuilder.rodar(heroi);
                 
                 Textos.printaLinhaDevagar(Arte.mapa);
-                InputHandler.esperar("Pressione ENTER para ir para " + getEvento());
+                Textos.printaLinhaDevagar(Cor.txtAzul(Arte.bordaHud4));
+                System.out.println();
+                InputHandler.esperar(Cor.cinza + "Pressione ENTER para ir para " + Cor.reset + getEvento());
                 getEvento().iniciar(heroi);
                 primeiroLoop = false;
                 continue;
@@ -85,7 +87,7 @@ public class Mapa {
             } 
 
             int escolha = escolherCaminho();
-            InputHandler.esperar("Pressione ENTER para ir para " + getProximoEvento(escolha));
+            InputHandler.esperar(Cor.cinza + "Pressione ENTER para ir para " + Cor.reset + getProximoEvento(escolha));
 
             irPara(escolha);
 
