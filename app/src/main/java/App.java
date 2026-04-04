@@ -32,7 +32,7 @@ public class App {
         // batalha.iniciar();
         
         Mapa mapa = new Mapa(heroi);
-        mapa.explorar();
+        mapa.explorar(); // por enquanto ta programado pra ter 3 lutas, a primeira facil a 2 meio aleatorio a 3 contra os 7 inimigos
 
         // se chegou ate aq e pq vc venceu o jogo todo parabens!!
         Textos.printaLinhaDevagar(Arte.PEROLANEGRA);

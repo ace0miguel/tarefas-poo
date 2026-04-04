@@ -1,7 +1,6 @@
 package Telas;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import Deck.DeckBuilder;
 import Entidades.Heroi;
 import Telas.Eventos.Evento;
 import Util.Arte;
@@ -61,9 +60,9 @@ public class Mapa {
         return getProximoEvento(nodeAtual, escolha);
     }
 
-    public void explorar() { // explorar e um nome meio merda se tiver uma ideia melhor atualizar aq 
+    public void explorar() { // explorar e um nome meio sem graça se tiver uma ideia melhor atualizar aq 
 
-        boolean primeiroLoop = true; // se quiser pular a primeira luta por motivos de teste so deixar false aqui direto
+        boolean primeiroLoop = true; // se quiser pular a primeira luta por motivos de teste so deixar false aqui (lembra de arruma dps)
 
         while (true) { 
             Textos.limpaTela();

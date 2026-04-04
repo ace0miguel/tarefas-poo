@@ -16,11 +16,11 @@ public class ArvoreEventos {
     int p; // profundidade (QUANTIDADE TOTAL DE BATALHAS: P - 1 PQ COMEÇA DO PROFUNDIDADE 0)
 
     // instancias padrao pra teste por enquanto. talvez seja bom fazer essa classe receber uma lista de inimigos pra ficar mais procedural sla
-    Inimigo barbossa = new Inimigo("Capitão Hector Barbossa", 25, 3);
-    Inimigo loudCoringa = new Inimigo("LOUD Coringa", 15, 3);    
+    Inimigo barbossa = new Inimigo("Capitão Hector Barbossa", 25, 5);
+    Inimigo loudCoringa = new Assassino("LOUD Coringa", 15, 3);    
     Inimigo endrick = new Assassino("Endrick", 12, 4);
     Inimigo drake = new Inimigo("Drake", 10, 2);
-    Inimigo paulAtreides = new Inimigo("PAUL MUAD'DIB ATREIDES, DUKE OF ARRAKIS, LISAN AL GAIB", 35, 8); // ESSE AQUI E FORTE VIU
+    Inimigo paulAtreides = new Assassino("PAUL MUAD'DIB ATREIDES, DUKE OF ARRAKIS, LISAN AL GAIB", 35, 7); // ESSE AQUI E FORTE VIU MEIO QUE O BOSS
     Inimigo sabrinaCarpenter = new Inimigo("SABRINA CARPENTER", 30, 6); // ELA E FORTE TB
     Inimigo tripleT = new Inimigo("TUNG TUNG TUNG SAHUR", 67, 2); // TANK
 
@@ -44,7 +44,7 @@ public class ArvoreEventos {
         if (profundidadeAtual == p) { // se chegou no maximo vai toma a batalha mais dificil quero nem saber VAI LUTA COM TODO MUNDO
             return new Batalha(barbossa.criaCopia(), loudCoringa.criaCopia(), endrick.criaCopia(), drake.criaCopia(), paulAtreides.criaCopia(), sabrinaCarpenter.criaCopia(), tripleT.criaCopia());
         } else if (profundidadeAtual == 0){
-            return new Batalha(loudCoringa.criaCopia(), endrick.criaCopia(), sabrinaCarpenter.criaCopia()); // mas a primeira vai ser facinha pq eu sou bonzinho
+            return new Batalha(loudCoringa.criaCopia(), endrick.criaCopia(), barbossa.criaCopia()); // mas a primeira vai ser facinha pq eu sou bonzinho
         }
 
         int sorteio = RNGHandler.valorAleatorio(100);
