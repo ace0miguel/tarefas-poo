@@ -110,7 +110,7 @@ public class Batalha extends Evento {
 
         if (efeitoPrintado){
         Cor.printaAmarelo("\n- = - = - = - = - = - = - = -\n"); Textos.sleep(300);
-        Cor.printaAmarelo("- = - = - = - = - = -\n"); Textos.sleep(300);
+        Cor.printaAmarelo("- = - = - = - = - = - = -\n"); Textos.sleep(300);
         InputHandler.esperar();
         }
 
@@ -275,6 +275,7 @@ public class Batalha extends Evento {
 
     public void turnoHeroi(){
         limpaEfeitos();
+        heroi.resetarEnergia();
 
         mao.addCinco(pilhaCompra, pilhaDescarte);
         boolean primeiroLoop = true;
@@ -362,21 +363,23 @@ public class Batalha extends Evento {
 
     public void turnoInimigos(){
         Textos.limpaTela();
-        Cor.printaAmareloClaro("- = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = -\n"); Textos.sleep(300);
+        Cor.printaAmareloClaro("- = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = -\n"); Textos.sleep(300);
         Cor.printaAmareloClaro("- = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = -\n \n"); Textos.sleep(300);
 
         for (Inimigo inimigo : arrayInimigos) {
-            int acao = inimigo.getNextAcao();
-            inimigo.ataqueRealizado(heroi);
-            switch (acao){
-                case 0 -> inimigo.atacar(heroi);
-                case 1 -> inimigo.atacarEfeito(heroi, this, sangramento);
-                case 2 -> {
-                    inimigo.receberDano(2);
-                    inimigo.receberEfeito(this, pactoSinistro);
+            if (inimigo.estaVivo()){ // adicionei isso pq joguei uma partida aqui e tomei hit de um inimigo morto.
+                int acao = inimigo.getNextAcao();
+                inimigo.ataqueRealizado(heroi);
+                switch (acao){
+                    case 0 -> inimigo.atacar(heroi);
+                    case 1 -> inimigo.atacarEfeito(heroi, this, sangramento);
+                    case 2 -> {
+                        inimigo.receberDano(2);
+                        inimigo.receberEfeito(this, pactoSinistro);
+                    }
                 }
+                inimigo.escolheAcao(); // escolhe prox ação
             }
-            inimigo.escolheAcao(); // escolhe prox ação
         }
         
         Cor.printaAmareloClaro("\n- = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = - = -\n"); Textos.sleep(300);
@@ -405,15 +408,18 @@ public class Batalha extends Evento {
 
         if(!heroi.estaVivo() == false){
             Textos.printaLinhaDevagar(Arte.venceu2);
+            System.out.println();
+            InputHandler.esperar();
         } else {
             System.out.println();
             Textos.printaLinhaDevagar(Cor.txtCinza(Arte.sans2));
             System.out.println();
             System.out.println();
             Textos.printaLinhaDevagar(Cor.txtVermelho(Arte.VOCEMORREU));
+            System.out.println();
+            InputHandler.esperar();
+            System.exit(0);
         }
-        System.out.println();
-        InputHandler.esperar();
     }
 
     @Override

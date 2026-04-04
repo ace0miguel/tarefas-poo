@@ -18,7 +18,7 @@ public class Textos {
             new ProcessBuilder("clear").inheritIO().start().waitFor();
         } catch (Exception e){}
 
-        for(int i = 0; i < 200; i++) System.out.println(); // printa 200 linha nunca falha
+        for(int i = 0; i < 250; i++) System.out.println(); // printar 1 trilhao de linha nunca falha
     }
 
     public static void sleep(int time){ // tempo em ms

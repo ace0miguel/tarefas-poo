@@ -12,7 +12,7 @@ import Telas.Eventos.Evento;
 
 public class ArvoreEventos {
     int n; // quantidade de filhos por nó
-    int p; // profundidade
+    int p; // profundidade (QUANTIDADE TOTAL DE BATALHAS: P - 1 PQ COMEÇA DO PROFUNDIDADE 0)
 
     // instancias padrao pra teste por enquanto. talvez seja bom fazer essa classe receber uma lista de inimigos pra ficar mais procedural sla
     Inimigo inimigo = new Inimigo("Capitão Hector Barbossa", 30, 4);
