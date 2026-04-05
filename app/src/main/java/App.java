@@ -8,7 +8,7 @@ import Util.Textos;
 public class App {
     public static void main(String[] args) throws Exception {
 
-        // GERENCIADOR DE CARTAS Q ERA PRA CUIDAR DO JSON MAS NAO FUNCIONA ENTAO TA COMENTADO VAI TER Q FICAR DANDO NEW TODA HORA NESSA MERDA 
+        // GERENCIADOR DE CARTAS Q ERA PRA CUIDAR DO JSON MAS NAO FUNCIONA
         // GerenciadorCartas gerenciadorCartas = new GerenciadorCartas();
         // gerenciadorCartas.carregarCartas(false);
 
@@ -30,7 +30,7 @@ public class App {
         // batalha.iniciar();
         
         Mapa mapa = new Mapa(heroi);
-        mapa.explorar(); // por enquanto ta programado pra ter 3 lutas, a primeira facil a 2 meio aleatorio a 3 contra os 7 inimigos
+        mapa.explorar(); // por enquanto ta programado pra ter 3 lutas, a primeira facil a 2 meio aleatorio a 3 contra todos os inimigos ao msm tempo
 
         // se chegou ate aq e pq vc venceu o jogo todo parabens!!
         Textos.printaLinhaDevagar(Arte.PEROLANEGRA);

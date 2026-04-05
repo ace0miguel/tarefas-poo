@@ -107,8 +107,10 @@ public class Heroi extends Entidade {
     
 
     public String statusEnergia(){
-        if (this.energia > 5) // da pra passar de 5 por meio de cartas!
+        if (this.energia > this.energiaMax){ // da pra passar do max com cartas
             Cor.setRosa();
+            return "ENERGIA!!! ("+this.energia+"/"+this.energiaMax+")" + Cor.reset;
+        }
         else if (this.energia > 3)
             Cor.setVerde();
         else if (this.energia > 1)

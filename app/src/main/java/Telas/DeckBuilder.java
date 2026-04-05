@@ -6,8 +6,27 @@ import java.util.List;
 import Entidades.Heroi;
 import Util.Cor;
 import Util.InputHandler;
+import static Util.Moldes.armadura;
+import static Util.Moldes.beberVeneno;
+import static Util.Moldes.corteDefensivo;
+import static Util.Moldes.corteProfundo;
+import static Util.Moldes.corteRapido;
+import static Util.Moldes.corteVenenoso;
+import static Util.Moldes.dedoNervosoCarta;
+import static Util.Moldes.desprezo;
+import static Util.Moldes.energiaGratis;
+import static Util.Moldes.energizar;
+import static Util.Moldes.escudoFerro;
+import static Util.Moldes.escudoMadeira;
+import static Util.Moldes.mestreLaminasCarta;
+import static Util.Moldes.purificar;
+import static Util.Moldes.puroOdio;
+import static Util.Moldes.puxaCarta;
+import static Util.Moldes.sangrar;
+import static Util.Moldes.tiro;
+import static Util.Moldes.tiroCanhao;
+import static Util.Moldes.tiroEscopeta;
 import Util.Textos;
-import static Util.Moldes.*;
 
 public class DeckBuilder {
     List<String> decksPadrao = new ArrayList<>(); // decks padrao pra testagem ate ter o deckbuilder de vdd
@@ -15,7 +34,7 @@ public class DeckBuilder {
     public DeckBuilder(){
         decksPadrao.add(Cor.txtVermelho("MESTRE DAS LAMINAS: CORTES INFINITOS, DEBUFFS INFINITOS, RODADA INFIITA!"));
         decksPadrao.add(Cor.txtAmarelo("JOHN WICK: CAUSE MUITO DANO DIRETO EM UMA CHUVA DE BALAS!"));
-        decksPadrao.add(Cor.txtCinza("O AMALDIÇOADO: CARTAS MUITO FORTES, MAS TALVEZ O CUSTO SEJA ALTO DEMAIS..."));
+        decksPadrao.add(Cor.txtRoxo("O AMALDIÇOADO: CARTAS MUITO FORTES, MAS TALVEZ UM PREÇO ALTO DEMAIS..."));
     }
 
     public void rodar(Heroi heroi){

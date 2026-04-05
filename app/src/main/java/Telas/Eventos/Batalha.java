@@ -12,7 +12,6 @@ import Deck.Mao;
 import Deck.PilhaCompra;
 import Deck.PilhaDescarte;
 import EfeitosDeStatus.DanosConstantes.DanoConstante;
-import EfeitosDeStatus.DanosConstantes.Sangramento;
 import EfeitosDeStatus.DanosConstantes.Veneno;
 import EfeitosDeStatus.Efeito;
 import EfeitosDeStatus.Energizar;
@@ -34,7 +33,7 @@ public class Batalha extends Evento {
     private Mao mao = new Mao();
     private PilhaCompra pilhaCompra = new PilhaCompra();
     private PilhaDescarte pilhaDescarte = new PilhaDescarte();
-    private PilhaDescarte pilhaPoderes = new PilhaDescarte(); // <- cartas de poder vem pra cá! (so da pra usar 1 vez por copia)
+    private PilhaDescarte pilhaLixo = new PilhaDescarte(); // <- pra cartas que nao voltam pra sua mao durante o combate
 
     // subscribers --------
     private ArrayList<Efeito> listaEfeitos = new ArrayList<>(); 
@@ -47,9 +46,6 @@ public class Batalha extends Evento {
         this.arrayInimigos = _inimigos;
         inimigos = new ArrayList<>(Arrays.asList(arrayInimigos)); // converte o array inimigos em arraylist para facilitar a manipulação.
     }
-
-    // Carta generica (ta servindo pro veneno)
-    Carta c;
 
     // recebe heroi, define as variáveis e chama a classe principal.
     @Override
@@ -80,10 +76,11 @@ public class Batalha extends Evento {
     }
 
     /* reseta os bonus do heroi, notifica os efeitos, printa os q precisarem, notifica possiveis mortes,
-     limpa os efeitos que ja acabaram, notifica os poderes e esvazia a mao. */
+     limpa os efeitos que ja acabaram, notifica os poderes */
     public void passaRodada(){
         heroi.resetEfeitos();
 
+        //booleans pra controlar os prints
         boolean efeitoPrintado = false;
         boolean linhaCimaPrintada = false;
 
@@ -120,12 +117,14 @@ public class Batalha extends Evento {
         heroi.passaRodada(); // remove os bonus que acabam (escudo, etc) e reseta energia
     }
 
+    // troca de turno e se voltar pra vez do heroi chama o passaRodada
     public void passaTurno(){
         turno = (turno == 0) ? 1 : 0;
         notificaMorte();
         if (turno == 0) passaRodada();
     }
 
+    // notifica acabar e remove os efeitos a serem removidos (0 duraçao, 0 stacks ou purificar) 
     public void limpaEfeitos(){     
         for (Efeito efeito : listaEfeitos ) {
             if ((efeito.getDur() <= 0 || efeito.getStacks() <= 0 || efeito.getAlvo().getPurificar() == true) && !(efeito instanceof Purificar)){
@@ -142,6 +141,7 @@ public class Batalha extends Evento {
         listaEfeitos.removeIf(efeito -> (efeito instanceof Purificar));
     }
 
+    /* printa os inimigos vivos, valida a escolha e retorna o q vc escolheu. */
     public int selecionarAlvo(){  // falta fazer uma opçao pra voltar caso ele mude de ideia sobre a carta!
         int opcao = -1;
         while (true) { 
@@ -178,19 +178,24 @@ public class Batalha extends Evento {
         return opcao;
     }
 
+    //adiciona um efeito na lista de efeitos e notifica onCreate
     public void adicionarEfeito(Efeito efeito){
 
-            // ESPAÇO PRA SETAR AS FLAGS!
+            // isso aqui nao precisa mais, agora tem a funçao onCreate ---
 
-            if (efeito instanceof Sangramento s){ // se for sangramento deixa o nomezinho vermelho
-                s.getAlvo().setSangrando(true);
-            }
+            // // ESPAÇO PRA SETAR AS FLAGS!
 
-            if (efeito instanceof Veneno v){ // se for veneno deixa o nomezinho verde
-                v.getAlvo().setEnvenenado(true);
-            }
+            // if (efeito instanceof Sangramento s){ // se for sangramento deixa o nomezinho vermelho
+            //     s.getAlvo().setSangrando(true);
+            // }
 
-            // FIM DO ESPAÇO PARA SETAR AS FLAGS
+            // if (efeito instanceof Veneno v){ // se for veneno deixa o nomezinho verde
+            //     v.getAlvo().setEnvenenado(true);
+            // }
+
+            // // FIM DO ESPAÇO PARA SETAR AS FLAGS
+
+            // ----------------------------
             
         for (Efeito e : listaEfeitos) {
 
@@ -223,6 +228,7 @@ public class Batalha extends Evento {
         this.listaEfeitos.sort(Comparator.comparing(Efeito::getPrioridade)); // ordena os efeitos por prioridade pra sangramento sobrepor resistencia
     }
 
+    // adiciona um poder na lista, se ja tiver stacka
     public void adicionarPoder(Poder poder){
         for (Poder e : listaPoderes) {
             if (e.getNome().equals(poder.getNome())){
@@ -243,8 +249,10 @@ public class Batalha extends Evento {
         }
         if (todosMortos) return;
 
-        boolean venenoPrintado = false;
+        boolean venenoPrintado = false; // pra printar uma vez só a mensagem de O VENENO SE ESPALHA...
         List<Efeito> tempEfeitos = new ArrayList<>();
+
+        // adicionar aqui nesse loop os efeitos que fazem algo quando o alvo morre
         for (Inimigo i : inimigos) {
             if (!i.estaVivo()){
                 for (Efeito efeito : listaEfeitos) {
@@ -299,8 +307,8 @@ public class Batalha extends Evento {
                 }
 
                 // trecos pra mostrar os buffs pra debugar
-                // System.out.println("resist extra" + heroi.getResistencia());
-                // System.out.println("dano extra" + heroi.getDanoExtra());
+                // System.out.println(Cor.txtVermelho("resist extra" + heroi.getResistencia()));
+                // System.out.println(Cor.txtLaranja("dano extra" + heroi.getDanoExtra()));
 
                 int escolha = mao.mostrar(); 
                 if (escolha > mao.getSize() || escolha < 0){ 
@@ -320,11 +328,11 @@ public class Batalha extends Evento {
 
                     // poderes nao voltam pra mao depois de usados
                     if (cartaEscolhida instanceof CartaPoder)
-                        mao.removeCarta(escolha, pilhaPoderes);
+                        mao.removeCarta(escolha, pilhaLixo);
                     else 
                         mao.removeCarta(escolha, pilhaDescarte);
 
-                    Entidade alvoSelecionado = heroi; // se nao mudar é pq é o heroi msm
+                    Entidade alvoSelecionado = heroi; // se nao mudar o alvo é pq o alvo é si mesmo
 
                     // se não for selfcast ou poder pergunta o alvo, ataque com efeito selfcast ataca o alvo e aplica o efeito em si mesmo.
                     if ((cartaEscolhida.getSelfCast() || cartaEscolhida instanceof CartaPoder) && !(cartaEscolhida instanceof CartaAtaqueComEfeito)) {
@@ -355,11 +363,16 @@ public class Batalha extends Evento {
 
                     if (!inimigos.stream().anyMatch(i -> i.estaVivo() == true)) break;
 
-                    // se conseguir usar todas as cartas da mao puxa mais 5 e ganha 2 de energia bonus, injeçao de dopamina assim q vc mantem um jogador
+                    // se conseguir usar todas as cartas da mao puxa mais 5 e ganha 2 de energia bonus, injeçao de dopamina assim q vc mantem um jogador preso
                     if (mao.getSize() == 0){
                         Textos.limpaTela();
-                        Textos.printaLinhaDevagar(Cor.rosa + Arte.cincoCartas + Cor.reset);
-                        Textos.printaLinhaDevagar(Cor.rosa + Arte.doisEnergia + Cor.reset);
+
+                        // fiz 2 versoes esse rodada bonus aparecendo 1 trilhao de vezes e um mais simples +5 cartas +2 energia, nao sei qual e melhor
+                        Textos.printaLinhaDevagar(Cor.rosa + (Arte.bonus).repeat(15) + Cor.reset);
+
+                        // Textos.printaLinhaDevagar(Cor.rosa + Arte.bonus + Cor.reset);
+                        // Textos.printaLinhaDevagar(Cor.rosa + Arte.doisEnergia + Cor.reset);
+
                         heroi.ganhaEnergia(2);
                         InputHandler.esperar();
                         mao.addCinco(pilhaCompra, pilhaDescarte);
