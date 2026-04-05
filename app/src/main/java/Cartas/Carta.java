@@ -118,4 +118,6 @@ public abstract class Carta {
     public abstract String descricao();
 
     public abstract void aplicarEfeito(Heroi heroi, Entidade alvo, Batalha batalha); // so aplica o efeito da carta sem gastar nada
+
+    public abstract Carta criaCopia();
 }

@@ -7,6 +7,7 @@ import Telas.Eventos.Batalha;
 import Util.Cor;
 import Util.RNGHandler;
 import Util.Textos;
+import static Util.Moldes.*;
 
 /* inimigo base. pra criar um novo dar override pelo menos em:
 escolheAcao, anunciarAtaque, ataqueRealizado.
@@ -89,6 +90,17 @@ public class Inimigo extends Entidade{
             }
         }
         Cor.txtReset();
+    }
+    
+    public void realizarAcao(Heroi alvo, Batalha batalha){
+                switch (nextAcao){
+                    case 0 -> this.atacar(alvo); // ataque base
+                    case 1 -> this.atacarEfeito(alvo, batalha, sangramento); // ataque com efeio
+                    case 2 -> { // pacto sinistro 
+                        this.receberDano(2);
+                        this.receberEfeito(batalha, pactoSinistro);
+                    }
+                }
     }
 
     // getters e setters ---------
