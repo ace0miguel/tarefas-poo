@@ -28,6 +28,7 @@ import Util.Arte;
 import Util.Cor;
 import Util.InputHandler;
 import Util.Textos;
+import static Util.Moldes.*;
 
 public class Batalha extends Evento {
     private int turno; // 0 -> heroi, 1 -> inimigos
@@ -53,18 +54,6 @@ public class Batalha extends Evento {
 
     // Carta generica (ta servindo pro veneno)
     Carta c;
-
-    //efeitos de molde enquanto nao tem o json (esses aq sao pros inimigos)
-    Efeito feridas = new DanoConstante("Feridas", "Causa 1 de dano por rodada ao alvo por 2 rodadas", 2, 1);
-    Efeito sangramento = new Sangramento("Sangramento", "Causa 1 de dano por rodada ao alvo", 3, 1);
-    Efeito pactoSinistro = new AumentaDano(Cor.txtCinza("Pacto Sinistro"), "Aumenta o dano causado em 2 por 2 rodadas", 2, 2);
-    Efeito escudinho = new Escudo("Escudinho", "3 pontos de escudo", 0, 3);
-    Efeito escudao = new Escudo("Escudinho", "7 pontos de escudo", 0, 7);
-
-
-    //cartas de molde pros inimigos enquanto nao tem um gerenciador de cartas de vdd 
-    Carta nada = new CartaMaldicao("NADA!", "NAO FAZ NADA!", 1, false);
-    
 
     // recebe heroi, define as variáveis e chama a classe principal.
     @Override
@@ -248,6 +237,7 @@ public class Batalha extends Evento {
         this.listaPoderes.add(poder);
     }
 
+    // avisa os efeitos com aplicação quando o alvo morre, antes de remover da lista de inimigos
     public void notificaMorte(){
 
         // ve se morreu todo mundo e ja retorna
@@ -257,7 +247,6 @@ public class Batalha extends Evento {
         }
         if (todosMortos) return;
 
-        // avisa os efeitos com aplicação quando o alvo morre, antes de remover da lista de inimigos
         boolean venenoPrintado = false;
         List<Efeito> tempEfeitos = new ArrayList<>();
         for (Inimigo i : inimigos) {
@@ -268,7 +257,6 @@ public class Batalha extends Evento {
                         for (Inimigo inimigo2 : inimigos) {
                             if (inimigo2.estaVivo()) {
                                 Efeito copia = efeito.criaCopia();
-                                efeito.onHit(c, heroi, inimigo2, this); // usei uma carta generica pq nao importa pro onhit mas precisa passar
                                 copia.setAlvo(inimigo2);
                                 tempEfeitos.add(copia);                                
                             }
@@ -394,14 +382,8 @@ public class Batalha extends Evento {
             if (inimigo.estaVivo()){ // adicionei isso pq joguei uma partida aqui e tomei hit de um inimigo morto.
                 int acao = inimigo.getNextAcao();
                 inimigo.ataqueRealizado(heroi);
-                switch (acao){
-                    case 0 -> inimigo.atacar(heroi);
-                    case 1 -> inimigo.atacarEfeito(heroi, this, sangramento);
-                    case 2 -> {
-                        inimigo.receberDano(2);
-                        inimigo.receberEfeito(this, pactoSinistro);
-                    }
-                }
+                inimigo.realizarAcao(heroi, this);
+                
                 inimigo.escolheAcao(); // escolhe prox ação
             }
         }

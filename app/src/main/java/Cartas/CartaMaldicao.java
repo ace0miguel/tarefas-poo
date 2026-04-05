@@ -22,6 +22,14 @@ public class CartaMaldicao extends Carta
         this.setSelfCast(_selfCast);
     }
 
+    public CartaMaldicao(CartaMaldicao copia) {
+        super(copia.getNome(), copia.getDescricao(), copia.getCusto());
+        this.efeito = copia.efeito;
+        this.setSelfCast(copia.getSelfCast());
+        this.tipo = copia.tipo;
+        this.setResenha(copia.getResenha());
+    }
+
     @Override
     public void usar (Heroi heroi, Entidade alvo, Batalha batalha){
         int energiaAtual = heroi.getEnergia();
@@ -38,5 +46,10 @@ public class CartaMaldicao extends Carta
     
     public String descricao(){
         return ""+this.getNome()+" - "+this.getDescricao()+ " - [ " +this.efeito.getNomeColorido()+" ]" + Cor.txtAmareloClaro(" < custo: " + this.getCusto());
+    }
+
+    @Override
+    public Carta criaCopia() {
+        return new CartaMaldicao(this);
     }
 }

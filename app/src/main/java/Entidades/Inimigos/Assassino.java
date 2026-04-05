@@ -1,9 +1,12 @@
 package Entidades.Inimigos;
 
 import Entidades.Entidade;
+import Entidades.Heroi;
+import Telas.Eventos.Batalha;
 import Util.Cor;
 import Util.RNGHandler;
 import Util.Textos;
+import static Util.Moldes.*;
 
 /* inimigo com menos vida(cria com menos vida pelo amor de deus) 
 dano extra baseado em vida perdida no ataque base
@@ -39,7 +42,7 @@ public class Assassino extends Inimigo{
         return vidaPerdida / 5;
     } 
 
-    @Override
+    @Override // so tem 2 entao sorteia so 2
     public void escolheAcao() {
         nextAcao = RNGHandler.getGen().nextInt(2);
     }
@@ -75,5 +78,11 @@ public class Assassino extends Inimigo{
         Cor.txtReset();
     }
     
-
+    @Override
+    public void realizarAcao(Heroi alvo, Batalha batalha){
+                switch (nextAcao){
+                    case 0 -> this.atacar(alvo); // ataque base
+                    case 1 -> this.atacarEfeito(alvo, batalha, sangramento); // ataque com efeio
+                    }
+    }
 }

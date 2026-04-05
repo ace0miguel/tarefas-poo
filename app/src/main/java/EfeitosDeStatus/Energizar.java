@@ -8,11 +8,11 @@ import Util.Cor;
 import Util.InputHandler;
 import Util.Textos;
 
-/* heroi ganha o >valor< em energia quando a duraçao acabar */
+/* heroi ganha o valor em energia quando a duraçao acabar */
 public class Energizar extends Efeito {
-
     private int valor;
     private int valorBase;
+
     public Energizar(String nome, String desc, int dur, int valor){
         super(nome, desc, dur);
         this.valor = valor;
@@ -68,5 +68,4 @@ public class Energizar extends Efeito {
             InputHandler.esperar();
         }
     }
-    
 }

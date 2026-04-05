@@ -14,6 +14,13 @@ public class CartaPoder extends Carta
         this.poder = poder;
     }
 
+    public CartaPoder(CartaPoder copia) {
+        super(copia.getNome(), copia.getDescricao(), copia.getCusto());
+        this.poder = copia.poder;
+        this.tipo = copia.tipo;
+        this.setResenha(copia.getResenha());
+    }
+
     @Override
     public void usar (Heroi heroi, Entidade alvo, Batalha batalha){
         int energiaAtual = heroi.getEnergia();
@@ -38,6 +45,11 @@ public class CartaPoder extends Carta
     @Override
     public String descricao(){
         return ""+this.getNome()+" - "+this.getDescricao() + Cor.txtAmareloClaro(" < custo: " + this.getCusto());
+    }
+
+    @Override
+    public Carta criaCopia() {
+        return new CartaPoder(this);
     }
 }
 

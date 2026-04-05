@@ -6,24 +6,15 @@ import java.util.List;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import Entidades.Heroi;
-import Entidades.Inimigos.Assassino;
-import Entidades.Inimigos.Inimigo;
 import Telas.Eventos.Batalha;
 import Telas.Eventos.Evento;
+import static Util.Moldes.*;
 
 public class ArvoreEventos {
     int n; // quantidade de filhos por nó
     int p; // profundidade (QUANTIDADE TOTAL DE BATALHAS: P - 1 PQ COMEÇA DO PROFUNDIDADE 0)
 
     // instancias padrao pra teste por enquanto. talvez seja bom fazer essa classe receber uma lista de inimigos pra ficar mais procedural sla
-    Inimigo barbossa = new Inimigo("Capitão Hector Barbossa", 25, 5);
-    Inimigo loudCoringa = new Assassino("LOUD Coringa", 15, 3);    
-    Inimigo endrick = new Assassino("Endrick", 12, 4);
-    Inimigo drake = new Inimigo("Drake", 10, 2);
-    Inimigo paulAtreides = new Assassino("PAUL MUAD'DIB ATREIDES, DUKE OF ARRAKIS, LISAN AL GAIB", 35, 7); // ESSE AQUI E FORTE VIU MEIO QUE O BOSS
-    Inimigo sabrinaCarpenter = new Inimigo("SABRINA CARPENTER", 30, 6); // ELA E FORTE TB
-    Inimigo tripleT = new Inimigo("TUNG TUNG TUNG SAHUR", 67, 2); // TANK
-
     public ArvoreEventos(int n, int p, Heroi heroi){
         this.n = n;
         this.p = p;

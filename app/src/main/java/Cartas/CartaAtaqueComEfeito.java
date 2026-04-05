@@ -29,6 +29,19 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
         );
     }
 
+    public CartaAtaqueComEfeito(CartaAtaqueComEfeito copia) {
+        super(copia.getNome(), copia.getDescricao(), copia.getCusto(), copia.getDano());
+        this.efeito = copia.efeito; 
+        this.setSelfCast(copia.getSelfCast());
+        this.tipo = copia.tipo;
+        this.setResenha(copia.getResenha());
+        
+        setDescricao(!this.getSelfCast() 
+        ? ("Aplica [ " + this.efeito.getNomeColorido() + " ]")
+        : ("Recebe [ " + this.efeito.getNomeColorido() + " ]")
+        );
+    }
+
     @Override
     public void usar(Heroi heroi, Entidade alvo, Batalha batalha){
         int energiaAtual = heroi.getEnergia();
@@ -49,5 +62,10 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
         Efeito e = efeito.criaCopia();
         e.setAlvo(this.getSelfCast() ? heroi : alvo); // selfcast: ataca o inimigo e aplica um efeito em si mesmo
         batalha.adicionarEfeito(e);
+    }
+
+    @Override
+    public Carta criaCopia() {
+        return new CartaAtaqueComEfeito(this);
     }
 }

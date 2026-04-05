@@ -25,6 +25,14 @@ public class CartaHabilidade extends Carta // aplica um efeito em um alvo
         this.tipo = tipo;
     }
 
+    public CartaHabilidade(CartaHabilidade copia) {
+        super(copia.getNome(), copia.getDescricao(), copia.getCusto());
+        this.efeito = copia.efeito;
+        this.setSelfCast(copia.getSelfCast());
+        this.tipo = copia.tipo;
+        this.setResenha(copia.getResenha());
+    }
+
     @Override
     public void usar (Heroi heroi, Entidade alvo, Batalha batalha){
         int energiaAtual = heroi.getEnergia();
@@ -45,5 +53,10 @@ public class CartaHabilidade extends Carta // aplica um efeito em um alvo
     @Override
     public String descricao(){
         return ""+this.getNome()+" - "+this.getDescricao()+ " - [ " +this.efeito.getNomeColorido()+" ]" + Cor.txtAmareloClaro(" < custo: " + this.getCusto());
+    }
+
+    @Override
+    public Carta criaCopia() {
+        return new CartaHabilidade(this);
     }
 }

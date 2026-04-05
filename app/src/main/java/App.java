@@ -1,8 +1,8 @@
 import Entidades.Heroi;
-import Entidades.Inimigos.Inimigo;
 import Telas.Mapa;
 import Util.Arte;
 import Util.InputHandler;
+import Util.Moldes;
 import Util.Textos;
 
 public class App {
@@ -13,9 +13,7 @@ public class App {
         // gerenciadorCartas.carregarCartas(false);
 
         // instancias padrao pra teste por enquanto
-        Inimigo inimigo = new Inimigo("Capitão Hector Barbossa", 30, 4);
-        Inimigo inimigo2 = new Inimigo("LOUD Coringa", 15, 3);    
-        Inimigo inimigo3 = new Inimigo("Endrick", 12, 4);
+        Moldes.carregar();
 
         // heroi -----------
         Heroi heroi = new Heroi("Capitão Jack Sparrow", 60, 5);

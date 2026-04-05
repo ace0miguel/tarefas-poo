@@ -10,7 +10,6 @@ Cartas que causam dano direto e podem aplicar efeitos secundários.
 public class CartaAtaque extends Carta
 {
     private int dano;
-
     
     public CartaAtaque(String nome, String descricao, int custo, int dano){
         super(nome, descricao, custo);
@@ -21,6 +20,13 @@ public class CartaAtaque extends Carta
         super(nome, descricao, custo);
         this.dano = dano;
         this.tipo = tipo;
+    }
+
+    public CartaAtaque(CartaAtaque copia) {
+        super(copia.getNome(), copia.getDescricao(), copia.getCusto());
+        this.dano = copia.dano;
+        this.tipo = copia.tipo; 
+        this.setResenha(copia.getResenha());
     }
 
     @Override
@@ -50,5 +56,10 @@ public class CartaAtaque extends Carta
         return (!this.getDescricao().equals("")) 
         ? ""+this.getNome()+ " - " +this.getDescricao() + Cor.cinza +  " - ("  +this.getDano()+ ") " + "DANO" +  Cor.txtAmareloClaro(" < custo: " + this.getCusto())
         : ""+this.getNome() + Cor.cinza +  " - ("  +this.getDano()+ ") " + "DANO" +  Cor.txtAmareloClaro(" < custo: " + this.getCusto());
+    }
+
+    @Override
+    public Carta criaCopia() {
+        return new CartaAtaque(this);
     }
 }
