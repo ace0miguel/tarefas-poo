@@ -85,28 +85,29 @@ public class Moldes {
     public static Carta puxaCarta;
     public static Carta energizar;
     public static Carta energiaGratis;
-    public static Carta nada;
+    public static Carta sangrar;
+    public static Carta beberVeneno;
 
     public static void carregar(){
         // inimigos --
-        barbossa = new Inimigo("Capitão Hector Barbossa", 25, 5);
+        barbossa = new Inimigo("Capitão Hector Barbossa", 30, 5);
         loudCoringa = new Assassino("LOUD Coringa", 15, 3);    
         endrick = new Assassino("Endrick", 12, 4);
         drake = new Inimigo("Drake", 10, 2);
-        paulAtreides = new Assassino("PAUL MUAD'DIB ATREIDES, DUKE OF ARRAKIS, LISAN AL GAIB", 35, 7); // ESSE AQUI E FORTE VIU MEIO QUE O BOSS
+        paulAtreides = new Assassino("PAUL MUAD'DIB ATREIDES, DUKE OF ARRAKIS, LISAN AL GAIB", 45, 7); // ESSE AQUI E FORTE VIU MEIO QUE O BOSS
         sabrinaCarpenter = new Inimigo("SABRINA CARPENTER", 30, 6); // ELA E FORTE TB
-        tripleT = new Inimigo("TUNG TUNG TUNG SAHUR", 67, 2); // TANK
+        tripleT = new Assassino("TUNG TUNG TUNG SAHUR", 67, 2); // OUTRO BOSS TA MUITO ROUBADO
 
         // cartas ---
-        tiro = new CartaAtaque("Tiro de revolver", "", 2, 3, 1); tiro.setResenha(Arte.TIRO5);
-        tiroEscopeta = new CartaAtaque("Tiro de escopeta", "", 3, 6, 1); tiroEscopeta.setResenha(Arte.TIRO1);
+        tiro = new CartaAtaque("Tiro de revolver", "", 2, 4, 1); tiro.setResenha(Arte.TIRO5);
+        tiroEscopeta = new CartaAtaque("Tiro de escopeta", "", 3, 7, 1); tiroEscopeta.setResenha(Arte.TIRO1);
 
         tiroCanhao = new CartaAtaqueComEfeito("Tiro de canhão", "dispara uma bala de canhão", 4, 9, feridas, false, 1); tiroCanhao.setResenha(Arte.TIRO4);
-        corteProfundo = new CartaAtaqueComEfeito("Corte profundo", "", 2, 2, sangramento, false, 2); corteProfundo.setResenha(Cor.txtVermelho(Arte.CORTE));
+        corteProfundo = new CartaAtaqueComEfeito("Corte profundo", "", 1, 2, sangramento, false, 2); corteProfundo.setResenha(Cor.txtVermelho(Arte.CORTE));
         corteVenenoso = new CartaAtaqueComEfeito("Corte venenoso", "", 1, 1, veneno, false, 2); corteVenenoso.setResenha(Cor.txtVerdeClaro(Arte.CORTE2));
         corteDefensivo = new CartaAtaqueComEfeito("Corte defensivo", "bate e ganha escudo!", 1, 1, escudinho, true, 2); corteDefensivo.setResenha(Cor.txtAzulClaro(Arte.CORTE5));
         corteRapido = new CartaAtaqueComEfeito("Corte rapido", "bate e ganha 1 ponto de energia!", 1, 1, ganhaEnergia1, true, 2); corteRapido.setResenha(Cor.txtAmareloClaro(Arte.CORTE4));
-        desprezo = new CartaAtaqueComEfeito("DESPREZO", "causa muito dano porém irrita seu adversario", 4, 12, odioPuro, false); desprezo.setResenha(Arte.DESPREZO);
+        desprezo = new CartaAtaqueComEfeito("DESPREZO", "causa muito dano porém irrita seu adversario", 4, 13, odioPuro, false); desprezo.setResenha(Arte.DESPREZO);
 
         armadura = new CartaHabilidade("Armadura", "reduz o dano recebido", 2, aumentaResistencia, true);
         escudoMadeira = new CartaHabilidade("Postura de defesa", "da escudo", 0, escudinho, true);
@@ -120,7 +121,8 @@ public class Moldes {
         dedoNervosoCarta = new CartaPoder("JOHN WICK", "Para cada acúmulo, atire novamente sempre que usar uma carta de tiro!", 2, dedoNervoso);
         mestreLaminasCarta = new CartaPoder("Mestre das lâminas", "Para cada acúmulo, corte novamente sempre que usar uma carta de corte!", 2, mestreLaminas);
 
-        nada = new CartaMaldicao("NADA!", "NAO FAZ NADA!", 1, false); nada.setResenha(Arte.nada);
+        sangrar = new CartaMaldicao("Sangrar.", "Sangra.", 1, sangramento, true); sangrar.setResenha(Cor.txtCinza(Arte.algoRuim));
+        beberVeneno = new CartaMaldicao("Beber veneno.", "Bebe veneno.", 1, veneno, true); beberVeneno.setResenha(Cor.txtCinza(Arte.algoRuim));
 
         // preencher as listas aqui embaixo sempre que adicionar algo
 
@@ -137,6 +139,6 @@ public class Moldes {
         listaCartasMoldes.addAll(Arrays.asList(tiro, tiroEscopeta, tiroCanhao, corteProfundo, 
             corteVenenoso, corteDefensivo, corteRapido, desprezo, armadura, escudoMadeira, 
             escudoFerro, purificar, puroOdio, puxaCarta, energizar, energiaGratis, dedoNervosoCarta, 
-            mestreLaminasCarta, nada));
+            mestreLaminasCarta, sangrar));
     }
 }

@@ -15,7 +15,7 @@ public class RNGHandler {
 
     /*recebe uma porcentagem e retorna true or false dependendo se passou no teste
     exemplo: check(50) -> 50% de chance de retornar true, check(40) -> 40% de chance de retornar true*/
-    public boolean check(int valor){
+    public static boolean check(int valor){
         return (gen.nextInt(100) < valor);
     }
 }

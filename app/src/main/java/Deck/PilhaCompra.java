@@ -16,6 +16,10 @@ public class PilhaCompra {
         cartas.add(c);
     }
 
+    public void addCartaPilha(Carta c){
+        pilhaCartas.add(c);
+    }
+
     public void removeCarta(Carta c){
         cartas.remove(c);
     }
@@ -24,8 +28,8 @@ public class PilhaCompra {
         cartas = baralho;
     }
 
-    public void shuffle(){ // embaralha a lista de cartas
-        Collections.shuffle(cartas);
+    public void shuffle(){ // embaralha a pilha de compras
+        Collections.shuffle(this.pilhaCartas);
     }
 
     public void reShuffleDeck(ArrayList<Carta> mao){ // reembaralha só as cartas na pilha de compra e na mão

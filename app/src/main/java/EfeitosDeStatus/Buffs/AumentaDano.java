@@ -6,17 +6,15 @@ import Entidades.Heroi;
 import Telas.Eventos.Batalha;
 
 // altera o dano causado por ataques do alvo pelo valor passado (positivo aumenta, negativo reduz)
-public class AumentaDano extends Efeito {
-    private int valor;
+public class AumentaDano extends Buff {
+
 
     public AumentaDano(String nome, String desc, int dur, int valor){
-        super(nome, desc, dur);
-        this.valor = valor;
+        super(nome, desc, dur, valor);
     }
 
     public AumentaDano(AumentaDano copiado){
         super(copiado);
-        this.valor = copiado.valor;
     }
 
     @Override

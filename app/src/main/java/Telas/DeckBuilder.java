@@ -6,8 +6,27 @@ import java.util.List;
 import Entidades.Heroi;
 import Util.Cor;
 import Util.InputHandler;
+import static Util.Moldes.armadura;
+import static Util.Moldes.beberVeneno;
+import static Util.Moldes.corteDefensivo;
+import static Util.Moldes.corteProfundo;
+import static Util.Moldes.corteRapido;
+import static Util.Moldes.corteVenenoso;
+import static Util.Moldes.dedoNervosoCarta;
+import static Util.Moldes.desprezo;
+import static Util.Moldes.energiaGratis;
+import static Util.Moldes.energizar;
+import static Util.Moldes.escudoFerro;
+import static Util.Moldes.escudoMadeira;
+import static Util.Moldes.mestreLaminasCarta;
+import static Util.Moldes.purificar;
+import static Util.Moldes.puroOdio;
+import static Util.Moldes.puxaCarta;
+import static Util.Moldes.sangrar;
+import static Util.Moldes.tiro;
+import static Util.Moldes.tiroCanhao;
+import static Util.Moldes.tiroEscopeta;
 import Util.Textos;
-import static Util.Moldes.*;
 
 public class DeckBuilder {
     List<String> decksPadrao = new ArrayList<>(); // decks padrao pra testagem ate ter o deckbuilder de vdd
@@ -15,7 +34,7 @@ public class DeckBuilder {
     public DeckBuilder(){
         decksPadrao.add(Cor.txtVermelho("MESTRE DAS LAMINAS: CORTES INFINITOS, DEBUFFS INFINITOS, RODADA INFIITA!"));
         decksPadrao.add(Cor.txtAmarelo("JOHN WICK: CAUSE MUITO DANO DIRETO EM UMA CHUVA DE BALAS!"));
-        decksPadrao.add(Cor.txtVerde("BALANCEADO: NEM UM NEM OUTRO, NEM TA MUITO BALANCEADO INCLUSIVE!"));
+        decksPadrao.add(Cor.txtRoxo("O AMALDIÇOADO: CARTAS MUITO FORTES, MAS TALVEZ UM PREÇO ALTO DEMAIS..."));
     }
 
     public void rodar(Heroi heroi){
@@ -26,7 +45,7 @@ public class DeckBuilder {
             /*a ideia por tras desse deck aqui é q meio q vc tenta atingir um jackpot stackando mestre das laminas + usando cartas que ganham energia 
             + usando cartas baratas + usar a mao completa pra ganhar mais 2 de energia -> tentar repetir o ciclo -> turno infinito. dano infinito. dopamina infinita. */
             case 0 -> { 
-                // 2 de cada corte + 2 mestre laminas pra faze uns combao
+                // 2 de cada corte + mestre laminas pra faze uns combao
                 heroi.addCarta(corteVenenoso);
                 heroi.addCarta(corteVenenoso);
 
@@ -39,7 +58,6 @@ public class DeckBuilder {
                 heroi.addCarta(corteDefensivo);
                 heroi.addCarta(corteDefensivo);
 
-                heroi.addCarta(mestreLaminasCarta);
                 heroi.addCarta(mestreLaminasCarta);
 
                 heroi.addCarta(purificar);
@@ -95,26 +113,31 @@ public class DeckBuilder {
 
                 heroi.addCarta(armadura);
             }  
-            /* tentei fazer esse ser um deck equilibrado nao sei se deu certo eu pq eu so jogo com o mestre das laminas honestamente */
+            /* muita carta roubada porem voce começa com um monte de maldiçoes (1/3 do deck atualmente)*/
             case 2 -> {
                 heroi.addCarta(tiro);
-                heroi.addCarta(tiro);
-                heroi.addCarta(tiro);
-                heroi.addCarta(tiro);
 
-                heroi.addCarta(tiroEscopeta);
                 heroi.addCarta(tiroEscopeta);
                 heroi.addCarta(tiroEscopeta);
 
                 heroi.addCarta(corteVenenoso);
                 heroi.addCarta(corteVenenoso);
-                heroi.addCarta(corteVenenoso);
 
                 heroi.addCarta(corteProfundo);
                 heroi.addCarta(corteProfundo);
-                heroi.addCarta(corteProfundo);
+
+                heroi.addCarta(corteRapido);
+                heroi.addCarta(corteRapido);
 
                 heroi.addCarta(desprezo);
+                heroi.addCarta(desprezo);
+
+                heroi.addCarta(mestreLaminasCarta);
+                heroi.addCarta(dedoNervosoCarta);
+                heroi.addCarta(mestreLaminasCarta);
+                heroi.addCarta(dedoNervosoCarta);
+                heroi.addCarta(mestreLaminasCarta);
+                heroi.addCarta(dedoNervosoCarta);
                 
                 heroi.addCarta(purificar);
                 heroi.addCarta(purificar);
@@ -127,6 +150,7 @@ public class DeckBuilder {
               
                 heroi.addCarta(energiaGratis);
                 heroi.addCarta(energiaGratis);
+                heroi.addCarta(energiaGratis);
 
                 heroi.addCarta(puroOdio);
                 heroi.addCarta(puroOdio);
@@ -134,11 +158,34 @@ public class DeckBuilder {
                 heroi.addCarta(armadura);
                 heroi.addCarta(armadura);
 
-                heroi.addCarta(escudoFerro);
-                heroi.addCarta(escudoFerro);
+                heroi.addCarta(escudoMadeira);
+                heroi.addCarta(escudoMadeira);
 
-                heroi.addCarta(escudoMadeira);
-                heroi.addCarta(escudoMadeira);
+                //maldiçoes...
+
+                heroi.addCarta(sangrar);
+                heroi.addCarta(beberVeneno);
+
+                heroi.addCarta(sangrar);
+                heroi.addCarta(beberVeneno);
+
+                heroi.addCarta(sangrar);
+                heroi.addCarta(beberVeneno);
+
+                heroi.addCarta(sangrar);
+                heroi.addCarta(beberVeneno);
+
+                heroi.addCarta(sangrar);
+                heroi.addCarta(beberVeneno);
+
+                heroi.addCarta(sangrar);
+                heroi.addCarta(beberVeneno);
+
+                heroi.addCarta(sangrar);
+                heroi.addCarta(beberVeneno);
+
+                heroi.addCarta(sangrar);
+                heroi.addCarta(beberVeneno);
             }
         }
         Textos.limpaTela();

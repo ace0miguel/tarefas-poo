@@ -47,7 +47,10 @@ public abstract class Carta {
         else if (this instanceof CartaPoder)
             return Cor.rosa + this.nome + Cor.reset;
 
-        return this.nome + Cor.reset;
+        else if (this instanceof CartaMaldicao);
+            return Cor.cinza + this.nome + Cor.reset;
+
+        // return this.nome + Cor.reset;
     }
 
 
