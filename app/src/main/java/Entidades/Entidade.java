@@ -205,9 +205,14 @@ public abstract class Entidade {
         resetarBonus();
     }
 
-
     public void setDanoExtra(int valor){
         danoExtra = valor;
+    }
+
+    // todos os buffs e bom adicionar aqui, tipo dano extra, resistencia ou outros. pra passar no começo de cada batalha
+    public void resetaBuffs(){
+        this.danoExtra = 0;
+        this.resistencia = 0;
     }
 
     public String status(){

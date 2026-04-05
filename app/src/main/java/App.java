@@ -16,7 +16,7 @@ public class App {
         Moldes.carregar();
 
         // heroi -----------
-        Heroi heroi = new Heroi("Capitão Jack Sparrow", 60, 5);
+        Heroi heroi = new Heroi("Capitão Jack Sparrow", 55, 5);
       
         Textos.limpaTela();
         Textos.printaBonito((Arte.tituloSombreado + "\n"), 2, 2);

@@ -7,18 +7,15 @@ import java.util.Scanner;
 
 import Cartas.Carta;
 import Cartas.CartaAtaqueComEfeito;
-import Cartas.CartaMaldicao;
 import Cartas.CartaPoder;
 import Deck.Mao;
 import Deck.PilhaCompra;
 import Deck.PilhaDescarte;
-import EfeitosDeStatus.Buffs.AumentaDano;
 import EfeitosDeStatus.DanosConstantes.DanoConstante;
 import EfeitosDeStatus.DanosConstantes.Sangramento;
 import EfeitosDeStatus.DanosConstantes.Veneno;
 import EfeitosDeStatus.Efeito;
 import EfeitosDeStatus.Energizar;
-import EfeitosDeStatus.Instantaneos.Escudo;
 import EfeitosDeStatus.Instantaneos.Purificar;
 import Entidades.Entidade;
 import Entidades.Heroi;
@@ -28,7 +25,6 @@ import Util.Arte;
 import Util.Cor;
 import Util.InputHandler;
 import Util.Textos;
-import static Util.Moldes.*;
 
 public class Batalha extends Evento {
     private int turno; // 0 -> heroi, 1 -> inimigos
@@ -58,7 +54,6 @@ public class Batalha extends Evento {
     // recebe heroi, define as variáveis e chama a classe principal.
     @Override
     public void iniciar(Heroi heroi){
-        nada.setResenha(Cor.txtCinza(Arte.nada));
         
         this.heroi = heroi;
 
@@ -73,6 +68,7 @@ public class Batalha extends Evento {
         // resetando os bonus do heroi q possam ter sobrado da rodada passada
         heroi.passaRodada();
         heroi.passaRodada();
+        heroi.resetaBuffs();
         heroi.resetEfeitos();
 
         turno = 0; // 0: turno do heroi 
@@ -302,6 +298,7 @@ public class Batalha extends Evento {
                     Textos.batalhaSemDelay(heroi, listaEfeitos, listaPoderes, arrayInimigos);
                 }
 
+                // trecos pra mostrar os buffs pra debugar
                 // System.out.println("resist extra" + heroi.getResistencia());
                 // System.out.println("dano extra" + heroi.getDanoExtra());
 
@@ -380,9 +377,8 @@ public class Batalha extends Evento {
 
         for (Inimigo inimigo : arrayInimigos) {
             if (inimigo.estaVivo()){ // adicionei isso pq joguei uma partida aqui e tomei hit de um inimigo morto.
-                int acao = inimigo.getNextAcao();
-                inimigo.ataqueRealizado(heroi);
-                inimigo.realizarAcao(heroi, this);
+                inimigo.ataqueRealizado(heroi); // printa oq ele ta fazendo (antes de fazer pq as vezes ele se mata)
+                inimigo.realizarAcao(heroi, this); // faz oq ele ia fazer
                 
                 inimigo.escolheAcao(); // escolhe prox ação
             }

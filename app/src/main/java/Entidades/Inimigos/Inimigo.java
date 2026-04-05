@@ -9,15 +9,14 @@ import Util.RNGHandler;
 import Util.Textos;
 import static Util.Moldes.*;
 
-/* inimigo base. pra criar um novo dar override pelo menos em:
-escolheAcao, anunciarAtaque, ataqueRealizado.
+/* inimigo base.
 caso queira mudar algum dos danos dos ataques padroes(normal, com efeito) basta dar override em:
 getDanoAtaque, getDanoAtaqueEfeito. */
 public class Inimigo extends Entidade{
 
     protected int dano;
     protected int nextAcao;
-    protected int tier = 0; // 0 : randola, 1 : elite, 2 : boss (ainda nao ta sendo usado pra nada, talvez nunca seja)
+    protected int tier = 0; // 0 : randola, 1 : elite, 2 : boss (ainda nao ta sendo usado pra nada, talvez nunca seja)  
 
     public Inimigo(String nome, int vida, int dano){
         super(nome, vida);
@@ -92,6 +91,7 @@ public class Inimigo extends Entidade{
         Cor.txtReset();
     }
     
+    // aqui vc bota oq cada açao faz msm
     public void realizarAcao(Heroi alvo, Batalha batalha){
                 switch (nextAcao){
                     case 0 -> this.atacar(alvo); // ataque base

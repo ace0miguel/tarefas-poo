@@ -6,17 +6,14 @@ import Entidades.Heroi;
 import Telas.Eventos.Batalha;
 
 // altera a resistencia ( se quiser diminuir so passar um valor negativo e tals )
-public class AumentaResistencia extends Efeito {
-    private int valor;
+public class AumentaResistencia extends Buff {
 
     public AumentaResistencia(String nome, String desc, int dur, int valor){
-        super(nome, desc, dur);
-        this.valor = valor;
+        super(nome, desc, dur, valor);
     }
 
     public AumentaResistencia(AumentaResistencia copiado){
         super(copiado);
-        this.valor = copiado.valor;
     }
     
     @Override

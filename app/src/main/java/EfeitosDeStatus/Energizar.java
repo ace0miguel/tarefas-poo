@@ -59,13 +59,15 @@ public class Energizar extends Efeito {
 
     @Override
     public void acabar() {
-        if (this.getAlvo() instanceof Heroi h){
-            h.setEnergiaBonus(this.valor);
-            h.setEnergizado(false);
-        }
-        else {
-            System.out.println("vc tentou dar energia para um inimigo ??");
-            InputHandler.esperar();
+        if (!this.getAlvo().getPurificar()){
+            if (this.getAlvo() instanceof Heroi h){
+                h.setEnergiaBonus(this.valor);
+                h.setEnergizado(false);
+            }
+            else {
+                System.out.println("vc tentou dar energia para um inimigo ??");
+                InputHandler.esperar();
+            }
         }
     }
 }
