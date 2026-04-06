@@ -18,7 +18,7 @@ import EfeitosDeStatus.Energizar;
 import EfeitosDeStatus.Instantaneos.Purificar;
 import Entidades.Entidade;
 import Entidades.Heroi;
-import Entidades.Inimigos.Inimigo;
+import Entidades.Inimigo;
 import Poderes.Poder;
 import Util.Arte;
 import Util.Cor;
@@ -390,9 +390,8 @@ public class Batalha extends Evento {
 
         for (Inimigo inimigo : arrayInimigos) {
             if (inimigo.estaVivo()){ // adicionei isso pq joguei uma partida aqui e tomei hit de um inimigo morto.
-                inimigo.ataqueRealizado(heroi); // printa oq ele ta fazendo (antes de fazer pq as vezes ele se mata)
+                inimigo.resultadoAcao(heroi); // printa oq ele ta fazendo (antes de fazer pq as vezes ele se mata)
                 inimigo.realizarAcao(heroi, this); // faz oq ele ia fazer
-                
                 inimigo.escolheAcao(); // escolhe prox ação
             }
         }

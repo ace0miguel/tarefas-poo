@@ -87,7 +87,7 @@ public class Cor {
     }
 
     public static void printaReset(String printa) {
-        System.out.println(reset + printa + reset);
+        System.out.print(reset + printa + reset);
     }
 
     // ----------------------------------------------------------------------------
