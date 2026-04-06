@@ -18,6 +18,9 @@ public class App {
         // heroi -----------
         Heroi heroi = new Heroi("Capitão Jack Sparrow", 55, 5);
       
+        // pra debugar o deckbuilder 
+        // DeckBuilder.iniciar(heroi); 
+
         Textos.limpaTela();
         Textos.printaBonito((Arte.tituloSombreado + "\n"), 2, 2);
         System.out.println();

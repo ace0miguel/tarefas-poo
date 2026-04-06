@@ -444,7 +444,6 @@ public class Batalha extends Evento {
         for (Inimigo inimigo : arrayInimigos) {
             retorno += " [ " + inimigo.getNome() + " ]";
         }
-        retorno += "\n";
         return retorno;
     }
 }

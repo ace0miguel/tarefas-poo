@@ -3,16 +3,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Cartas.Carta;
+import Cartas.CartaMaldicao;
 import Deck.Mao;
 import Deck.PilhaCompra;
 import Deck.PilhaDescarte;
 import Util.Cor;
+import Util.InputHandler;
+import Util.Textos;
 
 public class Heroi extends Entidade {
     private int energia;
     private int energiaMax;
     private int energiaBonus; // soma na energia no começo da rodada e reseta.
-    private List<Carta> baralho = new ArrayList<>();
+
+    private List<Carta> baralho = new ArrayList<>(); // todas as cartas q o jogador tem e ta usando
+    private List<Carta> inventarioCartas = new ArrayList<>(); // todas as cartas q o jogador tem mas nao ta usando
 
     // pra poder acessar a mao e as pilhas pelo heroi
     private Mao maoAtual;
@@ -56,6 +61,10 @@ public class Heroi extends Entidade {
         return baralho;
     }
 
+    public List<Carta> getInventarioCartas() {
+        return inventarioCartas;
+    }
+
     // setters -----
 
     public void setDeck(List<Carta> deck) {
@@ -88,6 +97,10 @@ public class Heroi extends Entidade {
 
     public void setPilhaDescarte(PilhaDescarte pilhaDescarte) {
         this.pilhaDescarte = pilhaDescarte;
+    }
+
+    public void setInventarioCartas(List<Carta> inventarioCartas) {
+        this.inventarioCartas = inventarioCartas;
     }
     
     // ----
@@ -123,6 +136,7 @@ public class Heroi extends Entidade {
         return "Energia ("+this.energia+"/"+this.energiaMax+")" + Cor.reset;
     }
 
+    // adicionam e removem cartas do baralho
     public void addCarta(Carta c){
         baralho.add(c);
     }
@@ -131,6 +145,38 @@ public class Heroi extends Entidade {
         baralho.remove(c);
     }
 
+    // adicionam e removem cartas do inventario
+    public void addCartaInventario(Carta c){
+        inventarioCartas.add(c);
+    }
+
+    public void removeCartaInventario(Carta c){
+        inventarioCartas.remove(c);
+    }
+
+    // adiciona a carta de um e remove do outro, se nao tiver em nenhum printa msg de erro. maldiçao nao da pra tirar.
+    public void trocaCarta(Carta c){
+        if (c instanceof CartaMaldicao){
+            Textos.limpaTela();
+            System.out.println("maldiçoes nao podem ser removidas do baralho!");
+            InputHandler.esperar();
+            return;
+        }
+        if (baralho.contains(c)){
+            removeCarta(c);
+            addCartaInventario(c);
+            return;
+        }
+        if (inventarioCartas.contains(c)){
+            removeCartaInventario(c);
+            addCarta(c);
+            return;
+        }
+        System.out.println("Essa carta nao existe ou voce nao tem.");
+        InputHandler.esperar();
+    }
+
+    // cuida de tudo q tem q ser resetado/setado no fim e de cada rodada
     @Override
     public void passaRodada(){
         resetarBonus();
