@@ -91,7 +91,6 @@ public class Mapa {
                 DeckBuilder.iniciar(heroi);
                 continue;
             }
-            
 
             InputHandler.esperar(Cor.cinza + "Pressione ENTER para ir para " + Cor.reset + getProximoEvento(escolha));
 

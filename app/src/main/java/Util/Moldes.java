@@ -124,11 +124,12 @@ public class Moldes {
 
         // inimigos --
         barbossa = new Inimigo("Capitão Hector Barbossa", 30, 6,
-            new Acao.AtacarVidaPerdida()
+            new Acao.Atacar()
         );
 
         loudCoringa = new Inimigo("LOUD Coringa", 15, 3, 
-            new Acao.Atacar(), new Acao.AtacarEfeito(sangramento), new Acao.AdicionarCarta(sangrar));   
+            new Acao.Atacar(), new Acao.AtacarEfeito(sangramento), new Acao.AdicionarCarta(sangrar)
+        );   
 
         endrick = new Inimigo("Endrick", 12, 4,
             new Acao.Atacar(), new Acao.AtacarEfeito(veneno)
