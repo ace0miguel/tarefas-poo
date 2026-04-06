@@ -21,10 +21,10 @@ import EfeitosDeStatus.Instantaneos.Escudo;
 import EfeitosDeStatus.Instantaneos.GanhaEnergia;
 import EfeitosDeStatus.Instantaneos.Purificar;
 import EfeitosDeStatus.Instantaneos.PuxaCarta;
-import Entidades.Inimigos.Assassino;
-import Entidades.Inimigos.Inimigo;
+import Entidades.Inimigo;
 import Poderes.MaosLeves;
 import Poderes.Poder;
+import Util.Acao.Atacar;
 
 /*  centraliza as instancias criadas, tudo é publico e static.
 aqui so tem os moldes, sempre que for usar algo criar copia (todos tem o metodo criaCopia()) 
@@ -91,13 +91,29 @@ public class Moldes {
 
     public static void carregar(){
         // inimigos --
-        barbossa = new Inimigo("Capitão Hector Barbossa", 30, 5);
-        loudCoringa = new Assassino("LOUD Coringa", 15, 3);    
-        endrick = new Assassino("Endrick", 12, 4);
-        drake = new Inimigo("Drake", 10, 2);
-        paulAtreides = new Assassino("PAUL MUAD'DIB ATREIDES, DUKE OF ARRAKIS, LISAN AL GAIB", 45, 7); // ESSE AQUI E FORTE VIU MEIO QUE O BOSS
-        sabrinaCarpenter = new Inimigo("SABRINA CARPENTER", 30, 6); // ELA E FORTE TB
-        tripleT = new Assassino("TUNG TUNG TUNG SAHUR", 67, 4); // OUTRO BOSS TA MUITO ROUBADO
+        barbossa = new Inimigo("Capitão Hector Barbossa", 30, 6,
+            new Acao.Atacar(), new Acao.AtacarEfeito(sangramento)
+        );
+
+        loudCoringa = new Inimigo("LOUD Coringa", 15, 3, 
+            new Acao.Atacar(), new Acao.AtacarEfeito(sangramento), new Acao.AdicionarCarta(sangrar));   
+
+        endrick = new Inimigo("Endrick", 12, 4,
+            new Acao.Atacar(), new Acao.AtacarEfeito(veneno)
+        );
+
+        drake = new Inimigo("Drake", 10, 2,
+            new Acao.Atacar()
+        );
+
+        paulAtreides = new Inimigo("PAUL MUAD'DIB ATREIDES, DUKE OF ARRAKIS, LISAN AL GAIB", 45, 7, // ESSE AQUI E FORTE VIU MEIO QUE O BOSS
+            new Acao.AtacarVidaPerdida(), new Acao.AdicionarCarta(beberVeneno), new Acao.ReceberEfeito(pactoSinistro));
+
+        sabrinaCarpenter = new Inimigo("SABRINA CARPENTER", 30, 6,  // ELA E FORTE TB
+            new Acao.AtacarVidaPerdida(), new Acao.AdicionarCarta(beberVeneno), new Acao.ReceberEfeito(odioPuro));
+            
+        tripleT = new Inimigo("TUNG TUNG TUNG SAHUR", 67, 2, // OUTRO BOSS TA MUITO ROUBADO
+            new Acao.AdicionarCarta(beberVeneno), new Acao.ReceberEfeito(odioPuro), new Acao.AdicionarCarta(sangrar), new Acao.Atacar());
 
         // cartas ---
         tiro = new CartaAtaque("Tiro de revolver", "", 2, 5, 1); tiro.setResenha(Arte.TIRO5);
