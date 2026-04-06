@@ -26,6 +26,7 @@ public class ArvoreEventos {
         this.p = p;
     }
 
+    
     public long getTotalNos(){
         if (n == 1) return p+1;
 
@@ -56,7 +57,7 @@ public class ArvoreEventos {
         }
     }
 
-    /* cria uma arvore baseada nos parametros da instancia atual dessa classe e retorna a raiz.
+    /** cria uma arvore baseada nos parametros da instancia atual dessa classe e retorna a raiz.
     ele cria cada no com um evento, eu pensei em criar depois uma funçao pra percorrer e transformar
     esses eventos no q eles forem, tipo batalha ou outros ai q venham a ser criados. */
     public DefaultMutableTreeNode criarArvore(int profundidade, Heroi heroi) {
