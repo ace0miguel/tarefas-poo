@@ -19,11 +19,10 @@ public class Mapa {
     ArvoreEventos arvoreEventos = new ArvoreEventos(3, 2, heroi); // QUANTIDADE TOTAL DE BATALHAS: P - 1 (COMEÇA DO PROFUNDIDADE 0)
     DefaultMutableTreeNode nodeInicial = arvoreEventos.criarArvore(heroi); // cria arvore e recebe a raiz
     DefaultMutableTreeNode nodeAtual = nodeInicial; // eu to chamando de node pq noAtual ia ficar muito feio
-    DeckBuilder deckBuilder = new DeckBuilder();
     
-    // retorna um menu de seleçao com os filhos da posiçao passada
+    // retorna um menu de seleçao com os filhos da posiçao passada. a opçao exit te manda pro deckbuilder.
     public int escolherCaminho(DefaultMutableTreeNode posicaoAtual){ 
-        return InputHandler.selecionar(arvoreEventos.getEventos(posicaoAtual), Arte.mapa + "\n" + Cor.txtAzul(Arte.bordaHud4));
+        return InputHandler.selecionar(arvoreEventos.getEventos(posicaoAtual),true, Arte.mapa + "\n" + Cor.txtAzul(Arte.bordaHud4));
     }
 
     public int escolherCaminho(){ // se nao passar nada retorna baseado no nó atual
@@ -68,7 +67,7 @@ public class Mapa {
             Textos.limpaTela();
 
             if (primeiroLoop){
-                deckBuilder.rodar(heroi);
+                DeckBuilder.mostrarDecksPadrao(heroi);
                 
                 Textos.printaLinhaDevagar(Arte.mapa);
                 Textos.printaLinhaDevagar(Cor.txtAzul(Arte.bordaHud4));
@@ -86,6 +85,14 @@ public class Mapa {
             } 
 
             int escolha = escolherCaminho();
+
+            // o voltar te manda pro deckbuilder ( da pra deixar mais bonito depois e adicionar uma opçao deckbuilder mas enfim )
+            if (escolha == -1) {
+                DeckBuilder.iniciar(heroi);
+                continue;
+            }
+            
+
             InputHandler.esperar(Cor.cinza + "Pressione ENTER para ir para " + Cor.reset + getProximoEvento(escolha));
 
             irPara(escolha);

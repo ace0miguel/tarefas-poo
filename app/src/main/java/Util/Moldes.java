@@ -10,13 +10,13 @@ import Cartas.CartaAtaqueComEfeito;
 import Cartas.CartaHabilidade;
 import Cartas.CartaMaldicao;
 import Cartas.CartaPoder;
-import EfeitosDeStatus.Efeito;
-import EfeitosDeStatus.Energizar;
 import EfeitosDeStatus.Buffs.AumentaDano;
 import EfeitosDeStatus.Buffs.AumentaResistencia;
 import EfeitosDeStatus.DanosConstantes.DanoConstante;
 import EfeitosDeStatus.DanosConstantes.Sangramento;
 import EfeitosDeStatus.DanosConstantes.Veneno;
+import EfeitosDeStatus.Efeito;
+import EfeitosDeStatus.Energizar;
 import EfeitosDeStatus.Instantaneos.Escudo;
 import EfeitosDeStatus.Instantaneos.GanhaEnergia;
 import EfeitosDeStatus.Instantaneos.Purificar;
@@ -27,7 +27,8 @@ import Poderes.MaosLeves;
 import Poderes.Poder;
 
 /*  centraliza as instancias criadas, tudo é publico e static.
-aqui so tem os moldes, sempre que for usar algo criar copia (todos tem o metodo criaCopia()) */
+aqui so tem os moldes, sempre que for usar algo criar copia (todos tem o metodo criaCopia()) 
+pra importar essa classe aqui usar import static (import static Util.Moldes.*) */
 public class Moldes {
     public static List<Inimigo> listaInimigosMoldes = new ArrayList<>();
     public static List<Efeito> listaEfeitosMoldes = new ArrayList<>();
@@ -96,27 +97,27 @@ public class Moldes {
         drake = new Inimigo("Drake", 10, 2);
         paulAtreides = new Assassino("PAUL MUAD'DIB ATREIDES, DUKE OF ARRAKIS, LISAN AL GAIB", 45, 7); // ESSE AQUI E FORTE VIU MEIO QUE O BOSS
         sabrinaCarpenter = new Inimigo("SABRINA CARPENTER", 30, 6); // ELA E FORTE TB
-        tripleT = new Assassino("TUNG TUNG TUNG SAHUR", 67, 2); // OUTRO BOSS TA MUITO ROUBADO
+        tripleT = new Assassino("TUNG TUNG TUNG SAHUR", 67, 4); // OUTRO BOSS TA MUITO ROUBADO
 
         // cartas ---
-        tiro = new CartaAtaque("Tiro de revolver", "", 2, 4, 1); tiro.setResenha(Arte.TIRO5);
-        tiroEscopeta = new CartaAtaque("Tiro de escopeta", "", 3, 7, 1); tiroEscopeta.setResenha(Arte.TIRO1);
+        tiro = new CartaAtaque("Tiro de revolver", "", 2, 5, 1); tiro.setResenha(Arte.TIRO5);
+        tiroEscopeta = new CartaAtaque("Tiro de escopeta", "", 3, 8, 1); tiroEscopeta.setResenha(Arte.TIRO1);
 
-        tiroCanhao = new CartaAtaqueComEfeito("Tiro de canhão", "dispara uma bala de canhão", 4, 9, feridas, false, 1); tiroCanhao.setResenha(Arte.TIRO4);
-        corteProfundo = new CartaAtaqueComEfeito("Corte profundo", "", 1, 2, sangramento, false, 2); corteProfundo.setResenha(Cor.txtVermelho(Arte.CORTE));
+        tiroCanhao = new CartaAtaqueComEfeito("Tiro de canhão", "dispara uma bala de canhão", 4, 11, feridas, false, 1); tiroCanhao.setResenha(Arte.TIRO4);
+        corteProfundo = new CartaAtaqueComEfeito("Corte profundo", "", 2, 3, sangramento, false, 2); corteProfundo.setResenha(Cor.txtVermelho(Arte.CORTE));
         corteVenenoso = new CartaAtaqueComEfeito("Corte venenoso", "", 1, 1, veneno, false, 2); corteVenenoso.setResenha(Cor.txtVerdeClaro(Arte.CORTE2));
         corteDefensivo = new CartaAtaqueComEfeito("Corte defensivo", "bate e ganha escudo!", 1, 1, escudinho, true, 2); corteDefensivo.setResenha(Cor.txtAzulClaro(Arte.CORTE5));
         corteRapido = new CartaAtaqueComEfeito("Corte rapido", "bate e ganha 1 ponto de energia!", 1, 1, ganhaEnergia1, true, 2); corteRapido.setResenha(Cor.txtAmareloClaro(Arte.CORTE4));
-        desprezo = new CartaAtaqueComEfeito("DESPREZO", "causa muito dano porém irrita seu adversario", 4, 13, odioPuro, false); desprezo.setResenha(Arte.DESPREZO);
+        desprezo = new CartaAtaqueComEfeito("Desprezo.", "causa muito dano porém irrita seu adversario", 4, 15, odioPuro, false); desprezo.setResenha(Arte.DESPREZO);
 
-        armadura = new CartaHabilidade("Armadura", "reduz o dano recebido", 2, aumentaResistencia, true);
+        armadura = new CartaHabilidade("Ego", "Reduz o dano recebido", 2, aumentaResistencia, true);
         escudoMadeira = new CartaHabilidade("Postura de defesa", "da escudo", 0, escudinho, true);
-        escudoFerro = new CartaHabilidade("Aura de defesa", "da MUITO escudo", 1, escudao, true);
-        purificar = new CartaHabilidade("Receba!", "Remove todos os efeitos aplicados em voce (incluindo positivos)", 2, purificarEfeito, true); purificar.setResenha(Cor.txtAmarelo(Arte.RECEBA));
+        escudoFerro = new CartaHabilidade("Aura", "da MUITO escudo", 1, escudao, true);
+        purificar = new CartaHabilidade("RECEBA!", "Remove todos os efeitos aplicados em voce (incluindo positivos)", 2, purificarEfeito, true); purificar.setResenha(Cor.txtAmarelo(Arte.RECEBA));
         puroOdio = new CartaHabilidade("PURO ODIO", "Cause 1 de dano extra por 3 rodadas", 2, odioPuro, true);
         puxaCarta = new CartaHabilidade("Ganancia", "Puxe duas cartas da sua pilha de compras", 1, efeitoPuxaCarta2, true);
         energizar = new CartaHabilidade("ENERGIZAR!", "Ganhe mais 2 pontos de energia no começo da próxima rodada!", 1, efeitoEnergizado, true);
-        energiaGratis = new CartaHabilidade("Energia gratis!", "Ganhe 1 ponto de energia", 0, ganhaEnergia1, true);
+        energiaGratis = new CartaHabilidade("Energia!", "Ganhe 1 ponto de energia", 0, ganhaEnergia1, true);
         
         dedoNervosoCarta = new CartaPoder("JOHN WICK", "Para cada acúmulo, atire novamente sempre que usar uma carta de tiro!", 2, dedoNervoso);
         mestreLaminasCarta = new CartaPoder("Mestre das lâminas", "Para cada acúmulo, corte novamente sempre que usar uma carta de corte!", 2, mestreLaminas);

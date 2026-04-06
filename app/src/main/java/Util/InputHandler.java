@@ -22,7 +22,7 @@ public class InputHandler {
     }
 
     public static void esperar(){
-        esperar("\n[ Pressione ENTER para continuar ]");
+        esperar(Cor.txtCinza("\n[ Pressione ENTER para continuar ]"));
     }
 
     // versoes do selecionar pra vc poder passar so a lista ou so lista e msg ou so lista e exit.
@@ -38,7 +38,8 @@ public class InputHandler {
         return selecionar(lista, exit, "");
     }
 
-    /* recebe uma lista e printa, se for de objetos ele vai usar o metodo .toString(), se for string ela so printa */
+    /* recebe uma lista e printa, se for de objetos ele vai usar o metodo .toString(), se for string ela so printa 
+    depois valida a escolha e retorna o numero escolhido, se tiver a opçao exit e o usuario escolher vai retonar -1.*/
     public static <T> int selecionar(List<T> lista, boolean exit, String mensagemInicial) { 
         if (lista.isEmpty() && !exit) { // se a lista vier vazia e nao tiver nada pra voltar retorna
             Cor.printaVermelho(">> ERRO << LISTA VAZIA E NAO TEM EXIT\n");
@@ -50,8 +51,8 @@ public class InputHandler {
         int tamanhoEfetivo = lista.size() - 1; // se nao tiver exit a ultima opçao e um a menos q o size, se tiver e igual o size.
         if (exit) tamanhoEfetivo++;
 
-        // fiz isso aqui por motivo de estetica, toda lista vai ser imprimida em 1 segundo e a velocidade depende da quantidade de itens.
-        int tempoSleep = 1000 / lista.size(); 
+        // fiz isso aqui por motivo de estetica, toda lista vai ser imprimida durando o msm tempo, a velocidade depende da quantidade de itens.
+        int tempoSleep = (lista.size() != 0) ? 300 / lista.size() : 500; 
 
         while (true){
             Textos.limpaTela();
@@ -60,24 +61,37 @@ public class InputHandler {
                 Textos.printaLinhaDevagar(mensagemInicial);
                 System.out.println();   
             }
-            for(int i = 0; i < lista.size(); i++) {
-                Textos.printaBonito(((i) + " > " + lista.get(i)),2 ,0); Textos.sleep(tempoSleep);
-            }
 
             if (exit) {
-                Textos.printaBonito(Cor.txtCinza((lista.size()) + " > Voltar."), 2, 0); Textos.sleep(tempoSleep);
+                System.out.println(Cor.txtCinza(0 + " > Voltar.")); Textos.sleep(tempoSleep);
             }
+            
+            // se tiver exit, ele vai ser o 0 entao tem q printar a partir do 1
+            int corretor = exit? 1 : 0;
+
+            for(int i = 0; i < lista.size(); i++) {
+                System.out.println(((i + corretor) + " > " + lista.get(i))); Textos.sleep(tempoSleep);
+            }
+
 
             try {
                 escolha = leitor.nextInt();
             } catch (Exception e) {
-                escolha = -1;
+                escolha = -2;
             }
+
+            // pra nao dar pra pessoa escolher -1 de proposito ou sem querer tb
+            if (escolha == -1)
+                escolha = -2;
+
+            // se tiver exit, tem q subtrair 1 da escolha. se a pessoa escolher 0 retorna -1 (codigo de voltar)
+            if (exit)
+                escolha--;
 
             leitor.nextLine();
             System.out.println();
 
-            if (escolha >= 0 && escolha <= tamanhoEfetivo) // valida a escolha
+            if ((escolha >= 0 && escolha < lista.size()) || (escolha == -1 && exit)) // valida a escolha
                 break;         
             
             System.out.println(Textos.escolhaInvalida(tamanhoEfetivo));
