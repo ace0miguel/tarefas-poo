@@ -47,6 +47,10 @@ public class Batalha extends Evento {
         inimigos = new ArrayList<>(Arrays.asList(arrayInimigos)); // converte o array inimigos em arraylist para facilitar a manipulação.
     }
 
+    public List<Inimigo> getInimigos() {
+        return inimigos;
+    }
+
     // recebe heroi, define as variáveis e chama a classe principal.
     @Override
     public void iniciar(Heroi heroi){
@@ -146,23 +150,27 @@ public class Batalha extends Evento {
         int opcao = -1;
         while (true) { 
             int i = 0;
-            System.out.println();
-            Cor.printaAmarelo("Selecione o alvo:");
+            Textos.limpaTela();
+            Cor.printaAmarelo(Arte.selecioneAlvo2);
             System.out.println();
 
             for (Inimigo inimigo : inimigos) {
                 if (inimigo.estaVivo()){
                     Textos.sleep(30);
-                    System.out.println((""+i+" - "+inimigo.getNomeColorido()+""));
+                    System.out.println((Cor.amarelo + ""+i+" - "+inimigo.getNomeColorido()+""));
                     i++;
                 }
             }
 
             try {
                 opcao = ler.nextInt();
-                ler.nextLine();
+                if (ler.hasNextLine()) {
+                String linha = ler.nextLine();
+            };
             } catch (Exception e) {
-                ler.nextLine();  
+                if (ler.hasNextLine()) {
+                String linha = ler.nextLine();
+            };  
             }
 
             if (opcao >= 0 && opcao < inimigos.size() && inimigos.get(opcao).estaVivo()) 
@@ -172,8 +180,6 @@ public class Batalha extends Evento {
             Cor.printaAmarelo(Textos.escolhaInvalida(i-1));
 
             InputHandler.esperar();
-
-            Textos.apagarLinhas(i + 8);
         }
         return opcao;
     }
@@ -308,7 +314,7 @@ public class Batalha extends Evento {
                         InputHandler.esperar();
                         mao.addCinco(pilhaCompra, pilhaDescarte);
                 }
-                
+
                 if (escolha > mao.getSize() || escolha < 0){ 
                     escolhaInvalida = true;
                     continue;

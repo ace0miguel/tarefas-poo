@@ -46,7 +46,7 @@ public class Mao {
     public int mostrar(){ // retorna a opção escolhida em forma de numero
         System.out.println("Mão atual:");
         int ultimoNumero = 0;
-        
+
         if (cartas.size() <= 0) return -1;
 
         for (int i = 0; i < cartas.size(); i++){
@@ -60,9 +60,13 @@ public class Mao {
 
         try {
             opcao = ler.nextInt();
-            ler.nextLine();
+            if (ler.hasNextLine()) {
+                String linha = ler.nextLine();
+            };
         } catch (Exception e) {
-            ler.nextLine();
+            if (ler.hasNextLine()) {
+                String linha = ler.nextLine();
+            };
         }
         return opcao;
     }

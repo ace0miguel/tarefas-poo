@@ -75,7 +75,7 @@ public abstract class Acao {
 
         @Override
         public void anunciar(Inimigo executor, Entidade alvo) {
-            System.out.println(Cor.amarelo + "> " + Cor.reset + executor.getNome() + Cor.cinza +  " irá te atacar causando " + (executor.getDano() + executor.getDanoExtra() + danoVidaPerdida(alvo)) + " pontos de dano.");
+            System.out.println(Cor.amarelo + "> " + Cor.reset + executor.getNome() + Cor.cinza +  " irá te atacar causando " + (executor.getDano() + executor.getDanoExtra()) + " + (" + Cor.vermelho + danoVidaPerdida(alvo) + Cor.cinza  + ") pontos de dano.");
         }
 
         @Override
@@ -109,12 +109,12 @@ public abstract class Acao {
     /** Adiciona uma carta a pilha de compras do alvo (tem que ser o heroi) */
     public static class AdicionarCarta extends Acao {
         public AdicionarCarta(Carta carta) {
-            this.carta = carta;
+            this.carta = carta.criaCopia();
         }
 
         @Override
         public void executar(Inimigo executor, Entidade alvo, Batalha batalha) {
-            ((Heroi) alvo).getPilhaCompra().addCartaPilha(carta.criaCopia());
+            ((Heroi) alvo).getPilhaCompra().addCartaPilha(carta);
             ((Heroi) alvo).getPilhaCompra().shuffle();
         }
 

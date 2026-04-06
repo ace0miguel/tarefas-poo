@@ -88,7 +88,10 @@ public class InputHandler {
             if (exit)
                 escolha--;
 
-            leitor.nextLine();
+            if (leitor.hasNextLine()) {
+                String linha = leitor.nextLine();
+            }
+
             System.out.println();
 
             if ((escolha >= 0 && escolha < lista.size()) || (escolha == -1 && exit)) // valida a escolha

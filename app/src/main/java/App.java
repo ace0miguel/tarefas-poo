@@ -18,7 +18,7 @@ public class App {
         // heroi -----------
         Heroi heroi = new Heroi("Capitão Jack Sparrow", 55, 5);
       
-        // pra debugar o deckbuilder 
+        // pra entrar direto no deckBuilder descomenta aqui
         // DeckBuilder.iniciar(heroi); 
 
         Textos.limpaTela();

@@ -1,6 +1,7 @@
 package Cartas;
 import Entidades.Entidade;
 import Entidades.Heroi;
+import Entidades.Inimigo;
 import Telas.Eventos.Batalha;
 import Util.Cor;
 
@@ -31,19 +32,40 @@ public class CartaAtaque extends Carta
 
     @Override
     public void usar(Heroi heroi, Entidade alvo, Batalha batalha){
-        int energiaAtual = heroi.getEnergia();
-        if(energiaAtual >= this.getCusto()){
-            alvo.receberDano(this.dano + heroi.getDanoExtra());
-            heroi.usarEnergia(this.getCusto());
-            
-            printaResenha();
+        if (!efeitoEmArea) {
+            int energiaAtual = heroi.getEnergia();
+            if(energiaAtual >= this.getCusto()){
+                alvo.receberDano(this.dano + heroi.getDanoExtra());
+                heroi.usarEnergia(this.getCusto());
+                
+                printaResenha();
+            }
+        }
+        else {
+            int energiaAtual = heroi.getEnergia();
+            if(energiaAtual >= this.getCusto()){
+                for (Inimigo inimigo : batalha.getInimigos() ) {
+                    inimigo.receberDano(this.dano + heroi.getDanoExtra());
+                }
+                heroi.usarEnergia(this.getCusto());
+                
+                printaResenha();
+            }
         }
     }
 
     @Override
     public void aplicarEfeito(Heroi heroi, Entidade alvo, Batalha batalha) {
-        alvo.receberDano(this.dano + heroi.getDanoExtra());
-        printaResenha();
+        if (!efeitoEmArea) {
+            alvo.receberDano(this.dano + heroi.getDanoExtra());    
+            printaResenha();     
+        }
+        else {
+            for (Inimigo inimigo : batalha.getInimigos() ) {
+                inimigo.receberDano(this.dano + heroi.getDanoExtra());
+            }           
+            printaResenha();         
+        }
     }
     
     

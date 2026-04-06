@@ -3,6 +3,7 @@ package Cartas;
 import EfeitosDeStatus.Efeito;
 import Entidades.Entidade;
 import Entidades.Heroi;
+import Entidades.Inimigo;
 import Telas.Eventos.Batalha;
 
 public class CartaAtaqueComEfeito extends CartaAtaque {
@@ -46,22 +47,51 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
     public void usar(Heroi heroi, Entidade alvo, Batalha batalha){
         int energiaAtual = heroi.getEnergia();
         if(energiaAtual >= this.getCusto()){
-            alvo.receberDano(this.getDano() + heroi.getDanoExtra());
+            if (!efeitoEmArea){
+                alvo.receberDano(this.getDano() + heroi.getDanoExtra());
+            }    
+            else {
+                for (Inimigo inimigo : batalha.getInimigos() ) {
+                    inimigo.receberDano(this.getDano() + heroi.getDanoExtra());
+                }
+            }
             printaResenha();
             heroi.usarEnergia(this.getCusto());
-
             Entidade trueAlvo = (this.getSelfCast() ? heroi : alvo); // se for selfcast o efeito vai pra si mesmo, se nao vai pro inimigo!
-            efeito.adicionar(trueAlvo, batalha);
+            
+            if (trueAlvo == heroi){
+                efeito.adicionar(trueAlvo, batalha);
+            } else if (!efeitoEmArea){
+                efeito.adicionar(trueAlvo, batalha);
+            } else {
+                for (Inimigo inimigo : batalha.getInimigos() ) {
+                    efeito.adicionar(inimigo, batalha);
+                }
+            }
         }
     }
 
     @Override
     public void aplicarEfeito(Heroi heroi, Entidade alvo, Batalha batalha) {
-        alvo.receberDano(this.getDano() + heroi.getDanoExtra());
+        if (!efeitoEmArea){
+                alvo.receberDano(this.getDano() + heroi.getDanoExtra());
+            }    
+            else {
+                for (Inimigo inimigo : batalha.getInimigos() ) {
+                    inimigo.receberDano(this.getDano() + heroi.getDanoExtra());
+                }
+            }
         printaResenha();
-        Efeito e = efeito.criaCopia();
-        e.setAlvo(this.getSelfCast() ? heroi : alvo); // selfcast: ataca o inimigo e aplica um efeito em si mesmo
-        batalha.adicionarEfeito(e);
+
+        if (getSelfCast()){
+            efeito.adicionar(heroi, batalha);
+        } else if (!efeitoEmArea){
+            efeito.adicionar(alvo, batalha);
+        } else {
+            for (Inimigo inimigo : batalha.getInimigos() ) {
+                efeito.adicionar(inimigo, batalha);
+            }
+        }
     }
 
     @Override

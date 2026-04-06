@@ -13,6 +13,7 @@ public abstract class Carta {
     private int custo;
     private boolean selfCast;
     private String resenha = "";
+    protected boolean efeitoEmArea = false; // so ta implementado pra ataque por enquanto, falta coloca no habilidade!
 
     /*  -------------------------------------------------
     dicionario de tipos de ação:
@@ -74,6 +75,10 @@ public abstract class Carta {
         return resenha;
     }
 
+    public boolean getEfeitoEmArea(){
+        return this.efeitoEmArea;
+    }
+
     public boolean temResenha() {
         return !this.resenha.equals("");
      }
@@ -100,6 +105,9 @@ public abstract class Carta {
         this.descricao = descricao;
     }
 
+    public void setEfeitoEmArea(boolean efeitoEmArea) {
+        this.efeitoEmArea = efeitoEmArea;
+    }
 
     // ---------------------------------------------
     
@@ -116,11 +124,14 @@ public abstract class Carta {
             }
     }
 
+    /**Verifica se o heroi tem energia. Se sim, aplica o efeito da carta e subtrai o custo da energia.*/
     public abstract void usar(Heroi heroi, Entidade alvo, Batalha batalha);
 
-    public abstract String descricao();
-
+    /**Apenas aplica o efeito da carta.*/
     public abstract void aplicarEfeito(Heroi heroi, Entidade alvo, Batalha batalha); // so aplica o efeito da carta sem gastar nada
 
+    
+    public abstract String descricao();
+    
     public abstract Carta criaCopia();
 }

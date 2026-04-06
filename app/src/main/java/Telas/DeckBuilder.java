@@ -11,6 +11,8 @@ import Util.Cor;
 import Util.InputHandler;
 import static Util.Moldes.armadura;
 import static Util.Moldes.beberVeneno;
+import static Util.Moldes.bomba;
+import static Util.Moldes.bombaVeneno;
 import static Util.Moldes.corteDefensivo;
 import static Util.Moldes.corteProfundo;
 import static Util.Moldes.corteRapido;
@@ -45,6 +47,7 @@ public class DeckBuilder {
         decksPadrao.add(Cor.txtVermelho("O MESTRE DAS LAMINAS: CORTES INFINITOS, DEBUFFS INFINITOS, RODADA INFIITA!"));
         decksPadrao.add(Cor.txtAmarelo("JOHN WICK: CAUSE MUITO DANO DIRETO EM UMA CHUVA DE BALAS!"));
         decksPadrao.add(Cor.txtRoxo("O AMALDIÇOADO: CARTAS MUITO FORTES, MAS TALVEZ UM PREÇO ALTO DEMAIS..."));
+        decksPadrao.add(Cor.txtCinza("deck de teste nao usar fazendo favor obg."));
 
         Textos.limpaTela();
         int escolha = InputHandler.selecionar(decksPadrao, Cor.reset + "Escolha um baralho inicial: \n" + Cor.txtCinza("(se voce ganhar a primeira batalha eu te deixo personalizar o deck!)")); 
@@ -54,145 +57,163 @@ public class DeckBuilder {
             + usando cartas baratas + usar a mao completa pra ganhar mais 2 de energia -> tentar repetir o ciclo -> turno infinito. dano infinito. dopamina infinita. */
             case 0 -> { 
                 // 2 de cada corte + mestre laminas pra faze uns combao
-                heroi.addCarta(corteVenenoso.criaCopia());
-                heroi.addCarta(corteVenenoso.criaCopia());
+                heroi.addCarta(corteVenenoso);
+                heroi.addCarta(corteVenenoso);
 
-                heroi.addCarta(corteProfundo.criaCopia());
-                heroi.addCarta(corteProfundo.criaCopia());
+                heroi.addCarta(corteProfundo);
+                heroi.addCarta(corteProfundo);
 
-                heroi.addCarta(corteRapido.criaCopia());
-                heroi.addCarta(corteRapido.criaCopia());
+                heroi.addCarta(corteRapido);
+                heroi.addCarta(corteRapido);
 
-                heroi.addCarta(corteDefensivo.criaCopia());
-                heroi.addCarta(corteDefensivo.criaCopia());
+                heroi.addCarta(corteDefensivo);
+                heroi.addCarta(corteDefensivo);
 
-                heroi.addCarta(mestreLaminasCarta.criaCopia());
+                heroi.addCarta(mestreLaminasCarta);
 
-                heroi.addCarta(purificar.criaCopia());
-                heroi.addCarta(purificar.criaCopia());
+                heroi.addCarta(purificar);
+                heroi.addCarta(purificar);
 
-                heroi.addCarta(armadura.criaCopia());
+                heroi.addCarta(armadura);
 
-                heroi.addCarta(puxaCarta.criaCopia());
-                heroi.addCarta(puxaCarta.criaCopia());   
+                heroi.addCarta(puxaCarta);
+                heroi.addCarta(puxaCarta);   
                 
-                heroi.addCarta(energizar.criaCopia());
-                heroi.addCarta(energizar.criaCopia());
+                heroi.addCarta(energizar);
+                heroi.addCarta(energizar);
                 
-                heroi.addCarta(puroOdio.criaCopia());
+                heroi.addCarta(puroOdio);
 
-                heroi.addCarta(energiaGratis.criaCopia());
+                heroi.addCarta(energiaGratis);
 
-                heroi.addCarta(escudoFerro.criaCopia());
-                heroi.addCarta(escudoFerro.criaCopia());
-                heroi.addCarta(escudoMadeira.criaCopia());
+                heroi.addCarta(escudoFerro);
+                heroi.addCarta(escudoFerro);
+                heroi.addCarta(escudoMadeira);
             }
             /* deck de dano direto mesmo bem simples, 2 puro odio pra da mais dano ainda */
             case 1 -> {
                 // 2 de cada tiro
-                heroi.addCarta(tiro.criaCopia());
-                heroi.addCarta(tiroEscopeta.criaCopia());
-                heroi.addCarta(tiroCanhao.criaCopia());
+                heroi.addCarta(tiro);
+                heroi.addCarta(tiroEscopeta);
+                heroi.addCarta(tiroCanhao);
 
-                heroi.addCarta(tiro.criaCopia());
-                heroi.addCarta(tiroEscopeta.criaCopia());
-                heroi.addCarta(tiroCanhao.criaCopia());
+                heroi.addCarta(tiro);
+                heroi.addCarta(tiroEscopeta);
+                heroi.addCarta(tiroCanhao);
                 
                 // 2 purificar
-                heroi.addCarta(purificar.criaCopia());
-                heroi.addCarta(purificar.criaCopia());
+                heroi.addCarta(purificar);
+                heroi.addCarta(purificar);
 
-                heroi.addCarta(desprezo.criaCopia());
-                heroi.addCarta(dedoNervosoCarta.criaCopia());
+                heroi.addCarta(desprezo);
+                heroi.addCarta(dedoNervosoCarta);
 
-                heroi.addCarta(puroOdio.criaCopia());
-                heroi.addCarta(puroOdio.criaCopia());
+                heroi.addCarta(puroOdio);
+                heroi.addCarta(puroOdio);
 
-                heroi.addCarta(puxaCarta.criaCopia());   
+                heroi.addCarta(puxaCarta);  
+
+                heroi.addCarta(energizar);
+                heroi.addCarta(energizar);
+
+                heroi.addCarta(energiaGratis);
                 
-                heroi.addCarta(energizar.criaCopia());
-                heroi.addCarta(energizar.criaCopia());
+                heroi.addCarta(escudoMadeira);
+                heroi.addCarta(escudoMadeira);
 
-                heroi.addCarta(energiaGratis.criaCopia());
-                
-                heroi.addCarta(escudoMadeira.criaCopia());
-                heroi.addCarta(escudoMadeira.criaCopia());
-
-                heroi.addCarta(armadura.criaCopia());
+                heroi.addCarta(armadura);
             }  
             /* muita carta roubada porem voce começa com um monte de maldiçoes (1/3 do deck atualmente)*/
             case 2 -> {
                 heroi.addCarta(tiro);
 
-                heroi.addCarta(tiroEscopeta.criaCopia());
-                heroi.addCarta(tiroEscopeta.criaCopia());
+                heroi.addCarta(tiroEscopeta);
+                heroi.addCarta(tiroEscopeta);
 
-                heroi.addCarta(corteVenenoso.criaCopia());
-                heroi.addCarta(corteVenenoso.criaCopia());
+                heroi.addCarta(corteVenenoso);
+                heroi.addCarta(corteVenenoso);
 
-                heroi.addCarta(corteProfundo.criaCopia());
-                heroi.addCarta(corteProfundo.criaCopia());
+                heroi.addCarta(corteProfundo);
+                heroi.addCarta(corteProfundo);
 
-                heroi.addCarta(corteRapido.criaCopia());
-                heroi.addCarta(corteRapido.criaCopia());
+                heroi.addCarta(corteRapido);
+                heroi.addCarta(corteRapido);
 
-                heroi.addCarta(desprezo.criaCopia());
-                heroi.addCarta(desprezo.criaCopia());
+                heroi.addCarta(desprezo);
+                heroi.addCarta(desprezo);
 
-                heroi.addCarta(mestreLaminasCarta.criaCopia());
-                heroi.addCarta(dedoNervosoCarta.criaCopia());
-                heroi.addCarta(mestreLaminasCarta.criaCopia());
-                heroi.addCarta(dedoNervosoCarta.criaCopia());
-                heroi.addCarta(mestreLaminasCarta.criaCopia());
-                heroi.addCarta(dedoNervosoCarta.criaCopia());
+                heroi.addCarta(mestreLaminasCarta);
+                heroi.addCarta(dedoNervosoCarta);
+                heroi.addCarta(mestreLaminasCarta);
+                heroi.addCarta(dedoNervosoCarta);
+                heroi.addCarta(mestreLaminasCarta);
+                heroi.addCarta(dedoNervosoCarta);
                 
-                heroi.addCarta(purificar.criaCopia());
-                heroi.addCarta(purificar.criaCopia());
+                heroi.addCarta(purificar);
+                heroi.addCarta(purificar);
 
-                heroi.addCarta(puxaCarta.criaCopia()); 
-                heroi.addCarta(puxaCarta.criaCopia()); 
+                heroi.addCarta(puxaCarta); 
+                heroi.addCarta(puxaCarta); 
 
-                heroi.addCarta(energizar.criaCopia()); 
-                heroi.addCarta(energizar.criaCopia()); 
+                heroi.addCarta(energizar); 
+                heroi.addCarta(energizar); 
               
-                heroi.addCarta(energiaGratis.criaCopia());
-                heroi.addCarta(energiaGratis.criaCopia());
-                heroi.addCarta(energiaGratis.criaCopia());
+                heroi.addCarta(energiaGratis);
+                heroi.addCarta(energiaGratis);
+                heroi.addCarta(energiaGratis);
 
-                heroi.addCarta(puroOdio.criaCopia());
-                heroi.addCarta(puroOdio.criaCopia());
+                heroi.addCarta(puroOdio);
+                heroi.addCarta(puroOdio);
 
-                heroi.addCarta(armadura.criaCopia());
-                heroi.addCarta(armadura.criaCopia());
+                heroi.addCarta(armadura);
+                heroi.addCarta(armadura);
 
-                heroi.addCarta(escudoMadeira.criaCopia());
-                heroi.addCarta(escudoMadeira.criaCopia());
+                heroi.addCarta(escudoMadeira);
+                heroi.addCarta(escudoMadeira);
 
                 //maldiçoes...
 
-                heroi.addCarta(sangrar.criaCopia());
-                heroi.addCarta(beberVeneno.criaCopia());
+                heroi.addCarta(sangrar);
+                heroi.addCarta(sangrar);
 
-                heroi.addCarta(sangrar.criaCopia());
-                heroi.addCarta(beberVeneno.criaCopia());
+                heroi.addCarta(sangrar);
+                heroi.addCarta(sangrar);
+                
+                heroi.addCarta(sangrar);
+                heroi.addCarta(sangrar);
 
-                heroi.addCarta(sangrar.criaCopia());
-                heroi.addCarta(beberVeneno.criaCopia());
+                heroi.addCarta(sangrar);
+                heroi.addCarta(sangrar);
 
-                heroi.addCarta(sangrar.criaCopia());
-                heroi.addCarta(beberVeneno.criaCopia());
+                heroi.addCarta(sangrar);
+                heroi.addCarta(sangrar);
 
-                heroi.addCarta(sangrar.criaCopia());
-                heroi.addCarta(beberVeneno.criaCopia());
+                heroi.addCarta(beberVeneno);
+                heroi.addCarta(beberVeneno);
 
-                heroi.addCarta(sangrar.criaCopia());
-                heroi.addCarta(beberVeneno.criaCopia());
+                heroi.addCarta(beberVeneno);
+                heroi.addCarta(beberVeneno);
 
-                heroi.addCarta(sangrar.criaCopia());
-                heroi.addCarta(beberVeneno.criaCopia());
+                heroi.addCarta(beberVeneno);
+                heroi.addCarta(beberVeneno);
 
-                heroi.addCarta(sangrar.criaCopia());
-                heroi.addCarta(beberVeneno.criaCopia());
+                heroi.addCarta(beberVeneno);
+                heroi.addCarta(beberVeneno);
+
+                
+            }
+            case 3 -> { // deck pra testa carta
+                heroi.addCarta(bombaVeneno);
+                heroi.addCarta(bombaVeneno);
+                heroi.addCarta(bombaVeneno);
+
+                heroi.addCarta(bomba);
+                heroi.addCarta(bomba);
+                heroi.addCarta(bomba);
+
+                heroi.addCarta(corteVenenoso);
+                heroi.addCarta(corteVenenoso);
+                heroi.addCarta(corteVenenoso);
             }
         }
         Textos.limpaTela();

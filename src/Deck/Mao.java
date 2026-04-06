@@ -32,7 +32,9 @@ public class Mao {
 
         Scanner ler = new Scanner(System.in);
         int opcao = ler.nextInt();
-        ler.nextLine();
+        if (ler.hasNextLine()) {
+            String linha = ler.nextLine();
+        };
         ler.close();
 
         return opcao;

@@ -136,7 +136,7 @@ public class Heroi extends Entidade {
 
     // adicionam e removem cartas do baralho
     public void addCarta(Carta c){
-        baralho.add(c);
+        baralho.add(c.criaCopia());
     }
 
     public void removeCarta(Carta c){
@@ -145,7 +145,7 @@ public class Heroi extends Entidade {
 
     // adicionam e removem cartas do inventario
     public void addCartaInventario(Carta c){
-        inventarioCartas.add(c);
+        inventarioCartas.add(c.criaCopia());
     }
 
     public void removeCartaInventario(Carta c){
@@ -162,12 +162,12 @@ public class Heroi extends Entidade {
         }
         if (baralho.contains(c)){
             removeCarta(c);
-            addCartaInventario(c);
+            inventarioCartas.add(c);
             return;
         }
         if (inventarioCartas.contains(c)){
             removeCartaInventario(c);
-            addCarta(c);
+            baralho.add(c);
             return;
         }
         System.out.println("Essa carta nao existe ou voce nao tem.");

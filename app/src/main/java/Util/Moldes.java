@@ -48,6 +48,7 @@ public class Moldes {
     // efeitos ------------
     public static Efeito sangramento = new Sangramento("Sangramento", "Causa 1 de dano por rodada ao alvo", 3, 1);
     public static Efeito veneno = new Veneno("Veneno", "Causa sua duraçao em dano por rodada ao alvo", 2, 1);
+    public static Efeito veneno4 = new Veneno("Veneno", "Causa sua duraçao em dano por rodada ao alvo", 4, 1);
     public static Efeito odioPuro = new AumentaDano("Ódio Puro", "Aumenta o dano causado em 1 por 3 rodadas", 3, 1);
     public static Efeito aumentaResistencia = new AumentaResistencia("Armadura", "Reduz o dano recebido", 3, 2);
     public static Efeito escudinho = new Escudo("Ganho de escudo (3)", "3 pontos de escudo", 0, 3);
@@ -88,11 +89,42 @@ public class Moldes {
     public static Carta energiaGratis;
     public static Carta sangrar;
     public static Carta beberVeneno;
+    public static Carta bomba;
+    public static Carta bombaVeneno;
 
     public static void carregar(){
+        // cartas ---
+        tiro = new CartaAtaque("Tiro de revolver", "", 2, 5, 1); tiro.setResenha(Arte.TIRO5);
+        tiroEscopeta = new CartaAtaque("Tiro de escopeta", "", 3, 8, 1); tiroEscopeta.setResenha(Arte.TIRO1);
+        bomba = new CartaAtaque("BOMBA!", "joga uma bomba que atinge TODOS os inimigos!", 5, 8); bomba.setEfeitoEmArea(true);
+
+        tiroCanhao = new CartaAtaqueComEfeito("Tiro de canhão", "dispara uma bala de canhão", 4, 11, feridas, false, 1); tiroCanhao.setResenha(Arte.TIRO4);
+        corteProfundo = new CartaAtaqueComEfeito("Corte profundo", "", 2, 3, sangramento, false, 2); corteProfundo.setResenha(Cor.txtVermelho(Arte.CORTE));
+        corteVenenoso = new CartaAtaqueComEfeito("Corte venenoso", "", 1, 1, veneno, false, 2); corteVenenoso.setResenha(Cor.txtVerdeClaro(Arte.CORTE2));
+        corteDefensivo = new CartaAtaqueComEfeito("Corte defensivo", "bate e ganha escudo!", 1, 1, escudinho, true, 2); corteDefensivo.setResenha(Cor.txtAzulClaro(Arte.CORTE5));
+        corteRapido = new CartaAtaqueComEfeito("Corte rapido", "bate e ganha 1 ponto de energia!", 1, 1, ganhaEnergia1, true, 2); corteRapido.setResenha(Cor.txtAmareloClaro(Arte.CORTE4));
+        desprezo = new CartaAtaqueComEfeito("Desprezo.", "causa muito dano porém irrita seu adversario", 4, 15, odioPuro, false); desprezo.setResenha(Arte.DESPREZO);
+        bombaVeneno = new CartaAtaqueComEfeito("BOMBA DE VENENO!", "jogue uma " + Cor.txtVerdeEscuro("BOMBA TÓXICA") + " que atinge TODOS os inimigos e aplica " + veneno.getNomeColorido(), 4, 8, veneno4, false);
+        bombaVeneno.setEfeitoEmArea(true);
+
+        armadura = new CartaHabilidade("Ego", "Reduz o dano recebido", 2, aumentaResistencia, true);
+        escudoMadeira = new CartaHabilidade("Postura de defesa", "da escudo", 0, escudinho, true);
+        escudoFerro = new CartaHabilidade("Aura", "da MUITO escudo", 1, escudao, true);
+        purificar = new CartaHabilidade("RECEBA!", "Remove todos os efeitos aplicados em voce (incluindo positivos)", 2, purificarEfeito, true); purificar.setResenha(Cor.txtAmarelo(Arte.RECEBA));
+        puroOdio = new CartaHabilidade("PURO ODIO", "Cause 1 de dano extra por 3 rodadas", 2, odioPuro, true);
+        puxaCarta = new CartaHabilidade("Ganancia", "Puxe duas cartas da sua pilha de compras", 1, efeitoPuxaCarta2, true);
+        energizar = new CartaHabilidade("ENERGIZAR!", "Ganhe mais 2 pontos de energia no começo da próxima rodada!", 1, efeitoEnergizado, true);
+        energiaGratis = new CartaHabilidade("Energia!", "Ganhe 1 ponto de energia", 0, ganhaEnergia1, true);
+        
+        dedoNervosoCarta = new CartaPoder("JOHN WICK", "Para cada acúmulo, atire novamente sempre que usar uma carta de tiro!", 2, dedoNervoso);
+        mestreLaminasCarta = new CartaPoder("Mestre das lâminas", "Para cada acúmulo, corte novamente sempre que usar uma carta de corte!", 2, mestreLaminas);
+
+        sangrar = new CartaMaldicao("Sangrar.", "Sangra.", 1, sangramento, true); sangrar.setResenha(Cor.txtCinza(Arte.algoRuim));
+        beberVeneno = new CartaMaldicao("Beber veneno.", "Bebe veneno.", 1, veneno, true); beberVeneno.setResenha(Cor.txtCinza(Arte.algoRuim));
+
         // inimigos --
         barbossa = new Inimigo("Capitão Hector Barbossa", 30, 6,
-            new Acao.Atacar(), new Acao.AtacarEfeito(sangramento)
+            new Acao.AtacarVidaPerdida()
         );
 
         loudCoringa = new Inimigo("LOUD Coringa", 15, 3, 
@@ -114,33 +146,7 @@ public class Moldes {
             
         tripleT = new Inimigo("TUNG TUNG TUNG SAHUR", 67, 2, // OUTRO BOSS TA MUITO ROUBADO
             new Acao.AdicionarCarta(beberVeneno), new Acao.ReceberEfeito(odioPuro), new Acao.AdicionarCarta(sangrar), new Acao.Atacar());
-
-        // cartas ---
-        tiro = new CartaAtaque("Tiro de revolver", "", 2, 5, 1); tiro.setResenha(Arte.TIRO5);
-        tiroEscopeta = new CartaAtaque("Tiro de escopeta", "", 3, 8, 1); tiroEscopeta.setResenha(Arte.TIRO1);
-
-        tiroCanhao = new CartaAtaqueComEfeito("Tiro de canhão", "dispara uma bala de canhão", 4, 11, feridas, false, 1); tiroCanhao.setResenha(Arte.TIRO4);
-        corteProfundo = new CartaAtaqueComEfeito("Corte profundo", "", 2, 3, sangramento, false, 2); corteProfundo.setResenha(Cor.txtVermelho(Arte.CORTE));
-        corteVenenoso = new CartaAtaqueComEfeito("Corte venenoso", "", 1, 1, veneno, false, 2); corteVenenoso.setResenha(Cor.txtVerdeClaro(Arte.CORTE2));
-        corteDefensivo = new CartaAtaqueComEfeito("Corte defensivo", "bate e ganha escudo!", 1, 1, escudinho, true, 2); corteDefensivo.setResenha(Cor.txtAzulClaro(Arte.CORTE5));
-        corteRapido = new CartaAtaqueComEfeito("Corte rapido", "bate e ganha 1 ponto de energia!", 1, 1, ganhaEnergia1, true, 2); corteRapido.setResenha(Cor.txtAmareloClaro(Arte.CORTE4));
-        desprezo = new CartaAtaqueComEfeito("Desprezo.", "causa muito dano porém irrita seu adversario", 4, 15, odioPuro, false); desprezo.setResenha(Arte.DESPREZO);
-
-        armadura = new CartaHabilidade("Ego", "Reduz o dano recebido", 2, aumentaResistencia, true);
-        escudoMadeira = new CartaHabilidade("Postura de defesa", "da escudo", 0, escudinho, true);
-        escudoFerro = new CartaHabilidade("Aura", "da MUITO escudo", 1, escudao, true);
-        purificar = new CartaHabilidade("RECEBA!", "Remove todos os efeitos aplicados em voce (incluindo positivos)", 2, purificarEfeito, true); purificar.setResenha(Cor.txtAmarelo(Arte.RECEBA));
-        puroOdio = new CartaHabilidade("PURO ODIO", "Cause 1 de dano extra por 3 rodadas", 2, odioPuro, true);
-        puxaCarta = new CartaHabilidade("Ganancia", "Puxe duas cartas da sua pilha de compras", 1, efeitoPuxaCarta2, true);
-        energizar = new CartaHabilidade("ENERGIZAR!", "Ganhe mais 2 pontos de energia no começo da próxima rodada!", 1, efeitoEnergizado, true);
-        energiaGratis = new CartaHabilidade("Energia!", "Ganhe 1 ponto de energia", 0, ganhaEnergia1, true);
         
-        dedoNervosoCarta = new CartaPoder("JOHN WICK", "Para cada acúmulo, atire novamente sempre que usar uma carta de tiro!", 2, dedoNervoso);
-        mestreLaminasCarta = new CartaPoder("Mestre das lâminas", "Para cada acúmulo, corte novamente sempre que usar uma carta de corte!", 2, mestreLaminas);
-
-        sangrar = new CartaMaldicao("Sangrar.", "Sangra.", 1, sangramento, true); sangrar.setResenha(Cor.txtCinza(Arte.algoRuim));
-        beberVeneno = new CartaMaldicao("Beber veneno.", "Bebe veneno.", 1, veneno, true); beberVeneno.setResenha(Cor.txtCinza(Arte.algoRuim));
-
         // preencher as listas aqui embaixo sempre que adicionar algo
 
         // inimigos ------
