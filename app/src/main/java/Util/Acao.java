@@ -114,7 +114,7 @@ public abstract class Acao {
 
         @Override
         public void executar(Inimigo executor, Entidade alvo, Batalha batalha) {
-            ((Heroi) alvo).getPilhaCompra().addCartaPilha(carta);
+            ((Heroi) alvo).getPilhaCompra().addCartaPilha(carta.criaCopia());
             ((Heroi) alvo).getPilhaCompra().shuffle();
         }
 

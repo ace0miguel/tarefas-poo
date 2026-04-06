@@ -179,24 +179,7 @@ public class Batalha extends Evento {
     }
 
     //adiciona um efeito na lista de efeitos e notifica onCreate
-    public void adicionarEfeito(Efeito efeito){
-
-            // isso aqui nao precisa mais, agora tem a funçao onCreate ---
-
-            // // ESPAÇO PRA SETAR AS FLAGS!
-
-            // if (efeito instanceof Sangramento s){ // se for sangramento deixa o nomezinho vermelho
-            //     s.getAlvo().setSangrando(true);
-            // }
-
-            // if (efeito instanceof Veneno v){ // se for veneno deixa o nomezinho verde
-            //     v.getAlvo().setEnvenenado(true);
-            // }
-
-            // // FIM DO ESPAÇO PARA SETAR AS FLAGS
-
-            // ----------------------------
-            
+    public void adicionarEfeito(Efeito efeito) { 
         for (Efeito e : listaEfeitos) {
 
             // se tiver outro efeito q espalha ou passa copia sozinho bota uma checagem aq tb pra nao duplicar
@@ -311,6 +294,21 @@ public class Batalha extends Evento {
                 // System.out.println(Cor.txtLaranja("dano extra" + heroi.getDanoExtra()));
 
                 int escolha = mao.mostrar(); 
+
+                if (escolha == -1) { // se a mao acabar vindo vazia de algum jeito cai aqui
+                    Textos.limpaTela();
+
+                        // fiz 2 versoes esse rodada bonus aparecendo 1 trilhao de vezes e um mais simples +5 cartas +2 energia, nao sei qual e melhor
+                        Textos.printaLinhaDevagar(Cor.rosa + (Arte.bonus).repeat(15) + Cor.reset);
+
+                        // Textos.printaLinhaDevagar(Cor.rosa + Arte.bonus + Cor.reset);
+                        // Textos.printaLinhaDevagar(Cor.rosa + Arte.doisEnergia + Cor.reset);
+
+                        heroi.ganhaEnergia(2);
+                        InputHandler.esperar();
+                        mao.addCinco(pilhaCompra, pilhaDescarte);
+                }
+                
                 if (escolha > mao.getSize() || escolha < 0){ 
                     escolhaInvalida = true;
                     continue;

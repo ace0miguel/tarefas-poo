@@ -150,7 +150,6 @@ public abstract class Entidade {
     }
 
     public String corStatus() { // se quiser adicionar efeitos q mudam de cor colocar aqui!
-
         if (this.purificado) {
             return Cor.azulClaro;
         }

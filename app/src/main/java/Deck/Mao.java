@@ -46,6 +46,9 @@ public class Mao {
     public int mostrar(){ // retorna a opção escolhida em forma de numero
         System.out.println("Mão atual:");
         int ultimoNumero = 0;
+        
+        if (cartas.size() <= 0) return -1;
+
         for (int i = 0; i < cartas.size(); i++){
             Carta cartaAtual = cartas.get(i);
             System.out.println("["+i+"] > "+cartaAtual.descricao()+""); Textos.sleep(50);
