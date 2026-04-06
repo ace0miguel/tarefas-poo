@@ -92,7 +92,6 @@ public class DeckBuilder {
             }
             /* deck de dano direto mesmo bem simples, 2 puro odio pra da mais dano ainda */
             case 1 -> {
-                // 2 de cada tiro
                 heroi.addCarta(tiro);
                 heroi.addCarta(tiroEscopeta);
                 heroi.addCarta(tiroCanhao);
@@ -101,11 +100,14 @@ public class DeckBuilder {
                 heroi.addCarta(tiroEscopeta);
                 heroi.addCarta(tiroCanhao);
                 
-                // 2 purificar
                 heroi.addCarta(purificar);
                 heroi.addCarta(purificar);
 
                 heroi.addCarta(desprezo);
+
+                heroi.addCarta(bomba);
+                heroi.addCarta(bomba);
+
                 heroi.addCarta(dedoNervosoCarta);
 
                 heroi.addCarta(puroOdio);
@@ -122,6 +124,8 @@ public class DeckBuilder {
                 heroi.addCarta(escudoMadeira);
 
                 heroi.addCarta(armadura);
+
+                heroi.addCarta(bombaVeneno);
             }  
             /* muita carta roubada porem voce começa com um monte de maldiçoes (1/3 do deck atualmente)*/
             case 2 -> {
@@ -141,6 +145,11 @@ public class DeckBuilder {
 
                 heroi.addCarta(desprezo);
                 heroi.addCarta(desprezo);
+
+                heroi.addCarta(bombaVeneno);
+                heroi.addCarta(bombaVeneno);
+
+                heroi.addCarta(bomba);
 
                 heroi.addCarta(mestreLaminasCarta);
                 heroi.addCarta(dedoNervosoCarta);

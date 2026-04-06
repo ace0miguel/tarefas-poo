@@ -41,6 +41,8 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
         ? ("Aplica [ " + this.efeito.getNomeColorido() + " ]")
         : ("Recebe [ " + this.efeito.getNomeColorido() + " ]")
         );
+
+        this.setEfeitoEmArea(copia.getEfeitoEmArea());
     }
 
     @Override

@@ -151,13 +151,15 @@ public class Batalha extends Evento {
         while (true) { 
             int i = 0;
             Textos.limpaTela();
-            Cor.printaAmarelo(Arte.selecioneAlvo2);
+            Cor.printaAmarelo(Arte.selecioneAlvo);
             System.out.println();
+
+            System.out.println((Cor.amarelo + "0 - " + Cor.cinza + "Voltar."));
 
             for (Inimigo inimigo : inimigos) {
                 if (inimigo.estaVivo()){
                     Textos.sleep(30);
-                    System.out.println((Cor.amarelo + ""+i+" - "+inimigo.getNomeColorido()+""));
+                    System.out.println((Cor.amarelo + ""+ (i + 1) +" - "+inimigo.getNomeColorido()+""));
                     i++;
                 }
             }
@@ -181,7 +183,7 @@ public class Batalha extends Evento {
 
             InputHandler.esperar();
         }
-        return opcao;
+        return opcao - 1; 
     }
 
     //adiciona um efeito na lista de efeitos e notifica onCreate
@@ -330,12 +332,6 @@ public class Batalha extends Evento {
                         continue;
                     } 
 
-                    // poderes nao voltam pra mao depois de usados
-                    if (cartaEscolhida instanceof CartaPoder)
-                        mao.removeCarta(escolha, pilhaLixo);
-                    else 
-                        mao.removeCarta(escolha, pilhaDescarte);
-
                     Entidade alvoSelecionado = heroi; // se nao mudar o alvo é pq o alvo é si mesmo
 
                     // se não for selfcast ou poder pergunta o alvo, ataque com efeito selfcast ataca o alvo e aplica o efeito em si mesmo.
@@ -345,11 +341,20 @@ public class Batalha extends Evento {
                         cartaEscolhida.usar(heroi, heroi, this);
                     } else {
                         int alvo = selecionarAlvo();
+                        if (alvo == -1) { // -1 é o codigo pra exit
+                            continue;
+                        } 
                         alvoSelecionado = inimigos.get(alvo);
                         if (cartaEscolhida.temResenha())
                             Textos.limpaTela();
                         cartaEscolhida.usar(heroi, alvoSelecionado, this); 
                     }
+
+                    // poderes nao voltam pra mao depois de usados
+                    if (cartaEscolhida instanceof CartaPoder)
+                        mao.removeCarta(escolha, pilhaLixo);
+                    else 
+                        mao.removeCarta(escolha, pilhaDescarte);
 
                     // notifica os efeitos com on hit
                     for (Efeito efeito : listaEfeitos)
