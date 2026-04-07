@@ -23,6 +23,7 @@ import EfeitosDeStatus.Instantaneos.GanhaEnergia;
 import EfeitosDeStatus.Instantaneos.Purificar;
 import EfeitosDeStatus.Instantaneos.PuxaCarta;
 import Entidades.Inimigo;
+import Poderes.CartaAdicional;
 import Poderes.MaosLeves;
 import Poderes.Poder;
 
@@ -72,6 +73,7 @@ public class Moldes {
     public static Carta chocolex;
     public static Carta resenhax;
     public static Carta clubex;
+    public static Carta pactoSangue;
 
     // efeitos ------------
     public static Efeito sangramento = new Sangramento("Sangramento", "Causa 1 de dano por rodada ao alvo", 3, 1);
@@ -96,6 +98,7 @@ public class Moldes {
     // poderes -------------
     public static Poder dedoNervoso = new MaosLeves(("JOHN WICK!"), "Sempre que atirar, ATIRE NOVAMENTE! pelo tanto de acumulos desse poder.", 1);
     public static Poder mestreLaminas = new MaosLeves(("MESTRE DAS LÂMINAS"), "Sempre que cortar, CORTE NOVAMENTE! pelo tanto de acumulos desse poder.", 2);
+    public static Poder cartaAdicional = new CartaAdicional("Pacto de sangue", "No início de cada turno, puxe 1 carta adicional e perca 1 ponto de vida.", 1);
 
     public static void carregar(){
         // cartas ---
@@ -126,6 +129,7 @@ public class Moldes {
 
         dedoNervosoCarta = new CartaPoder("JOHN WICK", "[CONSUMIR] - Para cada acúmulo, atire novamente sempre que usar uma carta de tiro!", 2, dedoNervoso);
         mestreLaminasCarta = new CartaPoder("[CONSUMIR] - Mestre das lâminas", "Para cada acúmulo, corte novamente sempre que usar uma carta de corte!", 2, mestreLaminas);
+        pactoSangue = new CartaPoder("[CONSUMIR] - Pacto de sangue", "No início de cada turno, puxe 1 carta adicional e perca 1 ponto de vida.", 3, cartaAdicional);
 
         sangrar = new CartaMaldicao("Sangrar.", "Sangra.", 1, sangramento, true); sangrar.setResenha(Cor.txtCinza(Arte.algoRuim));
         beberVeneno = new CartaMaldicao("Beber veneno.", "Bebe veneno.", 1, veneno, true); beberVeneno.setResenha(Cor.txtCinza(Arte.algoRuim));
@@ -133,32 +137,36 @@ public class Moldes {
         // inimigos --
         barbossa = new Inimigo("Capitão Hector Barbossa", 30, 6,
             new Acao.Atacar()
-        );
+        ); barbossa.setTier(2);
 
         loudCoringa = new Inimigo("LOUD Coringa", 15, 3, 
             new Acao.Atacar(), new Acao.AtacarEfeito(sangramento), new Acao.AdicionarCarta(sangrar)
-        );   
+        ); loudCoringa.setTier(1);
 
         endrick = new Inimigo("Endrick", 12, 4,
             new Acao.Atacar(), new Acao.AtacarEfeito(veneno)
-        );
+        ); endrick.setTier(1);
 
         drake = new Inimigo("Drake", 10, 2,
             new Acao.Atacar()
-        );
+        ); drake.setTier(1);
 
-        paulAtreides = new Inimigo("PAUL MUAD'DIB ATREIDES, DUKE OF ARRAKIS, LISAN AL GAIB", 45, 7, // ESSE AQUI E FORTE VIU MEIO QUE O BOSS
-            new Acao.AtacarVidaPerdida(), new Acao.AdicionarCarta(beberVeneno), new Acao.ReceberEfeito(pactoSinistro));
+        paulAtreides = new Inimigo("PAUL MUAD'DIB ATREIDES, DUKE OF ARRAKIS, LISAN AL GAIB", 45, 5, // ESSE AQUI E FORTE VIU MEIO QUE O BOSS
+            new Acao.AtacarVidaPerdida(), new Acao.AdicionarCarta(beberVeneno), new Acao.ReceberEfeito(pactoSinistro)
+        ); paulAtreides.setTier(3);
 
-        sabrinaCarpenter = new Inimigo("SABRINA CARPENTER", 30, 6,  // ELA E FORTE TB
-            new Acao.AtacarVidaPerdida(), new Acao.AdicionarCarta(beberVeneno), new Acao.ReceberEfeito(odioPuro));
+        sabrinaCarpenter = new Inimigo("SABRINA CARPENTER", 50, 6,  // ELA E FORTE TB
+            new Acao.Atacar(), new Acao.AdicionarCarta(sangrar), new Acao.ReceberEfeito(odioPuro)
+        ); sabrinaCarpenter.setTier(3);
             
         tripleT = new Inimigo("TUNG TUNG TUNG SAHUR", 67, 2, // OUTRO BOSS TA MUITO ROUBADO
-            new Acao.AdicionarCarta(beberVeneno), new Acao.AdicionarCarta(sangrar), new Acao.AtacarEfeito(sangramento));
+            new Acao.AdicionarCarta(beberVeneno), new Acao.AdicionarCarta(sangrar), new Acao.AtacarEfeito(sangramento)
+        ); tripleT.setTier(3);
         
         // efeitos que referenciam cartas precisam ser setados aqui, pq as cartas sao criadas depois.
         ganhaResenhax.setCarta(resenhax);
         ganhaClubex.setCarta(clubex);
+        cartaAdicional.setSacrificio(1);
 
         // preencher as listas aqui embaixo sempre que adicionar algo ( na real nao ta mais precisando )
 

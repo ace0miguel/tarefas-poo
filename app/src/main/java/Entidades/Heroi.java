@@ -16,6 +16,8 @@ public class Heroi extends Entidade {
     private int energiaMax;
     private int energiaBonus; // soma na energia no começo da rodada e reseta.
 
+    private int dinheiro = 0; 
+
     private List<Carta> baralho = new ArrayList<>(); // todas as cartas q o jogador tem e ta usando
     private List<Carta> inventarioCartas = new ArrayList<>(); // todas as cartas q o jogador tem mas nao ta usando
 
@@ -65,6 +67,10 @@ public class Heroi extends Entidade {
         return inventarioCartas;
     }
 
+    public int getDinheiro() {
+        return dinheiro;
+    }
+
     // setters -----
 
     public void setDeck(List<Carta> deck) {
@@ -102,8 +108,26 @@ public class Heroi extends Entidade {
     public void setInventarioCartas(List<Carta> inventarioCartas) {
         this.inventarioCartas = inventarioCartas;
     }
+
+    public void setDinheiro(int dinheiro) {
+        this.dinheiro = dinheiro;
+    }
     
     // ----
+
+    public void ganhaDinheiro(int valor) {
+        Textos.limpaTela();
+        System.out.println("Voce recebeu " + Cor.txtAmarelo(String.valueOf(valor)) + " dinheiros!");
+        InputHandler.esperar();
+        this.dinheiro += valor;
+    }
+
+    public void gastaDinheiro(int valor) {
+        Textos.limpaTela();
+        System.out.println("Voce gastou " + Cor.txtVermelho(String.valueOf(valor)) + " dinheiros!");
+        InputHandler.esperar();
+        this.dinheiro -= valor;
+    }
 
     public void usarEnergia(int custo){
         this.energia -= custo;

@@ -19,6 +19,11 @@ public abstract class Acao {
     
     /** exibe no turno do inimigo */
     public void resultado(Inimigo executor, Entidade alvo){};
+
+    /** retorna o valor passado ou 0 se for menor q 0 */
+    public int validarDano(int dano){
+        return Math.max(dano,0);
+    }
     
     /** Causa o dano base */
     public static class Atacar extends Acao {
@@ -34,7 +39,7 @@ public abstract class Acao {
 
         @Override
         public void resultado(Inimigo executor, Entidade alvo) {
-            System.out.println(Cor.reset + "> " + executor.getNome() + Cor.txtAmarelo(" ") + Cor.vermelho + "Causou " + ((executor.getDano() + executor.getDanoExtra()) - alvo.getResistencia()) + " pontos de dano!");
+            System.out.println(Cor.reset + "> " + executor.getNome() + Cor.txtAmarelo(" ") + Cor.vermelho + "Causou " + validarDano((executor.getDano() + executor.getDanoExtra()) - alvo.getResistencia()) + " pontos de dano!");
         }
     }
 
@@ -57,7 +62,7 @@ public abstract class Acao {
 
         @Override
         public void resultado(Inimigo executor, Entidade alvo) {
-            System.out.println(Cor.reset + "> " + executor.getNome() + Cor.txtAmarelo(" ") + Cor.vermelho + "Causou " + ((executor.getDano()/2 + executor.getDanoExtra()) - alvo.getResistencia()) + " pontos de dano e aplicou " + efeito.getNomeColorido() + "!");
+            System.out.println(Cor.reset + "> " + executor.getNome() + Cor.txtAmarelo(" ") + Cor.vermelho + "Causou " + validarDano((executor.getDano()/2 + executor.getDanoExtra()) - alvo.getResistencia()) + " pontos de dano e aplicou " + efeito.getNomeColorido() + "!");
         }
     }
 
@@ -80,7 +85,7 @@ public abstract class Acao {
 
         @Override
         public void resultado(Inimigo executor, Entidade alvo) {
-            System.out.println(Cor.reset + "> " + executor.getNome() + Cor.txtAmarelo(" ") + Cor.vermelho + "Causou " + ((executor.getDano() + executor.getDanoExtra() + danoVidaPerdida(alvo)) - alvo.getResistencia()) + " pontos de dano!");
+            System.out.println(Cor.reset + "> " + executor.getNome() + Cor.txtAmarelo(" ") + Cor.vermelho + "Causou " + validarDano((executor.getDano() + executor.getDanoExtra() + danoVidaPerdida(alvo)) - alvo.getResistencia()) + " pontos de dano!");
         }
     }
 

@@ -29,6 +29,7 @@ public class Batalha extends Evento {
     private int turno; // 0 -> heroi, 1 -> inimigos
     private Inimigo[] arrayInimigos; // inimigos em forma de array pq infelizmente as vezes precisa :(
     private List<Inimigo> inimigos; // inimigos em forma de lista pq é bom !
+    private int recompensa = 0; // recompensa em dinheiro pela batalha, baseada na dificuldade
 
     private Mao mao = new Mao();
     private PilhaCompra pilhaCompra = new PilhaCompra();
@@ -45,6 +46,9 @@ public class Batalha extends Evento {
     public Batalha(Inimigo... _inimigos){
         this.arrayInimigos = _inimigos;
         inimigos = new ArrayList<>(Arrays.asList(arrayInimigos)); // converte o array inimigos em arraylist para facilitar a manipulação.
+        for (Inimigo inimigo : inimigos) {
+            recompensa += inimigo.getRecompensa();
+        }
     }
 
     public List<Inimigo> getInimigos() {
@@ -174,12 +178,14 @@ public class Batalha extends Evento {
                 String linha = ler.nextLine();
             };  
             }
-
-            if (opcao >= 0 && opcao < inimigos.size() && inimigos.get(opcao).estaVivo()) 
+            
+            if (opcao == 0) break;
+            
+            if ((opcao >= 0 && opcao <= inimigos.size() && inimigos.get(opcao-1).estaVivo())) 
                 break;
 
             System.out.println();
-            Cor.printaAmarelo(Textos.escolhaInvalida(i-1));
+            Cor.printaAmarelo(Textos.escolhaInvalida(i));
 
             InputHandler.esperar();
         }
@@ -275,6 +281,8 @@ public class Batalha extends Evento {
 
     public void turnoHeroi(){
         limpaEfeitos();
+        for (Poder poder : listaPoderes) // notifica os poderes com funçao roundStart
+            poder.roundStart(heroi);
 
         mao.addCinco(pilhaCompra, pilhaDescarte);
         boolean primeiroLoop = true;
@@ -433,6 +441,7 @@ public class Batalha extends Evento {
             Textos.printaLinhaDevagar(Arte.venceu2);
             System.out.println();
             InputHandler.esperar();
+            heroi.ganhaDinheiro(this.recompensa);
         } else {
             System.out.println();
             Textos.printaLinhaDevagar(Cor.txtCinza(Arte.sans2));

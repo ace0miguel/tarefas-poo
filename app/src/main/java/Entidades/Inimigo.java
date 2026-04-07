@@ -1,17 +1,14 @@
 package Entidades;
 
-import EfeitosDeStatus.Efeito;
-import Telas.Eventos.Batalha;
-import Util.Acao;
-import Util.Cor;
-import static Util.Moldes.pactoSinistro;
-import static Util.Moldes.sangramento;
-import Util.RNGHandler;
-import Util.Textos;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import Telas.Eventos.Batalha;
+import Util.Acao;
+import Util.Cor;
+import Util.RNGHandler;
+import Util.Textos;
 
 /* inimigo base.
 caso queira mudar algum dos danos dos ataques padroes(normal, com efeito) basta dar override em:
@@ -36,6 +33,7 @@ public class Inimigo extends Entidade{
         this.dano = copiado.dano;
         this.acoesArray = copiado.acoesArray;
         this.acoes = new ArrayList<>(Arrays.asList(acoesArray));
+        this.tier = copiado.tier;
     }
 
     public Inimigo criaCopia() {
@@ -79,6 +77,11 @@ public class Inimigo extends Entidade{
     
     public int getTier() {
         return tier;
+    }
+
+    /** retorna a recompensa por matar o inimigo. valor: 3^tier */
+    public int getRecompensa() {
+        return (int) Math.pow(3,tier);
     }
 
     public void setTier(int tier) {

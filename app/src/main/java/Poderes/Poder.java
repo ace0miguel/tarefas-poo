@@ -12,6 +12,7 @@ public abstract class Poder {
     private String nome;
     private String desc;
     private int stacks = 1;
+    protected int sacrificio = 0;
 
     public Poder(String nome, String desc) {
         this.nome = nome;
@@ -21,15 +22,22 @@ public abstract class Poder {
     public Poder(Poder copiado){
         this.nome = copiado.getNome();
         this.desc = copiado.getDesc();
+        this.sacrificio = copiado.sacrificio;
     }
 
-    public abstract void aplicar();
+    public void aplicar(){};
 
-    public abstract void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha);
+    public void roundStart(Heroi heroi){};
 
-    public abstract Poder criaCopia();
+    public void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha){};
 
-    public abstract String status();
+    public Poder criaCopia(){ return null; };
+    
+    public void onCreate(Heroi heroi){
+        heroi.receberDanoDireto(this.sacrificio);
+    };
+
+    public String status(){ return null; };
     
     // getters ------------
     public String getNome() {
@@ -43,6 +51,11 @@ public abstract class Poder {
     public int getStacks() {
         return stacks;
     }
+
+    public int getSacrificio() {
+        return sacrificio;
+    }
+
     // setters ------------
 
     public void setDesc(String desc) {
@@ -59,5 +72,9 @@ public abstract class Poder {
 
     public void stackar(){
         this.stacks++;
+    }
+
+    public void setSacrificio(int sacrificio) {
+        this.sacrificio = sacrificio;
     }
 }

@@ -18,13 +18,9 @@ public class MaosLeves extends Poder {
         this.tipo = tipo;
     }
 
-    public MaosLeves(Poder copiado, int tipo){
+    public MaosLeves(MaosLeves copiado){
         super(copiado);
-        this.tipo = tipo;
-    }
-
-    @Override
-    public void aplicar() {
+        this.tipo = copiado.tipo;
     }
 
     @Override
@@ -40,7 +36,7 @@ public class MaosLeves extends Poder {
 
     @Override
     public Poder criaCopia() {
-        return new MaosLeves(this, this.tipo);
+        return new MaosLeves(this);
     }
 
     @Override

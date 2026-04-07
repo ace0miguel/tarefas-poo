@@ -25,6 +25,7 @@ import static Util.Moldes.energizar;
 import static Util.Moldes.escudoFerro;
 import static Util.Moldes.escudoMadeira;
 import static Util.Moldes.mestreLaminasCarta;
+import static Util.Moldes.pactoSangue;
 import static Util.Moldes.purificar;
 import static Util.Moldes.puroOdio;
 import static Util.Moldes.puxaCarta;
@@ -223,15 +224,13 @@ public class DeckBuilder {
                 heroi.addCarta(bombaVeneno);
                 heroi.addCarta(bombaVeneno);
 
-                heroi.addCarta(bomba);
-                heroi.addCarta(bomba);
-                heroi.addCarta(bomba);
+                heroi.addCarta(puxaCarta);
+                heroi.addCarta(puxaCarta);
+                heroi.addCarta(puxaCarta);
+                heroi.addCarta(puxaCarta);
+                
 
-                heroi.addCarta(corteVenenoso);
-                heroi.addCarta(corteVenenoso);
-                heroi.addCarta(corteVenenoso);
-
-                heroi.addCarta(chocolex);
+                heroi.addCarta(pactoSangue);
             }
         }
         Textos.limpaTela();
