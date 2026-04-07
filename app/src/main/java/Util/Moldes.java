@@ -17,6 +17,7 @@ import EfeitosDeStatus.DanosConstantes.Sangramento;
 import EfeitosDeStatus.DanosConstantes.Veneno;
 import EfeitosDeStatus.Efeito;
 import EfeitosDeStatus.Energizar;
+import EfeitosDeStatus.Instantaneos.AdicionaCarta;
 import EfeitosDeStatus.Instantaneos.Escudo;
 import EfeitosDeStatus.Instantaneos.GanhaEnergia;
 import EfeitosDeStatus.Instantaneos.Purificar;
@@ -24,7 +25,6 @@ import EfeitosDeStatus.Instantaneos.PuxaCarta;
 import Entidades.Inimigo;
 import Poderes.MaosLeves;
 import Poderes.Poder;
-import Util.Acao.Atacar;
 
 /*  centraliza as instancias criadas, tudo é publico e static.
 aqui so tem os moldes, sempre que for usar algo criar copia (todos tem o metodo criaCopia()) 
@@ -44,28 +44,6 @@ public class Moldes {
     public static Inimigo paulAtreides;
     public static Inimigo sabrinaCarpenter;
     public static Inimigo tripleT;
-    
-    // efeitos ------------
-    public static Efeito sangramento = new Sangramento("Sangramento", "Causa 1 de dano por rodada ao alvo", 3, 1);
-    public static Efeito veneno = new Veneno("Veneno", "Causa sua duraçao em dano por rodada ao alvo", 2, 1);
-    public static Efeito veneno4 = new Veneno("Veneno", "Causa sua duraçao em dano por rodada ao alvo", 4, 1);
-    public static Efeito odioPuro = new AumentaDano("Ego", "Aumenta o dano causado em 1 por 3 rodadas", 3, 1);
-    public static Efeito aumentaResistencia = new AumentaResistencia("Aura", "Reduz o dano recebido", 3, 2);
-    public static Efeito escudinho = new Escudo("Ganho de escudo (3)", "3 pontos de escudo", 0, 3);
-    public static Efeito escudao = new Escudo("Ganho de escudo (7)", "7 pontos de escudo", 0, 7);
-    public static Efeito purificarEfeito = new Purificar("Purificar", "Remove todos os efeitos aplicados em voce (incluindo bons!)", 0);
-    public static Efeito feridas = new DanoConstante("Feridas", "Causa 1 de dano por rodada ao alvo por 2 rodadas", 2, 1);
-    public static Efeito ganhaEnergia2 = new GanhaEnergia("Ganho de energia (2)", "Ganha 2 pontos de energia", 0, 2);
-    public static Efeito ganhaEnergia1 = new GanhaEnergia("Ganho de energia (1)", "Ganha 1 ponto de energia", 0, 1);
-    public static Efeito pactoSinistro = new AumentaDano(Cor.txtCinza("Pacto Sinistro"), "Aumenta o dano causado em 2 por 2 rodadas", 2, 2);
-    
-    // novos efeitos
-    public static Efeito efeitoPuxaCarta2 = new PuxaCarta("Puxa duas cartas", "Puxa duas cartas", 0, 2);
-    public static Efeito efeitoEnergizado = new Energizar("Energizado", "Ganhe dois pontos de energia na proxima rodada", 1, 2);
-
-    // poderes -------------
-    public static Poder dedoNervoso = new MaosLeves(("JOHN WICK!"), "Sempre que atirar, ATIRE NOVAMENTE! pelo tanto de acumulos desse poder.", 1);
-    public static Poder mestreLaminas = new MaosLeves(("MESTRE DAS LÂMINAS"), "Sempre que cortar, CORTE NOVAMENTE! pelo tanto de acumulos desse poder.", 2);
 
     // cartas -----------
     public static Carta tiro;
@@ -91,12 +69,40 @@ public class Moldes {
     public static Carta beberVeneno;
     public static Carta bomba;
     public static Carta bombaVeneno;
+    public static Carta chocolex;
+    public static Carta resenhax;
+    public static Carta clubex;
+
+    // efeitos ------------
+    public static Efeito sangramento = new Sangramento("Sangramento", "Causa 1 de dano por rodada ao alvo", 3, 1);
+    public static Efeito veneno = new Veneno("Veneno", "Causa sua duraçao em dano por rodada ao alvo", 2, 1);
+    public static Efeito veneno4 = new Veneno("Veneno", "Causa sua duraçao em dano por rodada ao alvo", 4, 1);
+    public static Efeito odioPuro = new AumentaDano("Ego", "Aumenta o dano causado em 1 por 3 rodadas", 3, 1);
+    public static Efeito aumentaResistencia = new AumentaResistencia("Aura", "Reduz o dano recebido", 3, 2);
+    public static Efeito escudinho = new Escudo("Ganho de escudo (3)", "3 pontos de escudo", 0, 3);
+    public static Efeito escudao = new Escudo("Ganho de escudo (7)", "7 pontos de escudo", 0, 7);
+    public static Efeito purificarEfeito = new Purificar("Purificar", "Remove todos os efeitos aplicados em voce (incluindo bons!)", 0);
+    public static Efeito feridas = new DanoConstante("Feridas", "Causa 1 de dano por rodada ao alvo por 2 rodadas", 2, 1);
+    public static Efeito ganhaEnergia2 = new GanhaEnergia("Ganho de energia (2)", "Ganha 2 pontos de energia", 0, 2);
+    public static Efeito ganhaEnergia1 = new GanhaEnergia("Ganho de energia (1)", "Ganha 1 ponto de energia", 0, 1);
+    public static Efeito pactoSinistro = new AumentaDano(Cor.txtCinza("Pacto Sinistro"), "Aumenta o dano causado em 2 por 2 rodadas", 2, 2);
+    
+    // novos efeitos
+    public static Efeito efeitoPuxaCarta2 = new PuxaCarta("Puxa duas cartas", "Puxa duas cartas", 0, 2);
+    public static Efeito efeitoEnergizado = new Energizar("Energizado", "Ganhe dois pontos de energia na proxima rodada", 1, 2);
+    public static AdicionaCarta ganhaResenhax = new AdicionaCarta("Resenhax", "Recebe um resenhax", 0, null);
+    public static AdicionaCarta ganhaClubex = new AdicionaCarta("Clubex", "Recebe um clubex", 0, null);
+
+    // poderes -------------
+    public static Poder dedoNervoso = new MaosLeves(("JOHN WICK!"), "Sempre que atirar, ATIRE NOVAMENTE! pelo tanto de acumulos desse poder.", 1);
+    public static Poder mestreLaminas = new MaosLeves(("MESTRE DAS LÂMINAS"), "Sempre que cortar, CORTE NOVAMENTE! pelo tanto de acumulos desse poder.", 2);
 
     public static void carregar(){
         // cartas ---
         tiro = new CartaAtaque("Tiro de revolver", "", 2, 5, 1); tiro.setResenha(Arte.TIRO5);
         tiroEscopeta = new CartaAtaque("Tiro de escopeta", "", 3, 8, 1); tiroEscopeta.setResenha(Arte.TIRO1);
         bomba = new CartaAtaque("BOMBA!", "joga uma bomba que atinge TODOS os inimigos!", 4, 8); bomba.setEfeitoEmArea(true);
+        clubex = new CartaAtaque("Clubex", "[CONSUMIR] - Causa 20 pontos de dano a todos inimigos.", 5, 20); clubex.setEfeitoEmArea(true); clubex.setConsumir(true);
 
         tiroCanhao = new CartaAtaqueComEfeito("Tiro de canhão", "dispara uma bala de canhão", 4, 12, feridas, false, 1); tiroCanhao.setResenha(Arte.TIRO4);
         corteProfundo = new CartaAtaqueComEfeito("Corte profundo", "", 2, 3, sangramento, false, 2); corteProfundo.setResenha(Cor.txtVermelho(Arte.CORTE));
@@ -115,9 +121,11 @@ public class Moldes {
         puxaCarta = new CartaHabilidade("Ganancia", "Puxe duas cartas da sua pilha de compras", 1, efeitoPuxaCarta2, true);
         energizar = new CartaHabilidade("ENERGIZAR!", "Ganhe mais 2 pontos de energia no começo da próxima rodada!", 1, efeitoEnergizado, true);
         energiaGratis = new CartaHabilidade("Energia!", "Ganhe 1 ponto de energia", 0, ganhaEnergia1, true);
-        
-        dedoNervosoCarta = new CartaPoder("JOHN WICK", "Para cada acúmulo, atire novamente sempre que usar uma carta de tiro!", 2, dedoNervoso);
-        mestreLaminasCarta = new CartaPoder("Mestre das lâminas", "Para cada acúmulo, corte novamente sempre que usar uma carta de corte!", 2, mestreLaminas);
+        chocolex = new CartaHabilidade("Chocolex", "[CONSUMIR] - Adiciona um Resenhax na sua pilha de compras.", 2, ganhaResenhax, true); chocolex.setConsumir(true);
+        resenhax = new CartaHabilidade("Resenhax", "[CONSUMIR] - Adiciona um Clubex na sua pilha de compras.", 2, ganhaClubex, true); resenhax.setConsumir(true);
+
+        dedoNervosoCarta = new CartaPoder("JOHN WICK", "[CONSUMIR] - Para cada acúmulo, atire novamente sempre que usar uma carta de tiro!", 2, dedoNervoso);
+        mestreLaminasCarta = new CartaPoder("[CONSUMIR] - Mestre das lâminas", "Para cada acúmulo, corte novamente sempre que usar uma carta de corte!", 2, mestreLaminas);
 
         sangrar = new CartaMaldicao("Sangrar.", "Sangra.", 1, sangramento, true); sangrar.setResenha(Cor.txtCinza(Arte.algoRuim));
         beberVeneno = new CartaMaldicao("Beber veneno.", "Bebe veneno.", 1, veneno, true); beberVeneno.setResenha(Cor.txtCinza(Arte.algoRuim));
@@ -146,9 +154,13 @@ public class Moldes {
             new Acao.AtacarVidaPerdida(), new Acao.AdicionarCarta(beberVeneno), new Acao.ReceberEfeito(odioPuro));
             
         tripleT = new Inimigo("TUNG TUNG TUNG SAHUR", 67, 2, // OUTRO BOSS TA MUITO ROUBADO
-            new Acao.AdicionarCarta(beberVeneno), new Acao.ReceberEfeito(odioPuro), new Acao.AdicionarCarta(sangrar), new Acao.Atacar());
+            new Acao.AdicionarCarta(beberVeneno), new Acao.AdicionarCarta(sangrar), new Acao.AtacarEfeito(sangramento));
         
-        // preencher as listas aqui embaixo sempre que adicionar algo
+        // efeitos que referenciam cartas precisam ser setados aqui, pq as cartas sao criadas depois.
+        ganhaResenhax.setCarta(resenhax);
+        ganhaClubex.setCarta(clubex);
+
+        // preencher as listas aqui embaixo sempre que adicionar algo ( na real nao ta mais precisando )
 
         // inimigos ------
         listaInimigosMoldes.addAll(Arrays.asList(barbossa, loudCoringa, endrick, drake, 

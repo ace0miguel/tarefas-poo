@@ -36,13 +36,13 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
         this.setSelfCast(copia.getSelfCast());
         this.tipo = copia.tipo;
         this.setResenha(copia.getResenha());
+        this.consumir = copia.getConsumir();
+        this.setEfeitoEmArea(copia.getEfeitoEmArea());
         
         setDescricao(!this.getSelfCast() 
         ? ("Aplica [ " + this.efeito.getNomeColorido() + " ]")
         : ("Recebe [ " + this.efeito.getNomeColorido() + " ]")
         );
-
-        this.setEfeitoEmArea(copia.getEfeitoEmArea());
     }
 
     @Override

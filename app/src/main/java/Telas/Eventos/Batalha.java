@@ -33,7 +33,7 @@ public class Batalha extends Evento {
     private Mao mao = new Mao();
     private PilhaCompra pilhaCompra = new PilhaCompra();
     private PilhaDescarte pilhaDescarte = new PilhaDescarte();
-    private PilhaDescarte pilhaLixo = new PilhaDescarte(); // <- pra cartas que nao voltam pra sua mao durante o combate
+    private PilhaDescarte pilhaConsumir = new PilhaDescarte(); // <- pra cartas que nao voltam pra sua mao durante o combate
 
     // subscribers --------
     private ArrayList<Efeito> listaEfeitos = new ArrayList<>(); 
@@ -350,9 +350,9 @@ public class Batalha extends Evento {
                         cartaEscolhida.usar(heroi, alvoSelecionado, this); 
                     }
 
-                    // poderes nao voltam pra mao depois de usados
-                    if (cartaEscolhida instanceof CartaPoder)
-                        mao.removeCarta(escolha, pilhaLixo);
+                    // cartas com a flag consumir vao pra pilha secundaria e nao sao embaralhadas devolta
+                    if (cartaEscolhida.getConsumir())
+                        mao.removeCarta(escolha, pilhaConsumir);
                     else 
                         mao.removeCarta(escolha, pilhaDescarte);
 

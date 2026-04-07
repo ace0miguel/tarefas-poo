@@ -16,7 +16,7 @@ public class App {
         Moldes.carregar();
 
         // heroi -----------
-        Heroi heroi = new Heroi("Capitão Jack Sparrow", 55, 5);
+        Heroi heroi = new Heroi("Capitão Jack Sparrow", 55, 25);
       
         // pra entrar direto no deckBuilder descomenta aqui
         // DeckBuilder.iniciar(heroi); 

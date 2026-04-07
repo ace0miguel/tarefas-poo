@@ -13,6 +13,7 @@ import static Util.Moldes.armadura;
 import static Util.Moldes.beberVeneno;
 import static Util.Moldes.bomba;
 import static Util.Moldes.bombaVeneno;
+import static Util.Moldes.chocolex;
 import static Util.Moldes.corteDefensivo;
 import static Util.Moldes.corteProfundo;
 import static Util.Moldes.corteRapido;
@@ -223,6 +224,8 @@ public class DeckBuilder {
                 heroi.addCarta(corteVenenoso);
                 heroi.addCarta(corteVenenoso);
                 heroi.addCarta(corteVenenoso);
+
+                heroi.addCarta(chocolex);
             }
         }
         Textos.limpaTela();

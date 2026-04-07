@@ -22,7 +22,7 @@ public class CartaHabilidade extends Carta // aplica um efeito em um alvo
         super(nome, descricao, custo);
         this.efeito = efeito;
         this.setSelfCast(_selfCast);
-        this.tipo = tipo;
+        this.tipo = tipo; 
     }
 
     public CartaHabilidade(CartaHabilidade copia) {
@@ -31,6 +31,8 @@ public class CartaHabilidade extends Carta // aplica um efeito em um alvo
         this.setSelfCast(copia.getSelfCast());
         this.tipo = copia.tipo;
         this.setResenha(copia.getResenha());
+        this.consumir = copia.getConsumir();
+        this.setEfeitoEmArea(copia.getEfeitoEmArea());
     }
 
     @Override

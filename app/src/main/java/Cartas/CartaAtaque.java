@@ -29,6 +29,7 @@ public class CartaAtaque extends Carta
         this.tipo = copia.tipo; 
         this.setResenha(copia.getResenha());
         this.setEfeitoEmArea(copia.getEfeitoEmArea());
+        this.consumir = copia.getConsumir();
     }
 
     @Override

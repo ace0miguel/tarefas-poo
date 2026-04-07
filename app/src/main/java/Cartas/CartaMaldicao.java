@@ -29,6 +29,8 @@
             this.setSelfCast(copia.getSelfCast());
             this.tipo = copia.tipo;
             this.setResenha(copia.getResenha());
+            this.consumir = copia.getConsumir();
+            this.setEfeitoEmArea(copia.getEfeitoEmArea());
         }
 
         @Override

@@ -16,8 +16,10 @@ public class PilhaCompra {
         cartas.add(c);
     }
 
+    /**adiciona uma carta na pilha de compras e a embaralha */
     public void addCartaPilha(Carta c){
         pilhaCartas.add(c);
+        shuffle();
     }
 
     public void removeCarta(Carta c){

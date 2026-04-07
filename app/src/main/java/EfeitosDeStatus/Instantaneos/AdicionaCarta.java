@@ -8,18 +8,26 @@ import Telas.Eventos.Batalha;
 import Util.Cor;
 import Util.InputHandler;
 
-/** puxa da pilha de compra valor cartas e adiciona a mao do heroi */
-public class PuxaCarta extends Efeito {
+/** adiciona a carta passada na pilha de compras do heroi */
+public class AdicionaCarta extends Efeito {
+    protected Carta carta;
 
-    protected int valor;
-    public PuxaCarta(String nome, String desc, int dur, int valor){
+    public AdicionaCarta(String nome, String desc, int dur, Carta carta){
         super(nome, desc, dur);
-        this.valor = valor;
+        this.carta = carta;
     }
 
-    public PuxaCarta(PuxaCarta copiado){
+    public AdicionaCarta(AdicionaCarta copiado){
         super(copiado);
-        this.valor = copiado.valor;
+        this.carta = copiado.carta;
+    }
+
+    public Carta getCarta() {
+        return carta;
+    }
+
+    public void setCarta(Carta carta) {
+        this.carta = carta;
     }
 
     @Override
@@ -40,7 +48,7 @@ public class PuxaCarta extends Efeito {
     @Override
     public void onCreate() {
         if (this.getAlvo() instanceof Heroi h) {
-            h.getMaoAtual().addCartas(h.getPilhaCompra(), h.getPilhaDescarte(), this.valor);
+            h.getPilhaCompra().addCartaPilha(this.carta.criaCopia());
         } else {
             Cor.printaAmarelo("erro -> tentou dar cartas pra algo nao heroi");
             InputHandler.esperar();
@@ -49,7 +57,7 @@ public class PuxaCarta extends Efeito {
 
     @Override
     public Efeito criaCopia() {
-        return new PuxaCarta(this);
+        return new AdicionaCarta(this);
     }
 
     @Override

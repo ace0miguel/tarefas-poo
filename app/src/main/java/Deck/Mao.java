@@ -34,6 +34,10 @@ public class Mao {
             this.addCarta(pilhaCompra, pilhaDescarte); 
     }
 
+    public void addCartaEsp(Carta carta){
+        this.cartas.add(carta);
+    }
+
     public void addCinco(PilhaCompra pilhaCompra, PilhaDescarte pilhaDescarte){
         for (int i = 0; i < 5; i++) // adiciona 5 cartas à mão
             this.addCarta(pilhaCompra, pilhaDescarte);

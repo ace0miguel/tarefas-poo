@@ -8,10 +8,12 @@ import Util.Cor;
 public class CartaPoder extends Carta
 {
     private Poder poder;
+    
 
     public CartaPoder(String nome, String descricao, int custo, Poder poder){
         super(nome, descricao, custo);
         this.poder = poder;
+        this.consumir = true;
     }
 
     public CartaPoder(CartaPoder copia) {
@@ -19,6 +21,8 @@ public class CartaPoder extends Carta
         this.poder = copia.poder;
         this.tipo = copia.tipo;
         this.setResenha(copia.getResenha());
+        this.consumir = true;
+        this.setEfeitoEmArea(copia.getEfeitoEmArea());
     }
 
     @Override

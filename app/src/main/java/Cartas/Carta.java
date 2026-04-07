@@ -14,6 +14,7 @@ public abstract class Carta {
     private boolean selfCast;
     private String resenha = "";
     protected boolean efeitoEmArea = false; // so ta implementado pra ataque por enquanto, falta coloca no habilidade!
+    protected boolean consumir = false; // se verdadeiro, a carta vai pra uma pilha de descarte especial ao ser usada. (nao volta pra mao)
 
     /*  -------------------------------------------------
     dicionario de tipos de ação:
@@ -79,6 +80,10 @@ public abstract class Carta {
         return this.efeitoEmArea;
     }
 
+    public boolean getConsumir(){
+        return this.consumir;
+    }
+
     public boolean temResenha() {
         return !this.resenha.equals("");
      }
@@ -107,6 +112,10 @@ public abstract class Carta {
 
     public void setEfeitoEmArea(boolean efeitoEmArea) {
         this.efeitoEmArea = efeitoEmArea;
+    }
+
+    public void setConsumir(boolean consumir) {
+        this.consumir = consumir;
     }
 
     // ---------------------------------------------
