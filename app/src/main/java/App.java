@@ -1,4 +1,5 @@
 import Entidades.Heroi;
+import Telas.DeckBuilder;
 import Telas.Mapa;
 import Util.Arte;
 import Util.InputHandler;
@@ -16,9 +17,10 @@ public class App {
         Moldes.carregar();
 
         // heroi -----------
-        Heroi heroi = new Heroi("Capitão Jack Sparrow", 55, 25);
+        Heroi heroi = new Heroi("Capitão Jack Sparrow", 55, 5);
       
         // pra entrar direto no deckBuilder descomenta aqui
+        // DeckBuilder.mostrarDecksPadrao(heroi);
         // DeckBuilder.iniciar(heroi); 
 
         Textos.limpaTela();

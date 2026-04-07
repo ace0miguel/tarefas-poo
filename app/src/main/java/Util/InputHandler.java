@@ -1,6 +1,11 @@
 package Util;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import Cartas.Carta;
+import Entidades.Heroi;
 
 public class InputHandler {
     private static Scanner leitor = new Scanner(System.in);
@@ -101,6 +106,91 @@ public class InputHandler {
             esperar();
         }
         return escolha;
+    }
+
+    /** Recebe uma lista de objetos e divide em páginas com 7 elementos cada e opções voltar
+     * e próxima página e retorna uma matriz de strings, cada linha é uma pagina.
+     */
+    public static <T> List<List<String>> montaPaginas(List<T> lista) {
+        List<List<String>> listaCompleta = new ArrayList<>();
+
+        // cria uma lista com o nome das cartas
+        List<String> listaString = new ArrayList<>();
+
+        for (T objeto : lista) {
+            if (objeto != null)
+                listaString.add(objeto.toString());
+            else{
+                System.out.println("erro: tentaram colocar um objeto nulo na lista");
+                esperar();
+            }
+        }
+        
+        for (int i = 0; i < listaString.size(); i += 7) {
+            // garante que nao vai passar do tamanho da lista qnd chega na ultima pagina
+            int fimPagina = Math.min(i + 7, listaString.size()); 
+
+            // cria a pagina com os itens de i ate fimPagina da lista de nome de cartas
+            List<String> paginaAtual = new ArrayList<>(listaString.subList(i, fimPagina));
+
+            // tinha um if aqui pra deixar mais bonito e so printar quando precisa mas atrapalha depois na hora de lidar com a escolha do usuario
+            // if (i != 0)
+                paginaAtual.add(Cor.txtCinza("Página anterior"));
+            // if (i + 7 < listaString.size())
+                paginaAtual.add(Cor.txtCinza("Próxima página"));
+            
+            listaCompleta.add(paginaAtual);
+        }
+        
+        return listaCompleta;
+    }
+
+    /** imprime um menu utilizando a matriz de paginas e retorna a opção escolhida
+     *  se for pra sair retorna -1. false: nao deixa voce sair sem escolher.
+     */
+    public static int menu(List<List<String>> matrizPaginas, AtomicInteger pagina, boolean exit){
+        while (true) { 
+            // quando tirar o ultimo item de uma pagina ele volta sozinho pra anterior
+            if (matrizPaginas.size() <= 0) 
+                return -1;
+
+            // se vc acabar com os itens de uma pagina ele volta pra anterior.
+            if (pagina.get() >= matrizPaginas.size())
+                pagina.decrementAndGet();
+
+            List<String> paginaAtual = matrizPaginas.get(pagina.get());
+            int opcao = InputHandler.selecionar(paginaAtual, true, "Página (" + (pagina.get() + 1) + ")");
+
+            // -1: exit -> todas as cartas -> penultima e ultima: voltar e proxima
+            if (opcao == -1) {
+                if (exit)
+                    return -1;
+                else{
+                    System.out.println("Você nao pode voltar desse menu!");
+                    esperar();
+                    continue;
+                }
+            }
+
+            else if (opcao == paginaAtual.size() - 2) {
+                if (pagina.get() > 0)
+                    pagina.decrementAndGet();
+                Textos.sleep(50);
+                continue;
+            }
+            else if (opcao == paginaAtual.size() - 1){
+                if (pagina.get() < matrizPaginas.size() - 1)
+                    pagina.incrementAndGet();
+                Textos.sleep(50);
+                continue;
+            }
+
+            return opcao + (pagina.get() * 7);
+        }
+    }
+
+    public static int menu(List<List<String>> matrizPaginas, AtomicInteger pagina){
+        return menu(matrizPaginas, pagina, true);
     }
 }
 

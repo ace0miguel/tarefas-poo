@@ -9,8 +9,8 @@ import Telas.Eventos.Batalha;
 public class Escudo extends Efeito {
 
     private int valor;
-    public Escudo(String nome, String desc, int dur, int valor){
-        super(nome, desc, dur);
+    public Escudo(String nome, String desc, int valor){
+        super(nome, desc, 0);
         this.valor = valor;
     }
 

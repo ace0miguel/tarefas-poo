@@ -12,8 +12,8 @@ import Util.InputHandler;
 public class PuxaCarta extends Efeito {
 
     protected int valor;
-    public PuxaCarta(String nome, String desc, int dur, int valor){
-        super(nome, desc, dur);
+    public PuxaCarta(String nome, String desc, int valor){
+        super(nome, desc, 0);
         this.valor = valor;
     }
 

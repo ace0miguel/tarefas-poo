@@ -7,8 +7,8 @@ import Telas.Eventos.Batalha;
 
 // limpa todos os efeitos (incluindo positivos)
 public class Purificar extends Efeito {
-    public Purificar(String nome, String desc, int dur){
-        super(nome, desc, dur);
+    public Purificar(String nome, String desc){
+        super(nome, desc, 0);
     }
 
     public Purificar(Purificar copiado){

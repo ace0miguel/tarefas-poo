@@ -3,6 +3,7 @@ package Telas;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import Cartas.Carta;
 import Entidades.Heroi;
@@ -26,6 +27,7 @@ import static Util.Moldes.escudoFerro;
 import static Util.Moldes.escudoMadeira;
 import static Util.Moldes.mestreLaminasCarta;
 import static Util.Moldes.pactoSangue;
+import static Util.Moldes.contratoSangue;
 import static Util.Moldes.purificar;
 import static Util.Moldes.puroOdio;
 import static Util.Moldes.puxaCarta;
@@ -227,10 +229,18 @@ public class DeckBuilder {
                 heroi.addCarta(puxaCarta);
                 heroi.addCarta(puxaCarta);
                 heroi.addCarta(puxaCarta);
-                heroi.addCarta(puxaCarta);
-                
+                heroi.addCarta(puxaCarta); 
+
+                heroi.addCarta(corteProfundo);
+
+                heroi.addCarta(corteRapido);
 
                 heroi.addCarta(pactoSangue);
+                heroi.addCarta(pactoSangue);
+                heroi.addCarta(pactoSangue);
+                heroi.addCarta(pactoSangue);
+
+                heroi.addCarta(contratoSangue);
             }
         }
         Textos.limpaTela();
@@ -273,77 +283,26 @@ public class DeckBuilder {
         }
     }
 
-    /* recebe uma lista de carta, divide em paginas e retorna uma lista de strings (pra usar no selecionar)*/
-    public static List<List<String>> montaPaginas(List<Carta> cartas) {
-        List<List<String>> listaCompleta = new ArrayList<>();
 
-        // cria uma lista com o nome das cartas
-        List<String> cartasString = new ArrayList<>();
-
-        for (Carta carta : cartas) {
-            cartasString.add(carta.getNome());
-        }
-        
-        for (int i = 0; i < cartasString.size(); i += 7) {
-            // garante que nao vai passar do tamanho da lista qnd chega na ultima pagina
-            int fimPagina = Math.min(i + 7, cartasString.size()); 
-
-            // cria a pagina com os itens de i ate fimPagina da lista de nome de cartas
-            List<String> paginaAtual = new ArrayList<>(cartasString.subList(i, fimPagina));
-
-            // tinha um if aqui pra deixar mais bonito e so printar quando precisa mas atrapalha depois na hora de lidar com a escolha do usuario
-            // if (i != 0)
-                paginaAtual.add(Cor.txtCinza("Página anterior"));
-            // if (i + 7 < cartasString.size())
-                paginaAtual.add(Cor.txtCinza("Próxima página"));
-            
-            listaCompleta.add(paginaAtual);
-        }
-        
-        return listaCompleta;
-    }
-
-    // faz o menu de cartas usando a matriz, cuida da troca de cartas. true = baralho, false = inventario de cartas.
+    /** exibe o menu de cartas escolhido e cuida da troca de cartas
+     * @param baralho = true: mostra o baralho, false: mostra o inventario de cartas
+     */
     public static void menuCartas(Heroi heroi, boolean baralho){
-        int pagina = 0;
         Carta carta;
+        AtomicInteger pagina = new AtomicInteger(0);
         while (true) { 
             List<List<String>> matrizPaginas = new ArrayList<>();
 
             // verifica se é pra usar o baralho ou o inventario de carta
-            if (baralho) matrizPaginas.addAll(montaPaginas(heroi.getBaralho()));
-            else matrizPaginas.addAll(montaPaginas(heroi.getInventarioCartas()));
+            if (baralho) matrizPaginas.addAll(InputHandler.montaPaginas(heroi.getBaralho()));
+            else matrizPaginas.addAll(InputHandler.montaPaginas(heroi.getInventarioCartas()));
 
-            // quando vc tirar a ultima carta ele volta sozinho
-            if (matrizPaginas.size() <= 0) break;
+            int posicaoCarta = InputHandler.menu(matrizPaginas, pagina);
 
-            // se vc acabar com as cartas de uma pagina ele volta pra anterior.
-            if (pagina >= matrizPaginas.size())
-                pagina --;
+            // codigo pra voltar
+            if (posicaoCarta == -1) break; // volta pro menu inicial
 
-            List<String> paginaAtual = matrizPaginas.get(pagina);
-            int opcao = InputHandler.selecionar(paginaAtual, true, "Página " + (pagina + 1));
-
-            // -1: exit -> todas as cartas -> penultima e ultima: voltar e proxima
-            if (opcao == -1) break;
-
-            else if (opcao == paginaAtual.size() - 2) {
-                if (pagina > 0)
-                    pagina--;
-                Textos.sleep(50);
-                continue;
-            }
-            else if (opcao == paginaAtual.size() - 1){
-                if (pagina < matrizPaginas.size() - 1)
-                    pagina++;
-                Textos.sleep(50);
-                continue;
-            }
-
-            // cada pagina equivalem a 7 cartas
-            int posicaoCarta = pagina*7 + opcao;
-
-            // se chegou ate aqui é uma carta. ve se e inventario ou baralho e troca de um pro outro
+            // ve se e inventario ou baralho e troca de um pro outro
             if (baralho)
                 carta = heroi.getBaralho().get( posicaoCarta );
             else 

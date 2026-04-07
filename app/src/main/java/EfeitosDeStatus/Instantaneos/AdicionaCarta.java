@@ -12,8 +12,8 @@ import Util.InputHandler;
 public class AdicionaCarta extends Efeito {
     protected Carta carta;
 
-    public AdicionaCarta(String nome, String desc, int dur, Carta carta){
-        super(nome, desc, dur);
+    public AdicionaCarta(String nome, String desc, Carta carta){
+        super(nome, desc, 0);
         this.carta = carta;
     }
 

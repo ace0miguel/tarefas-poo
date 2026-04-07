@@ -13,6 +13,7 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
         super(nome, descricao, custo, dano);
         this.efeito = efeito;
         this.setSelfCast(selfCast);
+        
         setDescricao(!this.getSelfCast() 
         ? ("Aplica [ " + this.efeito.getNomeColorido() + " ]")
         : ("Recebe [ " + this.efeito.getNomeColorido() + " ]")
@@ -20,10 +21,10 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
     }
 
     public CartaAtaqueComEfeito(String nome, String descricao, int custo, int dano, Efeito efeito, boolean selfCast, int tipo){
-        super(nome, descricao, custo, dano);
+        super(nome, descricao, custo, dano, tipo);
         this.efeito = efeito;
-        this.tipo = tipo;
         this.setSelfCast(selfCast);
+
         setDescricao(!this.getSelfCast() 
         ? ("Aplica [ " + this.efeito.getNomeColorido() + " ]")
         : ("Recebe [ " + this.efeito.getNomeColorido() + " ]")
@@ -31,14 +32,9 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
     }
 
     public CartaAtaqueComEfeito(CartaAtaqueComEfeito copia) {
-        super(copia.getNome(), copia.getDescricao(), copia.getCusto(), copia.getDano());
-        this.efeito = copia.efeito; 
-        this.setSelfCast(copia.getSelfCast());
-        this.tipo = copia.tipo;
-        this.setResenha(copia.getResenha());
-        this.consumir = copia.getConsumir();
-        this.setEfeitoEmArea(copia.getEfeitoEmArea());
-        
+        super(copia);
+        this.efeito = copia.efeito;      
+
         setDescricao(!this.getSelfCast() 
         ? ("Aplica [ " + this.efeito.getNomeColorido() + " ]")
         : ("Recebe [ " + this.efeito.getNomeColorido() + " ]")
@@ -49,6 +45,7 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
     public void usar(Heroi heroi, Entidade alvo, Batalha batalha){
         int energiaAtual = heroi.getEnergia();
         if(energiaAtual >= this.getCusto()){
+            heroi.receberDanoDireto(this.sacrificio);
             if (!efeitoEmArea){
                 alvo.receberDano(this.getDano() + heroi.getDanoExtra());
             }    

@@ -18,6 +18,7 @@ import EfeitosDeStatus.DanosConstantes.Veneno;
 import EfeitosDeStatus.Efeito;
 import EfeitosDeStatus.Energizar;
 import EfeitosDeStatus.Instantaneos.AdicionaCarta;
+import EfeitosDeStatus.Instantaneos.EscolheCarta;
 import EfeitosDeStatus.Instantaneos.Escudo;
 import EfeitosDeStatus.Instantaneos.GanhaEnergia;
 import EfeitosDeStatus.Instantaneos.Purificar;
@@ -73,6 +74,7 @@ public class Moldes {
     public static Carta chocolex;
     public static Carta resenhax;
     public static Carta clubex;
+    public static Carta contratoSangue;
     public static Carta pactoSangue;
 
     // efeitos ------------
@@ -81,19 +83,21 @@ public class Moldes {
     public static Efeito veneno4 = new Veneno("Veneno", "Causa sua duraçao em dano por rodada ao alvo", 4, 1);
     public static Efeito odioPuro = new AumentaDano("Ego", "Aumenta o dano causado em 1 por 3 rodadas", 3, 1);
     public static Efeito aumentaResistencia = new AumentaResistencia("Aura", "Reduz o dano recebido", 3, 2);
-    public static Efeito escudinho = new Escudo("Ganho de escudo (3)", "3 pontos de escudo", 0, 3);
-    public static Efeito escudao = new Escudo("Ganho de escudo (7)", "7 pontos de escudo", 0, 7);
-    public static Efeito purificarEfeito = new Purificar("Purificar", "Remove todos os efeitos aplicados em voce (incluindo bons!)", 0);
+    public static Efeito escudinho = new Escudo("Ganho de escudo (3)", "3 pontos de escudo", 3);
+    public static Efeito escudao = new Escudo("Ganho de escudo (7)", "7 pontos de escudo", 7);
+    public static Efeito purificarEfeito = new Purificar("Purificar", "Remove todos os efeitos aplicados em voce (incluindo bons!)");
     public static Efeito feridas = new DanoConstante("Feridas", "Causa 1 de dano por rodada ao alvo por 2 rodadas", 2, 1);
-    public static Efeito ganhaEnergia2 = new GanhaEnergia("Ganho de energia (2)", "Ganha 2 pontos de energia", 0, 2);
-    public static Efeito ganhaEnergia1 = new GanhaEnergia("Ganho de energia (1)", "Ganha 1 ponto de energia", 0, 1);
+    public static Efeito ganhaEnergia2 = new GanhaEnergia("Ganho de energia (2)", "Ganha 2 pontos de energia", 2);
+    public static Efeito ganhaEnergia1 = new GanhaEnergia("Ganho de energia (1)", "Ganha 1 ponto de energia", 1);
     public static Efeito pactoSinistro = new AumentaDano(Cor.txtCinza("Pacto Sinistro"), "Aumenta o dano causado em 2 por 2 rodadas", 2, 2);
     
     // novos efeitos
-    public static Efeito efeitoPuxaCarta2 = new PuxaCarta("Puxa duas cartas", "Puxa duas cartas", 0, 2);
+    public static Efeito efeitoPuxaCarta2 = new PuxaCarta("Puxa duas cartas", "Puxa duas cartas", 2);
     public static Efeito efeitoEnergizado = new Energizar("Energizado", "Ganhe dois pontos de energia na proxima rodada", 1, 2);
-    public static AdicionaCarta ganhaResenhax = new AdicionaCarta("Resenhax", "Recebe um resenhax", 0, null);
-    public static AdicionaCarta ganhaClubex = new AdicionaCarta("Clubex", "Recebe um clubex", 0, null);
+    public static AdicionaCarta ganhaResenhax = new AdicionaCarta("Resenhax", "Recebe um resenhax", null);
+    public static AdicionaCarta ganhaClubex = new AdicionaCarta("Clubex", "Recebe um clubex", null);
+    public static EscolheCarta escolheCarta = new EscolheCarta("Escolhe uma carta", "Escolha uma carta da pilha de compra");
+
 
     // poderes -------------
     public static Poder dedoNervoso = new MaosLeves(("JOHN WICK!"), "Sempre que atirar, ATIRE NOVAMENTE! pelo tanto de acumulos desse poder.", 1);
@@ -126,10 +130,11 @@ public class Moldes {
         energiaGratis = new CartaHabilidade("Energia!", "Ganhe 1 ponto de energia", 0, ganhaEnergia1, true);
         chocolex = new CartaHabilidade("Chocolex", "[CONSUMIR] - Adiciona um Resenhax na sua pilha de compras.", 2, ganhaResenhax, true); chocolex.setConsumir(true);
         resenhax = new CartaHabilidade("Resenhax", "[CONSUMIR] - Adiciona um Clubex na sua pilha de compras.", 2, ganhaClubex, true); resenhax.setConsumir(true);
+        pactoSangue = new CartaHabilidade("Pacto de sangue", "Pague 1 ponto de vida e escolha uma carta da sua pilha de compras.", 2, escolheCarta, true); pactoSangue.setSacrificio(1);
 
         dedoNervosoCarta = new CartaPoder("JOHN WICK", "[CONSUMIR] - Para cada acúmulo, atire novamente sempre que usar uma carta de tiro!", 2, dedoNervoso);
         mestreLaminasCarta = new CartaPoder("[CONSUMIR] - Mestre das lâminas", "Para cada acúmulo, corte novamente sempre que usar uma carta de corte!", 2, mestreLaminas);
-        pactoSangue = new CartaPoder("[CONSUMIR] - Pacto de sangue", "No início de cada turno, puxe 1 carta adicional e perca 1 ponto de vida.", 3, cartaAdicional);
+        contratoSangue = new CartaPoder("[CONSUMIR] - Contrato de sangue", "No início de cada turno, puxe 1 carta adicional e perca 1 ponto de vida.", 3, cartaAdicional);
 
         sangrar = new CartaMaldicao("Sangrar.", "Sangra.", 1, sangramento, true); sangrar.setResenha(Cor.txtCinza(Arte.algoRuim));
         beberVeneno = new CartaMaldicao("Beber veneno.", "Bebe veneno.", 1, veneno, true); beberVeneno.setResenha(Cor.txtCinza(Arte.algoRuim));

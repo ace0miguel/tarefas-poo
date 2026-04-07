@@ -12,8 +12,8 @@ import Util.InputHandler;
 public class PuxaCartaEsp extends PuxaCarta {
     private Carta carta;
 
-    public PuxaCartaEsp(String nome, String desc, int dur, int valor, Carta carta){
-        super(nome, desc, dur, valor);
+    public PuxaCartaEsp(String nome, String desc, int valor, Carta carta){
+        super(nome, desc, valor);
         this.carta = carta;
     }
 

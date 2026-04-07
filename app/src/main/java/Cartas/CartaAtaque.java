@@ -24,12 +24,8 @@ public class CartaAtaque extends Carta
     }
 
     public CartaAtaque(CartaAtaque copia) {
-        super(copia.getNome(), copia.getDescricao(), copia.getCusto());
+        super(copia);
         this.dano = copia.dano;
-        this.tipo = copia.tipo; 
-        this.setResenha(copia.getResenha());
-        this.setEfeitoEmArea(copia.getEfeitoEmArea());
-        this.consumir = copia.getConsumir();
     }
 
     @Override
@@ -37,6 +33,7 @@ public class CartaAtaque extends Carta
         if (!efeitoEmArea) {
             int energiaAtual = heroi.getEnergia();
             if(energiaAtual >= this.getCusto()){
+                heroi.receberDanoDireto(this.sacrificio);
                 alvo.receberDano(this.dano + heroi.getDanoExtra());
                 heroi.usarEnergia(this.getCusto());
                 

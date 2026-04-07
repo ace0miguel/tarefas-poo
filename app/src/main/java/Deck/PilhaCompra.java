@@ -73,4 +73,8 @@ public class PilhaCompra {
         System.out.println("-----------------------");
         Textos.sleep(200);
     }
+
+    public Stack<Carta> getPilhaCartas() {
+        return pilhaCartas;
+    }
 }

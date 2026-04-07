@@ -14,8 +14,8 @@
 
         public CartaMaldicao(String nome, String descricao, int custo, Efeito efeito, boolean _selfCast){
             super(nome, descricao, custo);
-            this.efeito = efeito;
             this.setSelfCast(_selfCast);
+            this.efeito = efeito;
         }
 
         public CartaMaldicao(String nome, String descricao, int custo, boolean _selfCast){
@@ -24,13 +24,8 @@
         }
 
         public CartaMaldicao(CartaMaldicao copia) {
-            super(copia.getNome(), copia.getDescricao(), copia.getCusto());
+            super(copia);
             this.efeito = copia.efeito;
-            this.setSelfCast(copia.getSelfCast());
-            this.tipo = copia.tipo;
-            this.setResenha(copia.getResenha());
-            this.consumir = copia.getConsumir();
-            this.setEfeitoEmArea(copia.getEfeitoEmArea());
         }
 
         @Override

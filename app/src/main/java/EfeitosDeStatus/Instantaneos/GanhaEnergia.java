@@ -11,8 +11,8 @@ import Util.InputHandler;
 public class GanhaEnergia extends Efeito {
 
     private int valor;
-    public GanhaEnergia(String nome, String desc, int dur, int valor){
-        super(nome, desc, dur);
+    public GanhaEnergia(String nome, String desc, int valor){
+        super(nome, desc, 0);
         this.valor = valor;
     }
 

@@ -15,6 +15,7 @@ public abstract class Carta {
     private String resenha = "";
     protected boolean efeitoEmArea = false; // so ta implementado pra ataque por enquanto, falta coloca no habilidade!
     protected boolean consumir = false; // se verdadeiro, a carta vai pra uma pilha de descarte especial ao ser usada. (nao volta pra mao)
+    protected int sacrificio = 0; // variavel pra definir um custo em vida ao se usar a carta.
 
     /*  -------------------------------------------------
     dicionario de tipos de ação:
@@ -35,6 +36,19 @@ public abstract class Carta {
         this.descricao = descricao;
         this.custo = custo;
         this.tipo = tipo;
+    }
+
+    public Carta(Carta copia){
+        this.nome = copia.nome;
+        this.descricao = copia.descricao;
+        this.custo = copia.custo;
+
+        this.setSelfCast(copia.getSelfCast());
+        this.tipo = copia.tipo;
+        this.setResenha(copia.getResenha());
+        this.consumir = copia.getConsumir();
+        this.setEfeitoEmArea(copia.getEfeitoEmArea());
+        this.setSacrificio(copia.sacrificio);
     }
 
     // Getters --------------------------------------
@@ -86,8 +100,11 @@ public abstract class Carta {
 
     public boolean temResenha() {
         return !this.resenha.equals("");
-     }
+    }
 
+    public int getSacrificio() {
+        return sacrificio;
+    }
     // Setters --------------------------------------
     
     public void setSelfCast(boolean selfCast) {
@@ -118,6 +135,10 @@ public abstract class Carta {
         this.consumir = consumir;
     }
 
+    public void setSacrificio(int sacrificio) {
+        this.sacrificio = sacrificio;
+    }
+
     // ---------------------------------------------
     
     public boolean podeGastar(Heroi heroi){
@@ -139,8 +160,12 @@ public abstract class Carta {
     /**Apenas aplica o efeito da carta.*/
     public abstract void aplicarEfeito(Heroi heroi, Entidade alvo, Batalha batalha); // so aplica o efeito da carta sem gastar nada
 
-    
     public abstract String descricao();
     
     public abstract Carta criaCopia();
+
+    @Override
+    public String toString(){
+        return this.getNome() + " (Custo: " + this.getCusto() + Cor.txtAmarelo(" energia") +") - " + this.getDescricao();
+    }
 }
