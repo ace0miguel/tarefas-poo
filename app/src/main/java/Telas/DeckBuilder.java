@@ -90,6 +90,8 @@ public class DeckBuilder {
                 heroi.addCarta(escudoFerro);
                 heroi.addCarta(escudoFerro);
                 heroi.addCarta(escudoMadeira);
+
+                heroi.addCarta(chocolex);
             }
             /* deck de dano direto mesmo bem simples, 2 puro odio pra da mais dano ainda */
             case 1 -> {
@@ -125,6 +127,8 @@ public class DeckBuilder {
                 heroi.addCarta(escudoMadeira);
 
                 heroi.addCarta(armadura);
+
+                heroi.addCarta(chocolex);
 
                 heroi.addCarta(bombaVeneno);
             }  
@@ -180,6 +184,8 @@ public class DeckBuilder {
 
                 heroi.addCarta(escudoMadeira);
                 heroi.addCarta(escudoMadeira);
+
+                heroi.addCarta(chocolex);
 
                 //maldiçoes...
 
