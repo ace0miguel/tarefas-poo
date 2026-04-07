@@ -107,9 +107,16 @@ public class Moldes {
     public static Poder cartaAdicional = new CartaAdicional("CONTRATO DE SANGUE", "No início de cada turno, puxe 1 carta adicional e perca 1 ponto de vida.", 1);
 
     public static void carregar(){
-        // cartas ---
+        // cartas comuns ---
         tiro = new CartaAtaque("Tiro de revolver", "", 2, 5, 1); tiro.setResenha(Arte.TIRO5);
         tiroEscopeta = new CartaAtaque("Tiro de escopeta", "", 3, 8, 1); tiroEscopeta.setResenha(Arte.TIRO1);
+
+        
+
+        // cartas incomuns ---
+
+
+        // cartas raras ---
         bomba = new CartaAtaque("BOMBA!", "joga uma bomba que atinge TODOS os inimigos!", 4, 8); bomba.setEfeitoEmArea(true);
         clubex = new CartaAtaque("Clubex", "[CONSUMIR] - Causa 20 pontos de dano a todos inimigos.", 5, 20); clubex.setEfeitoEmArea(true); clubex.setConsumir(true);
 

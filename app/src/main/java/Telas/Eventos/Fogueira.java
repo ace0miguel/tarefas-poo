@@ -10,12 +10,12 @@ import Util.Cor;
 import Util.InputHandler;
 
 public class Fogueira extends Evento{
-    List<String> opcoes = new ArrayList<>(Arrays.asList("Descansar", "Melhorar Deck"));
+    List<String> opcoes = new ArrayList<>(Arrays.asList("Descansar", "Ganhar cartas(nao ta pronto ainda vc nao vai ganhar nada)"));
 
     @Override
     public void iniciar(Heroi heroi) {
         this.heroi = heroi;
-        
+
         int escolha = InputHandler.selecionar(opcoes,Arte.fogueira);
         switch (escolha) {
             case 0:

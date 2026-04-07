@@ -32,8 +32,6 @@ public class PuxaCartaEsp extends PuxaCarta {
 
     @Override
     public void addStack(){
-        this.stacks++;
-
         this.onCreate();
     }
 
