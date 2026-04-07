@@ -10,9 +10,7 @@ import Util.Cor;
 import Util.RNGHandler;
 import Util.Textos;
 
-/* inimigo base.
-caso queira mudar algum dos danos dos ataques padroes(normal, com efeito) basta dar override em:
-getDanoAtaque, getDanoAtaqueEfeito. */
+/* inimigo base. */
 public class Inimigo extends Entidade{
 
     protected int dano;
