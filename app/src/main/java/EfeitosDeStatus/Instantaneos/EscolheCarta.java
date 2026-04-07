@@ -30,6 +30,20 @@ public class EscolheCarta extends Efeito {
     public void onCreate() {
         List<List<String>> matrizPaginas = InputHandler.montaPaginas(((Heroi) this.getAlvo()).getPilhaCompra().getPilhaCartas());
 
+        if (((Heroi) this.getAlvo()).getPilhaCompra().getPilhaCartas().size() <= 0) {
+            System.out.println("Não há cartas para escolher!");
+            InputHandler.esperar();
+
+            ((Heroi) this.getAlvo()).getPilhaDescarte().recuperaUltima(((Heroi) this.getAlvo()).getMaoAtual());
+
+            if (((Heroi) this.getAlvo()).getMaoAtual().getSize() > 0) {
+                ((Heroi) this.getAlvo()).ganhaEnergia(((Heroi) this.getAlvo()).getMaoAtual().getUltima().getCusto());
+            }
+
+            return;
+        }
+
+        
         Carta escolha = ((Heroi) this.getAlvo()).getPilhaCompra().getPilhaCartas().get(InputHandler.menu(matrizPaginas, new AtomicInteger(0), false));
 
         ((Heroi) this.getAlvo()).getMaoAtual().addCartaEsp(escolha);

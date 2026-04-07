@@ -21,16 +21,7 @@ public class Escudo extends Efeito {
 
     @Override
     public void addStack(){
-        this.stacks++;
-        this.getAlvo().ganharEscudo(valor);
-    }
-    
-    @Override
-    public void aplicar() {
-    }
-
-    @Override
-    public void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha) {
+        this.onCreate();
     }
 
     @Override
@@ -42,14 +33,5 @@ public class Escudo extends Efeito {
     @Override
     public Efeito criaCopia() {
         return new Escudo(this);
-    }
-
-    @Override
-    public String status() {
-        return "";    
-    }
-
-    @Override
-    public void acabar() {
     }
 }

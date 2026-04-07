@@ -129,6 +129,15 @@ public class Heroi extends Entidade {
         this.dinheiro -= valor;
     }
 
+    public void ganhaVida(int valor){
+        this.vida += valor;
+        if (this.vida > this.vidaMax)
+            this.vida = this.vidaMax;
+
+        System.out.println("Voce ganhou " + Cor.txtVerde(String.valueOf(valor)) + " pontos de vida!");
+        InputHandler.esperar();
+    }
+
     public void usarEnergia(int custo){
         this.energia -= custo;
     }

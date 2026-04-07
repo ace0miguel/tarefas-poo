@@ -12,9 +12,17 @@ public class PilhaDescarte {
         cartas.add(c);
     }
 
-    public void recupera(Carta c, ArrayList<Carta> mao){
-        mao.add(c);
+    public void recupera(Carta c, Mao mao){
+        mao.addCartaEsp(c);
         cartas.remove(c);
+    }
+
+    public void recuperaUltima(Mao mao){
+        if (cartas.size() > 0) {
+            Carta c = cartas.get(cartas.size() - 1);
+            mao.addCartaEsp(c);
+            cartas.remove(cartas.size() - 1);
+        }
     }
 
     public ArrayList<Carta> getPilha(){

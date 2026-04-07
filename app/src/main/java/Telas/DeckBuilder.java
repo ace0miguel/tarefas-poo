@@ -22,6 +22,7 @@ import static Util.Moldes.corteVenenoso;
 import static Util.Moldes.dedoNervosoCarta;
 import static Util.Moldes.desprezo;
 import static Util.Moldes.energiaGratis;
+import static Util.Moldes.energiaSupremo;
 import static Util.Moldes.energizar;
 import static Util.Moldes.escudoFerro;
 import static Util.Moldes.escudoMadeira;
@@ -226,11 +227,13 @@ public class DeckBuilder {
                 heroi.addCarta(bombaVeneno);
                 heroi.addCarta(bombaVeneno);
 
-                heroi.addCarta(puxaCarta);
-                heroi.addCarta(puxaCarta);
+                heroi.addCarta(bomba);
+                heroi.addCarta(bomba);
+                
                 heroi.addCarta(puxaCarta);
                 heroi.addCarta(puxaCarta); 
 
+                heroi.addCarta(energiaSupremo);
                 heroi.addCarta(corteProfundo);
 
                 heroi.addCarta(corteRapido);
@@ -303,8 +306,15 @@ public class DeckBuilder {
             if (posicaoCarta == -1) break; // volta pro menu inicial
 
             // ve se e inventario ou baralho e troca de um pro outro
-            if (baralho)
+            if (baralho){
+                if (heroi.getDinheiro() < 5) {
+                    System.out.println("Dinheiro insuficiente");
+                    InputHandler.esperar();
+                    continue;
+                }
+                heroi.gastaDinheiro(5);
                 carta = heroi.getBaralho().get( posicaoCarta );
+            }   
             else 
                 carta = heroi.getInventarioCartas().get( posicaoCarta );
 

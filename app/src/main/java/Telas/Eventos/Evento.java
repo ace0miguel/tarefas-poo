@@ -8,7 +8,7 @@ public class Evento { // evento generico
 
     public void iniciar(Heroi heroi){
         this.heroi = heroi;
-    };
+    }
 
     public String toString() {
         String retorno = Cor.txtVermelho("evento") + " ( > ";

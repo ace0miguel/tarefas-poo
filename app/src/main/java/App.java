@@ -18,6 +18,9 @@ public class App {
 
         // heroi -----------
         Heroi heroi = new Heroi("Capitão Jack Sparrow", 55, 5);
+        
+        // pra dar dinheiro pra testar descomenta aqui
+        // heroi.setDinheiro(50);
       
         // pra entrar direto no deckBuilder descomenta aqui
         // DeckBuilder.mostrarDecksPadrao(heroi);

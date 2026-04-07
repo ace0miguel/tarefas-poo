@@ -8,6 +8,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import Entidades.Heroi;
 import Telas.Eventos.Batalha;
 import Telas.Eventos.Evento;
+import Telas.Eventos.Fogueira;
+
 import static Util.Moldes.barbossa;
 import static Util.Moldes.drake;
 import static Util.Moldes.endrick;
@@ -43,6 +45,8 @@ public class ArvoreEventos {
             return new Batalha(barbossa.criaCopia(), loudCoringa.criaCopia(), endrick.criaCopia(), drake.criaCopia(), paulAtreides.criaCopia(), sabrinaCarpenter.criaCopia(), tripleT.criaCopia());
         } else if (profundidadeAtual == 0){
             return new Batalha(loudCoringa.criaCopia(), barbossa.criaCopia(), endrick.criaCopia()); // mas a primeira vai ser facinha pq eu sou bonzinho
+        } else if (profundidadeAtual % 2 == 0) { // a cada uma luta vai ter um evento aleatorio (por enquanto só fogueira)
+            return new Fogueira();
         }
 
         int sorteio = RNGHandler.valorAleatorio(100);

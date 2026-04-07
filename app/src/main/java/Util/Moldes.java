@@ -76,6 +76,7 @@ public class Moldes {
     public static Carta clubex;
     public static Carta contratoSangue;
     public static Carta pactoSangue;
+    public static Carta energiaSupremo;
 
     // efeitos ------------
     public static Efeito sangramento = new Sangramento("Sangramento", "Causa 1 de dano por rodada ao alvo", 3, 1);
@@ -89,6 +90,7 @@ public class Moldes {
     public static Efeito feridas = new DanoConstante("Feridas", "Causa 1 de dano por rodada ao alvo por 2 rodadas", 2, 1);
     public static Efeito ganhaEnergia2 = new GanhaEnergia("Ganho de energia (2)", "Ganha 2 pontos de energia", 2);
     public static Efeito ganhaEnergia1 = new GanhaEnergia("Ganho de energia (1)", "Ganha 1 ponto de energia", 1);
+    public static Efeito ganhaEnergiaTest = new GanhaEnergia("Ganho de energia (60)", "Ganha 60 pontos de energia", 60);
     public static Efeito pactoSinistro = new AumentaDano(Cor.txtCinza("Pacto Sinistro"), "Aumenta o dano causado em 2 por 2 rodadas", 2, 2);
     
     // novos efeitos
@@ -102,7 +104,7 @@ public class Moldes {
     // poderes -------------
     public static Poder dedoNervoso = new MaosLeves(("JOHN WICK!"), "Sempre que atirar, ATIRE NOVAMENTE! pelo tanto de acumulos desse poder.", 1);
     public static Poder mestreLaminas = new MaosLeves(("MESTRE DAS LÂMINAS"), "Sempre que cortar, CORTE NOVAMENTE! pelo tanto de acumulos desse poder.", 2);
-    public static Poder cartaAdicional = new CartaAdicional("Pacto de sangue", "No início de cada turno, puxe 1 carta adicional e perca 1 ponto de vida.", 1);
+    public static Poder cartaAdicional = new CartaAdicional("CONTRATO DE SANGUE", "No início de cada turno, puxe 1 carta adicional e perca 1 ponto de vida.", 1);
 
     public static void carregar(){
         // cartas ---
@@ -128,9 +130,11 @@ public class Moldes {
         puxaCarta = new CartaHabilidade("Ganancia", "Puxe duas cartas da sua pilha de compras", 1, efeitoPuxaCarta2, true);
         energizar = new CartaHabilidade("ENERGIZAR!", "Ganhe mais 2 pontos de energia no começo da próxima rodada!", 1, efeitoEnergizado, true);
         energiaGratis = new CartaHabilidade("Energia!", "Ganhe 1 ponto de energia", 0, ganhaEnergia1, true);
+        energiaSupremo = new CartaHabilidade("Energia!!!!!!!!!!!", "Ganhe muitos ponto de energia", 0, ganhaEnergiaTest, true);
+        
         chocolex = new CartaHabilidade("Chocolex", "[CONSUMIR] - Adiciona um Resenhax na sua pilha de compras.", 2, ganhaResenhax, true); chocolex.setConsumir(true);
         resenhax = new CartaHabilidade("Resenhax", "[CONSUMIR] - Adiciona um Clubex na sua pilha de compras.", 2, ganhaClubex, true); resenhax.setConsumir(true);
-        pactoSangue = new CartaHabilidade("Pacto de sangue", "Pague 1 ponto de vida e escolha uma carta da sua pilha de compras.", 2, escolheCarta, true); pactoSangue.setSacrificio(1);
+        pactoSangue = new CartaHabilidade("Pacto de sangue", "Pague (1) vida e escolha uma carta.", 2, escolheCarta, true); pactoSangue.setSacrificio(1);
 
         dedoNervosoCarta = new CartaPoder("JOHN WICK", "[CONSUMIR] - Para cada acúmulo, atire novamente sempre que usar uma carta de tiro!", 2, dedoNervoso);
         mestreLaminasCarta = new CartaPoder("[CONSUMIR] - Mestre das lâminas", "Para cada acúmulo, corte novamente sempre que usar uma carta de corte!", 2, mestreLaminas);

@@ -16,7 +16,7 @@ public class Mapa {
         this.heroi = _heroi;
     }
 
-    ArvoreEventos arvoreEventos = new ArvoreEventos(3, 2, heroi); // QUANTIDADE TOTAL DE BATALHAS: P - 1 (COMEÇA DO PROFUNDIDADE 0)
+    ArvoreEventos arvoreEventos = new ArvoreEventos(3, 9, heroi); // QUANTIDADE TOTAL DE EVENTOS: P - 1 (COMEÇA DO PROFUNDIDADE 0)
     DefaultMutableTreeNode nodeInicial = arvoreEventos.criarArvore(heroi); // cria arvore e recebe a raiz
     DefaultMutableTreeNode nodeAtual = nodeInicial; // eu to chamando de node pq noAtual ia ficar muito feio
     

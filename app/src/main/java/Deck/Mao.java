@@ -96,4 +96,8 @@ public class Mao {
     public int getSize(){
         return cartas.size();
     }
+
+    public Carta getUltima(){
+        return cartas.getLast();
+    }
 }
