@@ -118,9 +118,9 @@ public class Moldes {
 
         // cartas raras ---
         bomba = new CartaAtaque("BOMBA!", "joga uma bomba que atinge TODOS os inimigos!", 4, 8); bomba.setEfeitoEmArea(true);
-        clubex = new CartaAtaque("Clubex", "[CONSUMIR] - Causa 20 pontos de dano a todos inimigos.", 4, 20); clubex.setEfeitoEmArea(true); clubex.setConsumir(true);
+        clubex = new CartaAtaque("Clubex", "[CONSUMIR] - Causa 26 pontos de dano a todos inimigos.", 4, 26); clubex.setEfeitoEmArea(true); clubex.setConsumir(true);
 
-        tiroCanhao = new CartaAtaqueComEfeito("Tiro de canhão", "dispara uma bala de canhão", 4, 12, feridas, false, 1); tiroCanhao.setResenha(Arte.TIRO4);
+        tiroCanhao = new CartaAtaqueComEfeito("Tiro de canhão", "dispara uma bala de canhão", 4, 12, feridas, false, 1); tiroCanhao.setResenha(Arte.TIRO3);
         corteProfundo = new CartaAtaqueComEfeito("Corte profundo", "", 2, 3, sangramento, false, 2); corteProfundo.setResenha(Cor.txtVermelho(Arte.CORTE));
         corteVenenoso = new CartaAtaqueComEfeito("Corte venenoso", "", 1, 1, veneno, false, 2); corteVenenoso.setResenha(Cor.txtVerdeClaro(Arte.CORTE2));
         corteDefensivo = new CartaAtaqueComEfeito("Corte defensivo", "bate e ganha escudo!", 1, 1, escudinho, true, 2); corteDefensivo.setResenha(Cor.txtAzulClaro(Arte.CORTE5));
@@ -151,7 +151,7 @@ public class Moldes {
         beberVeneno = new CartaMaldicao("Beber veneno.", "Bebe veneno.", 1, veneno, true); beberVeneno.setResenha(Cor.txtCinza(Arte.algoRuim));
 
         // inimigos --
-        barbossa = new Inimigo("Capitão Hector Barbossa", 30, 6,
+        barbossa = new Inimigo("Capitão Hector Barbossa", 30, 5,
             new Acao.Atacar()
         ); barbossa.setTier(2);
 
@@ -163,7 +163,7 @@ public class Moldes {
             new Acao.Atacar(), new Acao.AtacarEfeito(veneno)
         ); endrick.setTier(1);
 
-        drake = new Inimigo("Drake", 10, 2,
+        drake = new Inimigo("Drake", 10, 3,
             new Acao.Atacar()
         ); drake.setTier(1);
 
@@ -175,8 +175,8 @@ public class Moldes {
             new Acao.Atacar(), new Acao.AdicionarCarta(sangrar), new Acao.ReceberEfeito(odioPuro)
         ); sabrinaCarpenter.setTier(3);
             
-        tripleT = new Inimigo("TUNG TUNG TUNG SAHUR", 67, 2, // OUTRO BOSS TA MUITO ROUBADO
-            new Acao.AdicionarCarta(beberVeneno), new Acao.AdicionarCarta(sangrar), new Acao.AtacarEfeito(sangramento)
+        tripleT = new Inimigo("TUNG TUNG TUNG SAHUR", 67, 6, // OUTRO BOSS TA MUITO ROUBADO
+            new Acao.AdicionarCarta(beberVeneno), new Acao.AtacarEfeito(sangramento)
         ); tripleT.setTier(3);
         
         // efeitos que referenciam cartas precisam ser setados aqui, pq as cartas sao criadas depois.

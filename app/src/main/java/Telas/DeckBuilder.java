@@ -75,6 +75,7 @@ public class DeckBuilder {
                 heroi.addCarta(corteDefensivo);
 
                 heroi.addCarta(mestreLaminasCarta);
+                heroi.addCarta(mestreLaminasCarta);
 
                 heroi.addCarta(purificar);
                 heroi.addCarta(purificar);
@@ -88,6 +89,7 @@ public class DeckBuilder {
                 heroi.addCarta(energizar);
                 
                 heroi.addCarta(puroOdio);
+                heroi.addCarta(puroOdio);
 
                 heroi.addCarta(energiaGratis);
 
@@ -97,6 +99,9 @@ public class DeckBuilder {
 
                 heroi.addCarta(chocolex);
                 heroi.addCarta(bombaVeneno);
+                
+                heroi.addCarta(pactoSangue);
+                heroi.addCarta(pactoSangue);
             }
             /* deck de dano direto mesmo bem simples, 2 puro odio pra da mais dano ainda */
             case 1 -> {
@@ -136,6 +141,9 @@ public class DeckBuilder {
                 heroi.addCarta(chocolex);
 
                 heroi.addCarta(bombaVeneno);
+
+                heroi.addCarta(pactoSangue);
+                heroi.addCarta(pactoSangue);
             }  
             /* muita carta roubada porem voce começa com um monte de maldiçoes (1/3 do deck atualmente)*/
             case 2 -> {

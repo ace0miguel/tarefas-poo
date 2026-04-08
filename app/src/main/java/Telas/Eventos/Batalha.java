@@ -155,7 +155,7 @@ public class Batalha extends Evento {
         while (true) { 
             int i = 0;
             Textos.limpaTela();
-            Cor.printaAmarelo(Arte.selecioneAlvo);
+            Cor.printaAmareloClaro(Arte.selecioneAlvo6);
             System.out.println();
 
             System.out.println((Cor.amarelo + "0 - " + Cor.cinza + "Voltar."));
