@@ -1,35 +1,100 @@
-# Pirata do Caribe - Jogo de Duelo
+# Piratas do Caribe - Card Game
+
+Jogo de cartas em turnos no terminal, com foco em combate, efeitos de status, construção de deck e batalhas contra múltiplos inimigos.
 
 ## Descrição
 
-Um jogo de duelo por turnos onde você controla o **Capitão Jack Sparrow** em uma batalha contra o **Capitão Barbossa** e seus marujos figurantes. Use cartas de ataque e defesa para derrotar seu inimigo antes que ele o derrote!
+Você joga como Jack Sparrow e enfrenta encontros no mapa utilizando cartas. A instancia base das cartas, dos efeitos e dos inimigos está centralizada em `Moldes`.
 
-### Mecânica do Jogo
-- **Cartas de Dano**: Ataque o inimigo gastando energia
-- **Cartas de Escudo**: Defenda-se contra ataques
-- **Sistema de Energia**: Recupere energia ao encerrar seu turno
-- **Objetivo**: Reduzir a vida dos inimigos a 0 antes que eles reduzam a sua
+## Mecanicas especiais
 
-## Efeitos de status
-- **Ódio puro**: Aumenta o dano causado pelo alvo
-- **Sangramento**: Causa dano continuo no alvo
+- Ao usar todas as cartas da sua mao, receba uma nova mao completa e 2 pontos de energia!
+- Pague 5 dinheiros pra remover uma carta do seu baralho no deckBuilder™.   
+- [CONSUMIR] - Cartas que ao serem utilizadas nao voltam pra sua mao até o fim do combate
 
-## Compilação
+## Cartas 
 
-Execute o seguinte comando, da raíz do projeto:
+### Ataque
+- Tiro de revolver
+- Tiro de escopeta
+- Tiro de canhão (aplica Feridas)
+- Corte profundo (aplica Sangramento)
+- Corte venenoso (aplica Veneno)
+- Corte defensivo (dano + escudo)
+- Corte rapido (dano + energia)
+- Desprezo. (dano alto + aplica Ego no alvo)
+- BOMBA! (dano em area)
+- BOMBA DE VENENO! (dano em area + aplica Veneno)
+- Clubex ([CONSUMIR], dano em area)
+
+### Habilidade
+- Aura (Aumento de resistencia)
+- Postura de defesa (Escudo)
+- Shieldao (Escudo alto)
+- RECEBA! (Purificar)
+- Ego. (Aumento de dano)
+- Ganancia (Puxe duas cartas)
+- ENERGIZAR! (Receba 2 pontos de energia no proximo turno)
+- Energia! (Recebe 1 ponto de energia)
+- Chocolex ([CONSUMIR], adiciona um Resenhax na sua pilha de compras)
+- Resenhax ([CONSUMIR], adiciona um Clubex na sua pilha de compras)
+- Pacto de sangue (sacrifica vida para escolher uma carta da pilha de compras)
+
+### Poder
+- [CONSUMIR] - JOHN WICK (sempre que usar uma carta de tiro, use novamente)
+- [CONSUMIR] - Mestre das laminas (sempre que usar uma carta de corte, use novamente)
+- [CONSUMIR] - Contrato de sangue (perca 1 de vida a cada inicio de rodada e receba uma carta extra)
+
+### Maldiçoes
+- Descubra...
+
+## Efeitos
+
+### Dano constante
+- Sangramento - A cada início de rodada, aplica um ponto de dano por acúmulo. Ao acumular cinco acúmulos, causa todo o dano restante instantaneamente (numero de acumulos x duraçao) e zera os acumulos. 
+- Veneno - A cada início de rodada, aplica sua duraçao restante em dano. Ao matar um alvo afetado por Veneno, o veneno se espalha para todos os outros.
+- Feridas - A cada início de rodada, aplica um ponto de dano.
+
+### Buffs
+- Ego (Aumenta o dano causado)
+- Aura (Reduz o dano recebido)
+- Pacto Sinistro (Aumenta o dano causado em 2)
+
+### Instantaneos e utilitarios
+- Ganho de escudo
+- Purificar - remove todos os efeitos aplicados em si mesmo. (incluindo positivos)
+- Ganho de energia
+- Energizado
+
+## Compilacao (Gradle)
+
+Execute na raiz do projeto.
+
+### Windows (PowerShell / CMD)
 ```bash
-javac -d bin $(find src -name "*.java")
+.\gradlew.bat :app:compileJava
 ```
 
-## Execução
-
-Execute o programa:
+### Linux / macOS
 ```bash
-java -cp bin App
+./gradlew :app:compileJava
 ```
 
-### Como Jogar
-1. O jogo exibe o status de ambos os personagens.
-2. Escolha uma ação baseada nas cartas disponíveis.
-3. Continue até matar o seu inimigo (ou morrer tentando)!
+### Compilacao completa do projeto (com testes)
+```bash
+.\gradlew.bat build
+```
+
+## Execucao
+
+### Rodar pelo Gradle
+```bash
+.\gradlew.bat :app:run
+```
+
+## Como jogar
+1. Inicie o jogo e escolha seu deck inicial.
+2. Em cada turno, use energia para jogar cartas.
+3. Combine ataques, buffs, debuffs e poderes para controlar a luta.
+4. Vença os encontros do mapa para finalizar a campanha.
 
