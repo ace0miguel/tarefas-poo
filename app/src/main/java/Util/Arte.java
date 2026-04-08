@@ -744,14 +744,14 @@ public static String fogueira = """
 ▀▀         ▀▀▀                           
 """;
 
-public static String fogueiraColorida = Cor.laranja + """                                    
+public static String fogueiraColorida = Cor.reset + """                                    
   ▄▄                                     
  ██                                      
 ▄██▄         ▄▄             ▀▀ ▄         
-""" + Cor.laranja + """
+""" + Cor.reset + """
  ██ ▄███▄ ▄████ ██ ██ ▄█▀█▄ ██ ████▄▄▀▀█▄
  ██ ██ ██ ██ ██ ██ ██ ██▄█▀ ██ ██   ▄█▀██
-""" + Cor.vermelho + """
+""" + Cor.amareloClaro + """
 ▄██▄▀███▀▄▀████▄▀██▀█▄▀█▄▄▄▄██▄█▀  ▄▀█▄██
  ██          ██                          
 ▀▀         ▀▀▀                            

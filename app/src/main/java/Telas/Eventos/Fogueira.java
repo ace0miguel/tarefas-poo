@@ -10,13 +10,13 @@ import Util.Cor;
 import Util.InputHandler;
 
 public class Fogueira extends Evento{
-    List<String> opcoes = new ArrayList<>(Arrays.asList("Descansar", "Ganhar cartas(nao ta pronto ainda vc nao vai ganhar nada)"));
+    List<String> opcoes = new ArrayList<>(Arrays.asList("Descansar\n", "Ganhar cartas(nao ta pronto ainda vc nao vai ganhar nada)"));
 
     @Override
     public void iniciar(Heroi heroi) {
         this.heroi = heroi;
 
-        int escolha = InputHandler.selecionar(opcoes, Cor.txtCinza(Arte.fogueira) + "\n" + Cor.txtCinza(Arte.bordaHud4));
+        int escolha = InputHandler.selecionar(opcoes, Cor.txtCinza(Arte.fogueiraColorida) + "\n" + Cor.txtAmareloClaro(Arte.bordaHud4));
         switch (escolha) {
             case 0:
                 heroi.ganhaVida(heroi.getVidaMax()/3);

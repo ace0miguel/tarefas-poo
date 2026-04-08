@@ -4,9 +4,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import Cartas.Carta;
-import Entidades.Heroi;
-
 public class InputHandler {
     private static Scanner leitor = new Scanner(System.in);
 
@@ -68,14 +65,14 @@ public class InputHandler {
             }
 
             if (exit) {
-                System.out.println(Cor.txtCinza(0 + " > Voltar.")); Textos.sleep(tempoSleep);
+                System.out.println((Cor.cinza + 0 + Cor.txtAmarelo(" > ") + Cor.txtCinza("voltar."))); Textos.sleep(tempoSleep);
             }
             
             // se tiver exit, ele vai ser o 0 entao tem q printar a partir do 1
             int corretor = exit? 1 : 0;
 
             for(int i = 0; i < lista.size(); i++) {
-                System.out.println(((i + corretor) + " > " + lista.get(i))); Textos.sleep(tempoSleep);
+                System.out.println(((i + corretor) + Cor.txtAmarelo(" > ") + lista.get(i))); Textos.sleep(tempoSleep);
             }
 
 
