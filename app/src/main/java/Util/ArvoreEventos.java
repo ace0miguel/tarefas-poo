@@ -41,7 +41,7 @@ public class ArvoreEventos {
     public Evento escolherEvento(int profundidadeAtual, Heroi heroi) { // da pra da uma personalizadinha aqui dps so fiz o basico
         
         
-        if (profundidadeAtual == 0)
+        if (profundidadeAtual == 5)
             { // a primeira vai ser facinha pq eu sou bonzinho
             return new Batalha(loudCoringa.criaCopia(), barbossa.criaCopia(), endrick.criaCopia());
         } 
