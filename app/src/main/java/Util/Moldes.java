@@ -193,12 +193,14 @@ public class Moldes {
         // efeitos ------
         listaEfeitosMoldes.addAll(Arrays.asList(sangramento, veneno, odioPuro, aumentaResistencia, 
             escudinho, escudao, purificarEfeito, feridas, ganhaEnergia2, 
-            ganhaEnergia1, efeitoPuxaCarta2, efeitoEnergizado, pactoSinistro));
+            ganhaEnergia1, ganhaEnergiaTest, efeitoPuxaCarta2, efeitoEnergizado, 
+            ganhaResenhax, ganhaClubex, escolheCarta, pactoSinistro, veneno4)); 
         
         // cartas -------
         listaCartasMoldes.addAll(Arrays.asList(tiro, tiroEscopeta, tiroCanhao, corteProfundo, 
             corteVenenoso, corteDefensivo, corteRapido, desprezo, armadura, escudoMadeira, 
             escudoFerro, purificar, puroOdio, puxaCarta, energizar, energiaGratis, dedoNervosoCarta, 
-            mestreLaminasCarta, sangrar));
+            mestreLaminasCarta, bomba, bombaVeneno, chocolex,
+            contratoSangue, pactoSangue));
     }
 }

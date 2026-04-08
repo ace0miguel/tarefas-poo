@@ -10,20 +10,35 @@ public abstract class Carta {
 
     private String nome;
     private String descricao;
+    /** custo em energia da carta */
     private int custo;
+    /** se true, o efeito associado a carta é aplicado em si mesmo */
     private boolean selfCast;
+    /** exibido ao utilizar a carta (de preferencia uma arte ascii) */
     private String resenha = "";
-    protected boolean efeitoEmArea = false; // so ta implementado pra ataque por enquanto, falta coloca no habilidade!
+    /** true: afeta TODOS os inimigos */
+    protected boolean efeitoEmArea = false;
+    /** true: ao ser utilizada vai pra uma pilha de descartes separada */
     protected boolean consumir = false; // se verdadeiro, a carta vai pra uma pilha de descarte especial ao ser usada. (nao volta pra mao)
+    //** vida perdida ao usar a carta. */
     protected int sacrificio = 0; // variavel pra definir um custo em vida ao se usar a carta.
 
-    /*  -------------------------------------------------
+    /**  -------------------------------------------------
     dicionario de tipos de ação:
     0 - nenhum
     1 - disparo
     2 - corte 
     ----------------------------------------------------- */
     protected int tipo = 0; 
+
+    /** --------------------------------------------------
+    dicionario de raridades:
+    1 - comum
+    2 - incomum 
+    3 - rara
+    4 - especial ?
+    ----------------------------------------------------- */
+    protected int raridade = 1;
 
     public Carta(String nome, String descricao, int custo){
         this.nome = nome;
@@ -49,6 +64,7 @@ public abstract class Carta {
         this.consumir = copia.getConsumir();
         this.setEfeitoEmArea(copia.getEfeitoEmArea());
         this.setSacrificio(copia.sacrificio);
+        this.raridade = copia.raridade;
     }
 
     // Getters --------------------------------------
@@ -105,6 +121,10 @@ public abstract class Carta {
     public int getSacrificio() {
         return sacrificio;
     }
+
+    public int getRaridade() {
+        return raridade;
+    }
     // Setters --------------------------------------
     
     public void setSelfCast(boolean selfCast) {
@@ -137,6 +157,10 @@ public abstract class Carta {
 
     public void setSacrificio(int sacrificio) {
         this.sacrificio = sacrificio;
+    }
+
+    public void setRaridade(int raridade) {
+        this.raridade = raridade;
     }
 
     // ---------------------------------------------
