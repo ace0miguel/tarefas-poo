@@ -7,6 +7,7 @@ import Util.Arte;
 import Util.ArvoreEventos;
 import Util.Cor;
 import Util.InputHandler;
+import Util.RNGHandler;
 import Util.Textos;
 
 public class Mapa {
@@ -16,7 +17,7 @@ public class Mapa {
         this.heroi = _heroi;
     }
 
-    ArvoreEventos arvoreEventos = new ArvoreEventos(3, 9, heroi); // QUANTIDADE TOTAL DE EVENTOS: P - 1 (COMEÇA DO PROFUNDIDADE 0)
+    ArvoreEventos arvoreEventos = new ArvoreEventos(3, 6, heroi); // QUANTIDADE TOTAL DE EVENTOS: P + 1 (COMEÇA DO PROFUNDIDADE 0)
     DefaultMutableTreeNode nodeInicial = arvoreEventos.criarArvore(heroi); // cria arvore e recebe a raiz
     DefaultMutableTreeNode nodeAtual = nodeInicial; // eu to chamando de node pq noAtual ia ficar muito feio
     
@@ -36,6 +37,10 @@ public class Mapa {
     }
 
     public void irPara(int n){ // se nao passar nada passa baseado no nó atual
+        if (RNGHandler.check(15)){ // tem uma chance de 15% tomar o golden freddy
+            System.out.println(Cor.txtAmarelo(Arte.GOLDENFREDDY));
+            InputHandler.esperar();
+        }
         irPara(nodeAtual, n);
     }
 

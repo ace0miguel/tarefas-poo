@@ -16,7 +16,7 @@ public class Fogueira extends Evento{
     public void iniciar(Heroi heroi) {
         this.heroi = heroi;
 
-        int escolha = InputHandler.selecionar(opcoes,Arte.fogueira);
+        int escolha = InputHandler.selecionar(opcoes, Cor.txtCinza(Arte.fogueira) + "\n" + Cor.txtCinza(Arte.bordaHud4));
         switch (escolha) {
             case 0:
                 heroi.ganhaVida(heroi.getVidaMax()/3);

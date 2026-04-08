@@ -118,7 +118,7 @@ public class Moldes {
 
         // cartas raras ---
         bomba = new CartaAtaque("BOMBA!", "joga uma bomba que atinge TODOS os inimigos!", 4, 8); bomba.setEfeitoEmArea(true);
-        clubex = new CartaAtaque("Clubex", "[CONSUMIR] - Causa 20 pontos de dano a todos inimigos.", 5, 20); clubex.setEfeitoEmArea(true); clubex.setConsumir(true);
+        clubex = new CartaAtaque("Clubex", "[CONSUMIR] - Causa 20 pontos de dano a todos inimigos.", 4, 20); clubex.setEfeitoEmArea(true); clubex.setConsumir(true);
 
         tiroCanhao = new CartaAtaqueComEfeito("Tiro de canhão", "dispara uma bala de canhão", 4, 12, feridas, false, 1); tiroCanhao.setResenha(Arte.TIRO4);
         corteProfundo = new CartaAtaqueComEfeito("Corte profundo", "", 2, 3, sangramento, false, 2); corteProfundo.setResenha(Cor.txtVermelho(Arte.CORTE));
@@ -140,7 +140,7 @@ public class Moldes {
         energiaSupremo = new CartaHabilidade("Energia!!!!!!!!!!!", "Ganhe muitos ponto de energia", 0, ganhaEnergiaTest, true);
         
         chocolex = new CartaHabilidade("Chocolex", "[CONSUMIR] - Adiciona um Resenhax na sua pilha de compras.", 2, ganhaResenhax, true); chocolex.setConsumir(true);
-        resenhax = new CartaHabilidade("Resenhax", "[CONSUMIR] - Adiciona um Clubex na sua pilha de compras.", 2, ganhaClubex, true); resenhax.setConsumir(true);
+        resenhax = new CartaHabilidade("Resenhax", "[CONSUMIR] - Adiciona um Clubex na sua pilha de compras.", 3, ganhaClubex, true); resenhax.setConsumir(true);
         pactoSangue = new CartaHabilidade("Pacto de sangue", "Pague (1) vida e escolha uma carta.", 2, escolheCarta, true); pactoSangue.setSacrificio(1);
 
         dedoNervosoCarta = new CartaPoder("JOHN WICK", "[CONSUMIR] - Para cada acúmulo, atire novamente sempre que usar uma carta de tiro!", 2, dedoNervoso);

@@ -15,6 +15,7 @@ import static Util.Moldes.beberVeneno;
 import static Util.Moldes.bomba;
 import static Util.Moldes.bombaVeneno;
 import static Util.Moldes.chocolex;
+import static Util.Moldes.contratoSangue;
 import static Util.Moldes.corteDefensivo;
 import static Util.Moldes.corteProfundo;
 import static Util.Moldes.corteRapido;
@@ -28,7 +29,6 @@ import static Util.Moldes.escudoFerro;
 import static Util.Moldes.escudoMadeira;
 import static Util.Moldes.mestreLaminasCarta;
 import static Util.Moldes.pactoSangue;
-import static Util.Moldes.contratoSangue;
 import static Util.Moldes.purificar;
 import static Util.Moldes.puroOdio;
 import static Util.Moldes.puxaCarta;
@@ -96,6 +96,7 @@ public class DeckBuilder {
                 heroi.addCarta(escudoMadeira);
 
                 heroi.addCarta(chocolex);
+                heroi.addCarta(bombaVeneno);
             }
             /* deck de dano direto mesmo bem simples, 2 puro odio pra da mais dano ainda */
             case 1 -> {

@@ -9,7 +9,6 @@ import static Util.Moldes.listaCartasMoldes;
 
 /** Aqui ficam todos os metodos pra dar recompensas ao jogador (cartas, dinheiro, etc) */
 public class Recompensas {
-
     // parei pra analisa nenhuma dessas funçao deve ta certa tem q da uma refazida 
 
     /**  retorna uma carta aleatoria

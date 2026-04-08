@@ -9,7 +9,6 @@ import Entidades.Heroi;
 import Telas.Eventos.Batalha;
 import Telas.Eventos.Evento;
 import Telas.Eventos.Fogueira;
-
 import static Util.Moldes.barbossa;
 import static Util.Moldes.drake;
 import static Util.Moldes.endrick;
@@ -41,13 +40,19 @@ public class ArvoreEventos {
 
     public Evento escolherEvento(int profundidadeAtual, Heroi heroi) { // da pra da uma personalizadinha aqui dps so fiz o basico
         
-        if (profundidadeAtual == p) { // se chegou no maximo vai toma a batalha mais dificil quero nem saber VAI LUTA COM TODO MUNDO
-            return new Batalha(barbossa.criaCopia(), loudCoringa.criaCopia(), endrick.criaCopia(), drake.criaCopia(), paulAtreides.criaCopia(), sabrinaCarpenter.criaCopia(), tripleT.criaCopia());
-        } else if (profundidadeAtual == 0){
-            return new Batalha(loudCoringa.criaCopia(), barbossa.criaCopia(), endrick.criaCopia()); // mas a primeira vai ser facinha pq eu sou bonzinho
-        } else if (profundidadeAtual % 2 == 0) { // a cada uma luta vai ter um evento aleatorio (por enquanto só fogueira)
+        
+        if (profundidadeAtual == 0)
+            { // a primeira vai ser facinha pq eu sou bonzinho
+            return new Batalha(loudCoringa.criaCopia(), barbossa.criaCopia(), endrick.criaCopia());
+        } 
+        else if (profundidadeAtual % 2 == 0) 
+            { // a cada uma luta mais ou menos vai ter um evento aleatorio (por enquanto só fogueira)
             return new Fogueira();
         }
+        else if (profundidadeAtual == p) 
+            { // se chegou no maximo vai toma a batalha mais dificil quero nem saber VAI LUTA COM TODO MUNDO
+            return new Batalha(barbossa.criaCopia(), loudCoringa.criaCopia(), endrick.criaCopia(), drake.criaCopia(), paulAtreides.criaCopia(), sabrinaCarpenter.criaCopia(), tripleT.criaCopia());
+        } 
 
         int sorteio = RNGHandler.valorAleatorio(100);
 
