@@ -237,6 +237,15 @@ public class Textos {
         }
     }
 
+    /** printalinhadevagar com tempo fixo */
+    public static void printaLinhaDevagar(String texto, int tempo) {
+        String[] linhas = texto.split("\n");        
+        for (String linha : linhas) {
+            System.out.println(linha);
+            sleep(tempo);
+        }
+    }
+
     /** recebe uma string e um tempo e printa coluna por coluna esperando o tempo entre cada uma */
     public static void printaColunaDevagar(String texto, int tempoMs) {
         String[] linhas = texto.split("\n");
@@ -293,6 +302,22 @@ public class Textos {
             System.out.print("\u001B[1A\u001B[2K");
         }
         System.out.flush(); 
+    }
+
+    public static void dado(int valor, int valorMax) {
+        int tempoSleep = 20; 
+
+        for (int i = 0; i < 25; i++) {
+            int valorFalso = RNGHandler.valorAleatorio(valorMax); 
+            
+            System.out.print("\r" + valorFalso + "   ");
+            
+            sleep(tempoSleep);
+
+            tempoSleep += (i * 2); 
+        }
+        
+        System.out.println("\r" + Cor.txtAmarelo(String.valueOf(valor)) + "   "); 
     }
 
     /* BARQUINHO Q EU TINHA FEITO PRA HUD ANTIGA TO COM DÓ DE APAGAR DEU MO TRABALHO :(

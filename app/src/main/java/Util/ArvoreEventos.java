@@ -8,7 +8,9 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import Telas.Eventos.Batalha;
 import Telas.Eventos.Evento;
 import Telas.Eventos.Fogueira;
-import Telas.Eventos.Loja;  
+import Telas.Eventos.Loja;
+import Telas.Eventos.Tigrinho;
+
 import static Util.Moldes.barbossa;
 import static Util.Moldes.drake;
 import static Util.Moldes.endrick;
@@ -44,7 +46,8 @@ public class ArvoreEventos {
     public Evento escolherEvento(int profundidadeAtual) { // da pra da uma personalizadinha aqui dps so fiz o basico   
         if (profundidadeAtual == 0)
             { // a primeira vai ser facinha pq eu sou bonzinho
-            return new Batalha(loudCoringa.criaCopia(), barbossa.criaCopia(), endrick.criaCopia());
+                return new Tigrinho();
+            // return new Batalha(loudCoringa.criaCopia(), barbossa.criaCopia(), endrick.criaCopia());
         } 
         else if (profundidadeAtual % 2 == 0) 
             { // a cada uma luta mais ou menos vai ter um evento aleatorio (por enquanto só fogueira)

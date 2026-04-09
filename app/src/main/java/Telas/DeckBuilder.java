@@ -238,7 +238,11 @@ public class DeckBuilder {
 
                 heroi.addCarta(bomba);
                 heroi.addCarta(bomba);
-                
+                heroi.addCarta(bomba);
+                heroi.addCarta(bomba);
+                heroi.addCarta(bomba);
+                heroi.addCarta(bomba);
+           
                 heroi.addCarta(puxaCarta);
                 heroi.addCarta(puxaCarta); 
 
@@ -253,6 +257,8 @@ public class DeckBuilder {
                 heroi.addCarta(pactoSangue);
 
                 heroi.addCarta(contratoSangue);
+
+                heroi.ganhaDinheiro(100);
             }
         }
         Textos.limpaTela();

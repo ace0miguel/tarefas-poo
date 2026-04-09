@@ -30,22 +30,30 @@ public class InputHandler {
         esperar(Cor.txtCinza("\n[ Pressione ENTER para continuar ]"));
     }
 
-    // versoes do selecionar pra vc poder passar so a lista ou so lista e msg ou so lista e exit.
+    // versoes do selecionar (o unico parametro obrigatorio é a lista).
     public static <T> int selecionar(List<T> lista) {
-        return selecionar(lista, false, "");
+        return selecionar(lista, false, "", "");
     }
 
     public static <T> int selecionar(List<T> lista, String mensagem) {
-        return selecionar(lista, false, mensagem);
+        return selecionar(lista, false, mensagem, "");
     }
 
     public static <T> int selecionar(List<T> lista, boolean exit) {
-        return selecionar(lista, exit, "");
+        return selecionar(lista, exit, "", "");
+    }
+
+    public static <T> int selecionar(List<T> lista, boolean exit, String mensagemInicial) {
+        return selecionar(lista, exit, mensagemInicial, "");
     }
 
     /** recebe uma lista e printa, se for de objetos ele vai usar o metodo .toString(), se for string ela so printa.
-    valida a escolha e retorna o numero escolhido, se tiver a opçao exit e o usuario escolher vai retonar -1.*/
-    public static <T> int selecionar(List<T> lista, boolean exit, String mensagemInicial) { 
+    valida a escolha e retorna o numero escolhido, se tiver a opçao exit e o usuario escolher vai retonar -1.
+    @param lista : lista de opções
+    @param exit : opção de voltar
+    @param mensagemInicial : mensagem a ser exibida acima das opções
+    @param exitMsg : substitui a opção voltar pela string desejada*/
+    public static <T> int selecionar(List<T> lista, boolean exit, String mensagemInicial, String exitMsg) { 
         if (lista.isEmpty() && !exit) { // se a lista vier vazia e nao tiver nada pra voltar retorna
             Cor.printaVermelho(">> ERRO << LISTA VAZIA E NAO TEM EXIT\n");
             esperar();
@@ -68,7 +76,8 @@ public class InputHandler {
             }
 
             if (exit) {
-                System.out.println((Cor.cinza + 0 + Cor.txtAmarelo(" > ") + Cor.txtCinza("voltar."))); Textos.sleep(tempoSleep);
+                System.out.println((Cor.cinza + 0 + Cor.txtAmarelo(" > ") + 
+                Cor.txtCinza((exitMsg.equals("") ? "Voltar." : exitMsg)))); Textos.sleep(tempoSleep);
             }
             
             // se tiver exit, ele vai ser o 0 entao tem q printar a partir do 1
@@ -192,6 +201,38 @@ public class InputHandler {
 
     public static int menu(List<List<String>> matrizPaginas, AtomicInteger pagina){
         return menu(matrizPaginas, pagina, true);
+    }
+
+    public static int lerInt(){
+        int escolha;
+        while (true){
+            try {
+                escolha = leitor.nextInt();
+                break;
+            } catch (Exception e) {
+                esperar("digite um número válido!");
+                if (leitor.hasNextLine()) {
+                    String linha = leitor.nextLine();
+                }
+            }
+        }
+        return escolha;
+    }
+
+    public static String lerString(){
+        String input;
+        while (true){
+            try {
+                input = leitor.nextLine();
+                break;
+            } catch (Exception e) {
+                esperar("digite um texto válido!");
+                if (leitor.hasNextLine()) {
+                    String linha = leitor.nextLine();
+                }
+            }
+        }
+        return input;
     }
 }
 
