@@ -28,8 +28,8 @@ import Util.Textos;
 public class Batalha extends Evento {
     private int turno; // 0 -> heroi, 1 -> inimigos
     private Inimigo[] arrayInimigos; // inimigos em forma de array pq infelizmente as vezes precisa :(
-    private List<Inimigo> inimigos; // inimigos em forma de lista pq é bom !
-    private int recompensa = 0; // recompensa em dinheiro pela batalha, baseada na dificuldade
+    private List<Inimigo> inimigos; // inimigos em forma de lista pq é bom ! :)
+    private int recompensa = 0; // recompensa em dinheiro pela batalha, baseada no tier dos inimigos
 
     private Mao mao = new Mao();
     private PilhaCompra pilhaCompra = new PilhaCompra();
@@ -55,7 +55,7 @@ public class Batalha extends Evento {
         return inimigos;
     }
 
-    // recebe heroi, define as variáveis e chama a classe principal.
+    /** recebe heroi, define as variáveis e chama a classe principal. */
     @Override
     public void iniciar(Heroi heroi){
         
@@ -83,8 +83,6 @@ public class Batalha extends Evento {
         batalha();
     }
 
-    /* reseta os bonus do heroi, notifica os efeitos, printa os q precisarem, notifica possiveis mortes,
-     limpa os efeitos que ja acabaram, notifica os poderes */
     public void passaRodada(){
         heroi.resetEfeitos();
 
@@ -132,7 +130,7 @@ public class Batalha extends Evento {
         if (turno == 0) passaRodada();
     }
 
-    // notifica acabar e remove os efeitos a serem removidos (0 duraçao, 0 stacks ou purificar) 
+    /** notifica acabar e remove os efeitos a serem removidos (0 duraçao, 0 stacks ou purificar) */
     public void limpaEfeitos(){     
         for (Efeito efeito : listaEfeitos ) {
             if ((efeito.getDur() <= 0 || efeito.getStacks() <= 0 || efeito.getAlvo().getPurificar() == true) && !(efeito instanceof Purificar)){
@@ -149,7 +147,7 @@ public class Batalha extends Evento {
         listaEfeitos.removeIf(efeito -> (efeito instanceof Purificar));
     }
 
-    /* printa os inimigos vivos, valida a escolha e retorna o q vc escolheu. */
+    /** printa os inimigos vivos, valida a escolha e retorna o q vc escolheu. retorno -1: voltar*/
     public int selecionarAlvo(){  // falta fazer uma opçao pra voltar caso ele mude de ideia sobre a carta!
         int opcao = -1;
         while (true) { 
@@ -192,7 +190,7 @@ public class Batalha extends Evento {
         return opcao - 1; 
     }
 
-    //adiciona um efeito na lista de efeitos e notifica onCreate
+    /** adiciona um efeito na lista de efeitos e notifica onCreate */
     public void adicionarEfeito(Efeito efeito) { 
         for (Efeito e : listaEfeitos) {
 
@@ -225,7 +223,7 @@ public class Batalha extends Evento {
         this.listaEfeitos.sort(Comparator.comparing(Efeito::getPrioridade)); // ordena os efeitos por prioridade pra sangramento sobrepor resistencia
     }
 
-    // adiciona um poder na lista, se ja tiver stacka
+    /** adiciona um poder na lista, se ja tiver stacka */
     public void adicionarPoder(Poder poder){
         for (Poder e : listaPoderes) {
             if (e.getNome().equals(poder.getNome())){
@@ -236,7 +234,7 @@ public class Batalha extends Evento {
         this.listaPoderes.add(poder);
     }
 
-    // avisa os efeitos com aplicação quando o alvo morre, antes de remover da lista de inimigos
+    /** avisa os efeitos com aplicação quando o alvo morre, antes de remover da lista de inimigos */
     public void notificaMorte(){
 
         // ve se morreu todo mundo e ja retorna
@@ -354,7 +352,7 @@ public class Batalha extends Evento {
                         } 
                         alvoSelecionado = inimigos.get(alvo);
                         if (cartaEscolhida.temResenha())
-                            Textos.limpaTela();
+                            Textos.sobeTela();
                         cartaEscolhida.usar(heroi, alvoSelecionado, this); 
                     }
 
@@ -437,12 +435,15 @@ public class Batalha extends Evento {
         Textos.sleep(1500);
         Textos.limpaTela();
 
+        // derrota
         if(!heroi.estaVivo() == false){
             Textos.printaLinhaDevagar(Arte.venceu2);
             System.out.println();
             InputHandler.esperar();
             heroi.ganhaDinheiro(this.recompensa);
-        } else {
+        } 
+        // vitoria
+        else {
             System.out.println();
             Textos.printaLinhaDevagar(Cor.txtCinza(Arte.sans2));
             System.out.println();

@@ -5,7 +5,7 @@ import Entidades.Entidade;
 import Entidades.Heroi;
 import Telas.Eventos.Batalha;
 
-// altera o dano causado por ataques do alvo pelo valor passado (positivo aumenta, negativo reduz)
+/** altera o dano causado por ataques do alvo pelo valor passado (positivo aumenta, negativo reduz) */
 public class AumentaDano extends Buff {
 
 

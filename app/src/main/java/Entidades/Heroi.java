@@ -14,19 +14,18 @@ import Util.Textos;
 public class Heroi extends Entidade {
     private int energia;
     private int energiaMax;
-    private int energiaBonus; // soma na energia no começo da rodada e reseta.
+    private int energiaBonus; // energia extra a ganhar no começo da rodada
 
     private int dinheiro = 0; 
 
     private List<Carta> baralho = new ArrayList<>(); // todas as cartas q o jogador tem e ta usando
     private List<Carta> inventarioCartas = new ArrayList<>(); // todas as cartas q o jogador tem mas nao ta usando
 
-    // pra poder acessar a mao e as pilhas pelo heroi
+    // guarda a mao e as pilhas por referencia
     private Mao maoAtual;
     private PilhaCompra pilhaCompra;
     private PilhaDescarte pilhaDescarte;
 
-    /* inicializa os atributos */
     public Heroi(String nome, int vida, int energiaMax){
         super(nome, vida);
         this.energiaMax = energiaMax;
@@ -150,6 +149,9 @@ public class Heroi extends Entidade {
         this.energia += valor;
     }
 
+    /** Imprime a energia atual do heroi, com cores diferentes a depender da
+     * quantidade atual.
+     */
     public String statusEnergia(){
         if (this.energia > this.energiaMax){ // da pra passar do max com cartas
             Cor.setRosa();
@@ -172,6 +174,12 @@ public class Heroi extends Entidade {
         baralho.add(c.criaCopia());
     }
 
+    public void addCartas(Carta c, int quantidade){
+        for (int i = 0; i < quantidade; i++){
+            addCarta(c);
+        }
+    }
+
     public void removeCarta(Carta c){
         baralho.remove(c);
     }
@@ -185,7 +193,9 @@ public class Heroi extends Entidade {
         inventarioCartas.remove(c);
     }
 
-    // adiciona a carta de um e remove do outro, se nao tiver em nenhum printa msg de erro. maldiçao nao da pra tirar.
+    /** Troca uma carta entre o baralho e o inventário
+     * @param c : carta a ser trocada
+     */
     public void trocaCarta(Carta c){
         if (c instanceof CartaMaldicao){
             Textos.limpaTela();
@@ -207,7 +217,7 @@ public class Heroi extends Entidade {
         InputHandler.esperar();
     }
 
-    // cuida de tudo q tem q ser resetado/setado no fim e de cada rodada
+    /** reseta o estado do heroi e soma a energia bonus */
     @Override
     public void passaRodada(){
         resetarBonus();

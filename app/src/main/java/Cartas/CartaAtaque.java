@@ -6,7 +6,7 @@ import Telas.Eventos.Batalha;
 import Util.Cor;
 
 /* 
-Cartas que causam dano direto e podem aplicar efeitos secundários.
+Cartas que causam dano direto e não aplicam efeitos secundários.
  */
 public class CartaAtaque extends Carta
 {

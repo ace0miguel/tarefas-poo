@@ -8,7 +8,7 @@ import Util.Cor;
 import Util.InputHandler;
 import Util.Textos;
 
-/* heroi ganha o valor em energia quando a duraçao acabar */
+/** ganha o valor em energia quando a duraçao acabar */
 public class Energizar extends Efeito {
     private int valor;
     private int valorBase;

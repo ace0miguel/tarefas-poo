@@ -13,11 +13,12 @@ import Util.Textos;
 /* inimigo base. */
 public class Inimigo extends Entidade{
 
-    protected int dano;
+    protected int dano; // dano base
     protected Acao nextAcao;
-    protected int tier = 0; // 0 : randola, 1 : elite, 2 : boss (ainda nao ta sendo usado pra nada, talvez nunca seja)  
+    /** nível de dificuldade do inimigo, influencia a recompensa por vencer a batalha. */
+    protected int tier = 0;
     protected Acao[] acoesArray; // array de acoes :(
-    protected List<Acao> acoes; // arraylist de acoes !!
+    protected List<Acao> acoes; // arraylist de acoes! :)
 
     public  Inimigo(String nome, int vida, int dano, Acao... acoes){
         super(nome, vida);
@@ -43,6 +44,7 @@ public class Inimigo extends Entidade{
         nextAcao = acoes.get(RNGHandler.getGen().nextInt(acoes.size()));
     }
 
+    /** imprime a intenção do inimigo (próxima ação a ser realizada) */
     public void anunciarIntencao(Entidade alvo){
         if (this.estaVivo()){
             nextAcao.anunciar(this, alvo);
@@ -55,6 +57,7 @@ public class Inimigo extends Entidade{
             nextAcao.executar(this, alvo, batalha);
     }
 
+    /** imprime o resultado da ação do inimigo (dano causado, efeitos aplicados, etc.) */
     public void resultadoAcao(Entidade alvo){
         if (this.estaVivo()){
             nextAcao.resultado(this, alvo);

@@ -7,6 +7,7 @@ import Entidades.Heroi;
 import Entidades.Inimigo;
 import Telas.Eventos.Batalha;
 
+/** classe abstrata que representa uma ação que pode ser realizada por um inimigo */
 public abstract class Acao {
     protected Efeito efeito;
     protected Carta carta;

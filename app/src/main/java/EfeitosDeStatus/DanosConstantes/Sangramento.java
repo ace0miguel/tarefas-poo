@@ -10,10 +10,9 @@ import Util.Cor;
 import Util.InputHandler;
 import Util.Textos;
 
-/*  ao aplicar sangramento em um inimigo que ja tem o efeito, reseta a duraçao e aumenta o dano.
+/**  ao aplicar sangramento em um inimigo que ja tem o efeito, reseta a duraçao e aumenta o dano.
 dano causado : dano base * numero de stacks
-Ao atingir 5 acumulos de sangramento, causa todo o dano restante e remove o efeito
-(se de algum jeito passar de 5 acumulos ele ainda calcula o dano certinho)*/
+Ao atingir 5 acumulos de sangramento, causa todo o dano restante e remove o efeito */
 
 public class Sangramento extends DanoConstante{
 

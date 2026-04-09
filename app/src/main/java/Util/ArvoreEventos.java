@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import Entidades.Heroi;
 import Telas.Eventos.Batalha;
 import Telas.Eventos.Evento;
 import Telas.Eventos.Fogueira;
@@ -17,12 +16,15 @@ import static Util.Moldes.paulAtreides;
 import static Util.Moldes.sabrinaCarpenter;
 import static Util.Moldes.tripleT;
 
+/** cria uma arvore onde cada nó representa um evento
+ * @param n quantidade de filhos por nó
+ * @param p profundidade (quantidade total de eventos: p - 1, começa da profundidade 0)
+ */
 public class ArvoreEventos {
     int n; // quantidade de filhos por nó
     int p; // profundidade (QUANTIDADE TOTAL DE BATALHAS: P - 1 PQ COMEÇA DO PROFUNDIDADE 0)
 
-    // instancias padrao pra teste por enquanto. talvez seja bom fazer essa classe receber uma lista de inimigos pra ficar mais procedural sla
-    public ArvoreEventos(int n, int p, Heroi heroi){
+    public ArvoreEventos(int n, int p){
         this.n = n;
         this.p = p;
     }
@@ -37,11 +39,9 @@ public class ArvoreEventos {
         return numerador / denominador;
     }
 
-
-    public Evento escolherEvento(int profundidadeAtual, Heroi heroi) { // da pra da uma personalizadinha aqui dps so fiz o basico
-        
-        
-        if (profundidadeAtual == 5)
+    /** define como os eventos serao distribuidos por cada nó */
+    public Evento escolherEvento(int profundidadeAtual) { // da pra da uma personalizadinha aqui dps so fiz o basico   
+        if (profundidadeAtual == 0)
             { // a primeira vai ser facinha pq eu sou bonzinho
             return new Batalha(loudCoringa.criaCopia(), barbossa.criaCopia(), endrick.criaCopia());
         } 
@@ -69,27 +69,27 @@ public class ArvoreEventos {
     /** cria uma arvore baseada nos parametros da instancia atual dessa classe e retorna a raiz.
     ele cria cada no com um evento, eu pensei em criar depois uma funçao pra percorrer e transformar
     esses eventos no q eles forem, tipo batalha ou outros ai q venham a ser criados. */
-    public DefaultMutableTreeNode criarArvore(int profundidade, Heroi heroi) {
-        DefaultMutableTreeNode node = new DefaultMutableTreeNode(escolherEvento(profundidade, heroi));
+    public DefaultMutableTreeNode criarArvore(int profundidade) {
+        DefaultMutableTreeNode node = new DefaultMutableTreeNode(escolherEvento(profundidade));
         
         // caso base
         if (profundidade == p) return node;
 
         // cria n nos
         for (int i = 0; i < n; i ++){
-            DefaultMutableTreeNode novonode = criarArvore(profundidade+1, heroi);
+            DefaultMutableTreeNode novonode = criarArvore(profundidade+1);
             node.add(novonode);
         }
 
         return node;
     }
 
-    // funçao pra vc nao precisar chamar como criarArvore(0) quando for utilizar
-    public DefaultMutableTreeNode criarArvore(Heroi heroi) {
-        return criarArvore(0, heroi);
+    // função pra vc nao precisar chamar como criarArvore(0) quando for utilizar
+    public DefaultMutableTreeNode criarArvore() {
+        return criarArvore(0);
     }
 
-    // retorna os filhos do no q vc passar
+    /** retorna os filhos do no q vc passar */
     public List<DefaultMutableTreeNode> getFilhos (DefaultMutableTreeNode node) {
         List<DefaultMutableTreeNode> listaFilhos = new ArrayList<>();
 
@@ -101,7 +101,7 @@ public class ArvoreEventos {
         return listaFilhos;
     }
 
-    // retorna os eventos nos filhos do no q vc passar
+    /** retorna os eventos nos filhos do no q vc passar */
     public List<Evento> getEventos (DefaultMutableTreeNode node) {
         List<Evento> listaEventos = new ArrayList<>();
 
