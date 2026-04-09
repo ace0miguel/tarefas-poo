@@ -9,19 +9,19 @@ import static Util.Moldes.listaCartasMoldes;
 
 /** Aqui ficam todos os metodos pra dar recompensas ao jogador (cartas, dinheiro, etc) */
 public class Recompensas {
-    // parei pra analisa nenhuma dessas funçao deve ta certa tem q da uma refazida 
-
     /**  retorna uma carta aleatoria
      * @param raridade a raridade minima da carta a ser retornada (1 - comum, 2 - incomum, 3 - rara, 4 - especial)
      */
-    public Carta cartaAleatoria(int raridade){
+    public static Carta cartaAleatoria(int raridade){
         List<Carta> listaRecompensas = new ArrayList<>();
         for(Carta c : listaCartasMoldes)
-            {
-            for(int i = 0; i < 5 - c.getRaridade(); i++)
+        {
+            if (c.getRaridade() >= raridade) 
+            {           
+                for(int i = 0; i < 5 - c.getRaridade(); i++)
                 {
-                if (c.getRaridade() >= raridade)
                     listaRecompensas.add(c);
+                }
             }
         }
 
@@ -30,27 +30,48 @@ public class Recompensas {
     }
 
     /** retorna cartas aleatorias
-     * @param raridade a raridade minima de uma das cartas a serem retornadas (1 - comum, 2 - incomum, 3 - rara, 4 - especial)
+     * @param raridade a raridade minima das cartas a serem retornadas (1 - comum, 2 - incomum, 3 - rara, 4 - especial)
      * @param quantidade a quantidade de cartas a ser retornada
      */
-    public List<Carta> cartasAleatorias(int raridade, int quantidade){
+    public static List<Carta> cartasAleatorias(int raridade, int quantidade){
         List<Carta> listaRecompensas = new ArrayList<>();
-        boolean cartaMinima = false;
-
-        List<Carta> listaCartas = listaCartasMoldes;
-        Collections.shuffle(listaCartas);
-        
-        for(Carta c : listaCartas)
+        for(Carta c : listaCartasMoldes)
+        {
+            if (c.getRaridade() >= raridade) 
             {
-            for(int i = 0; i < 5 - c.getRaridade(); i++)
+                for(int i = 0; i < 5 - c.getRaridade(); i++)
                 {
-               if (c.getRaridade() >= raridade || !cartaMinima){
                     listaRecompensas.add(c);
-                    cartaMinima = true;
                 }
             }
         }
 
-        return listaRecompensas.subList(0, quantidade);
+        Collections.shuffle(listaRecompensas);
+        return listaRecompensas.subList(0, Math.min(quantidade, listaRecompensas.size()));
+    }
+
+    /** exibe um menu de seleçao com as cartas passadas e retorna a carta escolhida */
+    public static Carta menuCartas(Carta... cartas){
+        List<String> opcoes = new ArrayList<>();
+        for (Carta c : cartas) 
+        {
+            opcoes.add(c.toString());
+        }
+        int escolha = InputHandler.selecionar(opcoes, Cor.txtAmareloClaro("Escolha uma carta:"));
+        return cartas[escolha];
+    }
+
+    /** cria um menu de seleção para o usuario escolher uma carta
+     * @param raridade a raridade minima das cartas a serem exibidas
+     * @param quantidade a quantidade de cartas a serem exibidas
+     */
+    public static Carta escolheCarta(int raridade, int quantidade){
+        List<Carta> cartas = cartasAleatorias(raridade, quantidade);
+        Carta[] cartasArray = new Carta[cartas.size()];
+        for (int i = 0; i < cartas.size(); i++) 
+        {
+            cartasArray[i] = cartas.get(i);
+        }
+        return menuCartas(cartasArray);
     }
 }

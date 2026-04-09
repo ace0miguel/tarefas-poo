@@ -8,6 +8,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import Telas.Eventos.Batalha;
 import Telas.Eventos.Evento;
 import Telas.Eventos.Fogueira;
+import Telas.Eventos.Loja;  
 import static Util.Moldes.barbossa;
 import static Util.Moldes.drake;
 import static Util.Moldes.endrick;
@@ -47,7 +48,10 @@ public class ArvoreEventos {
         } 
         else if (profundidadeAtual % 2 == 0) 
             { // a cada uma luta mais ou menos vai ter um evento aleatorio (por enquanto só fogueira)
-            return new Fogueira();
+            if(RNGHandler.check(50))
+                return new Fogueira();
+            else
+                return new Loja();
         }
         else if (profundidadeAtual == p) 
             { // se chegou no maximo vai toma a batalha mais dificil quero nem saber VAI LUTA COM TODO MUNDO

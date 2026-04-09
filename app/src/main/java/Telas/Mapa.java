@@ -37,8 +37,9 @@ public class Mapa {
     }
 
     public void irPara(int n){ // se nao passar nada passa baseado no nó atual
-        if (RNGHandler.check(15)){ // tem uma chance de 15% tomar o golden freddy
+        if (RNGHandler.check(15)){ // tem uma chance de 15% tomar jumpscare do golden freddy
             System.out.println(Cor.txtAmarelo(Arte.GOLDENFREDDY));
+            System.out.println(Cor.txtVermelho("RECEBA O JUMPSCARE!"));
             InputHandler.esperar();
         }
         irPara(nodeAtual, n);
