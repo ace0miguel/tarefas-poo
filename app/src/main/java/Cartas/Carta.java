@@ -5,6 +5,7 @@ import Entidades.Heroi;
 import Telas.Eventos.Batalha;
 import Util.Cor;
 import Util.Textos;
+
 // as classes filhas representam os diferentes tipos de carta, baseados nos tipos do jogo slay the spire.
 public abstract class Carta {
 
