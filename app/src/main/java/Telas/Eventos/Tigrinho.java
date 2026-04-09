@@ -28,7 +28,7 @@ public class Tigrinho extends Evento{
                 {
                     Textos.limpaTela();
                     System.out.println(Cor.txtAmareloClaro("O dobro ou nada! quanto você deseja apostar? " + Cor.cinza +
-                        "Saldo atual: ( " + Cor.amarelo + heroi.getDinheiro() + Cor.cinza + " )"
+                        "Saldo atual: ( " + Cor.amarelo + heroi.getDinheiro() + Cor.cinza + " )\n"
                     ));
                     int valor = InputHandler.lerInt();
 
@@ -43,7 +43,7 @@ public class Tigrinho extends Evento{
 
                     int valorNecessario = (int) Math.ceil(valor / 2.0);
 
-                    System.out.println(Cor.reset + ("Tire ao menos " + Cor.amarelo + valorNecessario + Cor.reset + " no dado para ganhar!"));
+                    System.out.println(Cor.reset + ("\nTire ao menos " + Cor.amarelo + valorNecessario + Cor.reset + " no dado para ganhar!\n"));
                     InputHandler.esperar("Pressione ENTER para rolar o dado");
 
                     int dado = RNGHandler.valorAleatorio(valor);
@@ -70,7 +70,7 @@ public class Tigrinho extends Evento{
                 {
                     Textos.limpaTela();
                     System.out.println(Cor.txtAmareloClaro("O dobro ou nada! quanto você deseja apostar? " + Cor.cinza +
-                        "Vida atual: ( " + Cor.amarelo + heroi.getVida() + Cor.cinza + " )"
+                        "Vida atual: ( " + Cor.vermelho + heroi.getVida() + Cor.reset + " / " + heroi.getVidaMax() + " )\n"
                     ));
                     int valor = InputHandler.lerInt();
 
@@ -83,9 +83,9 @@ public class Tigrinho extends Evento{
                         continue;
                     }
 
-                    int valorNecessario =  600;
+                    int valorNecessario = (int) Math.ceil(valor / 2.0);
 
-                    System.out.println(Cor.reset + ("Tire ao menos " + Cor.amarelo + valorNecessario + Cor.reset + " no dado para ganhar!"));
+                    System.out.println(Cor.reset + ("\nTire ao menos " + Cor.amarelo + valorNecessario + Cor.reset + " no dado para ganhar!\n"));
                     InputHandler.esperar("Pressione ENTER para rolar o dado");
 
                     int dado = RNGHandler.valorAleatorio(valor);
@@ -93,6 +93,7 @@ public class Tigrinho extends Evento{
                     Textos.dado(dado, valor);
 
                     if (dado >= valorNecessario){
+                        System.out.println();
                         heroi.ganhaVida(valor);
                     } else {
                         heroi.receberDanoDireto(valor);
@@ -100,6 +101,7 @@ public class Tigrinho extends Evento{
                             Textos.printaLinhaDevagar(Cor.txtVermelho(Arte.hahaha).repeat(35), 10);
                             System.exit(0);
                         }
+                        System.out.println(Cor.vermelho + "Você perdeu " + valor + " pontos de vida!");
                     }
 
                     System.out.println("\nVida atual: " + Cor.txtAmareloClaro(String.valueOf(heroi.getVida())));
