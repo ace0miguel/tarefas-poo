@@ -6,6 +6,7 @@ import Entidades.Heroi;
 import Entidades.Inimigo;
 import Telas.Eventos.Batalha;
 
+/** cartas que causam dano direto e aplicam efeitos */
 public class CartaAtaqueComEfeito extends CartaAtaque {
     private Efeito efeito;
 

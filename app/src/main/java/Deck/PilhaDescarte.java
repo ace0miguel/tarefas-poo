@@ -29,6 +29,7 @@ public class PilhaDescarte {
         return cartas;
     }
 
+    /** limpa a pilha de descarte e retorna as cartas contidas embaralhadas */
     public ArrayList<Carta> reset(){
         Collections.shuffle(cartas);
         ArrayList<Carta> temp = new ArrayList<>(this.cartas);
@@ -36,6 +37,7 @@ public class PilhaDescarte {
         return temp;
     }
 
+    /** limpa a pilha de descarte */
     public void clear(){
         cartas.clear();
     }

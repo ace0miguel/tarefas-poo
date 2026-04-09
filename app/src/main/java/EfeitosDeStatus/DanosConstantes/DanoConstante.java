@@ -7,8 +7,8 @@ import Telas.Eventos.Batalha;
 import Util.Cor;
 import Util.Textos;
 
-/* efeitos de dano constante, dano depende do efeito especifico
-ignoram resistencias(inclusive escudo) */
+/** efeitos de dano constante, dano depende do efeito especifico
+causam dano direto (ignoram resistencias) */
 public class DanoConstante extends Efeito {
     private int dano;
 

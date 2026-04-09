@@ -50,7 +50,7 @@ public class PilhaCompra {
         pilhaCartas.addAll(cartas);
     }
 
-    // embaralha todas as cartas da pilha de descarte e adiciona a pilha de compra (O PRINCIPAL)
+    /** embaralha todas as cartas da pilha de descarte e adiciona a pilha de compra (O PRINCIPAL) */
     public void deckReset(PilhaDescarte pilhaDescarte){
         Cor.setLaranja(); 
         System.out.print("Embaralhando as cartas");

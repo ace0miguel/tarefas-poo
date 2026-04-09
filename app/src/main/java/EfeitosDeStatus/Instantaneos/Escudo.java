@@ -6,6 +6,7 @@ import Entidades.Entidade;
 import Entidades.Heroi;
 import Telas.Eventos.Batalha;
 
+/** adiciona escudo ao alvo */
 public class Escudo extends Efeito {
 
     private int valor;

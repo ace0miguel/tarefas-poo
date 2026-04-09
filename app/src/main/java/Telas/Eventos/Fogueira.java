@@ -8,7 +8,9 @@ import Entidades.Heroi;
 import Util.Arte;
 import Util.Cor;
 import Util.InputHandler;
+import Util.Textos;
 
+/** evento aleatório, o jogador pode escolher entre recuperar vida ou ganhar uma recompensa */
 public class Fogueira extends Evento{
     List<String> opcoes = new ArrayList<>(Arrays.asList("Descansar", "Ganhar cartas(nao ta pronto ainda vc nao vai ganhar nada)"));
 
@@ -16,6 +18,7 @@ public class Fogueira extends Evento{
     public void iniciar(Heroi heroi) {
         this.heroi = heroi;
 
+        Textos.sobeTela();
         int escolha = InputHandler.selecionar(opcoes, (Arte.fogueiraColorida) + Cor.txtAmareloClaro("\n\nVocê encontrou uma fogueira! O que deseja fazer?"));
         switch (escolha) {
             case 0 ->

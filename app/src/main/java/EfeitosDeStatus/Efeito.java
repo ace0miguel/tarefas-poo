@@ -43,6 +43,7 @@ public abstract class Efeito {
         return this.nome.toUpperCase();
     }
     
+    /** retorna o nome do efeito colorido baseado na subclasse */
     public String getNomeColorido() { // define aqui a cor pra cada efeito ai se quiser, acho que seria mais orientado a objetos ficar dando override filhos mas to com pregs 
         if (this.getClass() == DanoConstante.class) return Cor.txtAmarelo(this.nome);
 
@@ -83,7 +84,8 @@ public abstract class Efeito {
         return 1;
     }
 
-    public boolean getResetDur() { // flag pra efeitos que resetam a duraçao ao inves de somar quando stackam
+    /** flag pra efeitos que resetam a duraçao ao inves de somar quando stackam */
+    public boolean getResetDur() {
         return false;
     }
 
@@ -127,29 +129,30 @@ public abstract class Efeito {
         this.stacks++;
     }
 
-    public void adicionar(Entidade alvo, Batalha batalha){ // recebe alvo e batalha e adiciona uma copia do efeito na batalha
+    /** adiciona uma cópia do efeito à batalha */
+    public void adicionar(Entidade alvo, Batalha batalha){ 
         Efeito e = this.criaCopia();
         e.setAlvo(alvo); 
         batalha.adicionarEfeito(e);
     }
 
     // ----------- abstratos
-  
-    //chamado no inicio de cada rodada
+
+    /** chamado no inicio de cada rodada */
     public void aplicar(){};
 
-    //chamado sempre que uma carta é usada
+    /** chamado sempre que uma carta é usada */
     public void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha){};
 
-    //chamado sempre que o efeito vai ser removido da batalha
+    /** chamado sempre que o efeito vai ser removido da batalha */
     public void acabar(){};
 
-    //chamado quando o efeito é adicionado a batalha
+    /** chamado quando o efeito é adicionado a batalha */
     public void onCreate(){};
-   
-    //cria copia
+
+    /** cria copia */
     public Efeito criaCopia(){ return this;};
 
-    //a string que vai ficar na linha de efeitos embaixo do nome da entidade q eles tao afetando
+    /** a string que vai ficar na linha de efeitos embaixo do nome da entidade q eles tao afetando */
     public String status(){ return this.getNomeColorido() + " (" + this.stacks + ")"; };
 }

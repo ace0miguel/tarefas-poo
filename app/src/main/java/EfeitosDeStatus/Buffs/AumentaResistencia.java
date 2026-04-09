@@ -5,7 +5,7 @@ import Entidades.Entidade;
 import Entidades.Heroi;
 import Telas.Eventos.Batalha;
 
-// altera a resistencia ( se quiser diminuir so passar um valor negativo e tals )
+/** altera a resistencia ( se quiser diminuir so passar um valor negativo ) */
 public class AumentaResistencia extends Buff {
 
     public AumentaResistencia(String nome, String desc, int dur, int valor){

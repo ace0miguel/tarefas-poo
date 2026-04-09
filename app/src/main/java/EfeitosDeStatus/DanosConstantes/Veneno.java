@@ -8,8 +8,7 @@ import Telas.Eventos.Batalha;
 import Util.Cor;
 import Util.Textos;
 
-/* Causa dano igual a duraçao restante;
-ao colocar veneno denovo soma a duraçao;
+/** Causa dano igual a duraçao restante; ao colocar veneno denovo soma a duraçao;
 caso um inimigo morra envenenado o veneno espalha para todos os outros com a mesma duraçao de quando ele morreu */
 public class Veneno extends DanoConstante{
     public Veneno(String nome, String desc, int dur, int dano){ // a variavel dano nao faz nada ok nao se preocupar

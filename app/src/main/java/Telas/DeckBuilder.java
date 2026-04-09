@@ -38,6 +38,7 @@ import static Util.Moldes.tiroCanhao;
 import static Util.Moldes.tiroEscopeta;
 import Util.Textos;
 
+/** permite passar cartas do inventário para o baralho ou, por um preço, remover cartas do baralho */
 public class DeckBuilder {
     private static List<String> decksPadrao = new ArrayList<>(); // decks padrao pra testagem ate ter o deckbuilder de vdd
     private static List<String> menuInicial = new ArrayList<>(Arrays.asList("inventario", "baralho"));
@@ -46,13 +47,13 @@ public class DeckBuilder {
     private static int limiteMinimoCartas = 10;
 
 
-
+    /** exibe os decks padrao ja montados */
     public static void mostrarDecksPadrao(Heroi heroi){
         // nomes dos decks padrao
-        decksPadrao.add(Cor.txtVermelho("O MESTRE DAS LAMINAS: CORTES INFINITOS, DEBUFFS INFINITOS, RODADA INFIITA!"));
+        decksPadrao.add(Cor.txtVermelho("O MESTRE DAS LAMINAS: CORTES INFINITOS, DEBUFFS INFINITOS, RODADA INFINITA!"));
         decksPadrao.add(Cor.txtAmarelo("JOHN WICK: CAUSE MUITO DANO DIRETO EM UMA CHUVA DE BALAS!"));
         decksPadrao.add(Cor.txtRoxo("O AMALDIÇOADO: CARTAS MUITO FORTES, MAS TALVEZ UM PREÇO ALTO DEMAIS..."));
-        decksPadrao.add(Cor.txtCinza("deck de teste nao usar fazendo favor obg."));
+        decksPadrao.add(Cor.txtCinza("deck de teste nao usar fazendo favor vamos respeitar o amigo programador obg."));
 
         Textos.limpaTela();
         int escolha = InputHandler.selecionar(decksPadrao, Cor.reset + "Escolha um baralho inicial: \n" + Cor.txtCinza("(se voce ganhar a primeira batalha eu te deixo personalizar o deck!)")); 
@@ -228,10 +229,9 @@ public class DeckBuilder {
 
                 heroi.addCarta(beberVeneno);
                 heroi.addCarta(beberVeneno);
-
-                
             }
-            case 3 -> { // deck pra testa carta
+            // deck pra testar carta
+            case 3 -> {
                 heroi.addCarta(bombaVeneno);
                 heroi.addCarta(bombaVeneno);
                 heroi.addCarta(bombaVeneno);
@@ -258,9 +258,10 @@ public class DeckBuilder {
         Textos.limpaTela();
     }
 
-    /* ideia: menu de selecionar -> 0 - sair 1 - inventario 2 - baralho
-    se vc entra no inventario vc escolhe uma carta e ela vai pro baralho e vice versa
-    em um dos menus de carta -> 0 - sair(volta pro menu inicial), 1 - 7 cartas, 8 - pagina anterior, 9 - proxima pagina */
+    /** inicia o menu, permitindo ao jogador alternar entre o inventário 
+     * e o baralho atual, além de gerenciar a troca e remoção de cartas. O jogador só pode sair 
+     * se o seu baralho contiver pelo menos o limite mínimo de cartas exigido.
+     */
     public static void iniciar(Heroi heroi){
         while (true){
             int opcao = InputHandler.selecionar(menuInicial, true, Cor.txtAmareloClaro(Arte.deckBuilder));

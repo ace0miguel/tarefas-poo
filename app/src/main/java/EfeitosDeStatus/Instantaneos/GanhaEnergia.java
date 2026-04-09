@@ -8,6 +8,7 @@ import Telas.Eventos.Batalha;
 import Util.Cor;
 import Util.InputHandler;
 
+/** adiciona energia instantaneamente */
 public class GanhaEnergia extends Efeito {
 
     private int valor;

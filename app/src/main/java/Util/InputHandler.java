@@ -11,6 +11,9 @@ public class InputHandler {
         return leitor;
     }
 
+    /** exibe uma mensagem e espera qualquer input do usuario
+     * @param mensagem : a mensagem a ser exibida antes de esperar o input
+     */
     public static void esperar(String mensagem) {
         System.out.println(mensagem);
         
@@ -40,8 +43,8 @@ public class InputHandler {
         return selecionar(lista, exit, "");
     }
 
-    /* recebe uma lista e printa, se for de objetos ele vai usar o metodo .toString(), se for string ela so printa 
-    depois valida a escolha e retorna o numero escolhido, se tiver a opçao exit e o usuario escolher vai retonar -1.*/
+    /** recebe uma lista e printa, se for de objetos ele vai usar o metodo .toString(), se for string ela so printa.
+    valida a escolha e retorna o numero escolhido, se tiver a opçao exit e o usuario escolher vai retonar -1.*/
     public static <T> int selecionar(List<T> lista, boolean exit, String mensagemInicial) { 
         if (lista.isEmpty() && !exit) { // se a lista vier vazia e nao tiver nada pra voltar retorna
             Cor.printaVermelho(">> ERRO << LISTA VAZIA E NAO TEM EXIT\n");
@@ -143,7 +146,8 @@ public class InputHandler {
     }
 
     /** imprime um menu utilizando a matriz de paginas e retorna a opção escolhida
-     *  se for pra sair retorna -1. false: nao deixa voce sair sem escolher.
+     *  se for pra sair retorna -1.
+     * @param exit : se false, não permite voltar do menu sem escolher.
      */
     public static int menu(List<List<String>> matrizPaginas, AtomicInteger pagina, boolean exit){
         while (true) { 
