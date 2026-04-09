@@ -305,7 +305,9 @@ public class Textos {
     }
 
     public static void dado(int valor, int valorMax) {
-        int tempoSleep = 20; 
+        int tempoSleep = 10; 
+
+        Cor.reset();
 
         for (int i = 0; i < 25; i++) {
             int valorFalso = RNGHandler.valorAleatorio(valorMax); 
@@ -318,6 +320,25 @@ public class Textos {
         }
         
         System.out.println("\r" + Cor.txtAmarelo(String.valueOf(valor)) + "   "); 
+    }
+
+    public static String colorirPartes(String arte, String cor1, String cor2, int n) {
+        String[] linhas = arte.split("\n");
+        StringBuilder resultado = new StringBuilder();
+
+        for (int i = 0; i < linhas.length; i++) {
+            if (i < n) {
+                resultado.append(cor1).append(linhas[i]).append(Cor.reset);
+            } else {
+                resultado.append(cor2).append(linhas[i]).append(Cor.reset);
+            }
+            
+            if (i < linhas.length - 1) {
+                resultado.append("\n");
+            }
+        }
+
+        return resultado.toString();
     }
 
     /* BARQUINHO Q EU TINHA FEITO PRA HUD ANTIGA TO COM DÓ DE APAGAR DEU MO TRABALHO :(
