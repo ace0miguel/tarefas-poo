@@ -24,21 +24,17 @@ public abstract class Carta {
     //** vida perdida ao usar a carta. */
     protected int sacrificio = 0; // variavel pra definir um custo em vida ao se usar a carta.
 
-    /**  -------------------------------------------------
-    dicionario de tipos de ação:
+    /** dicionario de tipos de ação:
     0 - nenhum
     1 - disparo
-    2 - corte 
-    ----------------------------------------------------- */
-    protected int tipo = 0; 
+    2 - corte */
+    protected int tipo = 0;
 
-    /** --------------------------------------------------
-    dicionario de raridades:
+    /** dicionario de raridades:
     1 - comum
     2 - incomum 
     3 - rara
-    4 - especial ?
-    ----------------------------------------------------- */
+    4 - especial ? */
     protected int raridade = 1;
 
     public Carta(String nome, String descricao, int custo){
@@ -170,6 +166,7 @@ public abstract class Carta {
         return (heroi.getEnergia() >= this.custo);
     }
 
+    /** imprime uma string ao utilizar a carta, se existir. */
     public void printaResenha(){
         if (!this.getResenha().equals("")){
                 Textos.sleep(200);
@@ -179,11 +176,11 @@ public abstract class Carta {
             }
     }
 
-    /**Verifica se o heroi tem energia. Se sim, aplica o efeito da carta e subtrai o custo da energia.*/
+    /** verifica se o heroi tem energia. Se sim, aplica o efeito da carta e subtrai o custo da energia. */
     public abstract void usar(Heroi heroi, Entidade alvo, Batalha batalha);
 
-    /**Apenas aplica o efeito da carta.*/
-    public abstract void aplicarEfeito(Heroi heroi, Entidade alvo, Batalha batalha); // so aplica o efeito da carta sem gastar nada
+    /** apenas aplica o efeito da carta, sem consumir */
+    public abstract void aplicarEfeito(Heroi heroi, Entidade alvo, Batalha batalha); 
 
     public abstract String descricao();
     

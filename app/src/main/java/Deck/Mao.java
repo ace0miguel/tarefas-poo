@@ -19,14 +19,6 @@ public class Mao {
 
     public void addCarta(PilhaCompra pilhaCompra, PilhaDescarte pilhaDescarte){
         cartas.add(pilhaCompra.puxaCarta(pilhaDescarte));
-
-        // nao precisa mais disso aqui embaixo
-        // if(cartas.size() < quantMax){ 
-        //     cartas.add(pilhaCompra.puxaCarta(pilhaDescarte));
-        // }
-        // else{
-        //     System.out.println("Máximo de cartas na mão atingido.");
-        // }
     }
     
     public void addCartas(PilhaCompra pilhaCompra, PilhaDescarte pilhaDescarte, int quantidade){
@@ -34,6 +26,7 @@ public class Mao {
             this.addCarta(pilhaCompra, pilhaDescarte); 
     }
 
+    /** adiciona uma carta específica à mão */
     public void addCartaEsp(Carta carta){
         this.cartas.add(carta);
     }
@@ -47,7 +40,8 @@ public class Mao {
         return quantMax;
     }
 
-    public int mostrar(){ // retorna a opção escolhida em forma de numero
+    /** exibe uma lista de opçoes com as cartas da mão, valida a escolha e retorna o indice da carta escolhida */
+    public int mostrar(){ 
         System.out.println("Mão atual:");
         int ultimoNumero = 0;
 
@@ -88,7 +82,8 @@ public class Mao {
         cartas.clear();
     }
 
-    public Carta escolheCarta(int opcao){ // retorna a opçao escolhida em forma de carta
+    /** retorna a carta no indice opcao */
+    public Carta escolheCarta(int opcao){
         Carta carta = cartas.get(opcao);
         return carta;
     }

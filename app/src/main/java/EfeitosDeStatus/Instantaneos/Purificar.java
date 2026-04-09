@@ -5,7 +5,7 @@ import Entidades.Entidade;
 import Entidades.Heroi;
 import Telas.Eventos.Batalha;
 
-// limpa todos os efeitos (incluindo positivos)
+/** remove todos os efeitos (incluindo positivos) */
 public class Purificar extends Efeito {
     public Purificar(String nome, String desc){
         super(nome, desc, 0);

@@ -13,14 +13,28 @@ public class Textos {
         return "Tem que ser um número de 0 a " + maxEscolha + ", capitao!";
     }
 
+    /** apaga tudo que ta imprimido no terminal */
     public static void limpaTela(){
-        try  { // nao ta funcionando isso aqui nao sla
-            new ProcessBuilder("clear").inheritIO().start().waitFor();
-        } catch (Exception e){}
-
-        for(int i = 0; i < 250; i++) System.out.println(); // printar 1 trilhao de linha nunca falha
+        try {
+            if (System.getProperty("os.name").contains("Windows")) {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                new ProcessBuilder("clear").inheritIO().start().waitFor();
+            }
+        } catch (Exception e) {
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
+        }
     }
 
+    /** printa varias linhas pra limpar a tela e o proximo texto surgir de baixo */
+    public static void sobeTela(){
+        for(int i = 0; i < 300; i++) System.out.println(); // printar 1 trilhao de linha nunca falha
+    }
+
+    /** pausa por um tempo em ms
+     * @param time : tempo em ms
+    */
     public static void sleep(int time){ // tempo em ms
         try {
             Thread.sleep(time);
@@ -29,6 +43,7 @@ public class Textos {
         }
     }
 
+    /** imprime o estado atual da batalha */
     public static void batalha(Heroi heroi, ArrayList<Efeito> listaEfeitos, List<Poder> listaPoderes,  Inimigo... inimigos){
         limpaTela();
         boolean aux1 = false;
@@ -207,6 +222,7 @@ public class Textos {
         return barraFinal + Cor.cinza + " " + vidaAtual + Cor.reset + " / " + Cor.reset + vidaMax + Cor.reset;
     }
 
+    /** recebe uma string e printa linha a linha com um pequeno delay, proporcional ao tamanho da string. */
     public static void printaLinhaDevagar(String texto) {
         int tempoBase = 45; 
         int taxaReducao = 2; 
@@ -221,6 +237,7 @@ public class Textos {
         }
     }
 
+    /** recebe uma string e um tempo e printa coluna por coluna esperando o tempo entre cada uma */
     public static void printaColunaDevagar(String texto, int tempoMs) {
         String[] linhas = texto.split("\n");
         int maxCols = 0;
@@ -249,6 +266,10 @@ public class Textos {
         }
     }
 
+    /** printa como se tivesse sendo digitado, caractere por caractere
+     * @param tempoLetra : tempo entre cada letra em ms
+     * @param tempoLinha : tempo entre cada linha em ms
+     */
     public static void printaBonito(String texto, int tempoLetra, int tempoLinha) {       
         String[] linhas = texto.split("\n");
 
@@ -264,6 +285,9 @@ public class Textos {
     }
 
 
+    /** apaga uma quantidade de linhas da tela
+     * @param quantidade : quantidade de linhas a serem apagadas
+     */
     public static void apagarLinhas(int quantidade) {
         for (int i = 0; i < quantidade; i++) {
             System.out.print("\u001B[1A\u001B[2K");
