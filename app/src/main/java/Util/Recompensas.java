@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 import Cartas.Carta;
+import Entidades.Heroi;
+
 import static Util.Moldes.listaCartasMoldes;
 
 /** Aqui ficam todos os metodos pra dar recompensas ao jogador (cartas, dinheiro, etc) */
@@ -73,5 +75,22 @@ public class Recompensas {
             cartasArray[i] = cartas.get(i);
         }
         return menuCartas(cartasArray);
+    }
+
+    public static void ganharCartas(int raridade, int quantidade, Heroi heroi){
+        System.out.println(Cor.txtAmareloClaro("Você ganhou:")); Textos.sleep(500);
+                System.out.println();
+
+                List<Carta> recompensa = Recompensas.cartasAleatorias(raridade, quantidade);
+                
+                for (Carta carta : recompensa) {
+                    Textos.printaBonito(carta.recompensa(), 5, 2);
+                    heroi.addCartaInventario(carta);
+                    Textos.sleep(500);
+                }
+
+                System.out.println();
+                System.out.println("Novas cartas adicionadas ao inventário! Visite o deckBuilder para equipá-las.");
+                InputHandler.esperar();
     }
 }

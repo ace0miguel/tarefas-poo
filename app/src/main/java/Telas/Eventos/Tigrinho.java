@@ -14,7 +14,7 @@ import Util.Textos;
 
 /** cassino */
 public class Tigrinho extends Evento{
-    String tituloColorido = Textos.colorirPartes(Arte.cassino, Cor.laranja, Cor.marrom, 5) + "\n";
+    String tituloColorido = Textos.colorirPartes(Arte.cassino5, Cor.amareloClaro, Cor.laranja, 5) + "\n";
         // String hudCompleta = tituloColorido + "\n\n" + Cor.cinza + Arte.bordaHud1; 
     
     @Override
@@ -23,12 +23,12 @@ public class Tigrinho extends Evento{
         
         // opções: apostar dinheiro, cartas ou vida.
         List<String> opcoes = new ArrayList<>(Arrays.asList
-            (Cor.txtAmarelo("o seu dinheiro?"), 
-            Cor.txtAzul("as suas cartas?"), 
+            (Cor.txtReset("o seu dinheiro?"), 
+            Cor.txtReset("as suas cartas..."), 
             Cor.txtVermelho("OU A SUA VIDA?")));
 
         while (true){
-            int escolha = InputHandler.selecionar(opcoes, true, tituloColorido + Cor.txtVermelho("\nBoas vindas ao meu cassino! o que deseja apostar? "), "nada.");
+            int escolha = InputHandler.selecionar(opcoes, true, tituloColorido + Cor.txtVermelho("\nSeja bem vindo ao meu cassino! o que deseja apostar? "), "nada.");
             if ( escolha == -1 ) break;
             switch (escolha) 
             {
@@ -53,7 +53,7 @@ public class Tigrinho extends Evento{
     public void cassinoDinheiro(Heroi heroi) {
         Textos.limpaTela();
         System.out.println(tituloColorido + "\n" + Cor.txtVermelho("O dobro ou nada! quanto você deseja apostar? " + Cor.cinza +
-            "Saldo atual: ( " + Cor.amarelo + heroi.getDinheiro() + Cor.cinza + " )\n"
+            "[ Saldo atual: ( " + Cor.amarelo + heroi.getDinheiro() + Cor.cinza + " ) ]\n"
         ));
         int valor = InputHandler.lerInt();
 
@@ -90,7 +90,7 @@ public class Tigrinho extends Evento{
     public void cassinoVida(Heroi heroi){
     Textos.limpaTela();
         System.out.println(tituloColorido + "\n" + Cor.txtVermelho("O dobro ou nada! quanto você deseja apostar? " + Cor.cinza +
-            "Vida atual: ( " + Cor.cinza + heroi.getVida() + Cor.reset + " / " + heroi.getVidaMax() + " )\n"
+            "[ Vida atual: ( " + Cor.cinza + heroi.getVida()+ " / " + Cor.reset + heroi.getVidaMax() + Cor.cinza + " ) ]\n"
         ));
         int valor = InputHandler.lerInt();
 

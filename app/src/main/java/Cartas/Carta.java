@@ -66,8 +66,12 @@ public abstract class Carta {
 
     // Getters --------------------------------------
 
+    /** retorna o nome colorido baseado no tipo da carta */
     public String getNome(){
-        if (this instanceof CartaAtaque)
+        if (this instanceof CartaAtaqueComEfeito)
+            return Cor.laranja + this.nome + Cor.reset;
+        
+        else if (this instanceof CartaAtaque)
             return Cor.vermelho + this.nome + Cor.reset;
 
         else if (this instanceof CartaHabilidade)
@@ -82,6 +86,16 @@ public abstract class Carta {
         // return this.nome + Cor.reset;
     }
 
+    /** retorna o nome colorido baseado na raridade da carta */
+    public String getNomeRaridade(){
+        return switch (raridade) {
+            case 1 -> Cor.txtReset(this.nome);
+            case 2 -> Cor.txtVerde(this.nome);
+            case 3 -> Cor.txtLaranja(this.nome);
+            case 4 -> Cor.txtRosa(this.nome);
+            default -> Cor.txtCinza(this.nome);
+        };
+    }
 
     public int getCusto(){
         return this.custo;
@@ -189,5 +203,10 @@ public abstract class Carta {
     @Override
     public String toString(){
         return this.getNome() + " (Custo: " + this.getCusto() + Cor.txtAmarelo(" energia") +") - " + this.getDescricao();
+    }
+
+    /** string a ser printada ao ganhar a carta */
+    public String recompensa(){
+        return this.getNomeRaridade() + " (Custo: " + this.getCusto() + Cor.txtAmarelo(" energia") +") - " + this.getDescricao();
     }
 }

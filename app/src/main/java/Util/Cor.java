@@ -162,8 +162,8 @@ public class Cor {
 
     // ----------------------------------------------------------------------------
 
-    public static String txtReset() {
-        return reset;
+    public static String txtReset(String txt) {
+        return reset + txt + reset;
     }
 
     public static String txtVerde(String txt) {

@@ -108,45 +108,37 @@ public class Moldes {
 
     /** inicializa os moldes */
     public static void carregar(){
-        // cartas comuns ---
-        tiro = new CartaAtaque("Tiro de revolver", "", 2, 5, 1); tiro.setResenha(Arte.TIRO5);
-        tiroEscopeta = new CartaAtaque("Tiro de escopeta", "", 3, 8, 1); tiroEscopeta.setResenha(Arte.TIRO1);
+        tiro = new CartaAtaque("Tiro de revolver", "dispara um tiro com seu revolver", 2, 5, 1); tiro.setResenha(Arte.TIRO5); tiro.setRaridade(1);
+        tiroEscopeta = new CartaAtaque("Tiro de escopeta", "dispara um cartucho de escopeta", 3, 8, 1); tiroEscopeta.setResenha(Arte.TIRO1); tiroEscopeta.setRaridade(2);
+        bomba = new CartaAtaque("BOMBA!", "joga uma bomba que atinge TODOS os inimigos!", 4, 8); bomba.setEfeitoEmArea(true); bomba.setRaridade(2);
+        clubex = new CartaAtaque("Clubex", "[CONSUMIR] - Causa 26 pontos de dano a todos inimigos.", 4, 26); clubex.setEfeitoEmArea(true); clubex.setConsumir(true); clubex.setRaridade(3);
 
-        
-
-        // cartas incomuns ---
-
-
-        // cartas raras ---
-        bomba = new CartaAtaque("BOMBA!", "joga uma bomba que atinge TODOS os inimigos!", 4, 8); bomba.setEfeitoEmArea(true);
-        clubex = new CartaAtaque("Clubex", "[CONSUMIR] - Causa 26 pontos de dano a todos inimigos.", 4, 26); clubex.setEfeitoEmArea(true); clubex.setConsumir(true);
-
-        tiroCanhao = new CartaAtaqueComEfeito("Tiro de canhão", "dispara uma bala de canhão", 4, 12, feridas, false, 1); tiroCanhao.setResenha(Arte.TIRO3);
-        corteProfundo = new CartaAtaqueComEfeito("Corte profundo", "", 2, 3, sangramento, false, 2); corteProfundo.setResenha(Cor.txtVermelho(Arte.CORTE));
-        corteVenenoso = new CartaAtaqueComEfeito("Corte venenoso", "", 1, 1, veneno, false, 2); corteVenenoso.setResenha(Cor.txtVerdeClaro(Arte.CORTE2));
-        corteDefensivo = new CartaAtaqueComEfeito("Corte defensivo", "bate e ganha escudo!", 1, 1, escudinho, true, 2); corteDefensivo.setResenha(Cor.txtAzulClaro(Arte.CORTE5));
-        corteRapido = new CartaAtaqueComEfeito("Corte rapido", "bate e ganha 1 ponto de energia!", 1, 1, ganhaEnergia1, true, 2); corteRapido.setResenha(Cor.txtAmareloClaro(Arte.CORTE4));
-        desprezo = new CartaAtaqueComEfeito("Desprezo.", "causa muito dano porém irrita seu adversario", 4, 17, odioPuro, false); desprezo.setResenha(Arte.DESPREZO);
+        tiroCanhao = new CartaAtaqueComEfeito("Tiro de canhão", "dispara uma bala de canhão", 4, 12, feridas, false, 1); tiroCanhao.setResenha(Arte.TIRO3); tiroCanhao.setRaridade(2);
+        corteProfundo = new CartaAtaqueComEfeito("Corte profundo", "causa 3 pontos de dano e aplica sangramento", 2, 3, sangramento, false, 2); corteProfundo.setResenha(Cor.txtVermelho(Arte.CORTE)); corteProfundo.setRaridade(1);
+        corteVenenoso = new CartaAtaqueComEfeito("Corte venenoso", "causa 1 ponto de dano e aplica dois acumulos de veneno", 1, 1, veneno, false, 2); corteVenenoso.setResenha(Cor.txtVerdeClaro(Arte.CORTE2)); corteVenenoso.setRaridade(1);
+        corteDefensivo = new CartaAtaqueComEfeito("Corte defensivo", "causa 1 ponto de dano e ganha escudo!", 1, 1, escudinho, true, 2); corteDefensivo.setResenha(Cor.txtAzulClaro(Arte.CORTE5)); corteDefensivo.setRaridade(1);
+        corteRapido = new CartaAtaqueComEfeito("Corte rapido", "causa 1 ponto de dano e ganha 1 ponto de energia!", 1, 1, ganhaEnergia1, true, 2); corteRapido.setResenha(Cor.txtAmareloClaro(Arte.CORTE4)); corteRapido.setRaridade(2);
+        desprezo = new CartaAtaqueComEfeito("Desprezo.", "causa muito dano porém irrita seu adversario", 4, 17, odioPuro, false); desprezo.setResenha(Arte.DESPREZO); desprezo.setRaridade(3);
         bombaVeneno = new CartaAtaqueComEfeito("BOMBA DE VENENO!", "jogue uma " + Cor.txtVerdeEscuro("BOMBA TÓXICA") + " que atinge TODOS os inimigos e aplica " + veneno.getNomeColorido(), 4, 2, veneno4, false);
-        bombaVeneno.setEfeitoEmArea(true);
+        bombaVeneno.setEfeitoEmArea(true); bombaVeneno.setRaridade(3);
 
-        armadura = new CartaHabilidade("Aura", "Reduz o dano recebido", 2, aumentaResistencia, true);
-        escudoMadeira = new CartaHabilidade("Postura de defesa", "da escudo", 0, escudinho, true);
-        escudoFerro = new CartaHabilidade("Shieldão", "da MUITO escudo", 1, escudao, true);
-        purificar = new CartaHabilidade("RECEBA!", "Remove todos os efeitos aplicados em voce (incluindo positivos)", 2, purificarEfeito, true); purificar.setResenha(Cor.txtAmarelo(Arte.RECEBA));
-        puroOdio = new CartaHabilidade("Ego.", "Cause 1 de dano extra por 3 rodadas", 2, odioPuro, true);
-        puxaCarta = new CartaHabilidade("Ganancia", "Puxe duas cartas da sua pilha de compras", 1, efeitoPuxaCarta2, true);
-        energizar = new CartaHabilidade("ENERGIZAR!", "Ganhe mais 2 pontos de energia no começo da próxima rodada!", 1, efeitoEnergizado, true);
-        energiaGratis = new CartaHabilidade("Energia!", "Ganhe 1 ponto de energia", 0, ganhaEnergia1, true);
-        energiaSupremo = new CartaHabilidade("Energia!!!!!!!!!!!", "Ganhe muitos ponto de energia", 0, ganhaEnergiaTest, true);
+        armadura = new CartaHabilidade("Aura", "Reduz o dano recebido", 2, aumentaResistencia, true); armadura.setRaridade(2);
+        escudoMadeira = new CartaHabilidade("Postura de defesa", "da escudo", 0, escudinho, true); escudoMadeira.setRaridade(1);
+        escudoFerro = new CartaHabilidade("Shieldão", "da MUITO escudo", 1, escudao, true); escudoFerro.setRaridade(1);
+        purificar = new CartaHabilidade("RECEBA!", "Remove todos os efeitos aplicados em voce (incluindo positivos)", 2, purificarEfeito, true); purificar.setResenha(Cor.txtAmarelo(Arte.RECEBA)); purificar.setRaridade(2);
+        puroOdio = new CartaHabilidade("Ego.", "Cause 1 de dano extra por 3 rodadas", 2, odioPuro, true); puroOdio.setRaridade(2);
+        puxaCarta = new CartaHabilidade("Ganancia", "Puxe duas cartas da sua pilha de compras", 1, efeitoPuxaCarta2, true); puxaCarta.setRaridade(1);
+        energizar = new CartaHabilidade("ENERGIZAR!", "Ganhe mais 2 pontos de energia no começo da próxima rodada!", 1, efeitoEnergizado, true); energizar.setRaridade(2);
+        energiaGratis = new CartaHabilidade("Energia!", "Ganhe 1 ponto de energia", 0, ganhaEnergia1, true); energiaGratis.setRaridade(2);
+        energiaSupremo = new CartaHabilidade("Energia!!!!!!!!!!!", "Ganhe muitos ponto de energia", 0, ganhaEnergiaTest, true); energiaSupremo.setRaridade(4); // essa aqui nem vai pro sorteio mas botei 4
         
-        chocolex = new CartaHabilidade("Chocolex", "[CONSUMIR] - Adiciona um Resenhax na sua pilha de compras.", 2, ganhaResenhax, true); chocolex.setConsumir(true);
-        resenhax = new CartaHabilidade("Resenhax", "[CONSUMIR] - Adiciona um Clubex na sua pilha de compras.", 3, ganhaClubex, true); resenhax.setConsumir(true);
-        pactoSangue = new CartaHabilidade("Pacto de sangue", "Pague (1) vida e escolha uma carta.", 2, escolheCarta, true); pactoSangue.setSacrificio(1);
+        chocolex = new CartaHabilidade("Chocolex", "[CONSUMIR] - Adiciona um Resenhax na sua pilha de compras.", 2, ganhaResenhax, true); chocolex.setConsumir(true); chocolex.setRaridade(2);
+        resenhax = new CartaHabilidade("Resenhax", "[CONSUMIR] - Adiciona um Clubex na sua pilha de compras.", 3, ganhaClubex, true); resenhax.setConsumir(true); resenhax.setRaridade(3);
+        pactoSangue = new CartaHabilidade("Pacto de sangue", "Pague (1) vida e escolha uma carta da sua pilha de compras.", 2, escolheCarta, true); pactoSangue.setSacrificio(1); pactoSangue.setRaridade(3);
 
-        dedoNervosoCarta = new CartaPoder("JOHN WICK", "[CONSUMIR] - Para cada acúmulo, atire novamente sempre que usar uma carta de tiro!", 2, dedoNervoso);
-        mestreLaminasCarta = new CartaPoder("[CONSUMIR] - Mestre das lâminas", "Para cada acúmulo, corte novamente sempre que usar uma carta de corte!", 2, mestreLaminas);
-        contratoSangue = new CartaPoder("[CONSUMIR] - Contrato de sangue", "No início de cada turno, puxe 1 carta adicional e perca 1 ponto de vida.", 3, cartaAdicional);
+        dedoNervosoCarta = new CartaPoder("JOHN WICK", "[CONSUMIR] - Para cada acúmulo, atire novamente sempre que usar uma carta de tiro!", 2, dedoNervoso); dedoNervosoCarta.setRaridade(3);
+        mestreLaminasCarta = new CartaPoder("[CONSUMIR] - Mestre das lâminas", "Para cada acúmulo, corte novamente sempre que usar uma carta de corte!", 2, mestreLaminas); mestreLaminasCarta.setRaridade(3);
+        contratoSangue = new CartaPoder("[CONSUMIR] - Contrato de sangue", "No início de cada turno, puxe 1 carta adicional e perca 1 ponto de vida.", 3, cartaAdicional); contratoSangue.setRaridade(2);
 
         sangrar = new CartaMaldicao("Sangrar.", "Sangra.", 1, sangramento, true); sangrar.setResenha(Cor.txtCinza(Arte.algoRuim));
         beberVeneno = new CartaMaldicao("Beber veneno.", "Bebe veneno.", 1, veneno, true); beberVeneno.setResenha(Cor.txtCinza(Arte.algoRuim));
@@ -201,7 +193,6 @@ public class Moldes {
         listaCartasMoldes.addAll(Arrays.asList(tiro, tiroEscopeta, tiroCanhao, corteProfundo, 
             corteVenenoso, corteDefensivo, corteRapido, desprezo, armadura, escudoMadeira, 
             escudoFerro, purificar, puroOdio, puxaCarta, energizar, energiaGratis, dedoNervosoCarta, 
-            mestreLaminasCarta, bomba, bombaVeneno, chocolex,
-            contratoSangue, pactoSangue));
+            mestreLaminasCarta, bomba, bombaVeneno, chocolex,contratoSangue, pactoSangue));
     }
 }

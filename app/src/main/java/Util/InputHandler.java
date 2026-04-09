@@ -71,7 +71,7 @@ public class InputHandler {
             Textos.limpaTela();
 
             if (!mensagemInicial.equals("")){
-                Textos.printaLinhaDevagar(mensagemInicial);
+                Textos.printaBonito(mensagemInicial,2 ,2);
                 System.out.println();   
             }
 

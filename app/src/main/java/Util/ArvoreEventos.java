@@ -45,16 +45,17 @@ public class ArvoreEventos {
     /** define como os eventos serao distribuidos por cada nó */
     public Evento escolherEvento(int profundidadeAtual) { // da pra da uma personalizadinha aqui dps so fiz o basico   
         if (profundidadeAtual == 0)
-            { // a primeira vai ser facinha pq eu sou bonzinho
-                return new Tigrinho();
-            // return new Batalha(loudCoringa.criaCopia(), barbossa.criaCopia(), endrick.criaCopia());
+            {
+                // pra testar algum evento colocar aqui
+                // return new Fogueira();
+            return new Batalha(loudCoringa.criaCopia(), barbossa.criaCopia(), endrick.criaCopia());
         } 
         else if (profundidadeAtual % 2 == 0) 
-            { // a cada uma luta mais ou menos vai ter um evento aleatorio (por enquanto só fogueira)
+            {
             if(RNGHandler.check(50))
                 return new Fogueira();
             else
-                return new Loja();
+                return new Tigrinho();
         }
         else if (profundidadeAtual == p) 
             { // se chegou no maximo vai toma a batalha mais dificil quero nem saber VAI LUTA COM TODO MUNDO

@@ -62,7 +62,7 @@ public class Inimigo extends Entidade{
         if (this.estaVivo()){
             nextAcao.resultado(this, alvo);
             Textos.sleep(50);
-            Cor.txtReset();
+            Cor.reset();
         }
     }
     

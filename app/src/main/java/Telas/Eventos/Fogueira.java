@@ -4,22 +4,24 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import Cartas.Carta;
 import Entidades.Heroi;
 import Util.Arte;
 import Util.Cor;
 import Util.InputHandler;
+import Util.Recompensas;
 import Util.Textos;
 
 /** evento aleatório, o jogador pode escolher entre recuperar vida ou ganhar uma recompensa */
 public class Fogueira extends Evento{
-    List<String> opcoes = new ArrayList<>(Arrays.asList("Descansar", "Ganhar cartas(nao ta pronto ainda vc nao vai ganhar nada)"));
+    List<String> opcoes = new ArrayList<>(Arrays.asList("descansar.", "abrir um pacotinho de cartas q vc achou."));
 
     @Override
     public void iniciar(Heroi heroi) {
         this.heroi = heroi;
 
         Textos.sobeTela();
-        int escolha = InputHandler.selecionar(opcoes, (Arte.fogueiraColorida) + Cor.txtAmareloClaro("\n\nVocê encontrou uma fogueira! O que deseja fazer?"));
+        int escolha = InputHandler.selecionar(opcoes, true, (Arte.fogueiraColorida) + Cor.txtAmareloClaro("\n\nVocê encontrou uma fogueira! O que deseja fazer?"), "ir embora.");
         switch (escolha) {
             case 0 ->
             {
@@ -28,9 +30,7 @@ public class Fogueira extends Evento{
             }
             case 1 ->
             {
-                System.out.println(Cor.txtAmareloClaro("se tivesse pronto vc ia ganha uma carta aqui"));
-                InputHandler.esperar();
-                // falta fazer o pacote de cartas, pro heroi ganhar aqui
+                Recompensas.ganharCartas(1,3,heroi);
                 break;
             }
         }
