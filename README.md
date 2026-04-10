@@ -11,6 +11,13 @@ Você joga como Jack Sparrow e enfrenta encontros no mapa utilizando cartas. A i
 - Ao usar todas as cartas da sua mao, receba uma nova mao completa e 2 pontos de energia!
 - Pague 5 dinheiros pra remover uma carta do seu baralho no deckBuilder™.   
 - [CONSUMIR] - Cartas que ao serem utilizadas nao voltam pra sua mao até o fim do combate
+- Eventos aleatórios a cada encontro! (mas tem q ganhar duas batalhas seguidas antes).
+
+## Eventos aleatórios
+
+- Fogueira: escolha entre se curar ou receber cartas!
+- Loja: mesma coisa, só que pagando! (Compensa se tiver com os dolares)
+- Cassino: aposte vida ou dinheiro em um jogo de dados, em busca do dobro ou nada!
 
 ## Cartas 
 
@@ -26,6 +33,7 @@ Você joga como Jack Sparrow e enfrenta encontros no mapa utilizando cartas. A i
 - BOMBA! (dano em area)
 - BOMBA DE VENENO! (dano em area + aplica Veneno)
 - Clubex ([CONSUMIR], dano em area)
+- Aposte vida ou morte no cassino e talvez voce encontre mais uma...
 
 ### Habilidade
 - Aura (Aumento de resistencia)

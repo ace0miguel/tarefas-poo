@@ -54,6 +54,7 @@ public class Mao {
         }
         ultimoNumero++;
         Cor.printaCinza("["+ultimoNumero+"] - Encerrar turno\n");
+        
         int opcao = -1;
 
         try {

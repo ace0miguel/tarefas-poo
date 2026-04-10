@@ -318,20 +318,6 @@ public class Batalha extends Evento {
 
                 int escolha = mao.mostrar(); 
 
-                if (escolha == -1) { // se a mao acabar vindo vazia de algum jeito cai aqui
-                    Textos.limpaTela();
-
-                        // fiz 2 versoes esse rodada bonus aparecendo 1 trilhao de vezes e um mais simples +5 cartas +2 energia, nao sei qual e melhor
-                        Textos.printaLinhaDevagar(Cor.rosa + (Arte.bonus).repeat(15) + Cor.reset);
-
-                        // Textos.printaLinhaDevagar(Cor.rosa + Arte.bonus + Cor.reset);
-                        // Textos.printaLinhaDevagar(Cor.rosa + Arte.doisEnergia + Cor.reset);
-
-                        heroi.ganhaEnergia(2);
-                        InputHandler.esperar();
-                        mao.addCinco(pilhaCompra, pilhaDescarte);
-                }
-
                 if (escolha > mao.getSize() || escolha < 0){ 
                     escolhaInvalida = true;
                     continue;
