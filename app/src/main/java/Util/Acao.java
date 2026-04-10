@@ -134,4 +134,42 @@ public abstract class Acao {
             System.out.println(Cor.reset + "> " + executor.getNome() + Cor.txtAmarelo(" ") + "Colocou " + Cor.txtVermelho("algo ") + "na sua pilha de compras...");
         }
     }
+
+
+    public static class AplicarEfeitoAliadoMaisForte extends Acao {
+        Inimigo novoAlvo;
+        public AplicarEfeitoAliadoMaisForte(Efeito efeito){
+            this.efeito = efeito;
+        }
+
+        @Override
+        public void executar(Inimigo executor, Entidade alvo, Batalha batalha) {
+            novoAlvo = executor;
+            if (batalha.getInimigos().stream().anyMatch(i -> i.estaVivo()))
+            {
+                if (!batalha.getInimigos().isEmpty())
+                    novoAlvo = batalha.getInimigos().get(0);
+                
+                for (Inimigo inimigo : batalha.getInimigos())
+                {
+                    if (inimigo.estaVivo() && inimigo.getTier() > novoAlvo.getTier())
+                    {
+                        novoAlvo = inimigo;
+                    }
+                }
+            }
+
+            efeito.adicionar(novoAlvo, batalha);
+        };
+
+        @Override
+        public void anunciar(Inimigo executor, Entidade alvo) {
+            System.out.println(Cor.txtAmarelo("> ") + executor.getNome() + Cor.cinza + " irá aplicar o efeito " + efeito.getNomeColorido() + " em um aliado.");
+        }
+
+        @Override
+        public void resultado(Inimigo executor, Entidade alvo) {
+            System.out.println(Cor.reset + "> " + executor.getNome() + " aplicou " + efeito.getNomeColorido() + " em um aliado!"); 
+        }
+    }
 }   

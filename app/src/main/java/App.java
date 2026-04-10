@@ -21,7 +21,7 @@ public class App {
         Moldes.carregar();
 
         // heroi -----------
-        Heroi heroi = new Heroi("Capitão Jack Sparrow", 55, 5);
+        Heroi heroi = new Heroi("Capitão Jack Sparrow", 60, 5);
         
         // pra dar dinheiro pra testar descomenta aqui
         // heroi.setDinheiro(50);
@@ -38,7 +38,7 @@ public class App {
         Textos.sleep(500);
         System.out.println();
         
-        InputHandler.esperar(Cor.txtAmareloClaro("Pressione ENTER para iniciar!"));
+        InputHandler.esperar(Cor.txtAmareloClaro("Pressione ENTER para partir em busca do Pérola Negra!"));
 
         // ----------------------------
 

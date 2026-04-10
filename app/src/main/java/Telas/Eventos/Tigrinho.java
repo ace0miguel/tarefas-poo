@@ -93,7 +93,7 @@ public class Tigrinho extends Evento{
         Textos.limpaTela();
         System.out.println(tituloColorido + "\n" + Cor.txtVermelho("O dobro ou nada! quanto você deseja apostar? " + Cor.cinza +
             "[ Vida atual: ( " + Cor.cinza + heroi.getVida()+ " / " + Cor.reset + heroi.getVidaMax() + Cor.cinza + " ) ]" +
-            Cor.vermelho + "Se voce colocar tudo a perder, talvez eu tenha algo a te oferecer... \n"
+            Cor.vermelho + "\nSe voce colocar tudo a perder, talvez eu tenha algo a te oferecer... \n"
         ));
 
         int valor = InputHandler.lerInt();

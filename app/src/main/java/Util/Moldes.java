@@ -154,6 +154,16 @@ public class Moldes {
         energiaSupremo = new CartaHabilidade("Energia!!!!!!!!!!!", "Ganhe muitos ponto de energia", 0, ganhaEnergiaTest, true); energiaSupremo.setRaridade(4); // essa aqui nem vai pro sorteio mas botei 4
 
         // inimigos --
+        // tier 1
+        endrick = new Inimigo("Endrick", 15, 5,
+            new Acao.Atacar(), new Acao.AtacarEfeito(veneno), new Acao.AplicarEfeitoAliadoMaisForte(odioPuro)
+        ); endrick.setTier(1);
+
+        drake = new Inimigo("Drake", 19, 2,
+            new Acao.AplicarEfeitoAliadoMaisForte(odioPuro), new Acao.AplicarEfeitoAliadoMaisForte(escudao), new Acao.Atacar()
+        ); drake.setTier(1);
+
+        // tier 2
         barbossa = new Inimigo("Capitão Hector Barbossa", 30, 5,
             new Acao.Atacar(), new Acao.AtacarEfeito(sangramento)
         ); barbossa.setTier(2);
@@ -162,25 +172,20 @@ public class Moldes {
             new Acao.AtacarVidaPerdida(), new Acao.AtacarEfeito(sangramento), new Acao.AdicionarCarta(sangrar)
         ); loudCoringa.setTier(2);
 
-        endrick = new Inimigo("Endrick", 12, 4,
-            new Acao.Atacar(), new Acao.AtacarEfeito(veneno)
-        ); endrick.setTier(1);
-
-        drake = new Inimigo("Drake", 10, 3,
-            new Acao.Atacar()
-        ); drake.setTier(1);
-
-        paulAtreides = new Inimigo("PAUL MUAD'DIB ATREIDES, DUKE OF ARRAKIS, LISAN AL GAIB", 45, 5, // ESSE AQUI E FORTE VIU MEIO QUE O BOSS
-            new Acao.AtacarVidaPerdida(), new Acao.AdicionarCarta(beberVeneno), new Acao.ReceberEfeito(pactoSinistro)
-        ); paulAtreides.setTier(3);
-
+        // tier 3
         sabrinaCarpenter = new Inimigo("SABRINA CARPENTER", 50, 6,  // ELA E FORTE TB
             new Acao.Atacar(), new Acao.AdicionarCarta(sangrar), new Acao.ReceberEfeito(odioPuro)
         ); sabrinaCarpenter.setTier(3);
             
-        tripleT = new Inimigo("TUNG TUNG TUNG SAHUR", 67, 6, // OUTRO BOSS TA MUITO ROUBADO
-            new Acao.AdicionarCarta(beberVeneno), new Acao.AtacarEfeito(sangramento)
+        tripleT = new Inimigo("TUNG TUNG TUNG SAHUR", 67, 2, // OUTRO BOSS TA MUITO ROUBADO
+            new Acao.AdicionarCarta(beberVeneno), new Acao.AtacarEfeito(sangramento), new Acao.AplicarEfeitoAliadoMaisForte(escudao), new Acao.AtacarVidaPerdida()
         ); tripleT.setTier(3);
+
+        // tier 4 (goats)
+        paulAtreides = new Inimigo("PAUL MUAD'DIB ATREIDES, DUKE OF ARRAKIS, LISAN AL GAIB", 51, 6, // ESSE AQUI E FORTE VIU MEIO QUE O BOSS
+            new Acao.AtacarVidaPerdida(), new Acao.ReceberEfeito(pactoSinistro)
+        ); paulAtreides.setTier(4);
+
         
         // efeitos que referenciam cartas precisam ser setados aqui, pq as cartas sao criadas depois.
         ganhaResenhax.setCarta(resenhax);

@@ -38,7 +38,7 @@ public class ArvoreEventos {
     Batalha tripleTeAmigos = new Batalha(drake.criaCopia(), tripleT.criaCopia(), endrick.criaCopia());
     Batalha sabrinaAtreides = new Batalha(paulAtreides.criaCopia(), sabrinaCarpenter.criaCopia());
     Batalha coringaBarbossaEndrick = new Batalha(loudCoringa.criaCopia(), barbossa.criaCopia(), endrick.criaCopia());
-    Batalha sabrinaAtreidesBarbossa = new Batalha(paulAtreides.criaCopia(), sabrinaCarpenter.criaCopia(), barbossa.criaCopia());
+    Batalha barbossaSabrinaCoringa = new Batalha(barbossa.criaCopia(), sabrinaCarpenter.criaCopia(), drake.criaCopia());
 
     public ArvoreEventos(int n, int p){
         this.n = n;
@@ -53,7 +53,7 @@ public class ArvoreEventos {
         batalhasAleatorias.add(tripleTeAmigos);
         batalhasAleatorias.add(sabrinaAtreides);
         batalhasAleatorias.add(coringaBarbossaEndrick);
-        batalhasAleatorias.add(sabrinaAtreidesBarbossa);
+        batalhasAleatorias.add(barbossaSabrinaCoringa);
     }
 
     public long getTotalNos(){
@@ -75,7 +75,7 @@ public class ArvoreEventos {
             for (int i = 0; i < n; i++) {
                 // se quiser testar um evento especifico e so substituir aq e comentar a batalha
                 // opcoes.add(new Loja());
-                opcoes.add(new Batalha(loudCoringa.criaCopia(), barbossa.criaCopia(), endrick.criaCopia()));
+                opcoes.add(new Batalha(loudCoringa.criaCopia(), barbossa.criaCopia(), drake.criaCopia()));
             }
         } 
         

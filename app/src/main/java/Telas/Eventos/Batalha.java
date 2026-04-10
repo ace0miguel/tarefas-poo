@@ -101,7 +101,6 @@ public class Batalha extends Evento {
         boolean linhaCimaPrintada = false;
 
         for (Inimigo inimigo : arrayInimigos) {
-            inimigo.passaRodada();
             inimigo.resetEfeitos();
         }
         
@@ -163,7 +162,7 @@ public class Batalha extends Evento {
         while (true) { 
             int i = 0;
             Textos.limpaTela();
-            Cor.printaAmareloClaro(Arte.selecioneAlvo6);
+            Cor.printaAmareloClaro("Selecione o alvo:");
             System.out.println();
 
             System.out.println((Cor.amarelo + "0 - " + Cor.cinza + "Voltar."));
@@ -415,6 +414,7 @@ public class Batalha extends Evento {
 
         for (Inimigo inimigo : arrayInimigos) {
             if (inimigo.estaVivo()){ // adicionei isso pq joguei uma partida aqui e tomei hit de um inimigo morto.
+                inimigo.passaRodada(); // reseta os bonus (escudo por enquanto)
                 inimigo.resultadoAcao(heroi); // printa oq ele ta fazendo (antes de fazer pq as vezes ele se mata)
                 inimigo.realizarAcao(heroi, this); // faz oq ele ia fazer
                 inimigo.escolheAcao(); // escolhe prox ação

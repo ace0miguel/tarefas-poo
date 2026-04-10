@@ -8,9 +8,10 @@ import Entidades.Inimigo;
 import Poderes.Poder;
 
 public class Textos {
+    public static String bordaHudBatalha = Cor.txtCinza(Arte.bordaHud13);
 
     public static String escolhaInvalida(int maxEscolha){
-        return "Tem que ser um número de 0 a " + maxEscolha + ", capitao!";
+        return "Tem que ser um número de 0 à " + maxEscolha + ", capitao!";
     }
 
     /** apaga tudo que ta imprimido no terminal */
@@ -53,7 +54,7 @@ public class Textos {
         System.out.println();
         // parte de cima da hud
         
-        printaBonito(Cor.txtCinza(Arte.bordaHud1), 2, 0);
+        printaBonito(bordaHudBatalha, 2, 1);
 
         // ---------------------------------
 
@@ -97,7 +98,7 @@ public class Textos {
 
         // parte de baixo da hud
         
-        printaBonito(Cor.txtCinza(Arte.bordaHud1), 2, 0);
+        printaBonito(bordaHudBatalha, 2, 1);
 
         // ---------------------------------
         
@@ -127,7 +128,7 @@ public class Textos {
 
         // parte de cima da hud
 
-        System.out.print(Cor.txtCinza(Arte.bordaHud1));
+        System.out.print(bordaHudBatalha);
 
         // ---------------------------------
 
@@ -172,7 +173,7 @@ public class Textos {
         }
         // parte de baixo da hud
 
-        System.out.print(Cor.txtCinza(Arte.bordaHud1));
+        System.out.print(bordaHudBatalha);
 
         // ---------------------------------
 
