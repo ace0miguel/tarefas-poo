@@ -103,7 +103,7 @@ public class InputHandler {
                 escolha--;
 
             if (leitor.hasNextLine()) {
-                String linha = leitor.nextLine();
+                leitor.nextLine();
             }
 
             System.out.println();
@@ -212,7 +212,7 @@ public class InputHandler {
             } catch (Exception e) {
                 esperar("digite um número válido!");
                 if (leitor.hasNextLine()) {
-                    String linha = leitor.nextLine();
+                    leitor.nextLine();
                 }
             }
         }
@@ -228,7 +228,7 @@ public class InputHandler {
             } catch (Exception e) {
                 esperar("digite um texto válido!");
                 if (leitor.hasNextLine()) {
-                    String linha = leitor.nextLine();
+                    leitor.nextLine();
                 }
             }
         }

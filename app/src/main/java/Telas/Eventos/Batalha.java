@@ -179,11 +179,11 @@ public class Batalha extends Evento {
             try {
                 opcao = ler.nextInt();
                 if (ler.hasNextLine()) {
-                String linha = ler.nextLine();
+                ler.nextLine();
             };
             } catch (Exception e) {
                 if (ler.hasNextLine()) {
-                String linha = ler.nextLine();
+                ler.nextLine();
             };  
             }
             

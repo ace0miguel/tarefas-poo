@@ -1,10 +1,6 @@
 package EfeitosDeStatus.Instantaneos;
 
-import Cartas.Carta;
 import EfeitosDeStatus.Efeito;
-import Entidades.Entidade;
-import Entidades.Heroi;
-import Telas.Eventos.Batalha;
 
 /** adiciona escudo ao alvo */
 public class Escudo extends Efeito {
