@@ -6,7 +6,7 @@
             "name": "App (Gradle app)",
             "request": "launch",
             "mainClass": "App",
-            "projectName": "app"
+            "cwd": "${workspaceFolder}/app"
         }
     ]
 }
