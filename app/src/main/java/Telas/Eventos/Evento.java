@@ -14,4 +14,8 @@ public class Evento { // evento generico
         String retorno = Cor.txtVermelho("evento") + " ( > ";
         return retorno;
     }
+
+    public Evento criaCopia() {
+        return new Evento();
+    }
 }

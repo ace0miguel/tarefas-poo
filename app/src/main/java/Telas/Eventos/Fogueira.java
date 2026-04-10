@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import Cartas.Carta;
 import Entidades.Heroi;
 import Util.Arte;
 import Util.Cor;
@@ -38,7 +37,14 @@ public class Fogueira extends Evento{
 
     @Override
     public String toString() {
-        String retorno = Cor.txtVerde("Fogueira");
+        String retorno = Cor.txtVerde("Fogueira.");
         return retorno;
     }
+
+    @Override
+    public Fogueira criaCopia() {
+        return new Fogueira();
+    }
+
+    
 }

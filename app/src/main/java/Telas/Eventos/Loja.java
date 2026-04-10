@@ -8,48 +8,53 @@ import Entidades.Heroi;
 import Util.Arte;
 import Util.Cor;
 import Util.InputHandler;
-import Util.Textos;
 import Util.Recompensas;
-import Cartas.Carta;
+import Util.Textos;
 
 
 public class Loja extends Evento{
-    List<String> opcoes = new ArrayList<>(Arrays.asList("Poção", "Carta"));
+    List<String> opcoes = new ArrayList<>(Arrays.asList("Poções de vida", "Pacotes de carta"));
 
     
     @Override 
     public void iniciar (Heroi heroi){
         this.heroi = heroi;
-        Textos.sobeTela();
-        int escolha = InputHandler.selecionar(opcoes, Cor.txtAmareloClaro("\n\nVocê encontrou a loja, deseja comprar algo?"));
-        switch (escolha) {
-            case 0 ->{
-                List<String> opcoes = new ArrayList<>(Arrays.asList("Poção pequena", "Poção média", "Poção grande"));
-                int escolha2 = InputHandler.selecionar(opcoes, Cor.txtAmareloClaro("\n\nQual poção deseja comprar?"));
-                switch (escolha2) {
-                    case 0 -> {
-                        compraPoção(heroi, 15, 10);
-                    }
-                    case 1 -> {
-                        compraPoção(heroi, 25, 20);  
-                    }
-                    case 2 -> {
-                        compraPoção(heroi, 40, 35);  
+        String titulo = Textos.colorirPartes(Arte.loja, Cor.reset, Cor.ciano, 1);
+        while (true){
+            Textos.limpaTela();
+            int escolha = InputHandler.selecionar(opcoes, true, titulo + Cor.txtAmareloClaro("\n\nVocê encontrou a loja! deseja comprar algo? "+ Cor.cinza + "[ Saldo atual: ( " + Cor.amarelo + heroi.getDinheiro() + Cor.cinza + " ) ]"));
+            if (escolha == -1) break;
+            switch (escolha) {
+                case 0 ->{
+                    List<String> opcoes = new ArrayList<>(Arrays.asList("Poção pequena (15 de vida, 10 reais)", "Poção média (25 de vida, 25 reais)", "Poção grande (40 de vida, 35 reais)"));
+                    int escolha2 = InputHandler.selecionar(opcoes, true, Cor.txtAmareloClaro("\n\nQual poção deseja comprar? "+ Cor.cinza + "[ Saldo atual: ( " + Cor.amarelo + heroi.getDinheiro() + Cor.cinza + " ) ]"));
+                    if (escolha2 == -1) break;
+                    switch (escolha2) {
+                        case 0 -> {
+                            compraPoção(heroi, 15, 10);
+                        }
+                        case 1 -> {
+                            compraPoção(heroi, 25, 25);  
+                        }
+                        case 2 -> {
+                            compraPoção(heroi, 40, 35);  
+                        }
                     }
                 }
-            }
-            case 1 -> {
-                List<String> opcoes = new ArrayList<>(Arrays.asList("Booster pack comum", "Booster pack incomum", "Booster pack raro", "Booster pack especial"));
-                int escolha3 = InputHandler.selecionar(opcoes, Cor.txtAmareloClaro("\n\nQual Booster deseja comprar?"));
-                switch (escolha3) {
-                    case 0 -> {
-                        compraBoosterPack(heroi, 1, 35);
-                    }
-                    case 1 -> {
-                        compraBoosterPack(heroi, 2, 50); 
-                    }
-                    case 2 -> {
-                        compraBoosterPack(heroi, 3, 70);   
+                case 1 -> {
+                    List<String> opcoes = new ArrayList<>(Arrays.asList("Booster pack comum (35 reais)", "Booster pack incomum (50 reais)", "Booster pack raro (70 reais)"));
+                    int escolha3 = InputHandler.selecionar(opcoes, true, Cor.txtAmareloClaro("\n\nQual Booster deseja comprar? "+ Cor.cinza + "[ Saldo atual: ( " + Cor.amarelo + heroi.getDinheiro() + Cor.cinza + " ) ]"));
+                    if (escolha3 == -1) break;
+                    switch (escolha3) {
+                        case 0 -> {
+                            compraBoosterPack(heroi, 1, 35);
+                        }
+                        case 1 -> {
+                            compraBoosterPack(heroi, 2, 50); 
+                        }
+                        case 2 -> {
+                            compraBoosterPack(heroi, 3, 70);   
+                        }
                     }
                 }
             }
@@ -59,29 +64,33 @@ public class Loja extends Evento{
     public void compraBoosterPack(Heroi heroi, int raridade, int preco) {
         if (heroi.getDinheiro() >= preco) {
             heroi.gastaDinheiro(preco);
-            List<Carta> cartas = Recompensas.cartasAleatorias(raridade, 3);
-            for (Carta carta : cartas) {
-                heroi.addCartaInventario(carta);
-                System.out.println(Cor.txtVerdeClaro("\n\nVocê comprou um booster pack e recebeu a carta " + carta.getNome() + "!"));
-            }
+            Recompensas.ganharCartas(raridade, 3, heroi);
         } else {
-            System.out.println(Cor.txtVermelho("\n\nVocê não tem ouro suficiente!"));
+            System.out.println(Cor.txtVermelho("Você não tem dinheiro suficiente!"));
+            InputHandler.esperar();
         }  
     }
 
     public void compraPoção(Heroi heroi, int cura, int preco) {
         if (heroi.getDinheiro() >= preco) {
             heroi.gastaDinheiro(preco);
-            heroi.setVida(heroi.getVida() + cura);
-            System.out.println(Cor.txtVerdeClaro("\n\nVocê comprou uma poção e recuperou " + cura + " de vida!"));
+            heroi.ganhaVida(cura);
         } else {
-            System.out.println(Cor.txtVermelho("\n\nVocê não tem ouro suficiente!"));
+            System.out.println(Cor.txtVermelho("Você não tem dinheiro suficiente!"));
+            InputHandler.esperar();
         }  
     }
 
     @Override
     public String toString() {
-        String retorno = Cor.txtVerde("Loja");
+        String retorno = Cor.txtCiano("Loja.");
         return retorno;
     }
+
+    @Override
+    public Loja criaCopia() {
+        return new Loja();
+    }
+
+    
 }

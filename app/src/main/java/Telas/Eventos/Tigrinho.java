@@ -3,19 +3,19 @@ package Telas.Eventos;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.IntPredicate;
 
 import Entidades.Heroi;
 import Util.Arte;
 import Util.Cor;
 import Util.InputHandler;
+import Util.Moldes;
 import Util.RNGHandler;
+import Util.Recompensas;
 import Util.Textos;
 
 /** cassino */
 public class Tigrinho extends Evento{
     String tituloColorido = Textos.colorirPartes(Arte.cassino5, Cor.amareloClaro, Cor.laranja, 5) + "\n";
-        // String hudCompleta = tituloColorido + "\n\n" + Cor.cinza + Arte.bordaHud1; 
     
     @Override
     public void iniciar(Heroi heroi) {
@@ -88,11 +88,20 @@ public class Tigrinho extends Evento{
     }
 
     public void cassinoVida(Heroi heroi){
-    Textos.limpaTela();
+        boolean apostaArriscada = false;
+
+        Textos.limpaTela();
         System.out.println(tituloColorido + "\n" + Cor.txtVermelho("O dobro ou nada! quanto você deseja apostar? " + Cor.cinza +
-            "[ Vida atual: ( " + Cor.cinza + heroi.getVida()+ " / " + Cor.reset + heroi.getVidaMax() + Cor.cinza + " ) ]\n"
+            "[ Vida atual: ( " + Cor.cinza + heroi.getVida()+ " / " + Cor.reset + heroi.getVidaMax() + Cor.cinza + " ) ]" +
+            Cor.vermelho + "Se voce colocar tudo a perder, talvez eu tenha algo a te oferecer... \n"
         ));
+
         int valor = InputHandler.lerInt();
+
+        if (valor == heroi.getVida()){
+            Textos.printaBonito(Cor.txtVermelho("\nInteressante..."),10 ,0);
+            apostaArriscada = true;
+        }
 
         if (valor <= 1) {
             InputHandler.esperar("\nTa morto dorme fio");
@@ -118,18 +127,33 @@ public class Tigrinho extends Evento{
         } else {
             heroi.receberDanoDireto(valor);
             if (!heroi.estaVivo()){
-                Textos.printaLinhaDevagar(Cor.txtVermelho(Arte.hahaha).repeat(35), 10);
+                Textos.printaLinhaDevagar(Cor.txtVermelho(Arte.hahaha).repeat(35), 5);
                 System.exit(0);
             }
             System.out.println("\n" + Cor.vermelho + "Obrigado! Você perdeu " + valor + " pontos de vida!" + Cor.reset + Cor.txtVermelho(" :D"));
+            System.out.println();
         }
 
-        System.out.println("\nVida atual: " + Cor.txtAmareloClaro(String.valueOf(heroi.getVida())));
+        System.out.println("Vida atual: " + Cor.txtAmareloClaro(String.valueOf(heroi.getVida())));
         InputHandler.esperar();
+
+        if (apostaArriscada){
+            Textos.printaBonito(Cor.txtVermelho("Eu aprecio sua coragem. Muito bem, eu vou te dar um presente.\n"),5 ,2);
+            Recompensas.ganharCartaEsp(Moldes.presenteMaldito, heroi);
+        }
     }
+
+
     @Override
     public String toString() {
-        String retorno = Cor.txtLaranja("Cassino! ") + "- O dobro ou nada!";
+        String retorno = Cor.txtLaranja("Cassino!");
         return retorno;
     }   
+
+    @Override
+    public Tigrinho criaCopia() {
+        return new Tigrinho();
+    }
+
+    
 }

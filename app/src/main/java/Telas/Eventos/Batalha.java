@@ -27,8 +27,9 @@ import Util.Textos;
 
 public class Batalha extends Evento {
     private int turno; // 0 -> heroi, 1 -> inimigos
-    private Inimigo[] arrayInimigos; // inimigos em forma de array pq infelizmente as vezes precisa :(
-    private List<Inimigo> inimigos; // inimigos em forma de lista pq é bom ! :)
+    private Inimigo[] arrayInimigos; // inimigos em forma de array (nenhum inimigo é removido daqui durante a batalha)
+    private List<Inimigo> inimigos; // inimigos em forma de lista pq é bom ! :)  
+    private final Inimigo[] arrayInimigosPermanente; // cópia do array de inimigos pra usar na função criarCopia
     private int recompensa = 0; // recompensa em dinheiro pela batalha, baseada no tier dos inimigos
 
     private Mao mao = new Mao();
@@ -43,8 +44,17 @@ public class Batalha extends Evento {
 
     Scanner ler = InputHandler.getLeitor();
 
+    private Inimigo[] copiarInimigos(Inimigo[] inimigosOriginais) {
+        Inimigo[] copiados = new Inimigo[inimigosOriginais.length];
+        for (int i = 0; i < inimigosOriginais.length; i++) {
+            copiados[i] = inimigosOriginais[i].criaCopia();
+        }
+        return copiados;
+    }
+
     public Batalha(Inimigo... _inimigos){
-        this.arrayInimigos = _inimigos;
+        this.arrayInimigos = copiarInimigos(_inimigos);
+        this.arrayInimigosPermanente = copiarInimigos(_inimigos); // moldes imutaveis para criar copias futuras
         inimigos = new ArrayList<>(Arrays.asList(arrayInimigos)); // converte o array inimigos em arraylist para facilitar a manipulação.
         for (Inimigo inimigo : inimigos) {
             recompensa += inimigo.getRecompensa();
@@ -343,7 +353,7 @@ public class Batalha extends Evento {
                     // se não for selfcast ou poder pergunta o alvo, ataque com efeito selfcast ataca o alvo e aplica o efeito em si mesmo.
                     if ((cartaEscolhida.getSelfCast() || cartaEscolhida instanceof CartaPoder) && !(cartaEscolhida instanceof CartaAtaqueComEfeito)) {
                         if (cartaEscolhida.temResenha())
-                            Textos.limpaTela();
+                            Textos.sobeTela();
                         cartaEscolhida.usar(heroi, heroi, this);
                     } else {
                         int alvo = selecionarAlvo();
@@ -380,7 +390,7 @@ public class Batalha extends Evento {
 
                     // se conseguir usar todas as cartas da mao puxa mais 5 e ganha 2 de energia bonus, injeçao de dopamina assim q vc mantem um jogador preso
                     if (mao.getSize() == 0){
-                        Textos.limpaTela();
+                        Textos.sobeTela();
 
                         // fiz 2 versoes esse rodada bonus aparecendo 1 trilhao de vezes e um mais simples +5 cartas +2 energia, nao sei qual e melhor
                         Textos.printaLinhaDevagar(Cor.rosa + (Arte.bonus).repeat(15) + Cor.reset);
@@ -463,5 +473,10 @@ public class Batalha extends Evento {
             retorno += " [ " + inimigo.getNome() + " ]";
         }
         return retorno;
+    }
+
+    @Override
+    public Batalha criaCopia() {
+        return new Batalha(arrayInimigosPermanente); 
     }
 }

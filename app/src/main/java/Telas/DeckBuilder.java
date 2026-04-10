@@ -13,6 +13,7 @@ import Util.InputHandler;
 import static Util.Moldes.armadura;
 import static Util.Moldes.beberVeneno;
 import static Util.Moldes.bomba;
+import static Util.Moldes.bombaSuprema;
 import static Util.Moldes.bombaVeneno;
 import static Util.Moldes.chocolex;
 import static Util.Moldes.contratoSangue;
@@ -238,15 +239,18 @@ public class DeckBuilder {
 
                 heroi.addCarta(bomba);
                 heroi.addCarta(bomba);
-                heroi.addCarta(bomba);
-                heroi.addCarta(bomba);
-                heroi.addCarta(bomba);
-                heroi.addCarta(bomba);
+                
+                heroi.addCarta(bombaSuprema);
+                heroi.addCarta(bombaSuprema);
+                heroi.addCarta(bombaSuprema);
            
                 heroi.addCarta(puxaCarta);
                 heroi.addCarta(puxaCarta); 
 
                 heroi.addCarta(energiaSupremo);
+                heroi.addCarta(energiaSupremo);
+                heroi.addCarta(energiaSupremo);
+                
                 heroi.addCarta(corteProfundo);
 
                 heroi.addCarta(corteRapido);

@@ -216,7 +216,7 @@ public abstract class Entidade {
 
     public String status(){
         return (getEscudo() != 0) 
-        ? ""+this.getNomeColorido()+ Cor.reset + " " + Textos.desenharBarraVida(this.getVida(), this.getVidaMax()) + " "+Cor.azul+" ("+this.getEscudo()+" de escudo)" + Cor.reset + "" + Cor.reset
-        : ""+this.getNomeColorido()+ Cor.reset + " " + Textos.desenharBarraVida(this.getVida(), this.getVidaMax()) + Cor.reset + "" + Cor.reset ;
+        ? ""+this.getNomeColorido()+ Cor.reset + " || " + Textos.desenharBarraVida(this.getVida(), this.getVidaMax()) + " "+Cor.azul+" ("+this.getEscudo()+" de escudo)" + Cor.reset + "" + Cor.reset
+        : ""+this.getNomeColorido()+ Cor.reset + " || " + Textos.desenharBarraVida(this.getVida(), this.getVidaMax()) + Cor.reset + "" + Cor.reset ;
     }
 }

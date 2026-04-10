@@ -23,7 +23,7 @@ public class Mapa {
     
     // retorna um menu de seleçao com os filhos da posiçao passada. a opçao exit te manda pro deckbuilder.
     public int escolherCaminho(DefaultMutableTreeNode posicaoAtual){ 
-        return InputHandler.selecionar(arvoreEventos.getEventos(posicaoAtual),true, Arte.mapa + "\n" + Cor.txtAzul(Arte.bordaHud4) + Cor.txtAmarelo("\nEscolha voltar para personalizar seu deck"), "deckBuilder.");
+        return InputHandler.selecionar(arvoreEventos.getEventos(posicaoAtual),true, Arte.mapa + "\n" + Cor.txtAzul(Arte.bordaHud4) + Cor.txtAmareloClaro("\nvida atual: " + heroi.getVida() + "/" + heroi.getVidaMax() + " || dinheiro atual: " + heroi.getDinheiro()) , "deckBuilder.");
     }
 
     public int escolherCaminho(){ // se nao passar nada retorna baseado no nó atual
