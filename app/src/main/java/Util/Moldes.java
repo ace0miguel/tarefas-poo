@@ -46,6 +46,7 @@ public class Moldes {
     public static Inimigo paulAtreides;
     public static Inimigo sabrinaCarpenter;
     public static Inimigo tripleT;
+    public static Inimigo loudSacy;
 
     // cartas -----------
     public static Carta tiro;
@@ -172,18 +173,24 @@ public class Moldes {
             new Acao.AtacarVidaPerdida(), new Acao.AtacarEfeito(sangramento), new Acao.AdicionarCarta(sangrar)
         ); loudCoringa.setTier(2);
 
+        loudSacy = new Inimigo("LOUD Sacy", 21, 2, 
+            new Acao.AdicionarCarta(sangrar), new Acao.AplicarEfeitoAliadoMaisForte(odioPuro), 
+            new Acao.AplicarEfeitoAliadoMaisForte(escudao), new Acao.AplicarEfeitoAliadoMaisForte(pactoSinistro)
+        ); loudSacy.setTier(2);
+
         // tier 3
-        sabrinaCarpenter = new Inimigo("SABRINA CARPENTER", 50, 6,  // ELA E FORTE TB
-            new Acao.Atacar(), new Acao.AdicionarCarta(sangrar), new Acao.ReceberEfeito(odioPuro)
+        sabrinaCarpenter = new Inimigo("SABRINA CARPENTER", 42, 6,  // ELA E FORTE TB
+            new Acao.Atacar(), new Acao.AtacarEfeito(sangramento), new Acao.ReceberEfeito(odioPuro)
         ); sabrinaCarpenter.setTier(3);
             
         tripleT = new Inimigo("TUNG TUNG TUNG SAHUR", 67, 2, // OUTRO BOSS TA MUITO ROUBADO
-            new Acao.AdicionarCarta(beberVeneno), new Acao.AtacarEfeito(sangramento), new Acao.AplicarEfeitoAliadoMaisForte(escudao), new Acao.AtacarVidaPerdida()
+            new Acao.AdicionarCarta(beberVeneno), new Acao.AtacarEfeito(sangramento), 
+            new Acao.AplicarEfeitoAliadoMaisForte(escudao), new Acao.AtacarVidaPerdida()
         ); tripleT.setTier(3);
 
         // tier 4 (goats)
-        paulAtreides = new Inimigo("PAUL MUAD'DIB ATREIDES, DUKE OF ARRAKIS, LISAN AL GAIB", 51, 6, // ESSE AQUI E FORTE VIU MEIO QUE O BOSS
-            new Acao.AtacarVidaPerdida(), new Acao.ReceberEfeito(pactoSinistro)
+        paulAtreides = new Inimigo("PAUL MUAD'DIB ATREIDES, DUKE OF ARRAKIS, LISAN AL GAIB", 53, 8, // ESSE AQUI E FORTE VIU MEIO QUE O BOSS
+            new Acao.AtacarVidaPerdida(), new Acao.ReceberEfeito(pactoSinistro), new Acao.AtacarEfeito(sangramento)
         ); paulAtreides.setTier(4);
 
         

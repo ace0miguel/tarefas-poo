@@ -15,6 +15,7 @@ import static Util.Moldes.barbossa;
 import static Util.Moldes.drake;
 import static Util.Moldes.endrick;
 import static Util.Moldes.loudCoringa;
+import static Util.Moldes.loudSacy;
 import static Util.Moldes.paulAtreides;
 import static Util.Moldes.sabrinaCarpenter;
 import static Util.Moldes.tripleT;
@@ -36,7 +37,7 @@ public class ArvoreEventos {
 
     // moldes de batalhas
     Batalha tripleTeAmigos = new Batalha(drake.criaCopia(), tripleT.criaCopia(), endrick.criaCopia());
-    Batalha sabrinaAtreides = new Batalha(paulAtreides.criaCopia(), sabrinaCarpenter.criaCopia());
+    Batalha sabrinaAtreides = new Batalha(loudSacy.criaCopia(), paulAtreides.criaCopia(), sabrinaCarpenter.criaCopia());
     Batalha coringaBarbossaEndrick = new Batalha(loudCoringa.criaCopia(), barbossa.criaCopia(), endrick.criaCopia());
     Batalha barbossaSabrinaCoringa = new Batalha(barbossa.criaCopia(), sabrinaCarpenter.criaCopia(), drake.criaCopia());
 

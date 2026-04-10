@@ -31,6 +31,7 @@ public class Batalha extends Evento {
     private List<Inimigo> inimigos; // inimigos em forma de lista pq é bom ! :)  
     private final Inimigo[] arrayInimigosPermanente; // cópia do array de inimigos pra usar na função criarCopia
     private int recompensa = 0; // recompensa em dinheiro pela batalha, baseada no tier dos inimigos
+    private int dificuldadeTotal = 0; // soma da dificuldade(tier) de cada inimigo
 
     private Mao mao = new Mao();
     private PilhaCompra pilhaCompra = new PilhaCompra();
@@ -58,6 +59,7 @@ public class Batalha extends Evento {
         inimigos = new ArrayList<>(Arrays.asList(arrayInimigos)); // converte o array inimigos em arraylist para facilitar a manipulação.
         for (Inimigo inimigo : inimigos) {
             recompensa += inimigo.getRecompensa();
+            dificuldadeTotal += inimigo.getTier();
         }
     }
 
@@ -455,6 +457,9 @@ public class Batalha extends Evento {
     public String toString() {
         String retorno = Cor.txtVermelho("Batalha") + Cor.txtCinza(" VERSUS");
 
+        if (dificuldadeTotal > 8) {
+            retorno += " (" + Cor.vermelho + "elite" + Cor.reset + ")";
+        }
         for (Inimigo inimigo : arrayInimigos) {
             retorno += " [ " + inimigo.getNome() + " ]";
         }
