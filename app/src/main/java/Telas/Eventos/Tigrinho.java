@@ -58,11 +58,11 @@ public class Tigrinho extends Evento{
         int valor = InputHandler.lerInt();
 
         if (valor <= 1) {
-            InputHandler.esperar("\nTa duro dorme fio");
+            InputHandler.esperar(Cor.txtVermelho("\nTa duro dorme fio."));
             return;
         }
         else if (valor > heroi.getDinheiro()) {
-            InputHandler.esperar("\nVocê não tem esse valor!");
+            InputHandler.esperar(Cor.txtVermelho("\nVocê não tem esse valor!"));
             return;
         }
 
@@ -104,11 +104,11 @@ public class Tigrinho extends Evento{
         }
 
         if (valor <= 1) {
-            InputHandler.esperar("\nTa morto dorme fio");
+            InputHandler.esperar(Cor.txtVermelho("\nTa morto dorme fio."));
             return;
         }
         else if (valor > heroi.getVida()) {
-            InputHandler.esperar("\nVocê não tem vida suficiente!");
+            InputHandler.esperar(Cor.txtVermelho("\nVocê não tem vida suficiente!"));
             return;
         }
 
