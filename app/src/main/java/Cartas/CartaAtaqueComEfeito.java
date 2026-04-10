@@ -5,6 +5,7 @@ import Entidades.Entidade;
 import Entidades.Heroi;
 import Entidades.Inimigo;
 import Telas.Eventos.Batalha;
+import Util.Cor;
 
 /** cartas que causam dano direto e aplicam efeitos */
 public class CartaAtaqueComEfeito extends CartaAtaque {
@@ -92,6 +93,26 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
                 efeito.adicionar(inimigo, batalha);
             }
         }
+    }
+
+    @Override
+    public String descricao(){
+        String retorno = this.getNome();
+
+        if (!tags.isEmpty()) {
+            retorno += " - [" + String.join(", ",  tags) + "]";
+        }
+
+        if (!this.getDescricao().equals("")) {
+            retorno += " - " + this.getDescricao();
+        }
+
+        if (this.getSacrificio() != 0){
+            retorno += " - " + Cor.txtVermelho("[Sacrifício: " + this.getSacrificio() + "]");
+        }
+
+        retorno += Cor.cinza + " (" + this.getDano() + ") " + "DANO" +  Cor.txtAmareloClaro(" < custo: " + this.getCusto());
+        return retorno;
     }
 
     @Override

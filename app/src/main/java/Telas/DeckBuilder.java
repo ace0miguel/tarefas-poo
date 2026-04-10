@@ -30,6 +30,7 @@ import static Util.Moldes.escudoFerro;
 import static Util.Moldes.escudoMadeira;
 import static Util.Moldes.mestreLaminasCarta;
 import static Util.Moldes.pactoSangue;
+import static Util.Moldes.presenteMaldito;
 import static Util.Moldes.purificar;
 import static Util.Moldes.puroOdio;
 import static Util.Moldes.puxaCarta;
@@ -251,14 +252,15 @@ public class DeckBuilder {
                 heroi.addCarta(energiaSupremo);
                 heroi.addCarta(energiaSupremo);
                 
-                heroi.addCarta(corteProfundo);
-
-                heroi.addCarta(corteRapido);
 
                 heroi.addCarta(pactoSangue);
                 heroi.addCarta(pactoSangue);
                 heroi.addCarta(pactoSangue);
                 heroi.addCarta(pactoSangue);
+
+                heroi.addCarta(presenteMaldito);
+                heroi.addCarta(presenteMaldito);
+                heroi.addCarta(presenteMaldito);
 
                 heroi.addCarta(contratoSangue);
 

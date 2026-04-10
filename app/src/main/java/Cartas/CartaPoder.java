@@ -43,9 +43,23 @@ public class CartaPoder extends Carta
         printaResenha();
     }
 
-    @Override
     public String descricao(){
-        return ""+this.getNome()+" - "+this.getDescricao() + Cor.txtAmareloClaro(" < custo: " + this.getCusto());
+        String retorno = this.getNome();
+
+        if (!tags.isEmpty()) {
+            retorno += " - [" + String.join(", ",  tags) + "]";
+        }
+
+        if (!this.getDescricao().equals("")) {
+            retorno += " - " + this.getDescricao();
+        }
+
+        if (this.getSacrificio() != 0){
+            retorno += " - " + Cor.txtVermelho("[Sacrifício: " + this.getSacrificio() + "]");
+        }
+
+        retorno += Cor.cinza + " (" + this.poder.getNome() + ")"  +  Cor.txtAmareloClaro(" < custo: " + this.getCusto());
+        return retorno;
     }
 
     @Override

@@ -1,5 +1,8 @@
 package Cartas;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import Entidades.Entidade;
 import Entidades.Heroi;
 import Telas.Eventos.Batalha;
@@ -23,6 +26,8 @@ public abstract class Carta {
     protected boolean consumir = false; // se verdadeiro, a carta vai pra uma pilha de descarte especial ao ser usada. (nao volta pra mao)
     //** vida perdida ao usar a carta. */
     protected int sacrificio = 0; // variavel pra definir um custo em vida ao se usar a carta.
+
+    protected List<String> tags = new ArrayList<>(); // lista de tags que serao exibidas na descriçao
 
     /** dicionario de tipos de ação:
     0 - nenhum
@@ -158,12 +163,22 @@ public abstract class Carta {
         this.descricao = descricao;
     }
 
-    public void setEfeitoEmArea(boolean efeitoEmArea) {
-        this.efeitoEmArea = efeitoEmArea;
+    public void setEfeitoEmArea(boolean _efeitoEmArea) {
+        this.efeitoEmArea = _efeitoEmArea;
+        if (_efeitoEmArea) {
+            if (!tags.contains("Área")) {
+                tags.add("Área");
+            }
+        }
     }
 
-    public void setConsumir(boolean consumir) {
-        this.consumir = consumir;
+    public void setConsumir(boolean _consumir) {
+        this.consumir = _consumir;
+        if (_consumir) {
+            if (!tags.contains("Consumir")) {
+                tags.add("Consumir");
+            }
+        }
     }
 
     public void setSacrificio(int sacrificio) {

@@ -80,10 +80,13 @@ public class ArvoreEventos {
             }
         } 
         
-        // ultimo evento: boss
+        // ultimo evento: boss (todos os inimigos!)
         else if (profundidadeAtual == p) {
             for (int i = 0; i < n; i++) {
-                opcoes.add(new Batalha(barbossa.criaCopia(), loudCoringa.criaCopia(), endrick.criaCopia(), drake.criaCopia(), paulAtreides.criaCopia(), sabrinaCarpenter.criaCopia(), tripleT.criaCopia()));
+                opcoes.add(new Batalha(
+                barbossa.criaCopia(), loudCoringa.criaCopia(), 
+                endrick.criaCopia(), drake.criaCopia(), paulAtreides.criaCopia(), 
+                sabrinaCarpenter.criaCopia(), tripleT.criaCopia(), loudSacy.criaCopia()));
             }
         }
 

@@ -50,16 +50,19 @@
         
         @Override
         public String descricao(){
-            String texto = "" + this.getNome() + " - " + this.getDescricao();
+            String retorno = "" + this.getNome() + " - " + this.getDescricao();
             
+            if (!tags.isEmpty()) {
+            retorno += " - [" + String.join(", ",  tags) + "]";
+            }
             // tirei a parte de mostrar o efeito, acho q ajuda a deixar a vibe da carta meio sinistra
             // if (this.efeito != null) {
             //     texto += " - [ " + this.efeito.getNomeColorido() + " ]";
             // }
             
-            texto += Cor.txtAmareloClaro(" < custo: " + this.getCusto());
+            retorno += Cor.txtAmareloClaro(" < custo: " + this.getCusto());
             
-            return texto;
+            return retorno;
         }
 
         @Override

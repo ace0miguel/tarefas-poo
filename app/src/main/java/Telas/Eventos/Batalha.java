@@ -458,7 +458,7 @@ public class Batalha extends Evento {
         String retorno = Cor.txtVermelho("Batalha") + Cor.txtCinza(" VERSUS");
 
         if (dificuldadeTotal > 8) {
-            retorno += " (" + Cor.vermelho + "elite" + Cor.reset + ")";
+            retorno += " <" + Cor.vermelho + "elite" + Cor.reset + ">";
         }
         for (Inimigo inimigo : arrayInimigos) {
             retorno += " [ " + inimigo.getNome() + " ]";

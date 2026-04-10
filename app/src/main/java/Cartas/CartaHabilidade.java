@@ -47,10 +47,24 @@ public class CartaHabilidade extends Carta // aplica um efeito em um alvo
         efeito.adicionar(alvo, batalha);
         printaResenha();
     }
-    
-    @Override
+
     public String descricao(){
-        return ""+this.getNome()+" - "+this.getDescricao()+ " - [ " +this.efeito.getNomeColorido()+" ]" + Cor.txtAmareloClaro(" < custo: " + this.getCusto());
+        String retorno = this.getNome();
+
+        if (!tags.isEmpty()) {
+            retorno += " - [" + String.join(", ",  tags) + "]";
+        }
+
+        if (!this.getDescricao().equals("")) {
+            retorno += " - " + this.getDescricao();
+        }
+
+        if (this.getSacrificio() != 0){
+            retorno += " - " + Cor.txtVermelho("[Sacrifício: " + this.getSacrificio() + "]");
+        }
+
+        retorno += Cor.cinza + " (" + this.efeito.getNomeColorido() + ")"  +  Cor.txtAmareloClaro(" < custo: " + this.getCusto());
+        return retorno;
     }
 
     @Override
