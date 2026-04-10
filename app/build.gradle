@@ -36,12 +36,16 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass = 'temp.gradle.App'
+    mainClass = 'App'
 }
 
 tasks.named('test') {
     // Use JUnit Platform for unit tests.
     useJUnitPlatform()
+}
+
+tasks.named('run') {
+    standardInput = System.in
 }
 
 jar {
