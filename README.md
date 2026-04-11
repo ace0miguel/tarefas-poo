@@ -83,26 +83,14 @@ Você joga como Jack Sparrow e enfrenta encontros no mapa utilizando cartas. A i
 
 Execute na raiz do projeto.
 
-### Windows (PowerShell / CMD)
 ```bash
-.\gradlew.bat :app:compileJava
+./gradlew build
 ```
-
-### Linux / macOS
-```bash
-./gradlew :app:compileJava
-```
-
-### Compilacao completa do projeto (com testes)
-```bash
-.\gradlew.bat build
-```
-
 ## Execucao
 
 ### Rodar pelo Gradle
 ```bash
-.\gradlew.bat :app:run
+./gradlew run
 ```
 
 ## Como jogar
