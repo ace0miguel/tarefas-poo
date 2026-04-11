@@ -274,7 +274,7 @@ public class DeckBuilder {
      */
     public static void iniciar(Heroi heroi){
         while (true){
-            int opcao = InputHandler.selecionar(menuInicial, true, Cor.txtAmareloClaro(Arte.deckBuilder) + "\n\n" + Textos.menuStatus(heroi));
+            int opcao = InputHandler.selecionar(menuInicial, true, Cor.txtAmareloClaro(Arte.deckBuilder) + "\n" + Textos.menuStatus(heroi));
 
             // escolheu voltar, sai do loop. mas so se tiver acima do limite minimo.
             if (opcao == -1) {

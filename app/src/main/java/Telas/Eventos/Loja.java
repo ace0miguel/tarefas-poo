@@ -12,7 +12,7 @@ import Util.Recompensas;
 import Util.Textos;
 import static Util.Textos.menuStatus;
 
-
+/** evento aleatório onde o jogador pode pagar pra se curar ou pra receber cartas aleatórias */
 public class Loja extends Evento{
     List<String> opcoes = new ArrayList<>(Arrays.asList("Poções de vida", "Pacotes de carta"));
 

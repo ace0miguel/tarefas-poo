@@ -5,7 +5,7 @@ import Poderes.Poder;
 import Telas.Eventos.Batalha;
 import Util.Cor;
 
-/** cartas que causam efeitos especiais, normalmente buffs permanentes (dentro do combate atual) */
+/** cartas que aplicam poderes (efeitos especiais, normalmente buffs permanentes dentro do combate atual) */
 public class CartaPoder extends Carta
 {
     private Poder poder;

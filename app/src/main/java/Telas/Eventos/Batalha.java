@@ -23,6 +23,7 @@ import Poderes.Poder;
 import Util.Arte;
 import Util.Cor;
 import Util.InputHandler;
+import Util.Recompensas;
 import Util.Textos;
 
 public class Batalha extends Evento {
@@ -134,7 +135,7 @@ public class Batalha extends Evento {
         heroi.passaRodada(); // remove os bonus que acabam (escudo, etc) e reseta energia
     }
 
-    // troca de turno e se voltar pra vez do heroi chama o passaRodada
+    /** troca de turno e se voltar pra vez do heroi chama o passaRodada  */
     public void passaTurno(){
         turno = (turno == 0) ? 1 : 0;
         notificaMorte();
@@ -353,6 +354,11 @@ public class Batalha extends Evento {
                         cartaEscolhida.usar(heroi, alvoSelecionado, this); 
                     }
 
+                    if (cartaEscolhida.getUsoCancelado()) {
+                        cartaEscolhida.setUsoCancelado(false);
+                        continue;
+                    }
+
                     // cartas com a flag consumir vao pra pilha secundaria e nao sao embaralhadas devolta
                     if (cartaEscolhida.getConsumir())
                         mao.removeCarta(escolha, pilhaConsumir);
@@ -440,14 +446,17 @@ public class Batalha extends Evento {
         }
     }
 
+    /** exibe a mensagem de vitória e cuida da recompensa da batalha */
     public void vitoria(){
         String arteVitoria = Textos.colorirPartes(Arte.venceu2, Cor.amareloClaro, Cor.laranja, 5);
         Textos.printaLinhaDevagar(arteVitoria);
         System.out.println();
         InputHandler.esperar();
         heroi.ganhaDinheiro(this.recompensa);
+        Recompensas.ganharCarta(1, heroi);
     }
 
+    /** exibe a mensagem de derrota e cuida da recompensa da batalha */
     public void derrota(){
         System.out.println();
         Textos.printaLinhaDevagar(Cor.txtCinza(Arte.sans2));
@@ -461,11 +470,19 @@ public class Batalha extends Evento {
 
     @Override
     public String toString() {
-        String retorno = Cor.txtVermelho("Batalha") + Cor.txtCinza(" VERSUS");
-
-        if (dificuldadeTotal > 8) {
+        String retorno = Cor.txtVermelho("Batalha");
+        
+        if (dificuldadeTotal < 6) {
+            retorno += " <" + Cor.azul + "trivial" + Cor.reset + ">";
+        }
+        else if (dificuldadeTotal <= 8) {
+            retorno += " <" + Cor.amarelo + "desafiador" + Cor.reset + ">";
+        }
+        else if (dificuldadeTotal > 8) {
             retorno += " <" + Cor.vermelho + "elite" + Cor.reset + ">";
         }
+
+        retorno += Cor.txtCinza(" VERSUS:");
         for (Inimigo inimigo : arrayInimigos) {
             retorno += " [ " + inimigo.getNome() + " ]";
         }

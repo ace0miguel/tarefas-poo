@@ -48,17 +48,22 @@ tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
-tasks.named('run') {
+tasks.named('run', JavaExec) {
     standardInput = System.in
+    // Ensure the spawned app process uses UTF-8 for source text and console streams.
+    jvmArgs(
+        '-Dfile.encoding=UTF-8',
+        '-Dsun.stdout.encoding=UTF-8',
+        '-Dsun.stderr.encoding=UTF-8',
+        '-Dnative.encoding=UTF-8'
+    )
 }
 
 jar {
     manifest {
         attributes 'Main-Class': 'App' 
     }
-    
-    // Isso aqui garante que se você usar bibliotecas externas no futuro, 
-    // elas vão ser "espremidas" junto no mesmo arquivo (Fat JAR)
+
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }

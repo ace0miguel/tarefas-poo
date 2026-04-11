@@ -13,7 +13,7 @@ import Util.RNGHandler;
 import Util.Recompensas;
 import Util.Textos;
 
-/** cassino */
+/** evento aleatório de cassino, onde o jogador pode apostar vida ou dinheiro. Em breve poderá apotar as cartas tambem, mas nao esta pronto. */
 public class Tigrinho extends Evento{
     String tituloColorido = Textos.colorirPartes(Arte.cassino5, Cor.amareloClaro, Cor.laranja, 5) + "\n";
     
@@ -39,7 +39,7 @@ public class Tigrinho extends Evento{
                 }
                 case 1 -> 
                 {
-                    InputHandler.esperar(Cor.txtVermelho("Sala em manutenção! Pedimos desculpa pelo transtorno. Volte em breve."));
+                    InputHandler.esperar(Cor.txtVermelho("Sala em manutenção! Pedimos desculpa pelo transtorno."));
                 }
                 case 2 -> 
                 {

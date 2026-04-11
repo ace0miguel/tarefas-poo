@@ -189,7 +189,7 @@ public class Moldes {
         ); tripleT.setTier(3);
 
         // tier 4 (goats)
-        paulAtreides = new Inimigo("PAUL MUAD'DIB ATREIDES, DUKE OF ARRAKIS, LISAN AL GAIB", 53, 8, // ESSE AQUI E FORTE VIU MEIO QUE O BOSS
+        paulAtreides = new Inimigo("PAUL MUAD'DIB ATREIDES, DUKE OF ARRAKIS, LISAN AL GAIB", 55, 9, // ESSE AQUI E FORTE VIU MEIO QUE O BOSS
             new Acao.AtacarVidaPerdida(), new Acao.ReceberEfeito(pactoSinistro), new Acao.AtacarEfeito(sangramento), new Acao.AtacarVidaPerdida()
         ); paulAtreides.setTier(4);
 

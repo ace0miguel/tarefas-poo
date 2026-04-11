@@ -1,6 +1,6 @@
 package Util;
 
-// classe cheia de desenho so usar
+/** coleçao de strings e metodos estaticos de artes ascii */
 public class Arte {
     //Textos desenhados vem do site: https://patorjk.com/software/taag/
     public static String titulo ="""                                                                                            

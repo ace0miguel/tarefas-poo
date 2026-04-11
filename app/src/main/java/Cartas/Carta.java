@@ -24,18 +24,19 @@ public abstract class Carta {
     protected boolean efeitoEmArea = false;
     /** true: ao ser utilizada vai pra uma pilha de descartes separada */
     protected boolean consumir = false; // se verdadeiro, a carta vai pra uma pilha de descarte especial ao ser usada. (nao volta pra mao)
-    //** vida perdida ao usar a carta. */
+    /** vida perdida ao usar a carta. */
     protected int sacrificio = 0; // variavel pra definir um custo em vida ao se usar a carta.
+    /** lista de tags que sao exibidas antes da descriçao da carta */
+    protected List<String> tags = new ArrayList<>();
 
-    protected List<String> tags = new ArrayList<>(); // lista de tags que serao exibidas na descriçao
-
-    /** dicionario de tipos de ação:
+    /** tipos de ação:
     0 - nenhum
     1 - disparo
     2 - corte */
     protected int tipo = 0;
+    protected boolean usoCancelado = false;
 
-    /** dicionario de raridades:
+    /** raridades:
     1 - comum
     2 - incomum 
     3 - rara
@@ -60,6 +61,7 @@ public abstract class Carta {
         this.descricao = copia.descricao;
         this.custo = copia.custo;
 
+        // variaveis opcionais
         this.selfCast = copia.selfCast;
         this.tipo = copia.tipo;
         this.resenha = copia.resenha;
@@ -142,6 +144,10 @@ public abstract class Carta {
     public int getRaridade() {
         return raridade;
     }
+
+    public boolean getUsoCancelado() {
+        return usoCancelado;
+    }
     // Setters --------------------------------------
     
     public void setSelfCast(boolean selfCast) {
@@ -192,6 +198,10 @@ public abstract class Carta {
 
     public void setRaridade(int raridade) {
         this.raridade = raridade;
+    }
+
+    public void setUsoCancelado(boolean usoCancelado) {
+        this.usoCancelado = usoCancelado;
     }
 
     // ---------------------------------------------

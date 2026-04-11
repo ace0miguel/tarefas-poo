@@ -6,7 +6,7 @@
     import Telas.Eventos.Batalha;
     import Util.Cor;
 
-    /* cartas que te prejudicam(te aplicam um efeito) ou nao fazem nada 
+    /** cartas que te prejudicam (te aplicam um efeito negativo) ou nao fazem nada 
     (normalmente inimigos vao colocar ela no seu deck ou vao ser consequencia de algo.) */
     public class CartaMaldicao extends Carta 
     {
@@ -55,11 +55,7 @@
             if (!tags.isEmpty()) {
             retorno += " - [" + String.join(", ",  tags) + "]";
             }
-            // tirei a parte de mostrar o efeito, acho q ajuda a deixar a vibe da carta meio sinistra
-            // if (this.efeito != null) {
-            //     texto += " - [ " + this.efeito.getNomeColorido() + " ]";
-            // }
-            
+
             retorno += Cor.txtAmareloClaro(" < custo: " + this.getCusto());
             
             return retorno;

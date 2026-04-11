@@ -19,6 +19,7 @@ public abstract class Efeito {
     private int dur;
     private Entidade alvo;
     protected int stacks = 1;
+    private boolean cancelarJogada = false;
 
     protected boolean onHit = true;
 
@@ -32,6 +33,7 @@ public abstract class Efeito {
         this.nome = copiado.getNome();
         this.desc = copiado.getDesc();
         this.dur = copiado.getDur();
+        this.cancelarJogada = false;
     }
     
     // ------------ getters
@@ -80,6 +82,10 @@ public abstract class Efeito {
         return stacks;
     }
 
+    public boolean getCancelarJogada() {
+        return cancelarJogada;
+    }
+
     public int getPrioridade() { // se quiser q um efeito va antes os outros reduz, os danos constantes tao 0.
         return 1;
     }
@@ -115,6 +121,10 @@ public abstract class Efeito {
         this.stacks = stacks;
     }
 
+    protected void cancelarJogada() {
+        this.cancelarJogada = true;
+    }
+
     // ---------------------
 
     public boolean passaTurno() { // retorna true se ainda nao tiver acabado a duraçao
@@ -130,10 +140,11 @@ public abstract class Efeito {
     }
 
     /** adiciona uma cópia do efeito à batalha */
-    public void adicionar(Entidade alvo, Batalha batalha){ 
+    public Efeito adicionar(Entidade alvo, Batalha batalha){ 
         Efeito e = this.criaCopia();
         e.setAlvo(alvo); 
         batalha.adicionarEfeito(e);
+        return e;
     }
 
     // ----------- abstratos

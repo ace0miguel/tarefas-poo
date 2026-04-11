@@ -36,7 +36,7 @@ public class ArvoreEventos {
     Tigrinho tigrinho = new Tigrinho();
 
     // moldes de batalhas
-    Batalha tripleTeAmigos = new Batalha(drake.criaCopia(), tripleT.criaCopia(), endrick.criaCopia());
+    Batalha tripleTeAmigos = new Batalha(drake.criaCopia(), tripleT.criaCopia(), endrick.criaCopia(), loudCoringa.criaCopia());
     Batalha sabrinaAtreides = new Batalha(loudSacy.criaCopia(), paulAtreides.criaCopia(), sabrinaCarpenter.criaCopia());
     Batalha coringaBarbossaEndrick = new Batalha(loudCoringa.criaCopia(), barbossa.criaCopia(), endrick.criaCopia());
     Batalha barbossaSabrinaCoringa = new Batalha(barbossa.criaCopia(), sabrinaCarpenter.criaCopia(), drake.criaCopia());
@@ -74,8 +74,8 @@ public class ArvoreEventos {
         // primeiro evento: luta facil
         if (profundidadeAtual == 0) {
             for (int i = 0; i < n; i++) {
-                // se quiser testar um evento especifico e so substituir aq e comentar a batalha
-                // opcoes.add(new Tigrinho());
+                // se quiser testar um evento especifico e so adicionar aq embaixo
+   
                 opcoes.add(new Batalha(loudCoringa.criaCopia(), barbossa.criaCopia(), drake.criaCopia()));
             }
         } 
@@ -149,23 +149,6 @@ public class ArvoreEventos {
     public DefaultMutableTreeNode criarArvore() {
         return criarArvore(0, escolherEvento(0).get(0)); // gera o evento da raiz e chama a função recursiva
     }
-
-    // criararvore antigo
-    // public DefaultMutableTreeNode criarArvore(int profundidade) {
-    //     DefaultMutableTreeNode node = new DefaultMutableTreeNode(escolherEvento(profundidade));
-        
-    //     // caso base
-    //     if (profundidade == p) return node;
-
-    //     // cria n nos
-    //     for (int i = 0; i < n; i ++){
-    //         DefaultMutableTreeNode novonode = criarArvore(profundidade+1);
-    //         node.add(novonode);
-    //     }
-
-    //     return node;
-    // }
-
 
     /** retorna os filhos do no q vc passar */
     public List<DefaultMutableTreeNode> getFilhos (DefaultMutableTreeNode node) {

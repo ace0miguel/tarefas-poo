@@ -1,5 +1,6 @@
 package Util;
 
+/** varias variaveis e métodos estáticos pra implementar cores no terminal */
 public class Cor {
 
     public static String reset = "\u001B[0m";

@@ -31,18 +31,43 @@ public class InputHandler {
     }
 
     // versoes do selecionar (o unico parametro obrigatorio é a lista).
+
+     /** recebe uma lista e printa, se for de objetos ele vai usar o metodo .toString(), se for string ela so printa.
+    valida a escolha e retorna o numero escolhido, se tiver a opçao exit e o usuario escolher vai retonar -1.
+    @param lista : lista de opções
+    @param exit : opção de voltar
+    @param mensagemInicial : mensagem a ser exibida acima das opções
+    @param exitMsg : substitui a opção voltar pela string desejada*/
     public static <T> int selecionar(List<T> lista) {
         return selecionar(lista, false, "", "");
     }
 
+     /** recebe uma lista e printa, se for de objetos ele vai usar o metodo .toString(), se for string ela so printa.
+    valida a escolha e retorna o numero escolhido, se tiver a opçao exit e o usuario escolher vai retonar -1.
+    @param lista : lista de opções
+    @param exit : opção de voltar
+    @param mensagemInicial : mensagem a ser exibida acima das opções
+    @param exitMsg : substitui a opção voltar pela string desejada*/
     public static <T> int selecionar(List<T> lista, String mensagem) {
         return selecionar(lista, false, mensagem, "");
     }
 
+     /** recebe uma lista e printa, se for de objetos ele vai usar o metodo .toString(), se for string ela so printa.
+    valida a escolha e retorna o numero escolhido, se tiver a opçao exit e o usuario escolher vai retonar -1.
+    @param lista : lista de opções
+    @param exit : opção de voltar
+    @param mensagemInicial : mensagem a ser exibida acima das opções
+    @param exitMsg : substitui a opção voltar pela string desejada*/
     public static <T> int selecionar(List<T> lista, boolean exit) {
         return selecionar(lista, exit, "", "");
     }
 
+     /** recebe uma lista e printa, se for de objetos ele vai usar o metodo .toString(), se for string ela so printa.
+    valida a escolha e retorna o numero escolhido, se tiver a opçao exit e o usuario escolher vai retonar -1.
+    @param lista : lista de opções
+    @param exit : opção de voltar
+    @param mensagemInicial : mensagem a ser exibida acima das opções
+    @param exitMsg : substitui a opção voltar pela string desejada*/
     public static <T> int selecionar(List<T> lista, boolean exit, String mensagemInicial) {
         return selecionar(lista, exit, mensagemInicial, "");
     }
@@ -199,10 +224,15 @@ public class InputHandler {
         }
     }
 
+    /** imprime um menu utilizando a matriz de paginas e retorna a opção escolhida
+     *  se for pra sair retorna -1.
+     * @param exit : se false, não permite voltar do menu sem escolher.
+     */
     public static int menu(List<List<String>> matrizPaginas, AtomicInteger pagina){
         return menu(matrizPaginas, pagina, true);
     }
 
+    /** le um inteiro (input) e retorna */
     public static int lerInt(){
         int escolha;
         while (true){
@@ -219,6 +249,7 @@ public class InputHandler {
         return escolha;
     }
 
+    /** le uma string (input) e retorna */
     public static String lerString(){
         String input;
         while (true){

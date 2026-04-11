@@ -135,7 +135,9 @@ public abstract class Acao {
         }
     }
 
-
+    /** aplica um efeito de status no aliado mais forte (procura pelo tier, se tiver mais de um igual vai no primeiro.
+     * se nao tiver mais ninguem vivo, vai aplicar em si mesmo.
+    ) */
     public static class AplicarEfeitoAliadoMaisForte extends Acao {
         Inimigo novoAlvo;
         public AplicarEfeitoAliadoMaisForte(Efeito efeito){
@@ -164,7 +166,7 @@ public abstract class Acao {
 
         @Override
         public void anunciar(Inimigo executor, Entidade alvo) {
-            System.out.println(Cor.txtAmarelo("> ") + executor.getNome() + Cor.cinza + " irá aplicar o efeito " + efeito.getNomeColorido() + " em um aliado.");
+            System.out.println(Cor.txtAmarelo("> ") + executor.getNome() + Cor.cinza + " irá aplicar o efeito " + efeito.getNomeColorido() + Cor.cinza + " em um " + Cor.txtAmarelo("aliado") + ".");
         }
 
         @Override

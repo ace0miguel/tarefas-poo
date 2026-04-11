@@ -76,6 +76,11 @@ public class Recompensas {
         return menuCartas(cartasArray);
     }
 
+    /** concede varias cartas ao heroi e imprime uma mensagem bonitinha mostrando as cartas ganhas
+     * @param raridade a raridade minima das cartas a serem concedidas
+     * @param quantidade a quantidade de cartas a serem concedidas
+     * @param heroi o heroi que recebera as cartas
+     */
     public static void ganharCartas(int raridade, int quantidade, Heroi heroi){
         System.out.println(Cor.txtAmareloClaro("Você ganhou:")); Textos.sleep(500);
         System.out.println();
@@ -93,13 +98,16 @@ public class Recompensas {
         InputHandler.esperar();
 }
 
+    /** concede uma carta ao heroi e imprime uma mensagem bonitinha mostrando a carta ganha
+     * @param raridade a raridade minima das carta
+     * @param heroi o heroi que recebera a carta
+     */
     public static void ganharCarta(int raridade, Heroi heroi){
         System.out.println(Cor.txtAmareloClaro("Você ganhou:")); Textos.sleep(500);
         System.out.println();
 
         Carta recompensa = Recompensas.cartaAleatoria(raridade);
         
-
         Textos.printaBonito(recompensa.recompensa(), 5, 2);
         heroi.addCartaInventario(recompensa);
         Textos.sleep(500);
@@ -109,6 +117,10 @@ public class Recompensas {
         InputHandler.esperar();
     }
 
+    /** concede uma carta especifica ao heroi e imprime uma mensagem bonitinha mostrando a carta ganha 
+     * @param carta a carta a ser concedida
+     * @param heroi o heroi que recebera a carta
+    */
     public static void ganharCartaEsp(Carta carta, Heroi heroi){
         System.out.println(Cor.txtAmareloClaro("Você ganhou:")); Textos.sleep(500);
         System.out.println();

@@ -35,7 +35,13 @@ public class CartaHabilidade extends Carta // aplica um efeito em um alvo
         int energiaAtual = heroi.getEnergia();
         if(energiaAtual >= this.getCusto()){
             heroi.receberDanoDireto(this.sacrificio);
-            efeito.adicionar(alvo, batalha);
+            Efeito efeitoAplicado = efeito.adicionar(alvo, batalha);
+
+            if (efeitoAplicado.getCancelarJogada()) {
+                this.setUsoCancelado(true);
+                return;
+            }
+
             heroi.usarEnergia(this.getCusto());
 
             printaResenha();

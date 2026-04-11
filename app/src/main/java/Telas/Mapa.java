@@ -21,23 +21,26 @@ public class Mapa {
     DefaultMutableTreeNode nodeInicial = arvoreEventos.criarArvore(); // cria arvore e recebe a raiz
     DefaultMutableTreeNode nodeAtual = nodeInicial; // eu to chamando de node pq noAtual ia ficar muito feio
     
-    // retorna um menu de seleçao com os filhos da posiçao passada. a opçao exit te manda pro deckbuilder.
+    /** retorna um menu de seleçao com os filhos da posiçao passada. a opçao exit te manda pro deckbuilder. */
     public int escolherCaminho(DefaultMutableTreeNode posicaoAtual){ 
         return InputHandler.selecionar(arvoreEventos.getEventos(posicaoAtual),true, Arte.mapa + "\n" + Cor.txtAzul(Arte.bordaHud4) + "\n" + Textos.menuStatus(heroi) , "deckBuilder.");
     }
 
-    public int escolherCaminho(){ // se nao passar nada retorna baseado no nó atual
+     /** retorna um menu de seleçao com os filhos do nó atual. a opçao exit te manda pro deckbuilder. */
+    public int escolherCaminho(){
         return escolherCaminho(nodeAtual);
     }
     
 
-    // atualiza o nodeAtual para o filho de indice n do nó passado como argumento
+    /** atualiza o nodeAtual para o filho de indice n do nó passado como argumento */
     public void irPara(DefaultMutableTreeNode posicaoAtual,int n){ 
         nodeAtual = (DefaultMutableTreeNode) posicaoAtual.getChildAt(n);
     }
 
-    public void irPara(int n){ // se nao passar nada passa baseado no nó atual
-        if (RNGHandler.check(15)){ // tem uma chance de 15% tomar jumpscare do golden freddy
+    /** atualiza o nodeAtual para o filho de indice n do nó atual*/
+    public void irPara(int n){ 
+        // tem uma chance de 15% tomar jumpscare do golden freddy
+        if (RNGHandler.check(15)){ 
             System.out.println(Cor.txtAmarelo(Arte.GOLDENFREDDY));
             System.out.println(Cor.txtVermelho("RECEBA O JUMPSCARE!"));
             InputHandler.esperar();
@@ -45,7 +48,7 @@ public class Mapa {
         irPara(nodeAtual, n);
     }
 
-    // converte o objeto em evento dentro do no atual e retorna 
+    /** converte o objeto em evento dentro do no atual e retorna */
     public Evento getEvento(DefaultMutableTreeNode atual) {
         return (Evento) atual.getUserObject();
     }
@@ -55,7 +58,7 @@ public class Mapa {
     }
     
 
-    /* converte o TreeNode(getChildAt retorna TreeNode) em DefaultMutableTreeNode,
+    /** converte o TreeNode(getChildAt retorna TreeNode) em DefaultMutableTreeNode,
      pega o objeto dentro dele e dps converte em evento e retorna.*/
     public Evento getProximoEvento(DefaultMutableTreeNode atual, int escolha) {
         return (Evento) ((DefaultMutableTreeNode) atual.getChildAt(escolha)).getUserObject();
@@ -65,7 +68,8 @@ public class Mapa {
         return getProximoEvento(nodeAtual, escolha);
     }
 
-    public void explorar() { // explorar e um nome meio sem graça se tiver uma ideia melhor atualizar aq 
+    /** inicia o mapa, mandando o jogador pro primeiro nó */
+    public void explorar() {
 
         boolean primeiroLoop = true; // se quiser pular a primeira luta por motivos de teste so deixar false aqui (lembra de arruma dps)
 

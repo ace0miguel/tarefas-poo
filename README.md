@@ -4,7 +4,7 @@ Jogo de cartas em turnos no terminal, com foco em combate, efeitos de status, co
 
 ## Descrição
 
-Você joga como Jack Sparrow e enfrenta encontros no mapa utilizando cartas. A instancia base das cartas, dos efeitos e dos inimigos está centralizada em `Moldes`.
+Você joga como Jack Sparrow e enfrenta encontros no mapa utilizando cartas. A instancia base das cartas, dos efeitos e dos inimigos está centralizada em `Moldes`. Ganhe dinheiro e cartas ao vencer encontros, e gaste em eventos aleatórios!
 
 ## Mecanicas especiais
 
@@ -18,8 +18,13 @@ Você joga como Jack Sparrow e enfrenta encontros no mapa utilizando cartas. A i
 - Fogueira: escolha entre se curar ou receber cartas!
 - Loja: mesma coisa, só que pagando! (Compensa se tiver com os dolares)
 - Cassino: aposte vida ou dinheiro em um jogo de dados, em busca do dobro ou nada!
+- GOLDEN FREDDY: sempre, ao viajar no mapa, voce pode receber uma surpresa...
 
 ## Cartas 
+
+#### Tags:
+- Consumir: só pode ser utilizada uma vez por encontro.
+- Área: a carta afeta TODOS os inimigos no encontro.
 
 ### Ataque
 - Tiro de revolver

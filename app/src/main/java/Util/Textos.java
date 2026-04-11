@@ -17,6 +17,17 @@ public class Textos {
     /** apaga tudo que ta imprimido no terminal */
     public static void limpaTela(){
         try {
+            // H: home, 2J: limpa tela, 3J: limpa scrollback quando suportado.
+            System.out.print("\u001B[H\u001B[2J\u001B[3J");
+            System.out.flush();
+        } catch (Exception e) {
+            sobeTela();
+        }
+    }
+
+    /* limpaTela versao antiga
+    public static void limpaTela(){
+        try {
             if (System.getProperty("os.name").contains("Windows")) {
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
             } else {
@@ -26,7 +37,7 @@ public class Textos {
             System.out.print("\033[H\033[2J");
             System.out.flush();
         }
-    }
+    } */
 
     /** printa varias linhas pra limpar a tela e o proximo texto surgir de baixo */
     public static void sobeTela(){
@@ -124,6 +135,7 @@ public class Textos {
         sleep(500);
     }
 
+    /** imprime o estado atual da batalha sem delay (aparece tudo de uma vez) */
     public static void batalhaSemDelay(Heroi heroi, ArrayList<Efeito> listaEfeitos, List<Poder> listaPoderes,  Inimigo... inimigos){
         limpaTela();
         boolean aux1 = false;
@@ -311,6 +323,10 @@ public class Textos {
         System.out.flush(); 
     }
 
+    /** mostra uma animaçaozinha de um numero mudando e no final mostra o valor passado como parametro
+     * @param valor : valor final a ser mostrado
+     * @param valorMax : valor maximo que pode ser mostrado durante a animaçao
+     */
     public static void dado(int valor, int valorMax) {
         int tempoSleep = 10; 
 
@@ -329,6 +345,7 @@ public class Textos {
         System.out.println("\r" + Cor.txtAmarelo(String.valueOf(valor)) + "   "); 
     }
 
+    /** recebe uma string de varias linhas e pinta n linhas de cor 1 e o resto de cor 2 */
     public static String colorirPartes(String arte, String cor1, String cor2, int n) {
         String[] linhas = arte.split("\n");
         StringBuilder resultado = new StringBuilder();
