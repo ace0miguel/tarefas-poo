@@ -15,20 +15,20 @@ public class GerenciadorCartas {
     private List<CartaPoder> cartaPoder;
     }
 
-    private Gson gson = new Gson(); 
+    private Gson gson = new Gson();
     private cartaList catalogoCartas;
 
     /* true: carrega todas as cartas do jogo
        false: carrega as cartas em posse do jogador */
     public void carregarCartas(boolean todas){ 
-        String local = todas
-        ? "dados/todascartas.json" 
-        : "dados/cartas.json" ;
+        String local = (todas == true) 
+        ? "./TAREFA01/app/src/main/resources/dados/todascartas.json" 
+        : "./TAREFA01/app/src/main/resources/dados/cartas.json" ;
 
-        InputStream caminho = this.getClass().getResourceAsStream(local);
-
-        try (InputStreamReader reader = new InputStreamReader(caminho)){
+        try (FileReader reader = new FileReader(local)){
             catalogoCartas = gson.fromJson(reader, cartaList.class);
+        } catch(FileNotFoundException e){
+            System.out.println("arquivo nao encontrado");
         } catch(IOException e){
             System.out.println("erro na leitura do json");
         }
