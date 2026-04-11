@@ -1,3 +1,5 @@
+
+
 import Entidades.Heroi;
 import Telas.Mapa;
 import Util.Arte;
@@ -43,8 +45,8 @@ public class App {
         // ----------------------------
 
         // se quiser pular o mapa e ir direto pra uma batalha teste descomenta aqui
-        // Batalha batalha = new Batalha(heroi, inimigo, inimigo2, inimigo3);
-        // batalha.iniciar();
+        //Batalha batalha = new Batalha(heroi, inimigo, inimigo2, inimigo3);
+        //batalha.iniciar();
         
         // menu inicial (tava meio redundante ai eu comentei) ------------
 
@@ -61,7 +63,6 @@ public class App {
         // }
     
         // inicio do jogo  ------------
-
         Mapa mapa = new Mapa(heroi);
         mapa.explorar(); // por enquanto ta programado pra ter 3 lutas, a primeira facil a 2 meio aleatorio a 3 contra todos os inimigos ao msm tempo
 
