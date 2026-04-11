@@ -13,13 +13,13 @@ public class CartaPoder extends Carta
     public CartaPoder(String nome, String descricao, int custo, Poder poder){
         super(nome, descricao, custo);
         this.poder = poder;
-        this.consumir = true;
+        this.setConsumir(true);
     }
 
     public CartaPoder(CartaPoder copia) {
         super(copia);
         this.poder = copia.poder;
-        this.consumir = true;
+        this.setConsumir(true);
     }
 
     @Override

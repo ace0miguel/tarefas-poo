@@ -10,6 +10,7 @@ import Util.Cor;
 import Util.InputHandler;
 import Util.Recompensas;
 import Util.Textos;
+import static Util.Textos.menuStatus;
 
 
 public class Loja extends Evento{
@@ -22,12 +23,13 @@ public class Loja extends Evento{
         String titulo = Textos.colorirPartes(Arte.loja, Cor.reset, Cor.ciano, 1);
         while (true){
             Textos.limpaTela();
-            int escolha = InputHandler.selecionar(opcoes, true, titulo + Cor.txtAmareloClaro("\n\nVocê encontrou a loja! deseja comprar algo? "+ Cor.cinza + "[ Saldo atual: ( " + Cor.amarelo + heroi.getDinheiro() + Cor.cinza + " ) ]"));
+            int escolha = InputHandler.selecionar(opcoes, true, titulo + Cor.txtAmareloClaro("\n\nVocê encontrou a loja! deseja comprar algo? "
+            + menuStatus(heroi)));
             if (escolha == -1) break;
             switch (escolha) {
                 case 0 ->{
                     List<String> opcoes = new ArrayList<>(Arrays.asList("Poção pequena (15 de vida, 10 reais)", "Poção média (25 de vida, 25 reais)", "Poção grande (40 de vida, 35 reais)"));
-                    int escolha2 = InputHandler.selecionar(opcoes, true, Cor.txtAmareloClaro("\n\nQual poção deseja comprar? "+ Cor.cinza + "[ Saldo atual: ( " + Cor.amarelo + heroi.getDinheiro() + Cor.cinza + " ) ]"));
+                    int escolha2 = InputHandler.selecionar(opcoes, true, Cor.txtAmareloClaro("\n\nQual poção deseja comprar? "+ menuStatus(heroi)));
                     if (escolha2 == -1) break;
                     switch (escolha2) {
                         case 0 -> {
@@ -43,7 +45,7 @@ public class Loja extends Evento{
                 }
                 case 1 -> {
                     List<String> opcoes = new ArrayList<>(Arrays.asList("Booster pack comum (35 reais)", "Booster pack incomum (50 reais)", "Booster pack raro (70 reais)"));
-                    int escolha3 = InputHandler.selecionar(opcoes, true, Cor.txtAmareloClaro("\n\nQual Booster deseja comprar? "+ Cor.cinza + "[ Saldo atual: ( " + Cor.amarelo + heroi.getDinheiro() + Cor.cinza + " ) ]"));
+                    int escolha3 = InputHandler.selecionar(opcoes, true, Cor.txtAmareloClaro("\n\nQual Booster deseja comprar? "+ menuStatus(heroi)));
                     if (escolha3 == -1) break;
                     switch (escolha3) {
                         case 0 -> {

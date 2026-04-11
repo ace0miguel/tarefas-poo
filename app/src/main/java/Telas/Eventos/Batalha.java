@@ -433,24 +433,30 @@ public class Batalha extends Evento {
         Textos.sleep(1500);
         Textos.limpaTela();
 
-        // derrota
-        if(!heroi.estaVivo() == false){
-            Textos.printaLinhaDevagar(Arte.venceu2);
-            System.out.println();
-            InputHandler.esperar();
-            heroi.ganhaDinheiro(this.recompensa);
-        } 
-        // vitoria
-        else {
-            System.out.println();
-            Textos.printaLinhaDevagar(Cor.txtCinza(Arte.sans2));
-            System.out.println();
-            System.out.println();
-            Textos.printaLinhaDevagar(Cor.txtVermelho(Arte.VOCEMORREU));
-            System.out.println();
-            InputHandler.esperar();
-            System.exit(0);
+        if(heroi.estaVivo()){
+            vitoria();
+        } else {
+            derrota();
         }
+    }
+
+    public void vitoria(){
+        String arteVitoria = Textos.colorirPartes(Arte.venceu2, Cor.amareloClaro, Cor.laranja, 5);
+        Textos.printaLinhaDevagar(arteVitoria);
+        System.out.println();
+        InputHandler.esperar();
+        heroi.ganhaDinheiro(this.recompensa);
+    }
+
+    public void derrota(){
+        System.out.println();
+        Textos.printaLinhaDevagar(Cor.txtCinza(Arte.sans2));
+        System.out.println();
+        System.out.println();
+        Textos.printaLinhaDevagar(Cor.txtVermelho(Arte.VOCEMORREU));
+        System.out.println();
+        InputHandler.esperar("Pressione ENTER para aceitar a sua derrota!");
+        System.exit(0);
     }
 
     @Override

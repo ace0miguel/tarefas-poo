@@ -76,8 +76,8 @@ public class DeckBuilder {
 
                 heroi.addCarta(corteDefensivo);
                 heroi.addCarta(corteDefensivo);
+                heroi.addCarta(corteDefensivo);
 
-                heroi.addCarta(mestreLaminasCarta);
                 heroi.addCarta(mestreLaminasCarta);
 
                 heroi.addCarta(purificar);
@@ -100,10 +100,6 @@ public class DeckBuilder {
                 heroi.addCarta(escudoFerro);
                 heroi.addCarta(escudoMadeira);
 
-                heroi.addCarta(chocolex);
-                heroi.addCarta(bombaVeneno);
-                
-                heroi.addCarta(pactoSangue);
                 heroi.addCarta(pactoSangue);
             }
             /* deck de dano direto mesmo bem simples, 2 puro odio pra da mais dano ainda */
@@ -119,14 +115,10 @@ public class DeckBuilder {
                 heroi.addCarta(purificar);
                 heroi.addCarta(purificar);
 
-                heroi.addCarta(desprezo);
-
-                heroi.addCarta(bomba);
                 heroi.addCarta(bomba);
 
                 heroi.addCarta(dedoNervosoCarta);
 
-                heroi.addCarta(puroOdio);
                 heroi.addCarta(puroOdio);
 
                 heroi.addCarta(puxaCarta);  
@@ -143,8 +135,6 @@ public class DeckBuilder {
 
                 heroi.addCarta(chocolex);
 
-                heroi.addCarta(bombaVeneno);
-
                 heroi.addCarta(pactoSangue);
                 heroi.addCarta(pactoSangue);
             }  
@@ -154,6 +144,8 @@ public class DeckBuilder {
 
                 heroi.addCarta(tiroEscopeta);
                 heroi.addCarta(tiroEscopeta);
+
+                heroi.addCarta(tiroCanhao);
 
                 heroi.addCarta(corteVenenoso);
                 heroi.addCarta(corteVenenoso);
@@ -202,6 +194,12 @@ public class DeckBuilder {
                 heroi.addCarta(escudoMadeira);
 
                 heroi.addCarta(chocolex);
+
+                heroi.addCarta(pactoSangue);
+                heroi.addCarta(pactoSangue);
+
+                heroi.addCarta(bomba);
+                heroi.addCarta(bomba);
 
                 //maldiçoes...
 
@@ -276,7 +274,7 @@ public class DeckBuilder {
      */
     public static void iniciar(Heroi heroi){
         while (true){
-            int opcao = InputHandler.selecionar(menuInicial, true, Cor.txtAmareloClaro(Arte.deckBuilder));
+            int opcao = InputHandler.selecionar(menuInicial, true, Cor.txtAmareloClaro(Arte.deckBuilder) + "\n\n" + Textos.menuStatus(heroi));
 
             // escolheu voltar, sai do loop. mas so se tiver acima do limite minimo.
             if (opcao == -1) {

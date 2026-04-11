@@ -20,7 +20,7 @@ public class Fogueira extends Evento{
         this.heroi = heroi;
 
         Textos.sobeTela();
-        int escolha = InputHandler.selecionar(opcoes, true, (Arte.fogueiraColorida) + Cor.txtAmareloClaro("\n\nVocê encontrou uma fogueira! O que deseja fazer?"), "ir embora.");
+        int escolha = InputHandler.selecionar(opcoes, true, (Arte.fogueiraColorida) + Cor.txtAmareloClaro("\n\nVocê encontrou uma fogueira! O que deseja fazer? ") + Textos.menuStatus(heroi), "ir embora.");
         switch (escolha) {
             case 0 ->
             {

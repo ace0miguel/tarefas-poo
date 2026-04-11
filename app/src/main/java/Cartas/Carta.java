@@ -60,13 +60,14 @@ public abstract class Carta {
         this.descricao = copia.descricao;
         this.custo = copia.custo;
 
-        this.setSelfCast(copia.getSelfCast());
+        this.selfCast = copia.selfCast;
         this.tipo = copia.tipo;
-        this.setResenha(copia.getResenha());
-        this.consumir = copia.getConsumir();
-        this.setEfeitoEmArea(copia.getEfeitoEmArea());
-        this.setSacrificio(copia.sacrificio);
+        this.resenha = copia.resenha;
+        this.consumir = copia.consumir;
+        this.efeitoEmArea = copia.efeitoEmArea;
+        this.sacrificio = copia.sacrificio;
         this.raridade = copia.raridade;
+        this.tags = new ArrayList<>(copia.tags);
     }
 
     // Getters --------------------------------------
@@ -166,9 +167,11 @@ public abstract class Carta {
     public void setEfeitoEmArea(boolean _efeitoEmArea) {
         this.efeitoEmArea = _efeitoEmArea;
         if (_efeitoEmArea) {
-            if (!tags.contains("Área")) {
-                tags.add("Área");
+            if (!tags.contains("Area")) {
+                tags.add("Area");
             }
+        } else {
+            tags.remove("Area");
         }
     }
 
@@ -178,6 +181,8 @@ public abstract class Carta {
             if (!tags.contains("Consumir")) {
                 tags.add("Consumir");
             }
+        } else {
+            tags.remove("Consumir");
         }
     }
 

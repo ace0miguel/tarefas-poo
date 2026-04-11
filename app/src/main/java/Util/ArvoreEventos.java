@@ -75,7 +75,7 @@ public class ArvoreEventos {
         if (profundidadeAtual == 0) {
             for (int i = 0; i < n; i++) {
                 // se quiser testar um evento especifico e so substituir aq e comentar a batalha
-                // opcoes.add(new Loja());
+                // opcoes.add(new Tigrinho());
                 opcoes.add(new Batalha(loudCoringa.criaCopia(), barbossa.criaCopia(), drake.criaCopia()));
             }
         } 
