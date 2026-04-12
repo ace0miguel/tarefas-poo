@@ -96,9 +96,11 @@ public class Moldes {
 
     public static Efeito aumentaResistencia = new AumentaResistencia("Aura", "Reduz o dano recebido em 25%", 3, 25);
 
-    public static Efeito escudinho = new Escudo("Ganho de escudo (4)", "4 pontos de escudo", 4);
+    public static Efeito escudo2 = new Escudo("Ganho de escudo (2)", "2 pontos de escudo", 2);
 
-    public static Efeito escudao = new Escudo("Ganho de escudo (10)", "10 pontos de escudo", 10);
+    public static Efeito escudo4 = new Escudo("Ganho de escudo (4)", "4 pontos de escudo", 4);
+
+    public static Efeito escudo10 = new Escudo("Ganho de escudo (10)", "10 pontos de escudo", 10);
 
     public static Efeito purificarEfeito = new Purificar("Purificar", "Remove todos os efeitos aplicados em voce (incluindo bons!)");
 
@@ -155,16 +157,16 @@ public class Moldes {
         clubex.setEfeitoEmArea(true); clubex.setConsumir(true);
 
         // cartas ataque com efeito
-        corteProfundo = new CartaAtaqueComEfeito("Corte profundo", "causa 3 pontos de dano e aplica sangramento", 2, 9, sangramento, false, 2); 
+        corteProfundo = new CartaAtaqueComEfeito("Corte profundo", "aplica sangramento", 1, 4, sangramento, false, 2); 
         corteProfundo.setResenha(Cor.txtVermelho(Arte.CORTE)); corteProfundo.setRaridade(1);
 
-        corteVenenoso = new CartaAtaqueComEfeito("Corte venenoso", "causa 1 ponto de dano e aplica dois acumulos de veneno", 2, 7, veneno, false, 2); 
+        corteVenenoso = new CartaAtaqueComEfeito("Corte venenoso", "aplica dois acumulos de veneno", 1, 3, veneno, false, 2); 
         corteVenenoso.setResenha(Cor.txtVerdeClaro(Arte.CORTE2)); corteVenenoso.setRaridade(1);
 
-        corteDefensivo = new CartaAtaqueComEfeito("Corte defensivo", "causa 1 ponto de dano e ganha escudo!", 2, 8, escudinho, true, 2); 
+        corteDefensivo = new CartaAtaqueComEfeito("Corte defensivo", "ganha escudo!", 1, 3, escudo2, true, 2); 
         corteDefensivo.setResenha(Cor.txtAzulClaro(Arte.CORTE5)); corteDefensivo.setRaridade(1);
 
-        corteRapido = new CartaAtaqueComEfeito("Corte rapido", "causa 1 ponto de dano e ganha 1 ponto de energia!", 2, 8, ganhaEnergia2, true, 2); 
+        corteRapido = new CartaAtaqueComEfeito("Corte rapido", " ganha 1 ponto de energia!", 1, 3, ganhaEnergia2, true, 2); 
         corteRapido.setResenha(Cor.txtAmareloClaro(Arte.CORTE4)); corteRapido.setRaridade(2);
 
         bombaVeneno = new CartaAtaqueComEfeito("BOMBA DE VENENO!", "jogue uma " + Cor.txtVerdeEscuro("BOMBA TÓXICA") + " que atinge TODOS os inimigos e aplica " + veneno.getNomeColorido(), 3, 6, veneno4, false);
@@ -177,10 +179,10 @@ public class Moldes {
         presenteMaldito.setConsumir(true); presenteMaldito.setSacrificio(5); presenteMaldito.setEfeitoEmArea(true);
 
         // cartas habilidade
-        shieldinho = new CartaHabilidade("Shieldinho", "4 pontos de escudo", 1, escudinho, true); 
+        shieldinho = new CartaHabilidade("Shieldinho", "4 pontos de escudo", 1, escudo4, true); 
         shieldinho.setRaridade(1);
 
-        shieldao = new CartaHabilidade("Shieldao", "10 pontos de escudo", 2, escudao, true); 
+        shieldao = new CartaHabilidade("Shieldao", "10 pontos de escudo", 2, escudo10, true); 
         shieldao.setRaridade(1);
 
         armadura = new CartaHabilidade("Aura", "Reduz o dano recebido em 25% por 3 rodadas", 2, aumentaResistencia, true); 
@@ -227,19 +229,21 @@ public class Moldes {
         beberVeneno = new CartaMaldicao("Beber veneno.", "Bebe veneno.", 1, veneno, true); beberVeneno.setResenha(Cor.txtCinza(Arte.algoRuim));
 
         // cartas pro deck de teste
-        bombaSuprema = new CartaAtaque("BOMBA!!!!!!!!!", "joga uma bomba que atinge TODOS os inimigos!", 1, 50); bombaSuprema.setEfeitoEmArea(true); 
-        bombaSuprema.setRaridade(10); // essa aqui nem vai pro sorteio mas botei 4
+        bombaSuprema = new CartaAtaque("BOMBA!!!!!!!!!", "joga uma bomba que atinge TODOS os inimigos!", 0, 50); bombaSuprema.setEfeitoEmArea(true); 
+        bombaSuprema.setRaridade(10);
+
         energiaSupremo = new CartaHabilidade("Energia!!!!!!!!!!!", "Ganhe muitos ponto de energia", 0, ganhaEnergiaTest, true); 
-        energiaSupremo.setRaridade(10); // essa aqui nem vai pro sorteio mas botei 4
+        energiaSupremo.setRaridade(10);
 
         // inimigos --
-        // tier 1
+        // tier 1 -----------------
         endrick = new Inimigo("Endrick", 50, 9,
             new Acao.Atacar(), new Acao.AtacarEfeito(veneno), new Acao.AplicarEfeitoAliadoMaisForte(ego)
         ); endrick.setTier(1);
 
-        drake = new Inimigo("Drake", 55, 7,
-            new Acao.AplicarEfeitoAliadoMaisForte(ego), new Acao.AplicarEfeitoAliadoMaisForte(escudao), new Acao.Atacar()
+        // suporte
+        drake = new Inimigo("Drake", 40, 7,
+            new Acao.AplicarEfeitoAliadoMaisForte(ego), new Acao.AplicarEfeitoAliadoMaisForte(escudo10), new Acao.Atacar()
         ); drake.setTier(1);
 
         // duplica ao chegar na metade da vida
@@ -247,22 +251,24 @@ public class Moldes {
             new Acao.AtacarEfeito(veneno1)
         ); amoeba.setTier(1); amoeba.setAcaoMeiaVida(new Acao.multiplicar(2));
 
-        // tier 2
+        // tier 2 -----------------
         // ganha escudo ao chegar na metade da vida 
         barbossa = new Inimigo("Capitão Hector Barbossa", 70, 13,
             new Acao.Atacar(), new Acao.AtacarEfeito(sangramento)
-        ); barbossa.setTier(2); barbossa.setAcaoMeiaVida(new Acao.ReceberEfeito(escudao));
+        ); barbossa.setTier(2); barbossa.setAcaoMeiaVida(new Acao.ReceberEfeito(escudo10));
 
-        loudCoringa = new Inimigo("LOUD Coringa", 60, 11, 
+        // assassino
+        loudCoringa = new Inimigo("LOUD Coringa", 50, 11, 
             new Acao.AtacarVidaPerdida(), new Acao.AtacarEfeito(sangramento), new Acao.AdicionarCarta(sangrar)
         ); loudCoringa.setTier(2);
 
+        // suporte
         loudSacy = new Inimigo("LOUD Sacy", 60, 0, 
             new Acao.AdicionarCarta(sangrar), new Acao.AplicarEfeitoAliadoMaisForte(ego), 
-            new Acao.AplicarEfeitoAliadoMaisForte(escudao), new Acao.AplicarEfeitoAliadoMaisForte(pactoSinistro)
+            new Acao.AplicarEfeitoAliadoMaisForte(escudo10), new Acao.AplicarEfeitoAliadoMaisForte(pactoSinistro)
         ); loudSacy.setTier(2);
 
-        // tier 3
+        // tier 3 -----------------
         sabrinaCarpenter = new Inimigo("SABRINA CARPENTER", 80, 20,
             new Acao.Atacar(), new Acao.AtacarEfeito(sangramento), new Acao.ReceberEfeito(ego)
         ); sabrinaCarpenter.setTier(3);
@@ -271,7 +277,7 @@ public class Moldes {
             new Acao.AdicionarCarta(beberVeneno), new Acao.AtacarEfeito(sangramento), new Acao.AtacarVidaPerdida()
         ); tripleT.setTier(3);
 
-        // tier 4 (goats)
+        // tier 4 (goats) -----------------
         paulAtreides = new Inimigo("PAUL MUAD'DIB ATREIDES, DUKE OF ARRAKIS, LISAN AL GAIB", 100, 35, // ESSE AQUI E FORTE VIU MEIO QUE O BOSS
             new Acao.AtacarVidaPerdida(), new Acao.ReceberEfeito(pactoSinistro), new Acao.AtacarEfeito(sangramento), new Acao.AtacarVidaPerdida()
         ); paulAtreides.setTier(4);
@@ -290,7 +296,7 @@ public class Moldes {
         
         // efeitos ------
         listaEfeitosMoldes.addAll(Arrays.asList(sangramento, veneno, veneno1, ego, aumentaResistencia, 
-            escudinho, escudao, purificarEfeito, feridas, ganhaEnergia2, 
+            escudo4, escudo10, purificarEfeito, feridas, ganhaEnergia2, 
             ganhaEnergia1, ganhaEnergiaTest, efeitoPuxaCarta2, efeitoEnergizado, 
             ganhaResenhax, ganhaClubex, escolheCarta, pactoSinistro, veneno4)); 
         

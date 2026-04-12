@@ -68,8 +68,10 @@ public class Batalha extends Evento {
         return entidades;
     }
 
-    /** adiciona os inimigos na lista novosInimigos a batalha e reseta a lista */
+    /** adiciona os inimigos na lista novosInimigos a batalha, remove os inimigos com flag pra remover e reseta a lista */
     private void addNovosInimigos() {
+        inimigos.removeIf(Inimigo::getRemoverDaBatalha);
+
         if (novosInimigos.isEmpty()) {
             return;
         }
@@ -80,6 +82,7 @@ public class Batalha extends Evento {
                 inimigos.add(novoInimigo);
             }
         }
+        
         novosInimigos.clear();
     }
 
@@ -107,7 +110,7 @@ public class Batalha extends Evento {
         heroi.setPilhaCompra(pilhaCompra);
         heroi.setPilhaDescarte(pilhaDescarte);
 
-        pilhaCompra.addBaralho(heroi.getBaralho()); // pilha de compras recebe o baralho do heroi e embaralha
+        pilhaCompra.addBaralho(new ArrayList<>(heroi.getBaralho())); // pilha de compras recebe o baralho do heroi e embaralha
         pilhaCompra.shuffleAll(pilhaDescarte);
         
         // resetando os bonus do heroi q possam ter sobrado da rodada passada
@@ -344,7 +347,8 @@ public class Batalha extends Evento {
             while(true){ // loop da escolha de ação
                 Textos.limpaTela();
 
-                if (primeiroLoop){
+                // mostra a animaçao de batalha apenas caso seja o inicio da rodada e o jogador nao esteja usando deck teste
+                if (primeiroLoop && !heroi.getTestMode()){
                     Textos.batalha(heroi, listaEfeitos, listaPoderes, inimigosAtuaisArray());
                     primeiroLoop = false;
                 } else {
@@ -523,6 +527,17 @@ public class Batalha extends Evento {
         InputHandler.esperar();
         heroi.ganhaDinheiro(this.recompensa);
         Recompensas.ganharCarta(1, heroi);
+
+        if (getNivelDificuldade() == 3) {
+            System.out.println("Parabens por vencer uma batalha desafiadora!\n");
+            Recompensas.ganharCarta(2, heroi);
+        }
+
+        if (getNivelDificuldade() == 4) {
+            System.out.println("Parabens por vencer uma batalha de elite!\n");
+            Recompensas.ganharCarta(3, heroi);
+        }
+
     }
 
     /** exibe a mensagem de derrota e cuida da recompensa da batalha */
@@ -537,18 +552,34 @@ public class Batalha extends Evento {
         System.exit(0);
     }
 
+    public int getDificuldadeTotal() {
+        return dificuldadeTotal;
+    }
+
+    public int getNivelDificuldade() {
+        if (dificuldadeTotal < 4) {
+            return 1; // trivial
+        }
+        else if (dificuldadeTotal < 7) {
+            return 2; // normal
+        }
+        else if (dificuldadeTotal <= 8) {
+            return 3; // desafiador
+        }
+        else {
+            return 4; // elite
+        }
+    }
+
     @Override
     public String toString() {
         String retorno = Cor.txtVermelho("Batalha");
         
-        if (dificuldadeTotal < 6) {
-            retorno += " <" + Cor.azul + "trivial" + Cor.reset + ">";
-        }
-        else if (dificuldadeTotal <= 8) {
-            retorno += " <" + Cor.amarelo + "desafiador" + Cor.reset + ">";
-        }
-        else if (dificuldadeTotal > 8) {
-            retorno += " <" + Cor.vermelho + "elite" + Cor.reset + ">";
+        switch (getNivelDificuldade()) {
+            case 1 -> retorno += " <" + Cor.azul + "trivial" + Cor.reset + ">";
+            case 2 -> retorno += " <" + Cor.verde + "normal" + Cor.reset + ">";
+            case 3 -> retorno += " <" + Cor.amarelo + "desafiador" + Cor.reset + ">";
+            case 4 -> retorno += " <" + Cor.vermelho + "elite" + Cor.reset + ">";
         }
 
         retorno += Cor.txtCinza(" VERSUS:");

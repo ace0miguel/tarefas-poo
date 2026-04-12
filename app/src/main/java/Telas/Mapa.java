@@ -17,42 +17,59 @@ public class Mapa {
         this.heroi = _heroi;
     }
 
-    ArvoreEventos arvoreEventos = new ArvoreEventos(3, 7); // QUANTIDADE TOTAL DE EVENTOS: P - 1 (COMEÇA DO PROFUNDIDADE 0)
-    DefaultMutableTreeNode nodeInicial = arvoreEventos.criarArvore(); // cria arvore e recebe a raiz
+    ArvoreEventos arvoreEventos = new ArvoreEventos(3, 15); // QUANTIDADE TOTAL DE ILHAS/ANDARES: P + 1 (COMEÇA DO PROFUNDIDADE 0)
+
+    // gera a raiz da arvore
+    DefaultMutableTreeNode nodeInicial = new DefaultMutableTreeNode(arvoreEventos.escolherEvento(0).get(0));
     DefaultMutableTreeNode nodeAtual = nodeInicial; // eu to chamando de node pq noAtual ia ficar muito feio
     
-    /** retorna um menu de seleçao com os filhos da posiçao passada. a opçao exit te manda pro deckbuilder. */
-    public int escolherCaminho(DefaultMutableTreeNode posicaoAtual){ 
-        return InputHandler.selecionar(arvoreEventos.getEventos(posicaoAtual),true, Arte.mapa + "\n" + Cor.txtAzul(Arte.bordaHud4) + "\n" + Textos.menuStatus(heroi) , "deckBuilder.");
+    /** gera os filhos da posiçao passada e printa um menu de seleçao com seus eventos. (usar quando gerando os filhos dinamicamente) */
+    public int criarCaminhos(DefaultMutableTreeNode posicaoAtual){ 
+        arvoreEventos.expandirNo(posicaoAtual);
+        return InputHandler.selecionar(arvoreEventos.getEventos(posicaoAtual),true, Arte.mapa + "\n" + Cor.txtAzul(Arte.bordaHud4) + 
+        "\n" + Textos.menuStatus(heroi) + Cor.reset +
+        "|| Próxima ilha: [" + Cor.txtAmarelo(String.valueOf((posicaoAtual.getLevel() + 1))) + "]" , "deckBuilder.");
     }
 
-     /** retorna um menu de seleçao com os filhos do nó atual. a opçao exit te manda pro deckbuilder. */
+    /** gera os filhos da posiçao atual e printa um menu de seleçao com os eventos (usar quando gerando os filhos dinamicamente) */
+    public int criarCaminhos(){
+        return criarCaminhos(nodeAtual);
+    }
+    
+    /** retorna os filhos da posiçao passada e printa um menu de seleçao com seus eventos (usar para arvores completas)*/
+    public int escolherCaminho(DefaultMutableTreeNode posicaoAtual){ 
+        return InputHandler.selecionar(arvoreEventos.getEventos(posicaoAtual),true, Arte.mapa + "\n" + Cor.txtAzul(Arte.bordaHud4) + 
+        "\n" + Textos.menuStatus(heroi) + Cor.reset +
+        "|| Próxima ilha: [" + Cor.txtAmarelo(String.valueOf((posicaoAtual.getLevel() + 1))) + "]" , "deckBuilder.");
+    }
+
+     /** gera os filhos da posiçao e printa um menu de seleçao com os eventos (usar para arvores completas)*/
     public int escolherCaminho(){
         return escolherCaminho(nodeAtual);
     }
-    
 
     /** atualiza o nodeAtual para o filho de indice n do nó passado como argumento */
     public void irPara(DefaultMutableTreeNode posicaoAtual,int n){ 
-        nodeAtual = (DefaultMutableTreeNode) posicaoAtual.getChildAt(n);
-    }
-
-    /** atualiza o nodeAtual para o filho de indice n do nó atual*/
-    public void irPara(int n){ 
-        // tem uma chance de 15% tomar jumpscare do golden freddy
+    // tem uma chance de 15% tomar jumpscare do golden freddy
         if (RNGHandler.check(15)){ 
             System.out.println(Cor.txtAmarelo(Arte.GOLDENFREDDY));
             System.out.println(Cor.txtVermelho("RECEBA O JUMPSCARE!"));
             InputHandler.esperar();
         }
+        nodeAtual = (DefaultMutableTreeNode) posicaoAtual.getChildAt(n);
+    }
+
+    /** atualiza o nodeAtual para o filho de indice n do nó atual*/
+    public void irPara(int n){ 
         irPara(nodeAtual, n);
     }
 
-    /** converte o objeto em evento dentro do no atual e retorna */
+    /** retorna o evento dentro do nó passado como argumento*/
     public Evento getEvento(DefaultMutableTreeNode atual) {
         return (Evento) atual.getUserObject();
     }
 
+    /** retorna o evento dentro do nó atual*/
     public Evento getEvento() {
         return getEvento(nodeAtual);
     }
@@ -88,15 +105,15 @@ public class Mapa {
                 continue;
             }
 
-            if (nodeAtual.isLeaf()) { // nao tem mais evento depois, sai do mapa ( mas avisa antes )
+            if (nodeAtual.getLevel() == arvoreEventos.getProfundidadeMax()) { // nao tem mais evento depois, sai do mapa ( mas avisa antes )
                 System.out.println(Cor.txtAmarelo("Parabéns!"));
                 InputHandler.esperar();
                 return;
             } 
 
-            int escolha = escolherCaminho();
+            int escolha = criarCaminhos();
 
-            // o voltar te manda pro deckbuilder ( da pra deixar mais bonito depois e adicionar uma opçao deckbuilder mas enfim )
+            // o voltar te manda pro deckbuilder
             if (escolha == -1) {
                 DeckBuilder.iniciar(heroi);
                 continue;

@@ -23,6 +23,8 @@ public class Inimigo extends Entidade{
 
     private Acao acaoMeiaVida; // ação que o inimigo realiza quando chega na metade da vida pela primeira vez
 
+    protected boolean removerDaBatalha = false; // flag para remover um inimigo da batalha ativar efeitos ao morrer
+
     public  Inimigo(String nome, int vida, int dano, Acao... acoes){
         super(nome, vida);
         this.acoesArray = acoes;
@@ -116,6 +118,9 @@ public class Inimigo extends Entidade{
     public Acao getAcaoMeiaVida() {
         return this.acaoMeiaVida;
     }
+    public boolean getRemoverDaBatalha() {
+        return removerDaBatalha;
+    }
 
     public void setTier(int tier) {
         this.tier = tier;
@@ -123,5 +128,9 @@ public class Inimigo extends Entidade{
 
     public void setAcaoMeiaVida(Acao acaoMeiaVida) {
         this.acaoMeiaVida = acaoMeiaVida;
+    }
+
+    public void setRemoverDaBatalha(boolean removerDaBatalha) {
+        this.removerDaBatalha = removerDaBatalha;
     }
 }

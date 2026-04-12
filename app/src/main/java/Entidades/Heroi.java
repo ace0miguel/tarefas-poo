@@ -26,6 +26,8 @@ public class Heroi extends Entidade {
     private PilhaCompra pilhaCompra;
     private PilhaDescarte pilhaDescarte;
 
+    private boolean testMode = false; // true caso o jogador escolha o deck teste
+
     public Heroi(String nome, int vida, int energiaMax){
         super(nome, vida);
         this.energiaMax = energiaMax;
@@ -70,6 +72,10 @@ public class Heroi extends Entidade {
         return dinheiro;
     }
 
+    public boolean getTestMode() {
+        return testMode;
+    }
+
     // setters -----
 
     public void setDeck(List<Carta> deck) {
@@ -110,6 +116,10 @@ public class Heroi extends Entidade {
 
     public void setDinheiro(int dinheiro) {
         this.dinheiro = dinheiro;
+    }
+
+    public void setTestMode(boolean testMode) {
+        this.testMode = testMode;
     }
     
     // ----

@@ -22,8 +22,8 @@ public class App {
         // instancias padrao pra teste por enquanto
         Moldes.carregar();
 
-        // heroi -----------
-        Heroi heroi = new Heroi("Capitão Jack Sparrow", 90, 5);
+        // heroi ----------- (4 de energia max pq assim 5 cartas de 1 de energia nao da pra resetar a mao)
+        Heroi heroi = new Heroi("Capitão Jack Sparrow", 90, 4);
       
         // pra entrar direto no deckBuilder descomenta aqui
         // DeckBuilder.mostrarDecksPadrao(heroi);
@@ -40,10 +40,6 @@ public class App {
         InputHandler.esperar(Cor.txtAmareloClaro("Pressione ENTER para partir em busca do Pérola Negra!"));
 
         // ----------------------------
-
-        // se quiser pular o mapa e ir direto pra uma batalha teste descomenta aqui
-        //Batalha batalha = new Batalha(heroi, inimigo, inimigo2, inimigo3);
-        //batalha.iniciar();
         
         // menu inicial (tava meio redundante ai eu comentei) ------------
 
@@ -61,8 +57,8 @@ public class App {
     
         // inicio do jogo  ------------
         Mapa mapa = new Mapa(heroi);
-        mapa.explorar(); // por enquanto ta programado pra ter 3 lutas, a primeira facil a 2 meio aleatorio a 3 contra todos os inimigos ao msm tempo
-
+        mapa.explorar();
+        
         // se chegou ate aq e pq vc venceu o jogo todo parabens!!
         Textos.printaLinhaDevagar(Arte.PEROLANEGRA);
         System.out.println();

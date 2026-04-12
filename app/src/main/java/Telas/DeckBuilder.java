@@ -9,32 +9,22 @@ import Cartas.Carta;
 import Entidades.Heroi;
 import Util.InputHandler;
 import static Util.Moldes.armadura;
-import static Util.Moldes.beberVeneno;
 import static Util.Moldes.bomba;
 import static Util.Moldes.bombaSuprema;
-import static Util.Moldes.bombaVeneno;
-import static Util.Moldes.chocolex;
 import static Util.Moldes.contratoSangue;
 import static Util.Moldes.corteDefensivo;
 import static Util.Moldes.corteProfundo;
 import static Util.Moldes.corteRapido;
 import static Util.Moldes.corteVenenoso;
-import static Util.Moldes.dedoNervosoCarta;
-import static Util.Moldes.desprezo;
 import static Util.Moldes.egoCarta;
-import static Util.Moldes.energiaGratis;
 import static Util.Moldes.energiaSupremo;
 import static Util.Moldes.energizar;
-import static Util.Moldes.mestreLaminasCarta;
 import static Util.Moldes.pactoSangue;
 import static Util.Moldes.presenteMaldito;
-import static Util.Moldes.purificar;
 import static Util.Moldes.puxaCarta;
-import static Util.Moldes.sangrar;
 import static Util.Moldes.shieldao;
 import static Util.Moldes.shieldinho;
 import static Util.Moldes.tiro;
-import static Util.Moldes.tiroCanhao;
 import static Util.Moldes.tiroEscopeta;
 import Visual.Arte;
 import Visual.Cor;
@@ -52,19 +42,16 @@ public class DeckBuilder {
     /** exibe os decks padrao ja montados */
     public static void mostrarDecksPadrao(Heroi heroi){
         // nomes dos decks padrao
-        decksPadrao.add(Cor.txtVermelho("O MESTRE DAS LAMINAS: CORTES INFINITOS, DEBUFFS INFINITOS, RODADA INFINITA!"));
-        decksPadrao.add(Cor.txtAmarelo("JOHN WICK: CAUSE MUITO DANO DIRETO EM UMA CHUVA DE BALAS!"));
-        decksPadrao.add(Cor.txtRoxo("O AMALDIÇOADO: CARTAS MUITO FORTES, MAS TALVEZ UM PREÇO ALTO DEMAIS..."));
-        decksPadrao.add(Cor.txtCinza("deck de teste nao usar fazendo favor vamos respeitar o amigo programador obg."));
+        decksPadrao.add(Cor.txtVermelho("Samurai: Cartas de corte (menos dano, aplicam efeito)"));
+        decksPadrao.add(Cor.txtAmarelo("John wick: Cartas de tiro (dano direto, sem efeito)"));
+        decksPadrao.add(Cor.txtCinza("deck de teste: ganha automaticamente e 100 de gold logo de cara."));
 
         Textos.limpaTela();
         int escolha = InputHandler.selecionar(decksPadrao, Cor.reset + "Escolha um baralho inicial: \n" + Cor.txtCinza("(se voce ganhar a primeira batalha eu te deixo personalizar o deck!)")); 
 
         switch (escolha){
-            /*a ideia por tras desse deck aqui é q meio q vc tenta atingir um jackpot stackando mestre das laminas + usando cartas que ganham energia 
-            + usando cartas baratas + usar a mao completa pra ganhar mais 2 de energia -> tentar repetir o ciclo -> turno infinito. dano infinito. dopamina infinita. */
+            /** deck inicial baseado em cortes */
             case 0 -> { 
-                // 2 de cada corte + mestre laminas pra faze uns combao
                 heroi.addCarta(corteVenenoso);
                 heroi.addCarta(corteVenenoso);
 
@@ -76,166 +63,36 @@ public class DeckBuilder {
 
                 heroi.addCarta(corteDefensivo);
                 heroi.addCarta(corteDefensivo);
-                heroi.addCarta(corteDefensivo);
-
-                heroi.addCarta(mestreLaminasCarta);
-
-                heroi.addCarta(purificar);
-                heroi.addCarta(purificar);
-
-                heroi.addCarta(armadura);
-
-                heroi.addCarta(puxaCarta);
-                heroi.addCarta(puxaCarta);   
-                
-                heroi.addCarta(energizar);
-                heroi.addCarta(energizar);
-                
-                heroi.addCarta(egoCarta);
-                heroi.addCarta(egoCarta);
-
-                heroi.addCarta(energiaGratis);
 
                 heroi.addCarta(shieldao);
-                heroi.addCarta(shieldao);
+
+                heroi.addCarta(shieldinho);
                 heroi.addCarta(shieldinho);
 
-                heroi.addCarta(pactoSangue);
+                heroi.addCarta(energizar);
             }
-            /* deck de dano direto mesmo bem simples, 2 puro odio pra da mais dano ainda */
+            /* deck de dano direto */
             case 1 -> {
                 heroi.addCarta(tiro);
-                heroi.addCarta(tiroEscopeta);
-                heroi.addCarta(tiroCanhao);
+                heroi.addCarta(tiro);
 
                 heroi.addCarta(tiro);
+                heroi.addCarta(tiro);
+
+                heroi.addCarta(tiroEscopeta);     
                 heroi.addCarta(tiroEscopeta);
-                heroi.addCarta(tiroCanhao);
                 
-                heroi.addCarta(purificar);
-                heroi.addCarta(purificar);
+                heroi.addCarta(shieldinho);
+                heroi.addCarta(shieldinho);
 
-                heroi.addCarta(bomba);
-
-                heroi.addCarta(dedoNervosoCarta);
+                heroi.addCarta(shieldao);
+                heroi.addCarta(shieldao);
 
                 heroi.addCarta(egoCarta);
-
-                heroi.addCarta(puxaCarta);  
-
-                heroi.addCarta(energizar);
-                heroi.addCarta(energizar);
-
-                heroi.addCarta(energiaGratis);
-                
-                heroi.addCarta(shieldinho);
-                heroi.addCarta(shieldinho);
-
                 heroi.addCarta(armadura);
-
-                heroi.addCarta(chocolex);
-
-                heroi.addCarta(pactoSangue);
-                heroi.addCarta(pactoSangue);
             }  
-            /* muita carta roubada porem voce começa com um monte de maldiçoes (1/3 do deck atualmente)*/
-            case 2 -> {
-                heroi.addCarta(tiro);
-
-                heroi.addCarta(tiroEscopeta);
-                heroi.addCarta(tiroEscopeta);
-
-                heroi.addCarta(tiroCanhao);
-
-                heroi.addCarta(corteVenenoso);
-                heroi.addCarta(corteVenenoso);
-
-                heroi.addCarta(corteProfundo);
-                heroi.addCarta(corteProfundo);
-
-                heroi.addCarta(corteRapido);
-                heroi.addCarta(corteRapido);
-
-                heroi.addCarta(desprezo);
-                heroi.addCarta(desprezo);
-
-                heroi.addCarta(bombaVeneno);
-                heroi.addCarta(bombaVeneno);
-
-                heroi.addCarta(bomba);
-
-                heroi.addCarta(mestreLaminasCarta);
-                heroi.addCarta(dedoNervosoCarta);
-                heroi.addCarta(mestreLaminasCarta);
-                heroi.addCarta(dedoNervosoCarta);
-                heroi.addCarta(mestreLaminasCarta);
-                heroi.addCarta(dedoNervosoCarta);
-                
-                heroi.addCarta(purificar);
-                heroi.addCarta(purificar);
-
-                heroi.addCarta(puxaCarta); 
-                heroi.addCarta(puxaCarta); 
-
-                heroi.addCarta(energizar); 
-                heroi.addCarta(energizar); 
-              
-                heroi.addCarta(energiaGratis);
-                heroi.addCarta(energiaGratis);
-                heroi.addCarta(energiaGratis);
-
-                heroi.addCarta(egoCarta);
-                heroi.addCarta(egoCarta);
-
-                heroi.addCarta(armadura);
-                heroi.addCarta(armadura);
-
-                heroi.addCarta(shieldinho);
-                heroi.addCarta(shieldinho);
-
-                heroi.addCarta(chocolex);
-
-                heroi.addCarta(pactoSangue);
-                heroi.addCarta(pactoSangue);
-
-                heroi.addCarta(bomba);
-                heroi.addCarta(bomba);
-
-                //maldiçoes...
-
-                heroi.addCarta(sangrar);
-                heroi.addCarta(sangrar);
-
-                heroi.addCarta(sangrar);
-                heroi.addCarta(sangrar);
-                
-                heroi.addCarta(sangrar);
-                heroi.addCarta(sangrar);
-
-                heroi.addCarta(sangrar);
-                heroi.addCarta(sangrar);
-
-                heroi.addCarta(sangrar);
-                heroi.addCarta(sangrar);
-
-                heroi.addCarta(beberVeneno);
-                heroi.addCarta(beberVeneno);
-
-                heroi.addCarta(beberVeneno);
-                heroi.addCarta(beberVeneno);
-
-                heroi.addCarta(beberVeneno);
-                heroi.addCarta(beberVeneno);
-
-                heroi.addCarta(beberVeneno);
-                heroi.addCarta(beberVeneno);
-            }
             // deck pra testar carta
-            case 3 -> {
-                heroi.addCarta(bombaVeneno);
-                heroi.addCarta(bombaVeneno);
-                heroi.addCarta(bombaVeneno);
-
+            case 2 -> {
                 heroi.addCarta(bomba);
                 heroi.addCarta(bomba);
                 
@@ -250,7 +107,6 @@ public class DeckBuilder {
                 heroi.addCarta(energiaSupremo);
                 heroi.addCarta(energiaSupremo);
                 
-
                 heroi.addCarta(pactoSangue);
                 heroi.addCarta(pactoSangue);
                 heroi.addCarta(pactoSangue);
@@ -263,6 +119,7 @@ public class DeckBuilder {
                 heroi.addCarta(contratoSangue);
 
                 heroi.ganhaDinheiro(100);
+                heroi.setTestMode(true);
             }
         }
         Textos.limpaTela();

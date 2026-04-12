@@ -198,7 +198,7 @@ public abstract class Acao {
                 batalha.adicionarInimigo(clone);
             }
 
-            executor.setVida(0);
+            executor.setRemoverDaBatalha(true);
         }
 
         @Override
