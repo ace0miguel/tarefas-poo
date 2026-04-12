@@ -4,7 +4,7 @@ import Cartas.Carta;
 import Entidades.Entidade;
 import Entidades.Heroi;
 import Telas.Eventos.Batalha;
-import Util.Cor;
+import Visual.Cor;
 
 /* aplica um efeito no heroi, duraçao infinita, nao volta pra pilha descarte ao ser usado. Normalmente stacka */
 public abstract class Poder {

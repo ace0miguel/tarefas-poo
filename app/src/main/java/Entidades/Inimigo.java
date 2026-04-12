@@ -6,9 +6,10 @@ import java.util.List;
 
 import Telas.Eventos.Batalha;
 import Util.Acao;
-import Util.Cor;
+import Util.InputHandler;
 import Util.RNGHandler;
-import Util.Textos;
+import Visual.Cor;
+import Visual.Textos;
 
 /* inimigo base. */
 public class Inimigo extends Entidade{
@@ -19,6 +20,8 @@ public class Inimigo extends Entidade{
     protected int tier = 0;
     protected Acao[] acoesArray; // array de acoes :(
     protected List<Acao> acoes; // arraylist de acoes! :)
+
+    private Acao acaoMeiaVida; // ação que o inimigo realiza quando chega na metade da vida pela primeira vez
 
     public  Inimigo(String nome, int vida, int dano, Acao... acoes){
         super(nome, vida);
@@ -32,7 +35,9 @@ public class Inimigo extends Entidade{
         this.dano = copiado.dano;
         this.acoesArray = copiado.acoesArray;
         this.acoes = new ArrayList<>(Arrays.asList(acoesArray));
+
         this.tier = copiado.tier;
+        this.acaoMeiaVida = copiado.acaoMeiaVida;
     }
 
     public Inimigo criaCopia() {
@@ -45,7 +50,7 @@ public class Inimigo extends Entidade{
     }
 
     /** imprime a intenção do inimigo (próxima ação a ser realizada) */
-    public void anunciarIntencao(Entidade alvo){
+    public void anunciarIntencao(Heroi alvo){
         if (this.estaVivo()){
             nextAcao.anunciar(this, alvo);
             Textos.sleep(50);
@@ -58,14 +63,27 @@ public class Inimigo extends Entidade{
     }
 
     /** imprime o resultado da ação do inimigo (dano causado, efeitos aplicados, etc.) */
-    public void resultadoAcao(Entidade alvo){
+    public void resultadoAcao(Heroi alvo){
         if (this.estaVivo()){
             nextAcao.resultado(this, alvo);
             Textos.sleep(50);
             Cor.reset();
         }
     }
-    
+
+    @Override
+    public void onMeiaVida(Entidade executor, Heroi heroi, Batalha batalha) {
+        if (this.acaoMeiaVida != null) {
+            if (executor instanceof Inimigo i) {
+                this.acaoMeiaVida.executar(i, heroi, batalha);
+                System.out.println();
+                Textos.printaBonito(Cor.txtAmareloClaro(this.getNome() + " chegou na metade da vida!" + "\n"), 5,2 );
+                this.acaoMeiaVida.resultado(i, heroi);
+                InputHandler.esperar();
+            }    
+        }
+    }
+
     // getters e setters ---------
 
     public int getDano() {
@@ -85,7 +103,15 @@ public class Inimigo extends Entidade{
         return (int) Math.pow(3,tier);
     }
 
+    public Acao getAcaoMeiaVida() {
+        return this.acaoMeiaVida;
+    }
+
     public void setTier(int tier) {
         this.tier = tier;
+    }
+
+    public void setAcaoMeiaVida(Acao acaoMeiaVida) {
+        this.acaoMeiaVida = acaoMeiaVida;
     }
 }

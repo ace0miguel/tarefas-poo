@@ -6,6 +6,9 @@ import java.util.List;
 
 import Cartas.Carta;
 import Entidades.Heroi;
+import Visual.Cor;
+import Visual.Textos;
+
 import static Util.Moldes.listaCartasMoldes;
 
 /** Aqui ficam todos os metodos pra dar recompensas ao jogador (cartas, dinheiro, etc) */

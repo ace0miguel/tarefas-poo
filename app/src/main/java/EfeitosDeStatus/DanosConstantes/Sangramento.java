@@ -5,10 +5,10 @@ import EfeitosDeStatus.Efeito;
 import Entidades.Entidade;
 import Entidades.Heroi;
 import Telas.Eventos.Batalha;
-import Util.Arte;
-import Util.Cor;
 import Util.InputHandler;
-import Util.Textos;
+import Visual.Arte;
+import Visual.Cor;
+import Visual.Textos;
 
 /**  ao aplicar sangramento em um inimigo que ja tem o efeito, reseta a duraçao e aumenta o dano.
 dano causado : dano base * numero de stacks

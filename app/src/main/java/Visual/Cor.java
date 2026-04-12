@@ -1,4 +1,4 @@
-package Util;
+package Visual;
 
 /** varias variaveis e métodos estáticos pra implementar cores no terminal */
 public class Cor {

@@ -4,8 +4,8 @@ import EfeitosDeStatus.Efeito;
 import Entidades.Entidade;
 import Entidades.Heroi;
 import Telas.Eventos.Batalha;
-import Util.Cor;
-import Util.Textos;
+import Visual.Cor;
+import Visual.Textos;
 
 /** efeitos de dano constante, dano depende do efeito especifico
 causam dano direto (ignoram resistencias) */

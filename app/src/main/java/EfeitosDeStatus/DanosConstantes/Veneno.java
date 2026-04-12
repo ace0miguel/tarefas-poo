@@ -5,8 +5,8 @@ import EfeitosDeStatus.Efeito;
 import Entidades.Entidade;
 import Entidades.Heroi;
 import Telas.Eventos.Batalha;
-import Util.Cor;
-import Util.Textos;
+import Visual.Cor;
+import Visual.Textos;
 
 /** Causa dano igual a duraçao restante; ao colocar veneno denovo soma a duraçao;
 caso um inimigo morra envenenado o veneno espalha para todos os outros com a mesma duraçao de quando ele morreu */

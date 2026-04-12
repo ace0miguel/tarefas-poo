@@ -1,16 +1,17 @@
 package Telas.Eventos;
 
+import static Visual.Textos.menuStatus;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import Entidades.Heroi;
-import Util.Arte;
-import Util.Cor;
 import Util.InputHandler;
 import Util.Recompensas;
-import Util.Textos;
-import static Util.Textos.menuStatus;
+import Visual.Arte;
+import Visual.Cor;
+import Visual.Textos;
 
 /** evento aleatório onde o jogador pode pagar pra se curar ou pra receber cartas aleatórias */
 public class Loja extends Evento{

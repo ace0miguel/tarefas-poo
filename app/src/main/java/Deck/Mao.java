@@ -3,9 +3,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import Cartas.Carta;
-import Util.Cor;
 import Util.InputHandler;
-import Util.Textos;
+import Visual.Cor;
+import Visual.Textos;
 
 /* Início do turno : puxa 5 carta;
  tudo que voce nao usar vai pra pilha de descarte;

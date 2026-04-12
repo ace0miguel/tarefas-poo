@@ -5,11 +5,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import Entidades.Heroi;
-import Util.Arte;
-import Util.Cor;
 import Util.InputHandler;
 import Util.Recompensas;
-import Util.Textos;
+import Visual.Arte;
+import Visual.Cor;
+import Visual.Textos;
 
 /** evento aleatório, o jogador pode escolher entre recuperar vida ou ganhar uma recompensa */
 public class Fogueira extends Evento{

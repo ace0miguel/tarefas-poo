@@ -4,9 +4,9 @@ import Cartas.Carta;
 import Entidades.Entidade;
 import Entidades.Heroi;
 import Telas.Eventos.Batalha;
-import Util.Cor;
 import Util.InputHandler;
-import Util.Textos;
+import Visual.Cor;
+import Visual.Textos;
 
 /** ganha o valor em energia quando a duraçao acabar */
 public class Energizar extends Efeito {

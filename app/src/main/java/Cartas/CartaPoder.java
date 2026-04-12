@@ -3,7 +3,7 @@ import Entidades.Entidade;
 import Entidades.Heroi;
 import Poderes.Poder;
 import Telas.Eventos.Batalha;
-import Util.Cor;
+import Visual.Cor;
 
 /** cartas que aplicam poderes (efeitos especiais, normalmente buffs permanentes dentro do combate atual) */
 public class CartaPoder extends Carta
@@ -14,12 +14,14 @@ public class CartaPoder extends Carta
         super(nome, descricao, custo);
         this.poder = poder;
         this.setConsumir(true);
+        this.setSelfCast(true);
     }
 
     public CartaPoder(CartaPoder copia) {
         super(copia);
         this.poder = copia.poder;
         this.setConsumir(true);
+        this.setSelfCast(true);
     }
 
     @Override
@@ -27,17 +29,18 @@ public class CartaPoder extends Carta
         int energiaAtual = heroi.getEnergia();
 
         if(energiaAtual >= this.getCusto()){
-            Poder p = poder.criaCopia();
-            batalha.adicionarPoder(p);
-            heroi.usarEnergia(this.getCusto());
+            heroi.receberDanoDireto(this.sacrificio);
 
-            printaResenha();
+            aplicarEfeito(heroi, alvo, batalha);
+
+            heroi.usarEnergia(this.getCusto());
         }
     }
 
     @Override
     public void aplicarEfeito(Heroi heroi, Entidade alvo, Batalha batalha) {
         Poder p = poder.criaCopia();
+
         batalha.adicionarPoder(p);
         
         printaResenha();

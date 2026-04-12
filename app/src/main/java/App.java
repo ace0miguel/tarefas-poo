@@ -2,11 +2,11 @@
 
 import Entidades.Heroi;
 import Telas.Mapa;
-import Util.Arte;
-import Util.Cor;
 import Util.InputHandler;
 import Util.Moldes;
-import Util.Textos;
+import Visual.Arte;
+import Visual.Cor;
+import Visual.Textos;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -23,7 +23,7 @@ public class App {
         Moldes.carregar();
 
         // heroi -----------
-        Heroi heroi = new Heroi("Capitão Jack Sparrow", 60, 5);
+        Heroi heroi = new Heroi("Capitão Jack Sparrow", 70, 5);
       
         // pra entrar direto no deckBuilder descomenta aqui
         // DeckBuilder.mostrarDecksPadrao(heroi);

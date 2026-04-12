@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Stack;
 
 import Cartas.Carta;
-import Util.Cor;
-import Util.Textos;
+import Visual.Cor;
+import Visual.Textos;
 
 public class PilhaCompra {
     private List<Carta> cartas = new ArrayList<>();  

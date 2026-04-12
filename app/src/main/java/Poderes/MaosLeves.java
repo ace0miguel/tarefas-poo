@@ -4,8 +4,8 @@ import Cartas.Carta;
 import Entidades.Entidade;
 import Entidades.Heroi;
 import Telas.Eventos.Batalha;
-import Util.Arte;
-import Util.Textos;
+import Visual.Arte;
+import Visual.Textos;
 
 // se a carta for um tiro usa [stacks] vezes a mais.
 // a fazer: generalizar pra funcionar pra qualquer tipo (nao deve dar mt trabalho)

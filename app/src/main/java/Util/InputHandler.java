@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import Visual.Cor;
+import Visual.Textos;
+
 public class InputHandler {
     private static Scanner leitor = new Scanner(System.in);
 

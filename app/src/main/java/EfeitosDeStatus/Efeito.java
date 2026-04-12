@@ -11,7 +11,7 @@ import EfeitosDeStatus.Instantaneos.Purificar;
 import Entidades.Entidade;
 import Entidades.Heroi;
 import Telas.Eventos.Batalha;
-import Util.Cor;
+import Visual.Cor;
 
 public abstract class Efeito {
     private String nome;
@@ -139,7 +139,7 @@ public abstract class Efeito {
         this.stacks++;
     }
 
-    /** adiciona uma cópia do efeito à batalha */
+    /** adiciona uma cópia do efeito à batalha. Retorna a cópia do efeito para validaçao da jogada*/
     public Efeito adicionar(Entidade alvo, Batalha batalha){ 
         Efeito e = this.criaCopia();
         e.setAlvo(alvo); 

@@ -1,7 +1,7 @@
 package Poderes;
 
 import Entidades.Heroi;
-import Util.Cor;
+import Visual.Cor;
 
 /** no começo da rodada puxa quantidade cartas extras e perde sacrificio pontos de vida. */
 public class CartaAdicional extends Poder {

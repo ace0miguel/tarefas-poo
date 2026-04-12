@@ -6,8 +6,8 @@ import java.util.List;
 import Entidades.Entidade;
 import Entidades.Heroi;
 import Telas.Eventos.Batalha;
-import Util.Cor;
-import Util.Textos;
+import Visual.Cor;
+import Visual.Textos;
 
 // as classes filhas representam os diferentes tipos de carta, baseados nos tipos do jogo slay the spire.
 public abstract class Carta {
@@ -88,10 +88,10 @@ public abstract class Carta {
         else if (this instanceof CartaPoder)
             return Cor.rosa + this.nome + Cor.reset;
 
-        else if (this instanceof CartaMaldicao);
+        else if (this instanceof CartaMaldicao)
             return Cor.cinza + this.nome + Cor.reset;
 
-        // return this.nome + Cor.reset;
+        return this.nome + Cor.reset;
     }
 
     /** retorna o nome colorido baseado na raridade da carta */
@@ -226,13 +226,14 @@ public abstract class Carta {
     /** apenas aplica o efeito da carta, sem consumir */
     public abstract void aplicarEfeito(Heroi heroi, Entidade alvo, Batalha batalha); 
 
+    /** retorna a descriçao da carta ao ser exibida na mao */
     public abstract String descricao();
     
     public abstract Carta criaCopia();
 
     @Override
     public String toString(){
-        return this.getNome() + " (Custo: " + this.getCusto() + Cor.txtAmarelo(" energia") +") - " + this.getDescricao();
+        return this.descricao();
     }
 
     /** string a ser printada ao ganhar a carta */

@@ -3,12 +3,12 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import Entidades.Heroi;
 import Telas.Eventos.Evento;
-import Util.Arte;
 import Util.ArvoreEventos;
-import Util.Cor;
 import Util.InputHandler;
 import Util.RNGHandler;
-import Util.Textos;
+import Visual.Arte;
+import Visual.Cor;
+import Visual.Textos;
 
 public class Mapa {
     private Heroi heroi;

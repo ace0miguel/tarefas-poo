@@ -7,8 +7,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import Cartas.Carta;
 import Entidades.Heroi;
-import Util.Arte;
-import Util.Cor;
 import Util.InputHandler;
 import static Util.Moldes.armadura;
 import static Util.Moldes.beberVeneno;
@@ -38,7 +36,10 @@ import static Util.Moldes.sangrar;
 import static Util.Moldes.tiro;
 import static Util.Moldes.tiroCanhao;
 import static Util.Moldes.tiroEscopeta;
-import Util.Textos;
+
+import Visual.Arte;
+import Visual.Cor;
+import Visual.Textos;
 
 /** permite passar cartas do inventário para o baralho ou, por um preço, remover cartas do baralho */
 public class DeckBuilder {

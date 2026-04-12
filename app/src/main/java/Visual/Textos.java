@@ -1,4 +1,4 @@
-package Util;
+package Visual;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -6,6 +6,7 @@ import EfeitosDeStatus.Efeito;
 import Entidades.Heroi;
 import Entidades.Inimigo;
 import Poderes.Poder;
+import Util.RNGHandler;
 
 public class Textos {
     public static String bordaHudBatalha = Cor.txtCinza(Arte.bordaHud13);
@@ -25,23 +26,19 @@ public class Textos {
         }
     }
 
-    /* limpaTela versao antiga
-    public static void limpaTela(){
-        try {
-            if (System.getProperty("os.name").contains("Windows")) {
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            } else {
-                new ProcessBuilder("clear").inheritIO().start().waitFor();
-            }
-        } catch (Exception e) {
-            System.out.print("\033[H\033[2J");
-            System.out.flush();
-        }
-    } */
-
     /** printa varias linhas pra limpar a tela e o proximo texto surgir de baixo */
-    public static void sobeTela(){
-        for(int i = 0; i < 300; i++) System.out.println(); // printar 1 trilhao de linha nunca falha
+    public static void sobeTela() {
+        try {
+            System.out.print("\u001B[H\u001B[2J\u001B[3J");
+
+            System.out.print("\u001B[999;1H");
+
+            System.out.flush();
+        } catch (Exception e) {
+            for (int i = 0; i < 300; i++) {
+                System.out.println();
+            }
+        }
     }
 
     /** pausa por um tempo em ms
@@ -230,7 +227,7 @@ public class Textos {
 
         String barraFinal = barra.toString();
         
-        if (porcentagem > 0.6) {
+        if (porcentagem > 0.5) {
             barraFinal = Cor.verdeClaro + barraFinal + Cor.reset;
         } else if (porcentagem > 0.3) {
             barraFinal = Cor.amarelo + barraFinal + Cor.reset;

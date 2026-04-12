@@ -2,8 +2,9 @@ package Entidades;
 
 import static java.lang.Math.max;
 
-import Util.Cor;
-import Util.Textos;
+import Telas.Eventos.Batalha;
+import Visual.Cor;
+import Visual.Textos;
 
 public abstract class Entidade {
     protected String nome;
@@ -13,6 +14,8 @@ public abstract class Entidade {
     private int danoExtra = 0;
     private int resistencia = 0; // todo dano recebido subtrai isso aqui
     private boolean purificar = false;
+
+    private boolean meiaVida = false; // flag que ativa quando a vida da entidade fica abaixo de 50% pela primeira vez
 
     // booleans pra defini a cor do nome
     private boolean purificado = false;
@@ -140,6 +143,14 @@ public abstract class Entidade {
         this.danoExtra += valor;
     }
 
+    /** garante que onMeiaVida() seja chamado apenas uma vez */
+    public void checkMeiaVida(Entidade executor, Heroi heroi, Batalha batalha){
+        if (!this.meiaVida && this.vida <= this.vidaMax / 2 && this.vida > 0){
+            this.meiaVida = true;
+            onMeiaVida(executor, heroi, batalha);
+        }
+    }
+
     // ----------   
 
     public void resetEfeitos(){
@@ -214,9 +225,12 @@ public abstract class Entidade {
         this.resistencia = 0;
     }
 
+    /** metodo chamado quando a entidade fica com metade da vida pela primeira vez */
+    public void onMeiaVida(Entidade executor, Heroi heroi, Batalha batalha){}
+
     public String status(){
         return (getEscudo() != 0) 
-        ? ""+this.getNomeColorido()+ Cor.reset + " || " + Textos.desenharBarraVida(this.getVida(), this.getVidaMax()) + " "+Cor.azul+" ("+this.getEscudo()+" de escudo)" + Cor.reset + "" + Cor.reset
-        : ""+this.getNomeColorido()+ Cor.reset + " || " + Textos.desenharBarraVida(this.getVida(), this.getVidaMax()) + Cor.reset + "" + Cor.reset ;
+        ? ""+this.getNomeColorido()+ Cor.reset + " " + Textos.desenharBarraVida(this.getVida(), this.getVidaMax()) + " "+Cor.azul+" ("+this.getEscudo()+" de escudo)" + Cor.reset + "" + Cor.reset
+        : ""+this.getNomeColorido()+ Cor.reset + " " + Textos.desenharBarraVida(this.getVida(), this.getVidaMax()) + Cor.reset + "" + Cor.reset ;
     }
 }

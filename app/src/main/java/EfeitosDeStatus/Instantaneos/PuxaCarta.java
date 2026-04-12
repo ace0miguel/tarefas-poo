@@ -5,8 +5,8 @@ import EfeitosDeStatus.Efeito;
 import Entidades.Entidade;
 import Entidades.Heroi;
 import Telas.Eventos.Batalha;
-import Util.Cor;
 import Util.InputHandler;
+import Visual.Cor;
 
 /** puxa da pilha de compra valor cartas e adiciona a mao do heroi */
 public class PuxaCarta extends Efeito {

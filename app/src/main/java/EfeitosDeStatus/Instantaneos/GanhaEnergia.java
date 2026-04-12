@@ -5,8 +5,8 @@ import EfeitosDeStatus.Efeito;
 import Entidades.Entidade;
 import Entidades.Heroi;
 import Telas.Eventos.Batalha;
-import Util.Cor;
 import Util.InputHandler;
+import Visual.Cor;
 
 /** adiciona energia instantaneamente */
 public class GanhaEnergia extends Efeito {

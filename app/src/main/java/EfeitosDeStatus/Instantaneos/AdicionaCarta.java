@@ -5,8 +5,8 @@ import EfeitosDeStatus.Efeito;
 import Entidades.Entidade;
 import Entidades.Heroi;
 import Telas.Eventos.Batalha;
-import Util.Cor;
 import Util.InputHandler;
+import Visual.Cor;
 
 /** adiciona a carta passada na pilha de compras do heroi */
 public class AdicionaCarta extends Efeito {

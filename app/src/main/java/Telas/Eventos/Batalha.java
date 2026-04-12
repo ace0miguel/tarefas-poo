@@ -7,7 +7,6 @@ import java.util.Scanner;
 
 import Cartas.Carta;
 import Cartas.CartaAtaqueComEfeito;
-import Cartas.CartaPoder;
 import Deck.Mao;
 import Deck.PilhaCompra;
 import Deck.PilhaDescarte;
@@ -20,11 +19,11 @@ import Entidades.Entidade;
 import Entidades.Heroi;
 import Entidades.Inimigo;
 import Poderes.Poder;
-import Util.Arte;
-import Util.Cor;
 import Util.InputHandler;
 import Util.Recompensas;
-import Util.Textos;
+import Visual.Arte;
+import Visual.Cor;
+import Visual.Textos;
 
 public class Batalha extends Evento {
     private int turno; // 0 -> heroi, 1 -> inimigos
@@ -132,6 +131,12 @@ public class Batalha extends Evento {
         for (Poder poder : listaPoderes) // notifica os poderes
             poder.aplicar();
         
+        // notifica possiveis meia vida
+        for (Inimigo inimigo : inimigos) {
+            inimigo.checkMeiaVida(inimigo, heroi, this);
+        }
+        heroi.checkMeiaVida(heroi, heroi, this);
+
         heroi.passaRodada(); // remove os bonus que acabam (escudo, etc) e reseta energia
     }
 
@@ -182,11 +187,11 @@ public class Batalha extends Evento {
                 opcao = ler.nextInt();
                 if (ler.hasNextLine()) {
                 ler.nextLine();
-            };
+            }
             } catch (Exception e) {
                 if (ler.hasNextLine()) {
                 ler.nextLine();
-            };  
+            }  
             }
             
             if (opcao == 0) break;
@@ -321,82 +326,97 @@ public class Batalha extends Evento {
 
                 int escolha = mao.mostrar(); 
 
+                if (escolha == mao.getSize()) break; // opção de passar o turno
+
                 if (escolha > mao.getSize() || escolha < 0){ 
                     escolhaInvalida = true;
                     continue;
                 }
 
-                // chegou aqui -> opçao de carta válida -> confere se não tem energia suficiente ( mas vou deixa essa linha conferindo ai msm pra evita bug sla )
-                if (escolha < mao.getSize() && escolha >= 0){
-                    Carta cartaEscolhida = mao.escolheCarta(escolha); 
-                    if (!cartaEscolhida.podeGastar(heroi)){
-                        System.out.println();
-                        System.out.println("Energia insuficiente");
-                        System.out.println();
+                Carta cartaEscolhida = mao.escolheCarta(escolha); 
+
+                if (!cartaEscolhida.podeGastar(heroi)){
+                    System.out.println();
+                    System.out.println("Energia insuficiente");
+                    System.out.println();
+                    InputHandler.esperar();
+                    continue;
+                } 
+
+                Entidade alvoSelecionado = heroi; // se nao mudar o alvo é pq o alvo é si mesmo
+
+                // se não for selfcast pergunta o alvo. Se for ataque com efeito selfcast ataca o alvo e aplica o efeito em si mesmo.
+                if ((cartaEscolhida.getSelfCast()) && !(cartaEscolhida instanceof CartaAtaqueComEfeito)) 
+                    {
+                    if (cartaEscolhida.temResenha())
+                        Textos.sobeTela();
+
+                    cartaEscolhida.usar(heroi, heroi, this);
+                } else 
+                    {
+                    int alvo = selecionarAlvo();
+                    if (alvo == -1) 
+                        { // -1 é o codigo pra exit
                         continue;
                     } 
 
-                    Entidade alvoSelecionado = heroi; // se nao mudar o alvo é pq o alvo é si mesmo
+                    alvoSelecionado = inimigos.get(alvo);
 
-                    // se não for selfcast ou poder pergunta o alvo, ataque com efeito selfcast ataca o alvo e aplica o efeito em si mesmo.
-                    if ((cartaEscolhida.getSelfCast() || cartaEscolhida instanceof CartaPoder) && !(cartaEscolhida instanceof CartaAtaqueComEfeito)) {
-                        if (cartaEscolhida.temResenha())
-                            Textos.sobeTela();
-                        cartaEscolhida.usar(heroi, heroi, this);
-                    } else {
-                        int alvo = selecionarAlvo();
-                        if (alvo == -1) { // -1 é o codigo pra exit
-                            continue;
-                        } 
-                        alvoSelecionado = inimigos.get(alvo);
-                        if (cartaEscolhida.temResenha())
-                            Textos.sobeTela();
-                        cartaEscolhida.usar(heroi, alvoSelecionado, this); 
-                    }
-
-                    if (cartaEscolhida.getUsoCancelado()) {
-                        cartaEscolhida.setUsoCancelado(false);
-                        continue;
-                    }
-
-                    // cartas com a flag consumir vao pra pilha secundaria e nao sao embaralhadas devolta
-                    if (cartaEscolhida.getConsumir())
-                        mao.removeCarta(escolha, pilhaConsumir);
-                    else 
-                        mao.removeCarta(escolha, pilhaDescarte);
-
-                    // notifica os efeitos com on hit
-                    for (Efeito efeito : listaEfeitos)
-                        if (efeito.getOnHit()){
-                            efeito.onHit(cartaEscolhida, heroi, alvoSelecionado, this);
-                        }
-
-                    // notifica os poderes com on hit
-                    for (Poder poder : listaPoderes) 
-                        poder.onHit(cartaEscolhida, heroi, alvoSelecionado, this); 
-
-                    // limpeza de efeitos esgotados    
-                    limpaEfeitos();
-                    notificaMorte();
-
-                    if (!inimigos.stream().anyMatch(i -> i.estaVivo() == true)) break;
-
-                    // se conseguir usar todas as cartas da mao puxa mais 5 e ganha 2 de energia bonus, injeçao de dopamina assim q vc mantem um jogador preso
-                    if (mao.getSize() == 0){
+                    if (cartaEscolhida.temResenha())
                         Textos.sobeTela();
 
-                        // fiz 2 versoes esse rodada bonus aparecendo 1 trilhao de vezes e um mais simples +5 cartas +2 energia, nao sei qual e melhor
-                        Textos.printaLinhaDevagar(Cor.rosa + (Arte.bonus).repeat(15) + Cor.reset);
+                    cartaEscolhida.usar(heroi, alvoSelecionado, this); 
+                }
 
-                        // Textos.printaLinhaDevagar(Cor.rosa + Arte.bonus + Cor.reset);
-                        // Textos.printaLinhaDevagar(Cor.rosa + Arte.doisEnergia + Cor.reset);
+                if (cartaEscolhida.getUsoCancelado()) 
+                    {
+                    cartaEscolhida.setUsoCancelado(false);
+                    continue;
+                }
 
-                        heroi.ganhaEnergia(2);
-                        InputHandler.esperar();
-                        mao.addCinco(pilhaCompra, pilhaDescarte);
+                // cartas com a flag consumir vao pra pilha secundaria e nao sao embaralhadas devolta
+                if (cartaEscolhida.getConsumir())
+                    mao.removeCarta(escolha, pilhaConsumir);
+                else 
+                    mao.removeCarta(escolha, pilhaDescarte);
+
+                // notifica os efeitos com on hit
+                for (Efeito efeito : listaEfeitos)
+                    if (efeito.getOnHit())
+                        {
+                        efeito.onHit(cartaEscolhida, heroi, alvoSelecionado, this);
                     }
 
-                } else if (escolha == mao.getSize()) break;
+                // notifica os poderes com on hit
+                for (Poder poder : listaPoderes) 
+                    poder.onHit(cartaEscolhida, heroi, alvoSelecionado, this); 
+
+                // limpeza de efeitos esgotados    
+                limpaEfeitos();
+                notificaMorte();
+
+                if (!inimigos.stream().anyMatch(i -> i.estaVivo() == true)) break;
+
+                // se conseguir usar todas as cartas da mao puxa mais 5 e ganha 2 de energia bonus, injeçao de dopamina assim q vc mantem um jogador preso
+                if (mao.getSize() == 0){
+                    Textos.sobeTela();
+
+                    // fiz 2 versoes esse rodada bonus aparecendo 1 trilhao de vezes e um mais simples +5 cartas +2 energia, nao sei qual e melhor
+                    Textos.printaLinhaDevagar(Cor.rosa + (Arte.bonus).repeat(15) + Cor.reset);
+
+                    // Textos.printaLinhaDevagar(Cor.rosa + Arte.bonus + Cor.reset);
+                    // Textos.printaLinhaDevagar(Cor.rosa + Arte.doisEnergia + Cor.reset);
+
+                    heroi.ganhaEnergia(2);
+                    InputHandler.esperar();
+                    mao.addCinco(pilhaCompra, pilhaDescarte);
+                }
+
+                // notifica possiveis meia vida
+                for (Inimigo inimigo : inimigos) {
+                    inimigo.checkMeiaVida(inimigo, heroi, this);
+                }
+                heroi.checkMeiaVida(heroi, heroi, this);
             }            
         mao.limpa(pilhaDescarte);    
         passaTurno();
@@ -406,12 +426,16 @@ public class Batalha extends Evento {
         Textos.limpaTela();
         Textos.printaBonito(Cor.txtCinza(Arte.bordaHud9), 2,2); Textos.sleep(300);
 
-        for (Inimigo inimigo : arrayInimigos) {
+        for (Inimigo inimigo : inimigos) {
             if (inimigo.estaVivo()){ // adicionei isso pq joguei uma partida aqui e tomei hit de um inimigo morto.
                 inimigo.passaRodada(); // reseta os bonus (escudo por enquanto)
                 inimigo.resultadoAcao(heroi); // printa oq ele ta fazendo (antes de fazer pq as vezes ele se mata)
                 inimigo.realizarAcao(heroi, this); // faz oq ele ia fazer
                 inimigo.escolheAcao(); // escolhe prox ação
+
+                // checa possiveis meia vida
+                inimigo.checkMeiaVida(inimigo, heroi, this);
+                heroi.checkMeiaVida(heroi, heroi, this);
             }
         }
         
@@ -438,6 +462,11 @@ public class Batalha extends Evento {
 
         Textos.sleep(1500);
         Textos.limpaTela();
+
+        // tira as referencias de mao e pilha do heroi
+        heroi.setMaoAtual(null);
+        heroi.setPilhaCompra(null);
+        heroi.setPilhaDescarte(null);
 
         if(heroi.estaVivo()){
             vitoria();

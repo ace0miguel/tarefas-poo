@@ -7,9 +7,9 @@ import Cartas.CartaMaldicao;
 import Deck.Mao;
 import Deck.PilhaCompra;
 import Deck.PilhaDescarte;
-import Util.Cor;
 import Util.InputHandler;
-import Util.Textos;
+import Visual.Cor;
+import Visual.Textos;
 
 public class Heroi extends Entidade {
     private int energia;

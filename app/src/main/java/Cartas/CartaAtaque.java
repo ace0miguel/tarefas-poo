@@ -3,7 +3,7 @@ import Entidades.Entidade;
 import Entidades.Heroi;
 import Entidades.Inimigo;
 import Telas.Eventos.Batalha;
-import Util.Cor;
+import Visual.Cor;
 
 /* 
 Cartas que causam dano direto e não aplicam efeitos secundários.
@@ -30,41 +30,27 @@ public class CartaAtaque extends Carta
 
     @Override
     public void usar(Heroi heroi, Entidade alvo, Batalha batalha){
-        if (!efeitoEmArea) {
-            int energiaAtual = heroi.getEnergia();
-            if(energiaAtual >= this.getCusto()){
-                heroi.receberDanoDireto(this.sacrificio);
-                alvo.receberDano(this.dano + heroi.getDanoExtra());
-                heroi.usarEnergia(this.getCusto());
-                
-                printaResenha();
-            }
-        }
-        else {
-            int energiaAtual = heroi.getEnergia();
-            if(energiaAtual >= this.getCusto()){
-                for (Inimigo inimigo : batalha.getInimigos() ) {
-                    inimigo.receberDano(this.dano + heroi.getDanoExtra());
-                }
-                heroi.usarEnergia(this.getCusto());
-                
-                printaResenha();
-            }
+        int energiaAtual = heroi.getEnergia();
+        if(energiaAtual >= this.getCusto()){
+            heroi.receberDanoDireto(this.sacrificio);
+
+            aplicarEfeito(heroi, alvo, batalha);
+
+            heroi.usarEnergia(this.getCusto());
         }
     }
 
     @Override
     public void aplicarEfeito(Heroi heroi, Entidade alvo, Batalha batalha) {
         if (!efeitoEmArea) {
-            alvo.receberDano(this.dano + heroi.getDanoExtra());    
-            printaResenha();     
+            alvo.receberDano(this.dano + heroi.getDanoExtra());               
         }
         else {
             for (Inimigo inimigo : batalha.getInimigos() ) {
                 inimigo.receberDano(this.dano + heroi.getDanoExtra());
-            }           
-            printaResenha();         
+            }                   
         }
+        printaResenha(); 
     }
     
     

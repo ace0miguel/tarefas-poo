@@ -27,6 +27,8 @@ import Entidades.Inimigo;
 import Poderes.CartaAdicional;
 import Poderes.MaosLeves;
 import Poderes.Poder;
+import Visual.Arte;
+import Visual.Cor;
 
 /*  centraliza as instancias criadas, tudo é publico e static.
 aqui so tem os moldes, sempre que for usar algo criar copia (todos tem o metodo criaCopia()) 
@@ -167,7 +169,7 @@ public class Moldes {
         // tier 2
         barbossa = new Inimigo("Capitão Hector Barbossa", 30, 5,
             new Acao.Atacar(), new Acao.AtacarEfeito(sangramento)
-        ); barbossa.setTier(2);
+        ); barbossa.setTier(2); barbossa.setAcaoMeiaVida(new Acao.Atacar());
 
         loudCoringa = new Inimigo("LOUD Coringa", 25, 4, 
             new Acao.AtacarVidaPerdida(), new Acao.AtacarEfeito(sangramento), new Acao.AdicionarCarta(sangrar)

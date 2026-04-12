@@ -1,4 +1,4 @@
-package Util;
+package Visual;
 
 /** coleçao de strings e metodos estaticos de artes ascii */
 public class Arte {

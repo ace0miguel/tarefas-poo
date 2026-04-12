@@ -5,7 +5,7 @@ import Entidades.Entidade;
 import Entidades.Heroi;
 import Entidades.Inimigo;
 import Telas.Eventos.Batalha;
-import Util.Cor;
+import Visual.Cor;
 
 /** cartas que causam dano direto e aplicam efeitos */
 public class CartaAtaqueComEfeito extends CartaAtaque {
@@ -48,27 +48,10 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
         int energiaAtual = heroi.getEnergia();
         if(energiaAtual >= this.getCusto()){
             heroi.receberDanoDireto(this.sacrificio);
-            if (!efeitoEmArea){
-                alvo.receberDano(this.getDano() + heroi.getDanoExtra());
-            }    
-            else {
-                for (Inimigo inimigo : batalha.getInimigos() ) {
-                    inimigo.receberDano(this.getDano() + heroi.getDanoExtra());
-                }
-            }
-            printaResenha();
-            heroi.usarEnergia(this.getCusto());
-            Entidade trueAlvo = (this.getSelfCast() ? heroi : alvo); // se for selfcast o efeito vai pra si mesmo, se nao vai pro inimigo!
             
-            if (trueAlvo == heroi){
-                efeito.adicionar(trueAlvo, batalha);
-            } else if (!efeitoEmArea){
-                efeito.adicionar(trueAlvo, batalha);
-            } else {
-                for (Inimigo inimigo : batalha.getInimigos() ) {
-                    efeito.adicionar(inimigo, batalha);
-                }
-            }
+            aplicarEfeito(heroi, alvo, batalha);
+    
+            heroi.usarEnergia(this.getCusto());
         }
     }
 
@@ -82,8 +65,6 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
                     inimigo.receberDano(this.getDano() + heroi.getDanoExtra());
                 }
             }
-        printaResenha();
-
         if (getSelfCast()){
             efeito.adicionar(heroi, batalha);
         } else if (!efeitoEmArea){
@@ -93,6 +74,8 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
                 efeito.adicionar(inimigo, batalha);
             }
         }
+
+        printaResenha();
     }
 
     @Override

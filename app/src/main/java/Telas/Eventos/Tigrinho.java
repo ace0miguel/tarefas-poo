@@ -5,13 +5,13 @@ import java.util.Arrays;
 import java.util.List;
 
 import Entidades.Heroi;
-import Util.Arte;
-import Util.Cor;
 import Util.InputHandler;
 import Util.Moldes;
 import Util.RNGHandler;
 import Util.Recompensas;
-import Util.Textos;
+import Visual.Arte;
+import Visual.Cor;
+import Visual.Textos;
 
 /** evento aleatório de cassino, onde o jogador pode apostar vida ou dinheiro. Em breve poderá apotar as cartas tambem, mas nao esta pronto. */
 public class Tigrinho extends Evento{
