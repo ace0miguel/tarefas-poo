@@ -49,6 +49,7 @@ public class ArvoreEventos {
     Batalha amoebas = new Batalha(amoeba.criaCopia(), amoeba.criaCopia());
     Batalha coringaSolo = new Batalha(loudCoringa.criaCopia());
     Batalha barbossaSolo = new Batalha(barbossa.criaCopia());
+    Batalha drakendrick = new Batalha(drake.criaCopia(), endrick.criaCopia());
 
     // medias ( dificuldade entre 4 e 6 )
     Batalha media1 = new Batalha(sabrinaCarpenter.criaCopia(), loudSacy.criaCopia());
@@ -71,6 +72,7 @@ public class ArvoreEventos {
         batalhasTriviais.add(amoebas);
         batalhasTriviais.add(coringaSolo);
         batalhasTriviais.add(barbossaSolo);
+        batalhasTriviais.add(drakendrick);
 
         // adicionar as batalhas médias --
         batalhasMedias.add(media1);
@@ -121,7 +123,7 @@ public class ArvoreEventos {
         // ultimo andar (boss)
         else if (profundidadeAtual == p) { 
             sorteados.add(new Batalha(
-            barbossa.criaCopia(), loudCoringa.criaCopia(), 
+            barbossa.criaCopia(), loudCoringa.criaCopia(), amoeba.criaCopia(),
             endrick.criaCopia(), drake.criaCopia(), paulAtreides.criaCopia(), 
             sabrinaCarpenter.criaCopia(), tripleT.criaCopia(), loudSacy.criaCopia()));
         }
