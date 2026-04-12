@@ -10,6 +10,7 @@ import Telas.Eventos.Batalha;
 import Telas.Eventos.Evento;
 import Telas.Eventos.Fogueira;
 import Telas.Eventos.Loja;
+import Telas.Eventos.Tesouro;
 import Telas.Eventos.Tigrinho;
 import static Util.Moldes.amoeba;
 import static Util.Moldes.barbossa;
@@ -29,7 +30,7 @@ public class ArvoreEventos {
     int n; // quantidade de filhos por nó
     int p; // profundidade (QUANTIDADE TOTAL DE BATALHAS: P - 1 PQ COMEÇA DO PROFUNDIDADE 0)
 
-    List<Evento> eventosPositivos = new ArrayList<>(); // lista de eventos que garantidamente ajudam o jogador
+    List<Evento> eventosCuradores = new ArrayList<>(); // lista de eventos que podem curar o jogador
     List<Evento> eventosNeutros = new ArrayList<>(); // lista de eventos que podem ou nao ajudar o jogador
     List<Evento> todosEventos = new ArrayList<>(); // lista de todos os eventos, usada caso precise sortear um evento completamente aleatorio sem se importar com a dificuldade
 
@@ -42,6 +43,7 @@ public class ArvoreEventos {
     Loja loja = new Loja();
     Fogueira fogueira = new Fogueira();
     Tigrinho tigrinho = new Tigrinho();
+    Tesouro tesouro = new Tesouro();
 
     // moldes de batalhas
 
@@ -91,11 +93,12 @@ public class ArvoreEventos {
         todosEventos.add(loja.criaCopia());
         todosEventos.add(fogueira.criaCopia());
         todosEventos.add(tigrinho.criaCopia());
+        todosEventos.add(tesouro.criaCopia());
         
         // adicionar os eventos que podem cair aleatoriamente aq --
-        eventosPositivos.add(loja.criaCopia());
-        eventosPositivos.add(fogueira.criaCopia());
-        eventosPositivos.add(tigrinho.criaCopia());
+        eventosCuradores.add(loja.criaCopia());
+        eventosCuradores.add(fogueira.criaCopia());
+        eventosCuradores.add(tigrinho.criaCopia());
 
         // eventos neutros
         eventosNeutros.add(tigrinho.criaCopia());
@@ -118,6 +121,7 @@ public class ArvoreEventos {
 
         // primeiro andar (batalha facil)
         if (profundidadeAtual == 0) { 
+            // adiciona aqui opcoes.add evento que vc quer testar
             sorteados.addAll(getEventosAleatorios(batalhasTriviais));
         }    
         // ultimo andar (boss)
@@ -129,11 +133,11 @@ public class ArvoreEventos {
         }
         // recompensa do meio do mapa (andar pacifico)
         else if (profundidadeAtual == p/2) { 
-            sorteados.addAll(getEventosAleatorios(eventosPositivos));
+            opcoes.add(tesouro.criaCopia());
         }
         // andar logo antes do boss (cura ou loja)
         else if (profundidadeAtual == p - 1) { 
-            sorteados.addAll(getEventosAleatorios(eventosPositivos));
+            sorteados.addAll(getEventosAleatorios(eventosCuradores));
         }
 
         // andares aleatorios -----------------------------------------
@@ -163,11 +167,24 @@ public class ArvoreEventos {
             sorteados.addAll(getEventosAleatorios(todosEventos));
         }
 
-        // adiciona os sorteados as opçoes, repetindo caso a quantidade de sorteados seja menor que n
-        for (int i = 0; i < n; i++) {
-                opcoes.add(sorteados.get(i % sorteados.size()).criaCopia());
+        // se tiver menos eventos que n gera so a quantidade de eventos disponiveis
+        int quantidadeOpcoes = n;
+        if (sorteados.size() < n) {
+            quantidadeOpcoes = sorteados.size();
         }
 
+        // adiciona os sorteados as opçoes, repetindo caso a quantidade de sorteados seja menor que n
+        if (!sorteados.isEmpty()) {
+            for (int i = 0; i < quantidadeOpcoes; i++) {
+                opcoes.add(sorteados.get(i % sorteados.size()).criaCopia());
+            }
+        }
+
+        // fallback caso opcoes acabe vindo vazio
+        if (opcoes.isEmpty()) {
+            InputHandler.esperar("Algum erro ocorreu na escolha de eventos. gerando eventos aleatórios");
+            opcoes.addAll(getEventosAleatorios(todosEventos));
+        }
         return opcoes;
     }
 
@@ -196,7 +213,9 @@ public class ArvoreEventos {
             return listaEventos;
         }
 
-    /** gera apenas os filhos de um nó especifico, baseado nas regras do escolherEvento */
+    /** gera apenas os filhos de um nó especifico, baseado nas regras do escolherEvento
+     * se tiver menos opçoes disponiveis que n, gera o maximo de opçoes disponiveis
+     */
     public void expandirNo(DefaultMutableTreeNode node) {
         // checagens de segurança
         if (node == null) return;
@@ -205,7 +224,12 @@ public class ArvoreEventos {
 
         List<Evento> eventosFilhos = escolherEvento(node.getLevel() + 1);
 
-        for (int i = 0; i < n; i++) {
+        int quantidadeOpcoes = n;
+        if (eventosFilhos.size() < n) {
+            quantidadeOpcoes = eventosFilhos.size();
+        }
+
+        for (int i = 0; i < quantidadeOpcoes; i++) {
             node.add(new DefaultMutableTreeNode(eventosFilhos.get(i)));
         }
     }
@@ -221,8 +245,13 @@ public class ArvoreEventos {
         // gera a lista de eventos dos filhos do no atual
         List<Evento> eventosFilhos = escolherEvento(profundidade + 1);
 
+        int quantidadeOpcoes = n;
+        if (eventosFilhos.size() < n) {
+            quantidadeOpcoes = eventosFilhos.size();
+        }
+        
         // cria os filhos distribuindo os eventos gerados
-        for (int i = 0; i < n; i++){
+        for (int i = 0; i < quantidadeOpcoes; i++){
             DefaultMutableTreeNode novonode = criarArvore(profundidade + 1, eventosFilhos.get(i));
             node.add(novonode);
         }
