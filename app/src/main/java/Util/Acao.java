@@ -2,7 +2,6 @@ package Util;
 
 import Cartas.Carta;
 import EfeitosDeStatus.Efeito;
-import Entidades.Entidade;
 import Entidades.Heroi;
 import Entidades.Inimigo;
 import Telas.Eventos.Batalha;
@@ -31,17 +30,17 @@ public abstract class Acao {
     public static class Atacar extends Acao {
         @Override
         public void executar(Inimigo executor, Heroi heroi, Batalha batalha){
-            heroi.receberDano(executor.getDano() + executor.getDanoExtra());
+            heroi.receberDano(executor.getDanoEfetivo());
         }
 
         @Override
         public void anunciar(Inimigo executor, Heroi heroi){
-            System.out.println(Cor.amarelo + "> " + Cor.reset + executor.getNome() + Cor.cinza + " irá te atacar causando " + (executor.getDano() + executor.getDanoExtra()) + " pontos de dano.");
+            System.out.println(Cor.amarelo + "> " + Cor.reset + executor.getNome() + Cor.cinza + " irá te atacar causando " + (executor.getDanoEfetivo()) + " pontos de dano.");
         }
 
         @Override
         public void resultado(Inimigo executor, Heroi heroi) {
-            System.out.println(Cor.reset + "> " + executor.getNome() + Cor.txtAmarelo(" ") + Cor.vermelho + "Causou " + validarDano((executor.getDano() + executor.getDanoExtra()) - heroi.getResistencia()) + " pontos de dano!");
+            System.out.println(Cor.reset + "> " + executor.getNome() + Cor.txtAmarelo(" ") + Cor.vermelho + "Causou " + heroi.getDanoRecebido(executor.getDanoEfetivo()) + " pontos de dano!");
         }
     }
 
@@ -53,23 +52,24 @@ public abstract class Acao {
 
         @Override
         public void executar(Inimigo executor, Heroi heroi, Batalha batalha){
-            heroi.receberDano(executor.getDano()/2 + executor.getDanoExtra());
+            heroi.receberDano(executor.getFracaoDanoEfetivo(2));
             efeito.adicionar(heroi, batalha);
         };
 
         @Override
         public void anunciar(Inimigo executor, Heroi heroi) {
-            System.out.println(Cor.amarelo + "> " + Cor.reset + executor.getNome() + Cor.cinza + " irá te atacar causando " + (executor.getDano()/2 + executor.getDanoExtra()) + " pontos de dano e aplicar " + efeito.getNomeColorido()  + ".");
+            System.out.println(Cor.amarelo + "> " + Cor.reset + executor.getNome() + Cor.cinza + " irá te atacar causando " + (executor.getFracaoDanoEfetivo(2)) + " pontos de dano e aplicar " + efeito.getNomeColorido()  + ".");
         }
 
         @Override
         public void resultado(Inimigo executor, Heroi heroi) {
-            System.out.println(Cor.reset + "> " + executor.getNome() + Cor.txtAmarelo(" ") + Cor.vermelho + "Causou " + validarDano((executor.getDano()/2 + executor.getDanoExtra()) - heroi.getResistencia()) + " pontos de dano e aplicou " + efeito.getNomeColorido() + "!");
+            System.out.println(Cor.reset + "> " + executor.getNome() + Cor.txtAmarelo(" ") + Cor.vermelho + "Causou " + heroi.getDanoRecebido(executor.getFracaoDanoEfetivo(2)) + " pontos de dano e aplicou " + efeito.getNomeColorido() + "!");
         }
     }
 
     /** Causa o dano base + dano extra baseado na vida perdida do heroi */
     public static class AtacarVidaPerdida extends Acao {
+        // um quinto da vida perdida do heroi é convertido em dano adicional
         public int danoVidaPerdida(Heroi heroi) {
             int vidaPerdida = heroi.getVidaMax() - heroi.getVida();
             return vidaPerdida / 5;
@@ -77,17 +77,17 @@ public abstract class Acao {
 
         @Override
         public void executar(Inimigo executor, Heroi heroi, Batalha batalha) {
-            heroi.receberDano(executor.getDano() + executor.getDanoExtra() + danoVidaPerdida(heroi));
+            heroi.receberDano(executor.getDanoEfetivo() + danoVidaPerdida(heroi));
         }
 
         @Override
         public void anunciar(Inimigo executor, Heroi heroi) {
-            System.out.println(Cor.amarelo + "> " + Cor.reset + executor.getNome() + Cor.cinza +  " irá te atacar causando " + (executor.getDano() + executor.getDanoExtra()) + " + (" + Cor.vermelho + danoVidaPerdida(heroi) + Cor.cinza  + ") pontos de dano.");
+            System.out.println(Cor.amarelo + "> " + Cor.reset + executor.getNome() + Cor.cinza +  " irá te atacar causando " + (executor.getDanoEfetivo()) + " + (" + Cor.vermelho + danoVidaPerdida(heroi) + Cor.cinza  + ") pontos de dano.");
         }
 
         @Override
         public void resultado(Inimigo executor, Heroi heroi) {
-            System.out.println(Cor.reset + "> " + executor.getNome() + Cor.txtAmarelo(" ") + Cor.vermelho + "Causou " + validarDano((executor.getDano() + executor.getDanoExtra() + danoVidaPerdida(heroi)) - heroi.getResistencia()) + " pontos de dano!");
+            System.out.println(Cor.reset + "> " + executor.getNome() + Cor.txtAmarelo(" ") + Cor.vermelho + "Causou " + heroi.getDanoRecebido(executor.getDanoEfetivo() + danoVidaPerdida(heroi)) + " pontos de dano!");
         }
     }
 
@@ -175,4 +175,40 @@ public abstract class Acao {
             System.out.println(Cor.reset + "> " + executor.getNome() + " aplicou " + efeito.getNomeColorido() + " em um aliado!"); 
         }
     }
-}   
+
+    /** se divide em (fator) inimigos, com a vida atual */
+    public static class multiplicar extends Acao {
+        private int fator;
+
+        public multiplicar(int fator){
+            this.fator = fator;
+        }
+
+        @Override
+        public void executar(Inimigo executor, Heroi heroi, Batalha batalha) {
+            if (fator <= 0) {
+                return;
+            }
+
+            int vidaAtual = executor.getVida();
+            for (int i = 0; i < fator; i++){
+                Inimigo clone = executor.criaCopia();
+                clone.setVida(vidaAtual);
+                clone.setVidaMax(vidaAtual);
+                batalha.adicionarInimigo(clone);
+            }
+
+            executor.setVida(0);
+        }
+
+        @Override
+        public void anunciar(Inimigo executor, Heroi heroi) {
+            System.out.println(Cor.txtAmarelo("> ") + executor.getNome() + Cor.cinza + " irá se multiplicar em " + fator + "!");
+        }
+
+        @Override
+        public void resultado(Inimigo executor, Heroi heroi) {
+            System.out.println(Cor.reset + "> " + executor.getNome() + Cor.txtAmarelo(" se multiplicou em ") + fator + "!"); 
+        }
+    }   
+}

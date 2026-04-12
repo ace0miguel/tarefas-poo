@@ -11,10 +11,12 @@ public abstract class Entidade {
     protected int vida;
     protected int vidaMax;
     private int escudo = 0;
-    private int danoExtra = 0;
-    private int resistencia = 0; // todo dano recebido subtrai isso aqui
-    private boolean purificar = false;
 
+    // buffs (serao utilizados em porcentagem, mas aqui guarda o valor inteiro pra facilitar)
+    private int danoExtra = 0; // aumenta em todo dano causado diretamente
+    private int resistencia = 0; // reduz de todo dano recebido diretamente
+    
+    private boolean purificar = false;
     private boolean meiaVida = false; // flag que ativa quando a vida da entidade fica abaixo de 50% pela primeira vez
 
     // booleans pra defini a cor do nome
@@ -89,8 +91,9 @@ public abstract class Entidade {
         return vida > 0;
     }
 
+    /** recebe um valor de dano, e retorna o dano reduzido pela resistencia da entidade no qual esta sendo aplicado */
     public int getDanoEfetivo(int dano){
-        return max((dano - this.resistencia), 0);
+        return max(dano - ((dano * this.resistencia) / 100), 0);
     }
 
     //setters -------
@@ -177,10 +180,10 @@ public abstract class Entidade {
         return Cor.reset;
     }
 
+    /** aplica um valor de dano considerando resistencia e escudo */
     public void receberDano(int dano){
-        int danoEfetivo = max((dano - this.resistencia), 0); // pra evitar o tal do -1 dano
-
-        // se tiver por ex 1 de escudo e voce tomar 1000 de dano vc nao toma dano so perde o escudo.       
+        int danoEfetivo = max(dano - ((dano * this.resistencia) / 100), 0);
+  
         if (this.escudo >= danoEfetivo){
             this.escudo -= danoEfetivo;
         } else {
@@ -190,7 +193,13 @@ public abstract class Entidade {
         }
     }
 
-    public void receberDanoDireto(int dano){ // danos que ignoram resistencias e escudo
+    /** retorna o dano recebido levando em consideraçao escudo e resistencia*/
+    public int getDanoRecebido(int dano){
+        return max(getDanoEfetivo(dano) - this.escudo, 0);
+    }
+
+    /** aplica um valor de dano que ignora resistencia e escudo */
+    public void receberDanoDireto(int dano){ 
         this.vida -= dano;
     }
 

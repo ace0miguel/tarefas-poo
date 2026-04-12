@@ -27,9 +27,11 @@ import Visual.Textos;
 
 public class Batalha extends Evento {
     private int turno; // 0 -> heroi, 1 -> inimigos
-    private Inimigo[] arrayInimigos; // inimigos em forma de array (nenhum inimigo é removido daqui durante a batalha)
-    private List<Inimigo> inimigos; // inimigos em forma de lista pq é bom ! :)  
-    private final Inimigo[] arrayInimigosPermanente; // cópia do array de inimigos pra usar na função criarCopia
+
+    private List<Inimigo> inimigos; // lista viva dos inimigos no combate atual
+    private Inimigo[] moldesInimigos; // moldes imutaveis para recriar a batalha
+    private List<Inimigo> novosInimigos = new ArrayList<>(); // lista de inimigos a serem adicionados na batalha quando possivel
+
     private int recompensa = 0; // recompensa em dinheiro pela batalha, baseada no tier dos inimigos
     private int dificuldadeTotal = 0; // soma da dificuldade(tier) de cada inimigo
 
@@ -53,10 +55,37 @@ public class Batalha extends Evento {
         return copiados;
     }
 
+    /** retorna al ista de inimigos vivos convertidas pra array */
+    private Inimigo[] inimigosAtuaisArray() {
+        return inimigos.toArray(Inimigo[]::new);
+    }
+
+    /** retorna todos os inimigos e o heroi */
+    private List<Entidade> listaEntidades() {
+        List<Entidade> entidades = new ArrayList<>();
+        entidades.add(heroi);
+        entidades.addAll(inimigos);
+        return entidades;
+    }
+
+    /** adiciona os inimigos na lista novosInimigos a batalha e reseta a lista */
+    private void addNovosInimigos() {
+        if (novosInimigos.isEmpty()) {
+            return;
+        }
+
+        for (Inimigo novoInimigo : novosInimigos) {
+            if (novoInimigo != null) {
+                novoInimigo.escolheAcao();
+                inimigos.add(novoInimigo);
+            }
+        }
+        novosInimigos.clear();
+    }
+
     public Batalha(Inimigo... _inimigos){
-        this.arrayInimigos = copiarInimigos(_inimigos);
-        this.arrayInimigosPermanente = copiarInimigos(_inimigos); // moldes imutaveis para criar copias futuras
-        inimigos = new ArrayList<>(Arrays.asList(arrayInimigos)); // converte o array inimigos em arraylist para facilitar a manipulação.
+        this.inimigos = new ArrayList<>(Arrays.asList(copiarInimigos(_inimigos)));
+        this.moldesInimigos = copiarInimigos(_inimigos);
         for (Inimigo inimigo : inimigos) {
             recompensa += inimigo.getRecompensa();
             dificuldadeTotal += inimigo.getTier();
@@ -102,7 +131,7 @@ public class Batalha extends Evento {
         boolean efeitoPrintado = false;
         boolean linhaCimaPrintada = false;
 
-        for (Inimigo inimigo : arrayInimigos) {
+        for (Inimigo inimigo : inimigos) {
             inimigo.resetEfeitos();
         }
         
@@ -145,6 +174,8 @@ public class Batalha extends Evento {
         turno = (turno == 0) ? 1 : 0;
         notificaMorte();
         if (turno == 0) passaRodada();
+        
+        addNovosInimigos();
     }
 
     /** notifica acabar e remove os efeitos a serem removidos (0 duraçao, 0 stacks ou purificar) */
@@ -205,6 +236,13 @@ public class Batalha extends Evento {
             InputHandler.esperar();
         }
         return opcao - 1; 
+    }
+
+    /** adiciona um inimigo na lista de inimigos da batalha! */
+    public void adicionarInimigo(Inimigo inimigo){
+        if (inimigo != null) {
+            novosInimigos.add(inimigo);
+        }
     }
 
     /** adiciona um efeito na lista de efeitos e notifica onCreate */
@@ -307,7 +345,7 @@ public class Batalha extends Evento {
                 Textos.limpaTela();
 
                 if (primeiroLoop){
-                    Textos.batalha(heroi, listaEfeitos, listaPoderes, arrayInimigos);
+                    Textos.batalha(heroi, listaEfeitos, listaPoderes, inimigosAtuaisArray());
                     primeiroLoop = false;
                 } else {
                     if (escolhaInvalida){
@@ -317,7 +355,7 @@ public class Batalha extends Evento {
                         Textos.limpaTela();
                         escolhaInvalida = false;  
                     }
-                    Textos.batalhaSemDelay(heroi, listaEfeitos, listaPoderes, arrayInimigos);
+                    Textos.batalhaSemDelay(heroi, listaEfeitos, listaPoderes, inimigosAtuaisArray());
                 }
 
                 // trecos pra mostrar os buffs pra debugar
@@ -417,6 +455,8 @@ public class Batalha extends Evento {
                     inimigo.checkMeiaVida(inimigo, heroi, this);
                 }
                 heroi.checkMeiaVida(heroi, heroi, this);
+
+                addNovosInimigos();
             }            
         mao.limpa(pilhaDescarte);    
         passaTurno();
@@ -512,7 +552,7 @@ public class Batalha extends Evento {
         }
 
         retorno += Cor.txtCinza(" VERSUS:");
-        for (Inimigo inimigo : arrayInimigos) {
+        for (Inimigo inimigo : moldesInimigos) {
             retorno += " [ " + inimigo.getNome() + " ]";
         }
         return retorno;
@@ -520,6 +560,6 @@ public class Batalha extends Evento {
 
     @Override
     public Batalha criaCopia() {
-        return new Batalha(arrayInimigosPermanente); 
+        return new Batalha(moldesInimigos); 
     }
 }

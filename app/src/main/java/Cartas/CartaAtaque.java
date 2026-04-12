@@ -43,11 +43,11 @@ public class CartaAtaque extends Carta
     @Override
     public void aplicarEfeito(Heroi heroi, Entidade alvo, Batalha batalha) {
         if (!efeitoEmArea) {
-            alvo.receberDano(this.dano + heroi.getDanoExtra());               
+            alvo.receberDano(this.dano + ((this.dano * heroi.getDanoExtra()) / 100));             
         }
         else {
             for (Inimigo inimigo : batalha.getInimigos() ) {
-                inimigo.receberDano(this.dano + heroi.getDanoExtra());
+                inimigo.receberDano(this.dano + ((this.dano * heroi.getDanoExtra()) / 100));
             }                   
         }
         printaResenha(); 

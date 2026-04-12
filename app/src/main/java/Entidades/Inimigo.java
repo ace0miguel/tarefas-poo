@@ -98,7 +98,16 @@ public class Inimigo extends Entidade{
         return tier;
     }
 
-    /** retorna a recompensa por matar o inimigo. valor: 3^tier */
+    public int getDanoEfetivo(){
+        return this.dano + ((this.dano * this.getDanoExtra()) / 100);
+    }
+
+    public int getFracaoDanoEfetivo(int divisor){
+        int danoBase = this.dano / divisor;
+        return danoBase + ((danoBase * this.getDanoExtra()) / 100);
+    }
+
+    /** retorna a recompensa por matar o inimigo. valor atual: 3^tier */
     public int getRecompensa() {
         return (int) Math.pow(3,tier);
     }

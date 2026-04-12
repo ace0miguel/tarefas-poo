@@ -21,22 +21,21 @@ import static Util.Moldes.corteRapido;
 import static Util.Moldes.corteVenenoso;
 import static Util.Moldes.dedoNervosoCarta;
 import static Util.Moldes.desprezo;
+import static Util.Moldes.egoCarta;
 import static Util.Moldes.energiaGratis;
 import static Util.Moldes.energiaSupremo;
 import static Util.Moldes.energizar;
-import static Util.Moldes.escudoFerro;
-import static Util.Moldes.escudoMadeira;
 import static Util.Moldes.mestreLaminasCarta;
 import static Util.Moldes.pactoSangue;
 import static Util.Moldes.presenteMaldito;
 import static Util.Moldes.purificar;
-import static Util.Moldes.puroOdio;
 import static Util.Moldes.puxaCarta;
 import static Util.Moldes.sangrar;
+import static Util.Moldes.shieldao;
+import static Util.Moldes.shieldinho;
 import static Util.Moldes.tiro;
 import static Util.Moldes.tiroCanhao;
 import static Util.Moldes.tiroEscopeta;
-
 import Visual.Arte;
 import Visual.Cor;
 import Visual.Textos;
@@ -92,14 +91,14 @@ public class DeckBuilder {
                 heroi.addCarta(energizar);
                 heroi.addCarta(energizar);
                 
-                heroi.addCarta(puroOdio);
-                heroi.addCarta(puroOdio);
+                heroi.addCarta(egoCarta);
+                heroi.addCarta(egoCarta);
 
                 heroi.addCarta(energiaGratis);
 
-                heroi.addCarta(escudoFerro);
-                heroi.addCarta(escudoFerro);
-                heroi.addCarta(escudoMadeira);
+                heroi.addCarta(shieldao);
+                heroi.addCarta(shieldao);
+                heroi.addCarta(shieldinho);
 
                 heroi.addCarta(pactoSangue);
             }
@@ -120,7 +119,7 @@ public class DeckBuilder {
 
                 heroi.addCarta(dedoNervosoCarta);
 
-                heroi.addCarta(puroOdio);
+                heroi.addCarta(egoCarta);
 
                 heroi.addCarta(puxaCarta);  
 
@@ -129,8 +128,8 @@ public class DeckBuilder {
 
                 heroi.addCarta(energiaGratis);
                 
-                heroi.addCarta(escudoMadeira);
-                heroi.addCarta(escudoMadeira);
+                heroi.addCarta(shieldinho);
+                heroi.addCarta(shieldinho);
 
                 heroi.addCarta(armadura);
 
@@ -185,14 +184,14 @@ public class DeckBuilder {
                 heroi.addCarta(energiaGratis);
                 heroi.addCarta(energiaGratis);
 
-                heroi.addCarta(puroOdio);
-                heroi.addCarta(puroOdio);
+                heroi.addCarta(egoCarta);
+                heroi.addCarta(egoCarta);
 
                 heroi.addCarta(armadura);
                 heroi.addCarta(armadura);
 
-                heroi.addCarta(escudoMadeira);
-                heroi.addCarta(escudoMadeira);
+                heroi.addCarta(shieldinho);
+                heroi.addCarta(shieldinho);
 
                 heroi.addCarta(chocolex);
 

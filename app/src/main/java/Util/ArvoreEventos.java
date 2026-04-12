@@ -11,6 +11,7 @@ import Telas.Eventos.Evento;
 import Telas.Eventos.Fogueira;
 import Telas.Eventos.Loja;
 import Telas.Eventos.Tigrinho;
+import static Util.Moldes.amoeba;
 import static Util.Moldes.barbossa;
 import static Util.Moldes.drake;
 import static Util.Moldes.endrick;
@@ -71,16 +72,16 @@ public class ArvoreEventos {
     public List<Evento> escolherEvento(int profundidadeAtual) {
         List<Evento> opcoes = new ArrayList<>();
 
-        // primeiro evento: luta facil
+        // primeiro evento ----------------------------
         if (profundidadeAtual == 0) {
             for (int i = 0; i < n; i++) {
                 // se quiser testar um evento especifico e so adicionar aq embaixo
    
-                opcoes.add(new Batalha(loudCoringa.criaCopia(), barbossa.criaCopia(), drake.criaCopia()));
+                opcoes.add(new Batalha(loudCoringa.criaCopia(), barbossa.criaCopia(), drake.criaCopia(), amoeba.criaCopia()));
             }
         } 
         
-        // ultimo evento: boss (todos os inimigos!)
+        // ultimo evento ------------------------------
         else if (profundidadeAtual == p) {
             for (int i = 0; i < n; i++) {
                 opcoes.add(new Batalha(

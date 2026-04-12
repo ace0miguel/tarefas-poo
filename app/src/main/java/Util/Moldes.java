@@ -49,8 +49,8 @@ public class Moldes {
     public static Inimigo sabrinaCarpenter;
     public static Inimigo tripleT;
     public static Inimigo loudSacy;
+    public static Inimigo amoeba;
 
-    // cartas -----------
     public static Carta tiro;
     public static Carta tiroEscopeta;
     public static Carta tiroCanhao;
@@ -60,10 +60,10 @@ public class Moldes {
     public static Carta corteRapido;
     public static Carta desprezo;
     public static Carta armadura;
-    public static Carta escudoMadeira;
-    public static Carta escudoFerro;
+    public static Carta shieldinho;
+    public static Carta shieldao;
     public static Carta purificar;
-    public static Carta puroOdio;
+    public static Carta egoCarta;
     public static Carta dedoNervosoCarta;
     public static Carta mestreLaminasCarta;
     // novas cartas
@@ -85,66 +85,138 @@ public class Moldes {
 
     // efeitos ------------
     public static Efeito sangramento = new Sangramento("Sangramento", "Causa 1 de dano por rodada ao alvo", 3, 1);
+
     public static Efeito veneno = new Veneno("Veneno", "Causa sua duraçao em dano por rodada ao alvo", 2, 1);
+
     public static Efeito veneno4 = new Veneno("Veneno", "Causa sua duraçao em dano por rodada ao alvo", 4, 1);
-    public static Efeito odioPuro = new AumentaDano("Ego", "Aumenta o dano causado em 1 por 4 rodadas", 4, 1);
-    public static Efeito aumentaResistencia = new AumentaResistencia("Aura", "Reduz o dano recebido", 3, 2);
-    public static Efeito escudinho = new Escudo("Ganho de escudo (3)", "3 pontos de escudo", 3);
-    public static Efeito escudao = new Escudo("Ganho de escudo (7)", "7 pontos de escudo", 7);
+
+    public static Efeito ego = new AumentaDano("Ego", "Aumenta o dano causado em 25% por 4 rodadas", 4, 25);
+
+    public static Efeito aumentaResistencia = new AumentaResistencia("Aura", "Reduz o dano recebido em 25%", 3, 25);
+
+    public static Efeito escudinho = new Escudo("Ganho de escudo (4)", "4 pontos de escudo", 4);
+
+    public static Efeito escudao = new Escudo("Ganho de escudo (10)", "10 pontos de escudo", 10);
+
     public static Efeito purificarEfeito = new Purificar("Purificar", "Remove todos os efeitos aplicados em voce (incluindo bons!)");
+
     public static Efeito feridas = new DanoConstante("Feridas", "Causa 1 de dano por rodada ao alvo por 2 rodadas", 2, 1);
+
     public static Efeito ganhaEnergia2 = new GanhaEnergia("Ganho de energia (2)", "Ganha 2 pontos de energia", 2);
+
     public static Efeito ganhaEnergia1 = new GanhaEnergia("Ganho de energia (1)", "Ganha 1 ponto de energia", 1);
+
     public static Efeito ganhaEnergiaTest = new GanhaEnergia("Ganho de energia (60)", "Ganha 60 pontos de energia", 60);
-    public static Efeito pactoSinistro = new AumentaDano(Cor.txtCinza("Pacto Sinistro"), "Aumenta o dano causado em 2 por 3 rodadas", 3, 2);
-    
+
+    public static Efeito pactoSinistro = new AumentaDano(Cor.txtCinza("Pacto Sinistro"), "Aumenta o dano causado em 2 por 3 rodadas", 3, 2); 
     // novos efeitos
     public static Efeito efeitoPuxaCarta2 = new PuxaCarta("Puxa duas cartas", "Puxa duas cartas", 2);
+
     public static Efeito efeitoEnergizado = new Energizar("Energizado", "Ganhe dois pontos de energia na proxima rodada", 1, 2);
+
     public static AdicionaCarta ganhaResenhax = new AdicionaCarta("Resenhax", "Recebe um resenhax", null);
+
     public static AdicionaCarta ganhaClubex = new AdicionaCarta("Clubex", "Recebe um clubex", null);
+
     public static EscolheCarta escolheCarta = new EscolheCarta("Escolhe uma carta", "Escolha uma carta da pilha de compra");
 
 
     // poderes -------------
     public static Poder dedoNervoso = new MaosLeves(("JOHN WICK!"), "Sempre que atirar, ATIRE NOVAMENTE! pelo tanto de acumulos desse poder.", 1);
+
     public static Poder mestreLaminas = new MaosLeves(("MESTRE DAS LÂMINAS"), "Sempre que cortar, CORTE NOVAMENTE! pelo tanto de acumulos desse poder.", 2);
+
     public static Poder cartaAdicional = new CartaAdicional("CONTRATO DE SANGUE", "No início de cada turno, puxe 1 carta adicional e perca 1 ponto de vida.", 1);
 
     /** inicializa os moldes */
     public static void carregar(){
-        tiro = new CartaAtaque("Tiro de revolver", "dispara um tiro com seu revolver", 2, 5, 1); tiro.setResenha(Arte.TIRO5); tiro.setRaridade(1);
-        tiroEscopeta = new CartaAtaque("Tiro de escopeta", "dispara um cartucho de escopeta", 3, 8, 1); tiroEscopeta.setResenha(Arte.TIRO1); tiroEscopeta.setRaridade(2);
-        bomba = new CartaAtaque("BOMBA!", "joga uma bomba que atinge TODOS os inimigos!", 4, 8); bomba.setEfeitoEmArea(true); bomba.setRaridade(2);
-        clubex = new CartaAtaque("Clubex", "Causa 26 pontos de dano a todos inimigos.", 4, 26); clubex.setEfeitoEmArea(true); clubex.setConsumir(true); clubex.setRaridade(3);
-        
-        tiroCanhao = new CartaAtaqueComEfeito("Tiro de canhão", "dispara uma bala de canhão", 4, 12, feridas, false, 1); tiroCanhao.setResenha(Arte.TIRO3); tiroCanhao.setRaridade(2);
-        corteProfundo = new CartaAtaqueComEfeito("Corte profundo", "causa 3 pontos de dano e aplica sangramento", 2, 3, sangramento, false, 2); corteProfundo.setResenha(Cor.txtVermelho(Arte.CORTE)); corteProfundo.setRaridade(1);
-        corteVenenoso = new CartaAtaqueComEfeito("Corte venenoso", "causa 1 ponto de dano e aplica dois acumulos de veneno", 1, 1, veneno, false, 2); corteVenenoso.setResenha(Cor.txtVerdeClaro(Arte.CORTE2)); corteVenenoso.setRaridade(1);
-        corteDefensivo = new CartaAtaqueComEfeito("Corte defensivo", "causa 1 ponto de dano e ganha escudo!", 1, 1, escudinho, true, 2); corteDefensivo.setResenha(Cor.txtAzulClaro(Arte.CORTE5)); corteDefensivo.setRaridade(1);
-        corteRapido = new CartaAtaqueComEfeito("Corte rapido", "causa 1 ponto de dano e ganha 1 ponto de energia!", 1, 1, ganhaEnergia1, true, 2); corteRapido.setResenha(Cor.txtAmareloClaro(Arte.CORTE4)); corteRapido.setRaridade(2);
-        desprezo = new CartaAtaqueComEfeito("Desprezo.", "causa muito dano porém irrita seu adversario", 4, 17, odioPuro, false); desprezo.setResenha(Arte.DESPREZO); desprezo.setRaridade(3);
-        bombaVeneno = new CartaAtaqueComEfeito("BOMBA DE VENENO!", "jogue uma " + Cor.txtVerdeEscuro("BOMBA TÓXICA") + " que atinge TODOS os inimigos e aplica " + veneno.getNomeColorido(), 3, 2, veneno4, false);
+        /* base do balanceamento: carta de 1 de energia: 5 pontos de dano ou 4 de escudo
+        um inimigo fraco deve ter por volta de uns 50 pontos de vida e causar uns 9 de dano
+        tiros: cartas de ataque sem efeito secundário, cortes aplicam efeito (em geral)
+        cartas com efeito adicional com o mesmo custo de energia devem causar menos dano
+        cartas que custam mais de 1 de energia devem causar mais que o seu custo * 5 pontos de dano, pra compensar pela inflexibilidade*/
+
+        // cartas ataque basicas
+        tiro = new CartaAtaque("Tiro de revolver", "dispara um tiro com seu revolver", 1, 5, 1); 
+        tiro.setResenha(Arte.TIRO5); tiro.setRaridade(1);
+
+        tiroEscopeta = new CartaAtaque("Tiro de escopeta", "dispara um cartucho de escopeta", 2, 12, 1); 
+        tiroEscopeta.setResenha(Arte.TIRO1); tiroEscopeta.setRaridade(2);
+
+        tiroCanhao = new CartaAtaque("Tiro de canhão", "dispara uma bala de canhão", 3, 18, 1); 
+        tiroCanhao.setResenha(Arte.TIRO3); tiroCanhao.setRaridade(2);
+
+        bomba = new CartaAtaque("BOMBA!", "joga uma bomba que atinge TODOS os inimigos!", 3, 14); 
+        bomba.setEfeitoEmArea(true); bomba.setRaridade(2);
+
+        clubex = new CartaAtaque("Clubex", "Causa 26 pontos de dano a todos inimigos.", 4, 26);
+        clubex.setEfeitoEmArea(true); clubex.setConsumir(true); clubex.setRaridade(3);
+
+        // cartas ataque com efeito
+        corteProfundo = new CartaAtaqueComEfeito("Corte profundo", "causa 3 pontos de dano e aplica sangramento", 2, 9, sangramento, false, 2); 
+        corteProfundo.setResenha(Cor.txtVermelho(Arte.CORTE)); corteProfundo.setRaridade(1);
+
+        corteVenenoso = new CartaAtaqueComEfeito("Corte venenoso", "causa 1 ponto de dano e aplica dois acumulos de veneno", 2, 7, veneno, false, 2); 
+        corteVenenoso.setResenha(Cor.txtVerdeClaro(Arte.CORTE2)); corteVenenoso.setRaridade(1);
+
+        corteDefensivo = new CartaAtaqueComEfeito("Corte defensivo", "causa 1 ponto de dano e ganha escudo!", 2, 8, escudinho, true, 2); 
+        corteDefensivo.setResenha(Cor.txtAzulClaro(Arte.CORTE5)); corteDefensivo.setRaridade(1);
+
+        corteRapido = new CartaAtaqueComEfeito("Corte rapido", "causa 1 ponto de dano e ganha 1 ponto de energia!", 2, 8, ganhaEnergia2, true, 2); 
+        corteRapido.setResenha(Cor.txtAmareloClaro(Arte.CORTE4)); corteRapido.setRaridade(2);
+
+        bombaVeneno = new CartaAtaqueComEfeito("BOMBA DE VENENO!", "jogue uma " + Cor.txtVerdeEscuro("BOMBA TÓXICA") + " que atinge TODOS os inimigos e aplica " + veneno.getNomeColorido(), 3, 6, veneno4, false);
         bombaVeneno.setEfeitoEmArea(true); bombaVeneno.setRaridade(3);
+
+        desprezo = new CartaAtaqueComEfeito("Desprezo.", "causa muito dano porém irrita seu adversario", 4, 26, ego, false);
+        desprezo.setResenha(Arte.DESPREZO); desprezo.setRaridade(3);
+
         presenteMaldito = new CartaAtaqueComEfeito("Presente maldito", "Um presente de um anfitrião misterioso... " + Cor.txtVermelho("[Sacrifício: 5]"), 4, 24, sangramento, false); presenteMaldito.setResenha((Arte.hahaha).repeat(18)); presenteMaldito.setRaridade(4); 
         presenteMaldito.setConsumir(true); presenteMaldito.setSacrificio(5); presenteMaldito.setEfeitoEmArea(true);
 
-        armadura = new CartaHabilidade("Aura", "Reduz o dano recebido", 2, aumentaResistencia, true); armadura.setRaridade(2);
-        escudoMadeira = new CartaHabilidade("Postura de defesa", "da escudo", 0, escudinho, true); escudoMadeira.setRaridade(1);
-        escudoFerro = new CartaHabilidade("Shieldão", "da MUITO escudo", 1, escudao, true); escudoFerro.setRaridade(1);
-        purificar = new CartaHabilidade("RECEBA!", "Remove todos os efeitos aplicados em voce (incluindo positivos)", 2, purificarEfeito, true); purificar.setResenha(Cor.txtAmarelo(Arte.RECEBA)); purificar.setRaridade(2);
-        puroOdio = new CartaHabilidade("Ego.", "Cause 1 de dano extra por 3 rodadas", 2, odioPuro, true); puroOdio.setRaridade(2);
-        puxaCarta = new CartaHabilidade("Ganancia", "Puxe duas cartas da sua pilha de compras", 1, efeitoPuxaCarta2, true); puxaCarta.setRaridade(1);
-        energizar = new CartaHabilidade("ENERGIZAR!", "Ganhe mais 2 pontos de energia no começo da próxima rodada!", 1, efeitoEnergizado, true); energizar.setRaridade(2);
-        energiaGratis = new CartaHabilidade("Energia!", "Ganhe 1 ponto de energia", 0, ganhaEnergia1, true); energiaGratis.setRaridade(2);
-        
-        chocolex = new CartaHabilidade("Chocolex", "Adiciona um Resenhax na sua pilha de compras.", 2, ganhaResenhax, true); chocolex.setConsumir(true); chocolex.setRaridade(2);
-        resenhax = new CartaHabilidade("Resenhax", "Adiciona um Clubex na sua pilha de compras.", 3, ganhaClubex, true); resenhax.setConsumir(true); resenhax.setRaridade(3);
-        pactoSangue = new CartaHabilidade("Pacto de sangue", "Pague (4) vida e escolha uma carta da sua pilha de compras.", 1, escolheCarta, true); pactoSangue.setSacrificio(4); pactoSangue.setRaridade(3);
+        // cartas habilidade
+        shieldinho = new CartaHabilidade("Shieldinho", "4 pontos de escudo", 1, escudinho, true); 
+        shieldinho.setRaridade(1);
 
-        dedoNervosoCarta = new CartaPoder("JOHN WICK", "Atire novamente sempre que usar uma carta de tiro!", 2, dedoNervoso); dedoNervosoCarta.setRaridade(3);
-        mestreLaminasCarta = new CartaPoder("Mestre das lâminas", "Corte novamente sempre que usar uma carta de corte!", 2, mestreLaminas); mestreLaminasCarta.setRaridade(3);
-        contratoSangue = new CartaPoder("Contrato de sangue", "No início de cada turno, puxe 1 carta adicional e perca 1 ponto de vida.", 3, cartaAdicional); contratoSangue.setRaridade(2);
+        shieldao = new CartaHabilidade("Shieldao", "10 pontos de escudo", 2, escudao, true); 
+        shieldao.setRaridade(2);
+
+        armadura = new CartaHabilidade("Aura", "Reduz o dano recebido em 25% por 3 rodadas", 2, aumentaResistencia, true); 
+        armadura.setRaridade(3);
+        
+        egoCarta = new CartaHabilidade("Ego.", "Cause 25% de dano extra por 4 rodadas", 2, ego, true); 
+        egoCarta.setRaridade(3);
+
+        purificar = new CartaHabilidade("RECEBA!", "Remove todos os efeitos aplicados em voce (incluindo positivos)", 3, purificarEfeito, true); 
+        purificar.setResenha(Cor.txtAmarelo(Arte.RECEBA)); purificar.setRaridade(2);
+
+        puxaCarta = new CartaHabilidade("Ganancia", "Puxe duas cartas da sua pilha de compras", 1, efeitoPuxaCarta2, true);
+        puxaCarta.setRaridade(1);
+
+        energizar = new CartaHabilidade("ENERGIZAR!", "Ganhe mais 2 pontos de energia no começo da próxima rodada!", 2, efeitoEnergizado, true); 
+        energizar.setRaridade(2);
+
+        energiaGratis = new CartaHabilidade("Energia!", "Ganhe 1 ponto de energia", 0, ganhaEnergia1, true); 
+        energiaGratis.setRaridade(2);
+        
+        chocolex = new CartaHabilidade("Chocolex", "Adiciona um Resenhax na sua pilha de compras.", 2, ganhaResenhax, true); chocolex.setConsumir(true); 
+        chocolex.setRaridade(2);
+
+        resenhax = new CartaHabilidade("Resenhax", "Adiciona um Clubex na sua pilha de compras.", 3, ganhaClubex, true); resenhax.setConsumir(true); 
+        resenhax.setRaridade(3);
+
+        pactoSangue = new CartaHabilidade("Pacto de sangue", "Pague (4) vida e escolha uma carta da sua pilha de compras.", 1, escolheCarta, true); 
+        pactoSangue.setSacrificio(4); pactoSangue.setRaridade(3);
+
+        // cartas poder
+        dedoNervosoCarta = new CartaPoder("JOHN WICK", "Atire novamente sempre que usar uma carta de tiro!", 3, dedoNervoso); 
+        dedoNervosoCarta.setRaridade(3);
+
+        mestreLaminasCarta = new CartaPoder("Mestre das lâminas", "Corte novamente sempre que usar uma carta de corte!", 3, mestreLaminas); 
+        mestreLaminasCarta.setRaridade(3);
+
+        contratoSangue = new CartaPoder("Contrato de sangue", "No início de cada turno, puxe 1 carta adicional e perca 1 ponto de vida.", 3, cartaAdicional); 
+        contratoSangue.setRaridade(2);
 
         // cartas que nao entram na lista de moldes ---------
 
@@ -158,40 +230,43 @@ public class Moldes {
 
         // inimigos --
         // tier 1
-        endrick = new Inimigo("Endrick", 15, 5,
-            new Acao.Atacar(), new Acao.AtacarEfeito(veneno), new Acao.AplicarEfeitoAliadoMaisForte(odioPuro)
+        endrick = new Inimigo("Endrick", 50, 9,
+            new Acao.Atacar(), new Acao.AtacarEfeito(veneno), new Acao.AplicarEfeitoAliadoMaisForte(ego)
         ); endrick.setTier(1);
 
-        drake = new Inimigo("Drake", 19, 2,
-            new Acao.AplicarEfeitoAliadoMaisForte(odioPuro), new Acao.AplicarEfeitoAliadoMaisForte(escudao), new Acao.Atacar()
+        drake = new Inimigo("Drake", 55, 7,
+            new Acao.AplicarEfeitoAliadoMaisForte(ego), new Acao.AplicarEfeitoAliadoMaisForte(escudao), new Acao.Atacar()
         ); drake.setTier(1);
 
+        amoeba = new Inimigo("Amoeba", 36, 5,
+            new Acao.AtacarEfeito(veneno)
+        ); amoeba.setTier(1); amoeba.setAcaoMeiaVida(new Acao.multiplicar(2));
+
         // tier 2
-        barbossa = new Inimigo("Capitão Hector Barbossa", 30, 5,
+        barbossa = new Inimigo("Capitão Hector Barbossa", 70, 13,
             new Acao.Atacar(), new Acao.AtacarEfeito(sangramento)
         ); barbossa.setTier(2); barbossa.setAcaoMeiaVida(new Acao.Atacar());
 
-        loudCoringa = new Inimigo("LOUD Coringa", 25, 4, 
+        loudCoringa = new Inimigo("LOUD Coringa", 60, 11, 
             new Acao.AtacarVidaPerdida(), new Acao.AtacarEfeito(sangramento), new Acao.AdicionarCarta(sangrar)
         ); loudCoringa.setTier(2);
 
-        loudSacy = new Inimigo("LOUD Sacy", 21, 2, 
-            new Acao.AdicionarCarta(sangrar), new Acao.AplicarEfeitoAliadoMaisForte(odioPuro), 
+        loudSacy = new Inimigo("LOUD Sacy", 60, 0, 
+            new Acao.AdicionarCarta(sangrar), new Acao.AplicarEfeitoAliadoMaisForte(ego), 
             new Acao.AplicarEfeitoAliadoMaisForte(escudao), new Acao.AplicarEfeitoAliadoMaisForte(pactoSinistro)
         ); loudSacy.setTier(2);
 
         // tier 3
-        sabrinaCarpenter = new Inimigo("SABRINA CARPENTER", 42, 6,  // ELA E FORTE TB
-            new Acao.Atacar(), new Acao.AtacarEfeito(sangramento), new Acao.ReceberEfeito(odioPuro)
+        sabrinaCarpenter = new Inimigo("SABRINA CARPENTER", 80, 20,
+            new Acao.Atacar(), new Acao.AtacarEfeito(sangramento), new Acao.ReceberEfeito(ego)
         ); sabrinaCarpenter.setTier(3);
             
-        tripleT = new Inimigo("TUNG TUNG TUNG SAHUR", 67, 2, // OUTRO BOSS TA MUITO ROUBADO
-            new Acao.AdicionarCarta(beberVeneno), new Acao.AtacarEfeito(sangramento), 
-            new Acao.AplicarEfeitoAliadoMaisForte(escudao), new Acao.AtacarVidaPerdida()
+        tripleT = new Inimigo("TUNG TUNG TUNG SAHUR", 67, 29, // pouca vida mas bate forte
+            new Acao.AdicionarCarta(beberVeneno), new Acao.AtacarEfeito(sangramento), new Acao.AtacarVidaPerdida()
         ); tripleT.setTier(3);
 
         // tier 4 (goats)
-        paulAtreides = new Inimigo("PAUL MUAD'DIB ATREIDES, DUKE OF ARRAKIS, LISAN AL GAIB", 55, 9, // ESSE AQUI E FORTE VIU MEIO QUE O BOSS
+        paulAtreides = new Inimigo("PAUL MUAD'DIB ATREIDES, DUKE OF ARRAKIS, LISAN AL GAIB", 100, 35, // ESSE AQUI E FORTE VIU MEIO QUE O BOSS
             new Acao.AtacarVidaPerdida(), new Acao.ReceberEfeito(pactoSinistro), new Acao.AtacarEfeito(sangramento), new Acao.AtacarVidaPerdida()
         ); paulAtreides.setTier(4);
 
@@ -208,15 +283,15 @@ public class Moldes {
             paulAtreides, sabrinaCarpenter, tripleT));
         
         // efeitos ------
-        listaEfeitosMoldes.addAll(Arrays.asList(sangramento, veneno, odioPuro, aumentaResistencia, 
+        listaEfeitosMoldes.addAll(Arrays.asList(sangramento, veneno, ego, aumentaResistencia, 
             escudinho, escudao, purificarEfeito, feridas, ganhaEnergia2, 
             ganhaEnergia1, ganhaEnergiaTest, efeitoPuxaCarta2, efeitoEnergizado, 
             ganhaResenhax, ganhaClubex, escolheCarta, pactoSinistro, veneno4)); 
         
         // cartas -------
         listaCartasMoldes.addAll(Arrays.asList(tiro, tiroEscopeta, tiroCanhao, corteProfundo, 
-            corteVenenoso, corteDefensivo, corteRapido, desprezo, armadura, escudoMadeira, 
-            escudoFerro, purificar, puroOdio, puxaCarta, energizar, energiaGratis, dedoNervosoCarta, 
+            corteVenenoso, corteDefensivo, corteRapido, desprezo, armadura, shieldao, 
+            shieldinho, purificar, egoCarta, puxaCarta, energizar, energiaGratis, dedoNervosoCarta, 
             mestreLaminasCarta, bomba, bombaVeneno, chocolex,contratoSangue, pactoSangue));
     }
 }
