@@ -13,6 +13,7 @@ public class Escudo extends Efeito {
 
     public Escudo(Escudo copiado){
         super(copiado);
+        this.setDur(0);
         this.valor = copiado.valor;
     }
 

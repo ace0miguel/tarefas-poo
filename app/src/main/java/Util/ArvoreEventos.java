@@ -31,12 +31,19 @@ public class ArvoreEventos {
     List<Evento> eventosAleatorios = new ArrayList<>(); // lista de eventos aleatorios
     List<Batalha> batalhasAleatorias = new ArrayList<>(); // lista de batalhas aleatorias (pode ser usada pra escolher as batalhas dos andares ímpares)
 
+    List<Batalha> batalhasTriviais = new ArrayList<>(); // lista de batalhas triviais (pode ser usada pra escolher as batalhas dos andares ímpares)
     // moldes de eventos aleatorios
     Loja loja = new Loja();
     Fogueira fogueira = new Fogueira();
     Tigrinho tigrinho = new Tigrinho();
 
     // moldes de batalhas
+
+    // triviais
+    Batalha amoebas = new Batalha(amoeba.criaCopia(), amoeba.criaCopia());
+    Batalha loud = new Batalha(loudCoringa.criaCopia(), loudSacy.criaCopia());
+    Batalha barbossaSolo = new Batalha(barbossa.criaCopia());
+
     Batalha tripleTeAmigos = new Batalha(drake.criaCopia(), tripleT.criaCopia(), endrick.criaCopia(), loudCoringa.criaCopia());
     Batalha sabrinaAtreides = new Batalha(loudSacy.criaCopia(), paulAtreides.criaCopia(), sabrinaCarpenter.criaCopia());
     Batalha coringaBarbossaEndrick = new Batalha(loudCoringa.criaCopia(), barbossa.criaCopia(), endrick.criaCopia());
@@ -56,6 +63,11 @@ public class ArvoreEventos {
         batalhasAleatorias.add(sabrinaAtreides);
         batalhasAleatorias.add(coringaBarbossaEndrick);
         batalhasAleatorias.add(barbossaSabrinaCoringa);
+
+        // adicionar as batalhas triviais --
+        batalhasTriviais.add(amoebas);
+        batalhasTriviais.add(loud);
+        batalhasTriviais.add(barbossaSolo);
     }
 
     public long getTotalNos(){
@@ -72,12 +84,18 @@ public class ArvoreEventos {
     public List<Evento> escolherEvento(int profundidadeAtual) {
         List<Evento> opcoes = new ArrayList<>();
 
-        // primeiro evento ----------------------------
+        // primeiro evento (nao da pra escolher, mas tem variaçoes)
         if (profundidadeAtual == 0) {
+            List<Batalha> batalhas = new ArrayList<>();
+
+            for (Batalha b : batalhasTriviais) {
+                batalhas.add(b.criaCopia());
+            }
+
+            Collections.shuffle(batalhas);
+
             for (int i = 0; i < n; i++) {
-                // se quiser testar um evento especifico e so adicionar aq embaixo
-   
-                opcoes.add(new Batalha(loudCoringa.criaCopia(), barbossa.criaCopia(), drake.criaCopia(), amoeba.criaCopia()));
+                opcoes.add(batalhas.get(i % batalhas.size()).criaCopia());
             }
         } 
         

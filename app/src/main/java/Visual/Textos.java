@@ -81,7 +81,7 @@ public class Textos {
         sleep(25);
         
         for (Efeito efeito : listaEfeitos) {
-            if (efeito.getAlvo() == heroi){
+            if (efeito.getAlvo() == heroi && efeito.getDur() > 0){
                 System.out.print("(" + efeito.status() + ") "); sleep(25);
                 aux1 = true;
             }
@@ -98,7 +98,7 @@ public class Textos {
                 aux2 = false;
 
                 for (Efeito efeito : listaEfeitos) {
-                    if (efeito.getAlvo() == inimigos[i]){
+                    if (efeito.getAlvo() == inimigos[i] && efeito.getDur() > 0){
                         System.out.print("(" + efeito.status() + ") "); sleep(25);
                         aux2 = true;
                     }
@@ -157,7 +157,7 @@ public class Textos {
         System.out.println();
 
         for (Efeito efeito : listaEfeitos) {
-            if (efeito.getAlvo() == heroi){
+            if (efeito.getAlvo() == heroi && efeito.getDur() > 0){
                 System.out.print("(" + efeito.status() + ") ");
                 aux1 = true;
             }
@@ -177,7 +177,7 @@ public class Textos {
                 aux2 = false;
 
                 for (Efeito efeito : listaEfeitos) {
-                    if (efeito.getAlvo() == inimigos[i]){
+                    if (efeito.getAlvo() == inimigos[i] && efeito.getDur() > 0){
                         System.out.print("(" + efeito.status() + ") ");
                         aux2 = true;
                     }

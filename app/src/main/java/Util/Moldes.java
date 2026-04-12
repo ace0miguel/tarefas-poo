@@ -86,6 +86,8 @@ public class Moldes {
     // efeitos ------------
     public static Efeito sangramento = new Sangramento("Sangramento", "Causa 1 de dano por rodada ao alvo", 3, 1);
 
+    public static Efeito veneno1 = new Veneno("Veneno", "Causa sua duraçao em dano por rodada ao alvo", 1, 1);
+
     public static Efeito veneno = new Veneno("Veneno", "Causa sua duraçao em dano por rodada ao alvo", 2, 1);
 
     public static Efeito veneno4 = new Veneno("Veneno", "Causa sua duraçao em dano por rodada ao alvo", 4, 1);
@@ -150,7 +152,7 @@ public class Moldes {
         bomba.setEfeitoEmArea(true); bomba.setRaridade(2);
 
         clubex = new CartaAtaque("Clubex", "Causa 26 pontos de dano a todos inimigos.", 4, 26);
-        clubex.setEfeitoEmArea(true); clubex.setConsumir(true); clubex.setRaridade(3);
+        clubex.setEfeitoEmArea(true); clubex.setConsumir(true);
 
         // cartas ataque com efeito
         corteProfundo = new CartaAtaqueComEfeito("Corte profundo", "causa 3 pontos de dano e aplica sangramento", 2, 9, sangramento, false, 2); 
@@ -166,10 +168,10 @@ public class Moldes {
         corteRapido.setResenha(Cor.txtAmareloClaro(Arte.CORTE4)); corteRapido.setRaridade(2);
 
         bombaVeneno = new CartaAtaqueComEfeito("BOMBA DE VENENO!", "jogue uma " + Cor.txtVerdeEscuro("BOMBA TÓXICA") + " que atinge TODOS os inimigos e aplica " + veneno.getNomeColorido(), 3, 6, veneno4, false);
-        bombaVeneno.setEfeitoEmArea(true); bombaVeneno.setRaridade(3);
+        bombaVeneno.setEfeitoEmArea(true); bombaVeneno.setRaridade(2);
 
         desprezo = new CartaAtaqueComEfeito("Desprezo.", "causa muito dano porém irrita seu adversario", 4, 26, ego, false);
-        desprezo.setResenha(Arte.DESPREZO); desprezo.setRaridade(3);
+        desprezo.setResenha(Arte.DESPREZO); desprezo.setRaridade(2);
 
         presenteMaldito = new CartaAtaqueComEfeito("Presente maldito", "Um presente de um anfitrião misterioso... " + Cor.txtVermelho("[Sacrifício: 5]"), 4, 24, sangramento, false); presenteMaldito.setResenha((Arte.hahaha).repeat(18)); presenteMaldito.setRaridade(4); 
         presenteMaldito.setConsumir(true); presenteMaldito.setSacrificio(5); presenteMaldito.setEfeitoEmArea(true);
@@ -179,19 +181,19 @@ public class Moldes {
         shieldinho.setRaridade(1);
 
         shieldao = new CartaHabilidade("Shieldao", "10 pontos de escudo", 2, escudao, true); 
-        shieldao.setRaridade(2);
+        shieldao.setRaridade(1);
 
         armadura = new CartaHabilidade("Aura", "Reduz o dano recebido em 25% por 3 rodadas", 2, aumentaResistencia, true); 
-        armadura.setRaridade(3);
+        armadura.setRaridade(2);
         
         egoCarta = new CartaHabilidade("Ego.", "Cause 25% de dano extra por 4 rodadas", 2, ego, true); 
-        egoCarta.setRaridade(3);
+        egoCarta.setRaridade(2);
 
         purificar = new CartaHabilidade("RECEBA!", "Remove todos os efeitos aplicados em voce (incluindo positivos)", 3, purificarEfeito, true); 
         purificar.setResenha(Cor.txtAmarelo(Arte.RECEBA)); purificar.setRaridade(2);
 
         puxaCarta = new CartaHabilidade("Ganancia", "Puxe duas cartas da sua pilha de compras", 1, efeitoPuxaCarta2, true);
-        puxaCarta.setRaridade(1);
+        puxaCarta.setRaridade(2);
 
         energizar = new CartaHabilidade("ENERGIZAR!", "Ganhe mais 2 pontos de energia no começo da próxima rodada!", 2, efeitoEnergizado, true); 
         energizar.setRaridade(2);
@@ -199,14 +201,14 @@ public class Moldes {
         energiaGratis = new CartaHabilidade("Energia!", "Ganhe 1 ponto de energia", 0, ganhaEnergia1, true); 
         energiaGratis.setRaridade(2);
         
-        chocolex = new CartaHabilidade("Chocolex", "Adiciona um Resenhax na sua pilha de compras.", 2, ganhaResenhax, true); chocolex.setConsumir(true); 
-        chocolex.setRaridade(2);
+        chocolex = new CartaHabilidade("Chocolex", "Adiciona um Resenhax na sua pilha de compras.", 2, ganhaResenhax, true); 
+        chocolex.setConsumir(true); chocolex.setRaridade(3);
 
-        resenhax = new CartaHabilidade("Resenhax", "Adiciona um Clubex na sua pilha de compras.", 3, ganhaClubex, true); resenhax.setConsumir(true); 
-        resenhax.setRaridade(3);
+        resenhax = new CartaHabilidade("Resenhax", "Adiciona um Clubex na sua pilha de compras.", 3, ganhaClubex, true); 
+        resenhax.setConsumir(true); 
 
         pactoSangue = new CartaHabilidade("Pacto de sangue", "Pague (4) vida e escolha uma carta da sua pilha de compras.", 1, escolheCarta, true); 
-        pactoSangue.setSacrificio(4); pactoSangue.setRaridade(3);
+        pactoSangue.setSacrificio(4); pactoSangue.setRaridade(2);
 
         // cartas poder
         dedoNervosoCarta = new CartaPoder("JOHN WICK", "Atire novamente sempre que usar uma carta de tiro!", 3, dedoNervoso); 
@@ -216,7 +218,7 @@ public class Moldes {
         mestreLaminasCarta.setRaridade(3);
 
         contratoSangue = new CartaPoder("Contrato de sangue", "No início de cada turno, puxe 1 carta adicional e perca 1 ponto de vida.", 3, cartaAdicional); 
-        contratoSangue.setRaridade(2);
+        contratoSangue.setRaridade(3);
 
         // cartas que nao entram na lista de moldes ---------
 
@@ -225,8 +227,10 @@ public class Moldes {
         beberVeneno = new CartaMaldicao("Beber veneno.", "Bebe veneno.", 1, veneno, true); beberVeneno.setResenha(Cor.txtCinza(Arte.algoRuim));
 
         // cartas pro deck de teste
-        bombaSuprema = new CartaAtaque("BOMBA!!!!!!!!!", "joga uma bomba que atinge TODOS os inimigos!", 1, 50); bombaSuprema.setEfeitoEmArea(true); bombaSuprema.setRaridade(4); // essa aqui nem vai pro sorteio mas botei 4
-        energiaSupremo = new CartaHabilidade("Energia!!!!!!!!!!!", "Ganhe muitos ponto de energia", 0, ganhaEnergiaTest, true); energiaSupremo.setRaridade(4); // essa aqui nem vai pro sorteio mas botei 4
+        bombaSuprema = new CartaAtaque("BOMBA!!!!!!!!!", "joga uma bomba que atinge TODOS os inimigos!", 1, 50); bombaSuprema.setEfeitoEmArea(true); 
+        bombaSuprema.setRaridade(10); // essa aqui nem vai pro sorteio mas botei 4
+        energiaSupremo = new CartaHabilidade("Energia!!!!!!!!!!!", "Ganhe muitos ponto de energia", 0, ganhaEnergiaTest, true); 
+        energiaSupremo.setRaridade(10); // essa aqui nem vai pro sorteio mas botei 4
 
         // inimigos --
         // tier 1
@@ -238,14 +242,16 @@ public class Moldes {
             new Acao.AplicarEfeitoAliadoMaisForte(ego), new Acao.AplicarEfeitoAliadoMaisForte(escudao), new Acao.Atacar()
         ); drake.setTier(1);
 
-        amoeba = new Inimigo("Amoeba", 36, 5,
-            new Acao.AtacarEfeito(veneno)
+        // duplica ao chegar na metade da vida
+        amoeba = new Inimigo("Amoeba", 20, 4,
+            new Acao.AtacarEfeito(veneno1)
         ); amoeba.setTier(1); amoeba.setAcaoMeiaVida(new Acao.multiplicar(2));
 
         // tier 2
+        // ganha escudo ao chegar na metade da vida 
         barbossa = new Inimigo("Capitão Hector Barbossa", 70, 13,
             new Acao.Atacar(), new Acao.AtacarEfeito(sangramento)
-        ); barbossa.setTier(2); barbossa.setAcaoMeiaVida(new Acao.Atacar());
+        ); barbossa.setTier(2); barbossa.setAcaoMeiaVida(new Acao.ReceberEfeito(escudao));
 
         loudCoringa = new Inimigo("LOUD Coringa", 60, 11, 
             new Acao.AtacarVidaPerdida(), new Acao.AtacarEfeito(sangramento), new Acao.AdicionarCarta(sangrar)
@@ -283,7 +289,7 @@ public class Moldes {
             paulAtreides, sabrinaCarpenter, tripleT));
         
         // efeitos ------
-        listaEfeitosMoldes.addAll(Arrays.asList(sangramento, veneno, ego, aumentaResistencia, 
+        listaEfeitosMoldes.addAll(Arrays.asList(sangramento, veneno, veneno1, ego, aumentaResistencia, 
             escudinho, escudao, purificarEfeito, feridas, ganhaEnergia2, 
             ganhaEnergia1, ganhaEnergiaTest, efeitoPuxaCarta2, efeitoEnergizado, 
             ganhaResenhax, ganhaClubex, escolheCarta, pactoSinistro, veneno4)); 

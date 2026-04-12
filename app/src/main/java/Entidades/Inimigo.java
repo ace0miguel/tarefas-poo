@@ -38,6 +38,7 @@ public class Inimigo extends Entidade{
 
         this.tier = copiado.tier;
         this.acaoMeiaVida = copiado.acaoMeiaVida;
+        this.meiaVida = copiado.meiaVida; // garante que nao ative dnv o meia vida
     }
 
     public Inimigo criaCopia() {

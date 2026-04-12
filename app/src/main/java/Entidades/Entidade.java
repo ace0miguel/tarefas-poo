@@ -17,7 +17,7 @@ public abstract class Entidade {
     private int resistencia = 0; // reduz de todo dano recebido diretamente
     
     private boolean purificar = false;
-    private boolean meiaVida = false; // flag que ativa quando a vida da entidade fica abaixo de 50% pela primeira vez
+    protected boolean meiaVida = false; // flag que ativa quando a vida da entidade fica abaixo de 50% pela primeira vez
 
     // booleans pra defini a cor do nome
     private boolean purificado = false;
