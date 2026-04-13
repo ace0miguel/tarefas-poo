@@ -1,9 +1,9 @@
     package Cartas;
 
-    import EfeitosDeStatus.Efeito;
     import Entidades.Entidade;
     import Entidades.Heroi;
-    import Telas.Eventos.Batalha;
+import Subscribers.EfeitosDeStatus.Efeito;
+import Telas.Eventos.Batalha;
 import Visual.Cor;
 
     /** cartas que te prejudicam (te aplicam um efeito negativo) ou nao fazem nada 

@@ -1,13 +1,14 @@
-package Poderes;
+package Subscribers.Poderes;
 
 import Cartas.Carta;
 import Entidades.Entidade;
 import Entidades.Heroi;
+import Subscribers.BatalhaSubscriber;
 import Telas.Eventos.Batalha;
 import Visual.Cor;
 
 /* aplica um efeito no heroi, duraçao infinita, nao volta pra pilha descarte ao ser usado. Normalmente stacka */
-public abstract class Poder {
+public abstract class Poder implements BatalhaSubscriber{
 
     private String nome;
     private String desc;
@@ -25,18 +26,8 @@ public abstract class Poder {
         this.sacrificio = copiado.sacrificio;
     }
 
-    public void aplicar(){};
-
-    public void roundStart(Heroi heroi){};
-
-    public void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha){};
-
     public Poder criaCopia(){ return null; };
     
-    public void onCreate(Heroi heroi){
-        heroi.receberDanoDireto(this.sacrificio);
-    };
-
     public String status(){ return null; };
     
     // getters ------------

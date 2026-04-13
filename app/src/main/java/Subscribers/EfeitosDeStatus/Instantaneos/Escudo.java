@@ -1,6 +1,6 @@
-package EfeitosDeStatus.Instantaneos;
+package Subscribers.EfeitosDeStatus.Instantaneos;
 
-import EfeitosDeStatus.Efeito;
+import Subscribers.EfeitosDeStatus.Efeito;
 
 /** adiciona escudo ao alvo */
 public class Escudo extends Efeito {

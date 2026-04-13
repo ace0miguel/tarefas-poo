@@ -2,10 +2,10 @@ package Visual;
 import java.util.ArrayList;
 import java.util.List;
 
-import EfeitosDeStatus.Efeito;
 import Entidades.Heroi;
 import Entidades.Inimigo;
-import Poderes.Poder;
+import Subscribers.EfeitosDeStatus.Efeito;
+import Subscribers.Poderes.Poder;
 import Util.RNGHandler;
 
 public class Textos {

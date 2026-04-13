@@ -1,6 +1,6 @@
-package EfeitosDeStatus.Buffs;
+package Subscribers.EfeitosDeStatus.Buffs;
 
-import EfeitosDeStatus.Efeito;
+import Subscribers.EfeitosDeStatus.Efeito;
 
 public abstract class Buff extends Efeito{
     protected int valor;

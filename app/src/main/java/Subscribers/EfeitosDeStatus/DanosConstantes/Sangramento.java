@@ -1,9 +1,9 @@
-package EfeitosDeStatus.DanosConstantes;
+package Subscribers.EfeitosDeStatus.DanosConstantes;
 
 import Cartas.Carta;
-import EfeitosDeStatus.Efeito;
 import Entidades.Entidade;
 import Entidades.Heroi;
+import Subscribers.EfeitosDeStatus.Efeito;
 import Telas.Eventos.Batalha;
 import Util.InputHandler;
 import Visual.Arte;
@@ -48,7 +48,7 @@ public class Sangramento extends DanoConstante{
     }
 
     @Override
-    public void aplicar(){
+    public void onRoundStart(){
         int danoEfetivo = this.stacks * this.getDano();
 
         this.getAlvo().receberDanoDireto(danoEfetivo);
@@ -56,7 +56,6 @@ public class Sangramento extends DanoConstante{
         if (this.getDur() > 1)
             this.getAlvo().setSangrando(true);
 
-        System.out.println("> " +this.getAlvo().getNome() + Cor.cinza  + " sofreu " + danoEfetivo + " pontos de dano de " + this.getNomeColorido() + "!"); Textos.sleep(300);
     }
 
     @Override

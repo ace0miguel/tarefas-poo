@@ -1,4 +1,4 @@
-package Poderes;
+package Subscribers.Poderes;
 
 import Entidades.Heroi;
 import Visual.Cor;
@@ -18,7 +18,7 @@ public class CartaAdicional extends Poder {
     }
 
     @Override
-    public void roundStart(Heroi heroi){
+    public void onRoundStart(Heroi heroi){
         heroi.getMaoAtual().addCartas(heroi.getPilhaCompra(), heroi.getPilhaDescarte(), this.quantidade);
         heroi.receberDanoDireto(sacrificio);
     }
@@ -29,7 +29,7 @@ public class CartaAdicional extends Poder {
     }
 
     @Override
-    public void onCreate(Heroi heroi) {}
+    public void onCreate(Heroi heroi){}
 
 
     @Override

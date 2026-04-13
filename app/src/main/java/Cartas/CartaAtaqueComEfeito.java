@@ -1,9 +1,9 @@
 package Cartas;
 
-import EfeitosDeStatus.Efeito;
 import Entidades.Entidade;
 import Entidades.Heroi;
 import Entidades.Inimigo;
+import Subscribers.EfeitosDeStatus.Efeito;
 import Telas.Eventos.Batalha;
 import Visual.Cor;
 

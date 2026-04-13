@@ -1,23 +1,23 @@
-package EfeitosDeStatus.Instantaneos;
+package Subscribers.EfeitosDeStatus.Instantaneos;
 
 import Cartas.Carta;
-import EfeitosDeStatus.Efeito;
 import Entidades.Entidade;
 import Entidades.Heroi;
+import Subscribers.EfeitosDeStatus.Efeito;
 import Telas.Eventos.Batalha;
 import Util.InputHandler;
 import Visual.Cor;
 
-/** puxa da pilha de compra valor cartas e adiciona a mao do heroi */
-public class PuxaCarta extends Efeito {
+/** adiciona energia instantaneamente */
+public class GanhaEnergia extends Efeito {
 
-    protected int valor;
-    public PuxaCarta(String nome, String desc, int valor){
+    private int valor;
+    public GanhaEnergia(String nome, String desc, int valor){
         super(nome, desc, 0);
         this.valor = valor;
     }
 
-    public PuxaCarta(PuxaCarta copiado){
+    public GanhaEnergia(GanhaEnergia copiado){
         super(copiado);
         this.valor = copiado.valor;
     }
@@ -26,11 +26,17 @@ public class PuxaCarta extends Efeito {
     public void addStack(){
         this.stacks++;
 
-        this.onCreate();
+        if (this.getAlvo() instanceof Heroi h) {
+            h.ganhaEnergia(valor);
+        } else {
+            Cor.printaAmarelo("erro -> tentou dar energia pra algo nao heroi");
+            InputHandler.esperar();
+        }
+
     }
 
     @Override
-    public void aplicar() {
+    public void onRoundStart() {
     }
 
     @Override
@@ -40,16 +46,16 @@ public class PuxaCarta extends Efeito {
     @Override
     public void onCreate() {
         if (this.getAlvo() instanceof Heroi h) {
-            h.getMaoAtual().addCartas(h.getPilhaCompra(), h.getPilhaDescarte(), this.valor);
+            h.ganhaEnergia(valor);
         } else {
-            Cor.printaAmarelo("erro -> tentou dar cartas pra algo nao heroi");
+            Cor.printaAmarelo("erro -> tentou dar energia pra algo nao heroi");
             InputHandler.esperar();
         }
     }
 
     @Override
     public Efeito criaCopia() {
-        return new PuxaCarta(this);
+        return new GanhaEnergia(this);
     }
 
     @Override
@@ -58,7 +64,7 @@ public class PuxaCarta extends Efeito {
     }
 
     @Override
-    public void acabar() {
+    public void onRemove() {
     }
     
 }

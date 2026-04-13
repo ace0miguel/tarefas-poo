@@ -1,4 +1,4 @@
-package EfeitosDeStatus;
+package Subscribers.EfeitosDeStatus;
 
 import Cartas.Carta;
 import Entidades.Entidade;
@@ -32,11 +32,14 @@ public class Energizar extends Efeito {
     }
 
     @Override
-    public void aplicar() {
-        this.getAlvo().setEnergizado(true);
-        if (this.getDur() == 1) 
-            System.out.println("> " +this.getAlvo().getNome() + Cor.cinza + " recebeu " + Cor.amarelo + this.valor + " pontos de energia!"); Textos.sleep(300);
+    public String getMsgFimRodada(Batalha batalha, Heroi heroi) {
+        return ("> " +this.getAlvo().getNome() + Cor.cinza + " recebeu " + Cor.amarelo + this.valor + " pontos de energia!");
     }
+
+    @Override
+    public void onRoundStart() {
+        this.getAlvo().setEnergizado(true);     
+        }
 
     @Override
     public void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha) {
@@ -58,7 +61,7 @@ public class Energizar extends Efeito {
     }
 
     @Override
-    public void acabar() {
+    public void onRemove() {
         if (!this.getAlvo().getPurificar()){
             if (this.getAlvo() instanceof Heroi h){
                 h.setEnergiaBonus(this.valor);

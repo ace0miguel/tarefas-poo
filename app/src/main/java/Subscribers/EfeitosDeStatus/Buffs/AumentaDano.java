@@ -1,8 +1,8 @@
-package EfeitosDeStatus.Buffs;
+package Subscribers.EfeitosDeStatus.Buffs;
 import Cartas.Carta;
-import EfeitosDeStatus.Efeito;
 import Entidades.Entidade;
 import Entidades.Heroi;
+import Subscribers.EfeitosDeStatus.Efeito;
 import Telas.Eventos.Batalha;
 
 /** altera o dano causado por ataques do alvo pelo valor passado (positivo aumenta, negativo reduz) */
@@ -29,7 +29,7 @@ public class AumentaDano extends Buff {
     }
 
     @Override
-    public void aplicar(){
+    public void onRoundStart(){
     }
 
     @Override
@@ -52,7 +52,7 @@ public class AumentaDano extends Buff {
     }
     
     @Override
-    public void acabar() {
+    public void onRemove() {
         this.getAlvo().somaDanoExtra(valor * this.stacks * -1);
     }
 }

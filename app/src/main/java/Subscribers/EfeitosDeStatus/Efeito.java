@@ -1,19 +1,20 @@
-package EfeitosDeStatus;
+package Subscribers.EfeitosDeStatus;
 
 import Cartas.Carta;
-import EfeitosDeStatus.Buffs.AumentaDano;
-import EfeitosDeStatus.DanosConstantes.DanoConstante;
-import EfeitosDeStatus.DanosConstantes.Sangramento;
-import EfeitosDeStatus.DanosConstantes.Veneno;
-import EfeitosDeStatus.Instantaneos.Escudo;
-import EfeitosDeStatus.Instantaneos.GanhaEnergia;
-import EfeitosDeStatus.Instantaneos.Purificar;
 import Entidades.Entidade;
 import Entidades.Heroi;
+import Subscribers.BatalhaSubscriber;
+import Subscribers.EfeitosDeStatus.Buffs.AumentaDano;
+import Subscribers.EfeitosDeStatus.DanosConstantes.DanoConstante;
+import Subscribers.EfeitosDeStatus.DanosConstantes.Sangramento;
+import Subscribers.EfeitosDeStatus.DanosConstantes.Veneno;
+import Subscribers.EfeitosDeStatus.Instantaneos.Escudo;
+import Subscribers.EfeitosDeStatus.Instantaneos.GanhaEnergia;
+import Subscribers.EfeitosDeStatus.Instantaneos.Purificar;
 import Telas.Eventos.Batalha;
 import Visual.Cor;
 
-public abstract class Efeito {
+public abstract class Efeito implements BatalhaSubscriber{
     private String nome;
     private String desc;
     private int dur;
@@ -22,6 +23,7 @@ public abstract class Efeito {
     private boolean cancelarJogada = false;
 
     protected boolean onHit = true;
+
 
     public Efeito(String nome, String desc, int dur) {
         this.nome = nome;
@@ -147,19 +149,10 @@ public abstract class Efeito {
         return e;
     }
 
-    // ----------- abstratos
-
-    /** chamado no inicio de cada rodada */
-    public void aplicar(){};
-
-    /** chamado sempre que uma carta é usada */
-    public void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha){};
-
-    /** chamado sempre que o efeito vai ser removido da batalha */
-    public void acabar(){};
-
-    /** chamado quando o efeito é adicionado a batalha */
-    public void onCreate(){};
+    @Override
+    public void onRoundStart(Batalha batalha, Heroi heroi) {
+        this.passaTurno();
+    }
 
     /** cria copia */
     public Efeito criaCopia(){ return this;};

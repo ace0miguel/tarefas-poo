@@ -10,15 +10,16 @@ import Cartas.CartaAtaqueComEfeito;
 import Deck.Mao;
 import Deck.PilhaCompra;
 import Deck.PilhaDescarte;
-import EfeitosDeStatus.DanosConstantes.DanoConstante;
-import EfeitosDeStatus.DanosConstantes.Veneno;
-import EfeitosDeStatus.Efeito;
-import EfeitosDeStatus.Energizar;
-import EfeitosDeStatus.Instantaneos.Purificar;
 import Entidades.Entidade;
 import Entidades.Heroi;
 import Entidades.Inimigo;
-import Poderes.Poder;
+import Subscribers.BatalhaSubscriber;
+import Subscribers.EfeitosDeStatus.Efeito;
+import Subscribers.EfeitosDeStatus.Energizar;
+import Subscribers.EfeitosDeStatus.DanosConstantes.DanoConstante;
+import Subscribers.EfeitosDeStatus.DanosConstantes.Veneno;
+import Subscribers.EfeitosDeStatus.Instantaneos.Purificar;
+import Subscribers.Poderes.Poder;
 import Util.InputHandler;
 import Util.Recompensas;
 import Visual.Arte;
@@ -41,6 +42,7 @@ public class Batalha extends Evento {
     private PilhaDescarte pilhaConsumir = new PilhaDescarte(); // <- pra cartas que nao voltam pra sua mao durante o combate
 
     // subscribers --------
+    private ArrayList<BatalhaSubscriber> subscribers = new ArrayList<>();
     private ArrayList<Efeito> listaEfeitos = new ArrayList<>(); 
     private ArrayList<Poder> listaPoderes = new ArrayList<>();
     // -------------
@@ -130,39 +132,24 @@ public class Batalha extends Evento {
     public void passaRodada(){
         heroi.resetEfeitos();
 
-        //booleans pra controlar os prints
-        boolean efeitoPrintado = false;
-        boolean linhaCimaPrintada = false;
-
         for (Inimigo inimigo : inimigos) {
             inimigo.resetEfeitos();
         }
         
         limpaEfeitos();
         
-        for (Efeito efeito : listaEfeitos) {  // notifica os efeitos APLICAR e DEPOIS reduz a duraçao
-            if (efeito.getAlvo().estaVivo()){
-                if (efeito instanceof DanoConstante) efeitoPrintado = true; // seria ideal fazer uma flag nos efeitos que dizem se vai printar ou nao
-                if (efeitoPrintado && !linhaCimaPrintada){
-                    Textos.printaBonito(Cor.txtCinza( "\n" + Arte.bordaHud9), 2,2); Textos.sleep(300);
-                    linhaCimaPrintada = true;
-                }
-                efeito.aplicar();
-                efeito.passaTurno(); 
-            }
+        for (BatalhaSubscriber subscriber : subscribers) {
+            subscriber.onRoundStart(this, heroi);
+            Textos.printaBonito(subscriber.getMsgFimRodada(this, heroi), 2,2);
+            Textos.sleep(300);
         }
 
-        if (efeitoPrintado){
         Textos.printaBonito(Cor.txtCinza( "\n" + Arte.bordaHud9), 2,2); Textos.sleep(300);
         InputHandler.esperar();
-        }
 
         notificaMorte();
         limpaEfeitos();
 
-        for (Poder poder : listaPoderes) // notifica os poderes
-            poder.aplicar();
-        
         // notifica possiveis meia vida
         for (Inimigo inimigo : inimigos) {
             inimigo.checkMeiaVida(inimigo, heroi, this);
@@ -185,14 +172,14 @@ public class Batalha extends Evento {
     public void limpaEfeitos(){     
         for (Efeito efeito : listaEfeitos ) {
             if ((efeito.getDur() <= 0 || efeito.getStacks() <= 0 || efeito.getAlvo().getPurificar() == true) && !(efeito instanceof Purificar)){
-                efeito.acabar();
+                efeito.onRemove(this, heroi);
             }
         }
         listaEfeitos.removeIf(efeito -> (efeito.getDur() <= 0 || efeito.getStacks() <= 0 || efeito.getAlvo().getPurificar() == true) && !(efeito instanceof Purificar));
 
         for (Efeito efeito : listaEfeitos ) {
             if ((efeito instanceof Purificar)){
-                efeito.acabar();
+                efeito.onRemove(this, heroi);
             }
         }
         listaEfeitos.removeIf(efeito -> (efeito instanceof Purificar));
@@ -249,47 +236,16 @@ public class Batalha extends Evento {
     }
 
     /** adiciona um efeito na lista de efeitos e notifica onCreate */
-    public void adicionarEfeito(Efeito efeito) { 
-        for (Efeito e : listaEfeitos) {
-
-            // se tiver outro efeito q espalha ou passa copia sozinho bota uma checagem aq tb pra nao duplicar
-            boolean doisVeneno = e instanceof Veneno && efeito instanceof Veneno; 
-
-            if ((e.getNome().equals(efeito.getNome()) || doisVeneno) && e.getAlvo() == efeito.getAlvo()){
-
-                // efeitos que nao afeta a duraçao ao stackar
-                if (e instanceof Energizar) {
-                    // nao faz nada esse if so serve pra pular o else
-                }
-
-                // efeitos q resetam duraçao ao inves de somar
-                else if (e.getResetDur()){ 
-                    e.setDur(efeito.getDur());      
-                }
-                
-                // efeitos q somam (padrao)
-                else e.setDur(e.getDur() + efeito.getDur());
-
-                e.addStack();
+    public void adicionarSubscriber(BatalhaSubscriber novoSubscriber) { 
+        for (BatalhaSubscriber subscriber : subscribers) {
+            if (subscriber.addStack(this, novoSubscriber)){
                 return;
             }
         }
-        this.listaEfeitos.add(efeito);
 
-        efeito.onCreate();
-
-        this.listaEfeitos.sort(Comparator.comparing(Efeito::getPrioridade)); // ordena os efeitos por prioridade pra sangramento sobrepor resistencia
-    }
-
-    /** adiciona um poder na lista, se ja tiver stacka */
-    public void adicionarPoder(Poder poder){
-        for (Poder e : listaPoderes) {
-            if (e.getNome().equals(poder.getNome())){
-                e.stackar();
-                return;
-            }
-        }
-        this.listaPoderes.add(poder);
+        this.subscribers.add(novoSubscriber);
+        novoSubscriber.onCreate(this, heroi);
+        this.subscribers.sort(Comparator.comparing(BatalhaSubscriber::getPrioridade)); // ordena os efeitos por prioridade pra sangramento sobrepor resistencia
     }
 
     /** avisa os efeitos com aplicação quando o alvo morre, antes de remover da lista de inimigos */
@@ -302,32 +258,18 @@ public class Batalha extends Evento {
         }
         if (todosMortos) return;
 
-        boolean venenoPrintado = false; // pra printar uma vez só a mensagem de O VENENO SE ESPALHA...
-        List<Efeito> tempEfeitos = new ArrayList<>();
+        List<BatalhaSubscriber> novosSubscribers = new ArrayList<>();
 
         // adicionar aqui nesse loop os efeitos que fazem algo quando o alvo morre
         for (Inimigo i : inimigos) {
             if (!i.estaVivo()){
-                for (Efeito efeito : listaEfeitos) {
-                    // veneno < ----
-                    if (efeito instanceof Veneno && efeito.getAlvo() == i){
-                        for (Inimigo inimigo2 : inimigos) {
-                            if (inimigo2.estaVivo()) {
-                                Efeito copia = efeito.criaCopia();
-                                copia.setAlvo(inimigo2);
-                                tempEfeitos.add(copia);                                
-                            }
-                            if (!venenoPrintado){
-                                Textos.printaLinhaDevagar(Cor.txtVerdeEscuro(Arte.TOXICO));
-                                InputHandler.esperar();
-                                venenoPrintado = true;
-                            }
-                        }
-                    }
+                for (BatalhaSubscriber subscriber : subscribers) {
+                    
                     // ----------
                 }
             }
         }
+        
         for (Efeito temp : tempEfeitos) {
             this.adicionarEfeito(temp);
         }   

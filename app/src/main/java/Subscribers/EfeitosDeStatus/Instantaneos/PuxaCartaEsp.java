@@ -1,9 +1,9 @@
-package EfeitosDeStatus.Instantaneos;
+package Subscribers.EfeitosDeStatus.Instantaneos;
 
 import Cartas.Carta;
-import EfeitosDeStatus.Efeito;
 import Entidades.Entidade;
 import Entidades.Heroi;
+import Subscribers.EfeitosDeStatus.Efeito;
 import Telas.Eventos.Batalha;
 import Util.InputHandler;
 import Visual.Cor;
@@ -36,7 +36,7 @@ public class PuxaCartaEsp extends PuxaCarta {
     }
 
     @Override
-    public void aplicar() {
+    public void onRoundStart() {
     }
 
     @Override
@@ -64,7 +64,7 @@ public class PuxaCartaEsp extends PuxaCarta {
     }
 
     @Override
-    public void acabar() {
+    public void onRemove() {
     }
     
 }

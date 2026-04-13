@@ -1,7 +1,7 @@
 package Cartas;
 import Entidades.Entidade;
 import Entidades.Heroi;
-import Poderes.Poder;
+import Subscribers.Poderes.Poder;
 import Telas.Eventos.Batalha;
 import Visual.Cor;
 

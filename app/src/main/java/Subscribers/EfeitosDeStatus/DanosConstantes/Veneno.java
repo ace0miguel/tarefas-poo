@@ -1,9 +1,9 @@
-package EfeitosDeStatus.DanosConstantes;
+package Subscribers.EfeitosDeStatus.DanosConstantes;
 
 import Cartas.Carta;
-import EfeitosDeStatus.Efeito;
 import Entidades.Entidade;
 import Entidades.Heroi;
+import Subscribers.EfeitosDeStatus.Efeito;
 import Telas.Eventos.Batalha;
 import Visual.Cor;
 import Visual.Textos;
@@ -20,13 +20,13 @@ public class Veneno extends DanoConstante{
     }
 
     @Override
-    public void aplicar(){
+    public void onRoundStart(){
         this.getAlvo().receberDanoDireto(this.getDur());
         
         if (this.getDur() > 1)
             this.getAlvo().setEnvenenado(true);
 
-        System.out.println("> " +this.getAlvo().getNome() + Cor.cinza  + " sofreu " + this.getDur() + " pontos de dano de " + this.getNomeColorido() + "!"); Textos.sleep(300);
+        System.out.println(); Textos.sleep(300);
     }
 
     @Override

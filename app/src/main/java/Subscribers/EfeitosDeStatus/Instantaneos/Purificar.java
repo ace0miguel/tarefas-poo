@@ -1,8 +1,8 @@
-package EfeitosDeStatus.Instantaneos;
+package Subscribers.EfeitosDeStatus.Instantaneos;
 import Cartas.Carta;
-import EfeitosDeStatus.Efeito;
 import Entidades.Entidade;
 import Entidades.Heroi;
+import Subscribers.EfeitosDeStatus.Efeito;
 import Telas.Eventos.Batalha;
 
 /** remove todos os efeitos (incluindo positivos) */
@@ -23,7 +23,7 @@ public class Purificar extends Efeito {
     }
 
     @Override
-    public void aplicar(){
+    public void onRoundStart(){
     }
 
     @Override
@@ -48,7 +48,7 @@ public class Purificar extends Efeito {
     }
     
     @Override
-    public void acabar() {
+    public void onRemove() {
         this.getAlvo().setPurificar(false);
     }
 }

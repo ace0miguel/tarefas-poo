@@ -1,11 +1,11 @@
-package EfeitosDeStatus.Instantaneos;
+package Subscribers.EfeitosDeStatus.Instantaneos;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import Cartas.Carta;
-import EfeitosDeStatus.Efeito;
 import Entidades.Heroi;
+import Subscribers.EfeitosDeStatus.Efeito;
 import Util.InputHandler;
 
 /** Abre um menu de seleção baseado na lista de compras

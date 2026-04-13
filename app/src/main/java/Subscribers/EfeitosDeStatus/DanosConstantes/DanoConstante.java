@@ -1,8 +1,8 @@
-package EfeitosDeStatus.DanosConstantes;
+package Subscribers.EfeitosDeStatus.DanosConstantes;
 import Cartas.Carta;
-import EfeitosDeStatus.Efeito;
 import Entidades.Entidade;
 import Entidades.Heroi;
+import Subscribers.EfeitosDeStatus.Efeito;
 import Telas.Eventos.Batalha;
 import Visual.Cor;
 import Visual.Textos;
@@ -20,6 +20,7 @@ public class DanoConstante extends Efeito {
     public DanoConstante(DanoConstante copiado){
         super(copiado);
         this.dano = copiado.dano;
+        
     }
 
     public int getDano() {
@@ -32,10 +33,9 @@ public class DanoConstante extends Efeito {
     }
     
     @Override
-    public void aplicar(){
+    public void onRoundStart(){
         this.getAlvo().receberDanoDireto(dano);
  
-        System.out.println("> " +this.getAlvo().getNome() + Cor.cinza + " sofreu " + this.dano + " pontos de dano de " + this.getNomeColorido() + "!"); Textos.sleep(300);
     }
 
     @Override
@@ -53,7 +53,12 @@ public class DanoConstante extends Efeito {
     }
 
     @Override
-    public void acabar() {
+    public String getMsgFimRodada(Batalha batalha, Heroi heroi){
+         return "> " +this.getAlvo().getNome() + Cor.cinza  + " sofreu " + this.getDur() + " pontos de dano de " + this.getNomeColorido() + "!";
+       }
+
+    @Override
+    public void onRemove() {
     }
 
     @Override

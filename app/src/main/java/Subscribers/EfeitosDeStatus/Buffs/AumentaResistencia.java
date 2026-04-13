@@ -1,8 +1,8 @@
-package EfeitosDeStatus.Buffs;
+package Subscribers.EfeitosDeStatus.Buffs;
 import Cartas.Carta;
-import EfeitosDeStatus.Efeito;
 import Entidades.Entidade;
 import Entidades.Heroi;
+import Subscribers.EfeitosDeStatus.Efeito;
 import Telas.Eventos.Batalha;
 
 /** altera a resistencia ( se quiser diminuir so passar um valor negativo ) */
@@ -28,7 +28,7 @@ public class AumentaResistencia extends Buff {
     }
 
     @Override
-    public void aplicar(){
+    public void onRoundStart(){
     }
 
     @Override
@@ -51,7 +51,7 @@ public class AumentaResistencia extends Buff {
     }
     
     @Override
-    public void acabar() {
+    public void onRemove() {
         this.getAlvo().somaResistencia(this.valor * this.stacks * -1);
     }
 }

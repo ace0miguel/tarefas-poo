@@ -51,7 +51,7 @@ public class Mapa {
     /** atualiza o nodeAtual para o filho de indice n do nó passado como argumento */
     public void irPara(DefaultMutableTreeNode posicaoAtual,int n){ 
     // tem uma chance de 15% tomar jumpscare do golden freddy
-        if (RNGHandler.check(15)){ 
+        if (RNGHandler.check(10)){ 
             System.out.println(Cor.txtAmarelo(Arte.GOLDENFREDDY));
             System.out.println(Cor.txtVermelho("RECEBA O JUMPSCARE!"));
             InputHandler.esperar();
