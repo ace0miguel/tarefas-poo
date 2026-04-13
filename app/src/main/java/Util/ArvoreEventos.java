@@ -135,6 +135,7 @@ public class ArvoreEventos {
         else if (profundidadeAtual == p/2) { 
             opcoes.add(tesouro.criaCopia());
         }
+        
         // andar logo antes do boss (cura ou loja)
         else if (profundidadeAtual == p - 1) { 
             sorteados.addAll(getEventosAleatorios(eventosCuradores));
