@@ -145,13 +145,8 @@ public abstract class Efeito implements BatalhaSubscriber{
     public Efeito adicionar(Entidade alvo, Batalha batalha){ 
         Efeito e = this.criaCopia();
         e.setAlvo(alvo); 
-        batalha.adicionarEfeito(e);
+        batalha.adicionarSubscriber(e);
         return e;
-    }
-
-    @Override
-    public void onRoundStart(Batalha batalha, Heroi heroi) {
-        this.passaTurno();
     }
 
     /** cria copia */

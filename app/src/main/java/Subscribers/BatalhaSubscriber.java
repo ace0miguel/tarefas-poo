@@ -22,6 +22,9 @@ public interface BatalhaSubscriber {
     /** chamado quando o heroi é atacado */
     default public void onReceivedHit(Batalha batalha, Heroi heroi, Entidade atacante, int danoRecebido){};
 
+    /** chamado quando o alvo morre */
+    default public void onDeath(Batalha batalha, Entidade alvo){};
+
     /** adiciona um acumulo. retorna true se não for o primeiro */
     default public boolean addStack(Batalha batalha, BatalhaSubscriber novo){
         return false;
@@ -33,7 +36,11 @@ public interface BatalhaSubscriber {
     };
 
     /** padrao: 1. Menor prioridade age primeiro */
-    default public int getPrioridade() {
+    default public int getPrioridade(){
         return 1;
     }   
+
+    default public boolean getRemover(){
+        return false;
+    }
 }

@@ -68,7 +68,7 @@ public class Textos {
         System.out.println();
         // parte de cima da hud
         
-        printaBonito(bordaHudBatalha, 2, 1);
+        printaBonito(bordaHudBatalha, 1, 1);
 
         // ---------------------------------
 
@@ -112,24 +112,24 @@ public class Textos {
 
         // parte de baixo da hud
         
-        printaBonito(bordaHudBatalha, 2, 1);
+        printaBonito(bordaHudBatalha, 1, 1);
 
         // ---------------------------------
         
-        sleep(700);
+        sleep(400);
         System.out.println();
 
         for (Inimigo inimigo : inimigos) {
                 inimigo.anunciarIntencao(heroi);
         }
 
-        sleep(500);
+        sleep(300);
 
         System.out.println();
         System.out.println(heroi.statusEnergia()); 
         System.out.println();
 
-        sleep(500);
+        sleep(200);
     }
 
     /** imprime o estado atual da batalha sem delay (aparece tudo de uma vez) */

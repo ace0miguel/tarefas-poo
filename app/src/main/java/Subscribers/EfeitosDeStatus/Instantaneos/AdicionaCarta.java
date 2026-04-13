@@ -9,11 +9,11 @@ import Util.InputHandler;
 import Visual.Cor;
 
 /** adiciona a carta passada na pilha de compras do heroi */
-public class AdicionaCarta extends Efeito {
+public class AdicionaCarta extends Instantaneo {
     protected Carta carta;
 
     public AdicionaCarta(String nome, String desc, Carta carta){
-        super(nome, desc, 0);
+        super(nome, desc);
         this.carta = carta;
     }
 
