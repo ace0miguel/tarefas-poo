@@ -29,7 +29,7 @@ public class AumentaDano extends Buff {
     }
 
     @Override
-    public void onRoundStart(){
+    public void onRoundStart(Batalha batalha, Heroi heroi){
     }
 
     @Override
@@ -37,7 +37,7 @@ public class AumentaDano extends Buff {
     }
 
     @Override
-    public void onCreate() {
+    public void onCreate(Batalha batalha, Heroi heroi) {
         this.getAlvo().somaDanoExtra(valor);
     }
 

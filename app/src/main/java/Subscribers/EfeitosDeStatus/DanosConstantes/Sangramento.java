@@ -48,7 +48,7 @@ public class Sangramento extends DanoConstante{
     }
 
     @Override
-    public void onRoundStart(){
+    public void onRoundStart(Batalha batalha, Heroi heroi){
         int danoEfetivo = this.stacks * this.getDano();
 
         this.getAlvo().receberDanoDireto(danoEfetivo);
@@ -63,7 +63,7 @@ public class Sangramento extends DanoConstante{
     }
 
     @Override
-    public void onCreate() {
+    public void onCreate(Batalha batalha, Heroi heroi) {
         this.getAlvo().setSangrando(true);
     }
 

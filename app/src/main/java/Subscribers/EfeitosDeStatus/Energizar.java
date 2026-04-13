@@ -37,16 +37,15 @@ public class Energizar extends Efeito {
     }
 
     @Override
-    public void onRoundStart() {
-        this.getAlvo().setEnergizado(true);     
-        }
+    public void onRoundStart(Batalha batalha , Heroi heroi ) {   
+    }
 
     @Override
     public void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha) {
     }
 
     @Override
-    public void onCreate() {
+    public void onCreate(Batalha batalha, Heroi heroi) {
         this.getAlvo().setEnergizado(true);
     }
 
@@ -61,7 +60,7 @@ public class Energizar extends Efeito {
     }
 
     @Override
-    public void onRemove() {
+    public void onRemove(Batalha batalha, Heroi heroi) {
         if (!this.getAlvo().getPurificar()){
             if (this.getAlvo() instanceof Heroi h){
                 h.setEnergiaBonus(this.valor);

@@ -1,6 +1,7 @@
 package Subscribers.Poderes;
 
 import Entidades.Heroi;
+import Telas.Eventos.Batalha;
 import Visual.Cor;
 
 /** no começo da rodada puxa quantidade cartas extras e perde sacrificio pontos de vida. */
@@ -18,7 +19,7 @@ public class CartaAdicional extends Poder {
     }
 
     @Override
-    public void onRoundStart(Heroi heroi){
+    public void onRoundStart(Batalha batalha, Heroi heroi){
         heroi.getMaoAtual().addCartas(heroi.getPilhaCompra(), heroi.getPilhaDescarte(), this.quantidade);
         heroi.receberDanoDireto(sacrificio);
     }
@@ -27,10 +28,6 @@ public class CartaAdicional extends Poder {
     public Poder criaCopia() {
         return new CartaAdicional(this);
     }
-
-    @Override
-    public void onCreate(Heroi heroi){}
-
 
     @Override
     public String status() {

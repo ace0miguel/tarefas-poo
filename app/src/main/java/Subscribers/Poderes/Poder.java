@@ -13,6 +13,7 @@ public abstract class Poder implements BatalhaSubscriber{
     private String nome;
     private String desc;
     private int stacks = 1;
+    // poderes que custam vida pra serem usados
     protected int sacrificio = 0;
 
     public Poder(String nome, String desc) {

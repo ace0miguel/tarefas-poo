@@ -33,7 +33,7 @@ public class DanoConstante extends Efeito {
     }
     
     @Override
-    public void onRoundStart(){
+    public void onRoundStart(Batalha batalha, Heroi heroi){
         this.getAlvo().receberDanoDireto(dano);
  
     }
@@ -62,6 +62,6 @@ public class DanoConstante extends Efeito {
     }
 
     @Override
-    public void onCreate() {
+    public void onCreate(Batalha batalha, Heroi heroi) {
     }  
 }

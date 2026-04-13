@@ -26,11 +26,11 @@ public class PuxaCarta extends Efeito {
     public void addStack(){
         this.stacks++;
 
-        this.onCreate();
+        this.onCreate(Batalha batalha, Heroi heroi);
     }
 
     @Override
-    public void onRoundStart() {
+    public void onRoundStart(Batalha batalha, Heroi heroi) {
     }
 
     @Override
@@ -38,7 +38,7 @@ public class PuxaCarta extends Efeito {
     }
 
     @Override
-    public void onCreate() {
+    public void onCreate(Batalha batalha, Heroi heroi) {
         if (this.getAlvo() instanceof Heroi h) {
             h.getMaoAtual().addCartas(h.getPilhaCompra(), h.getPilhaDescarte(), this.valor);
         } else {

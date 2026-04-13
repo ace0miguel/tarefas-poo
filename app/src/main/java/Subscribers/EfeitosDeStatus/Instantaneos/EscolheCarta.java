@@ -10,11 +10,11 @@ import Util.InputHandler;
 
 /** Abre um menu de seleção baseado na lista de compras
  *  e permite escolher uma carta pra puxar imediatamente */
-public class EscolheCarta extends Efeito {
+public class EscolheCarta extends Instantaneo {
     protected Carta carta;
 
     public EscolheCarta(String nome, String desc) {
-        super(nome, desc, 0);
+        super(nome, desc);
     }
 
     public EscolheCarta(EscolheCarta copiado) {
@@ -22,12 +22,12 @@ public class EscolheCarta extends Efeito {
     }
 
     @Override
-    public void addStack() {
-        this.onCreate();
+    public Efeito criaCopia() {
+        return new EscolheCarta(this);
     }
 
     @Override
-    public void onCreate() {
+    public void onCreate(Batalha batalha, Heroi heroi) {
         Heroi heroi = (Heroi) this.getAlvo();
         List<List<String>> matrizPaginas = InputHandler.montaPaginas(heroi.getPilhaCompra().getPilhaCartas());
 

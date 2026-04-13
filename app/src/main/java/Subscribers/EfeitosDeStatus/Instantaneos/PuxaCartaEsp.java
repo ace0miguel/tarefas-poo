@@ -32,11 +32,11 @@ public class PuxaCartaEsp extends PuxaCarta {
 
     @Override
     public void addStack(){
-        this.onCreate();
+        this.onCreate(Batalha batalha, Heroi heroi);
     }
 
     @Override
-    public void onRoundStart() {
+    public void onRoundStart(Batalha batalha, Heroi heroi) {
     }
 
     @Override
@@ -44,7 +44,7 @@ public class PuxaCartaEsp extends PuxaCarta {
     }
 
     @Override
-    public void onCreate() {
+    public void onCreate(Batalha batalha, Heroi heroi) {
        if (this.getAlvo() instanceof Heroi h) {
             h.getMaoAtual().addCartaEsp(this.carta.criaCopia());
         } else {

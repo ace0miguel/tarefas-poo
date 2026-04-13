@@ -41,7 +41,7 @@ public class CartaPoder extends Carta
     public void aplicarEfeito(Heroi heroi, Entidade alvo, Batalha batalha) {
         Poder p = poder.criaCopia();
 
-        batalha.adicionarPoder(p);
+        batalha.adicionarSubscriber(p);
         
         printaResenha();
     }
