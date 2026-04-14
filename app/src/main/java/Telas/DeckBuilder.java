@@ -10,6 +10,7 @@ import Entidades.Heroi;
 import Util.InputHandler;
 import static Util.Moldes.armadura;
 import static Util.Moldes.bombaSuprema;
+import static Util.Moldes.bombaVeneno;
 import static Util.Moldes.contratoSangue;
 import static Util.Moldes.corteDefensivo;
 import static Util.Moldes.corteProfundo;
@@ -20,6 +21,7 @@ import static Util.Moldes.energiaSupremo;
 import static Util.Moldes.energizar;
 import static Util.Moldes.pactoSangue;
 import static Util.Moldes.presenteMaldito;
+import static Util.Moldes.mestreLaminasCarta;
 import static Util.Moldes.puxaCarta;
 import static Util.Moldes.shieldao;
 import static Util.Moldes.shieldinho;
@@ -43,7 +45,7 @@ public class DeckBuilder {
         // nomes dos decks padrao
         decksPadrao.add(Cor.txtVermelho("Samurai: Cartas de corte (menos dano, aplicam efeito)"));
         decksPadrao.add(Cor.txtAmarelo("John wick: Cartas de tiro (dano direto, sem efeito)"));
-        decksPadrao.add(Cor.txtCinza("deck de teste: ganha automaticamente e 100 de gold logo de cara."));
+        decksPadrao.add(Cor.txtCinza("deck de teste: ativa o modo teste."));
 
         Textos.limpaTela();
         int escolha = InputHandler.selecionar(decksPadrao, Cor.reset + "Escolha um baralho inicial: \n" + Cor.txtCinza("(se voce ganhar a primeira batalha eu te deixo personalizar o deck!)")); 
@@ -94,6 +96,13 @@ public class DeckBuilder {
             case 2 -> {
                 // heroi.addCarta(bomba);
                 // heroi.addCarta(bomba);
+                heroi.addCarta(mestreLaminasCarta);
+                heroi.addCarta(mestreLaminasCarta);
+
+                heroi.addCarta(bombaVeneno);
+                heroi.addCarta(bombaVeneno);
+                heroi.addCarta(bombaVeneno);
+                heroi.addCarta(bombaVeneno);
                 
                 heroi.addCarta(bombaSuprema);
                 heroi.addCarta(bombaSuprema);
@@ -123,8 +132,12 @@ public class DeckBuilder {
                 heroi.addCarta(contratoSangue);
                 heroi.addCarta(contratoSangue);
 
-                // heroi.addCarta(mestreLaminasCarta);
-                // heroi.addCarta(mestreLaminasCarta);
+                heroi.addCarta(mestreLaminasCarta);
+                heroi.addCarta(mestreLaminasCarta);
+                heroi.addCarta(mestreLaminasCarta);
+                heroi.addCarta(mestreLaminasCarta);
+                heroi.addCarta(mestreLaminasCarta);
+                heroi.addCarta(mestreLaminasCarta);
 
                 // heroi.addCarta(egoCarta);
                 // heroi.addCarta(armadura);

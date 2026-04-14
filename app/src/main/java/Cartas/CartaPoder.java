@@ -1,4 +1,7 @@
 package Cartas;
+import java.util.ArrayList;
+import java.util.List;
+
 import Entidades.Entidade;
 import Entidades.Heroi;
 import Subscribers.Poderes.Poder;
@@ -9,7 +12,9 @@ import Visual.Cor;
 public class CartaPoder extends Carta
 {
     private Poder poder;
-    
+
+    { this.tagsRemoviveis = new ArrayList<>(List.of("Area", "Manter", "Sacrificio")); }
+
     public CartaPoder(String nome, String descricao, int custo, Poder poder){
         super(nome, descricao, custo);
         this.poder = poder;
@@ -50,7 +55,7 @@ public class CartaPoder extends Carta
         String retorno = this.getNome();
 
         if (!tags.isEmpty()) {
-            retorno += " - [" + String.join(", ",  tags) + "]";
+            retorno += " - <" + String.join(", ",  tags) + ">";
         }
 
         if (!this.getDescricao().equals("")) {

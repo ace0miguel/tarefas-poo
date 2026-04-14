@@ -69,7 +69,7 @@ public class Inimigo extends Entidade{
     public void resultadoAcao(Heroi alvo){
         if (this.estaVivo()){
             nextAcao.resultado(this, alvo);
-            Textos.sleep(50);
+        Textos.sleep(200);
             Cor.reset();
         }
     }

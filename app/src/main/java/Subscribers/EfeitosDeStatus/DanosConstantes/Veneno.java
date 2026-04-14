@@ -14,7 +14,7 @@ import Visual.Cor;
 import Visual.Textos;
 
 /** Causa dano igual a duraçao restante; ao colocar veneno denovo soma a duraçao;
-caso um inimigo morra envenenado o veneno espalha para todos os outros com a mesma duraçao de quando ele morreu */
+caso um inimigo morra enquanto envenenado o veneno espalha para todos os outros com a mesma duraçao de quando ele morreu */
 public class Veneno extends DanoConstante{
     public Veneno(String nome, String desc, int dur, int dano){ // a variavel dano nao faz nada ok nao se preocupar
         super(nome, desc, dur, dano);
@@ -39,13 +39,21 @@ public class Veneno extends DanoConstante{
         if (alvo != this.getAlvo())
             return;
 
+        int duracaoAtual = this.getDur();
+
         boolean espalhou = false;
         List<Inimigo> listaInimigos = batalha.getInimigos();
         for (Inimigo i : listaInimigos){
-            if (i != alvo){
-                adicionar(i, batalha);
+            if (i != alvo && i.estaVivo()){
+                Veneno copia = new Veneno(this);
+                copia.setDur(duracaoAtual);
+                copia.setAlvo(i);
+
+                batalha.adicionarFuturoSubscriber(copia);
+                
                 if (!espalhou){
                     Textos.printaBonito(Cor.txtVerdeEscuro(Arte.TOXICO), 1 ,1);
+                    InputHandler.esperar();
                     espalhou = true;
                 }
             }

@@ -1,5 +1,6 @@
 package Subscribers.Poderes;
 
+import Entidades.Entidade;
 import Subscribers.BatalhaSubscriber;
 import Telas.Eventos.Batalha;
 import Visual.Cor;
@@ -64,6 +65,7 @@ public abstract class Poder implements BatalhaSubscriber{
         this.stacks = stacks;
     }
 
+    /** adiciona um acumulo */
     public void stackar(){
         this.stacks++;
     }
@@ -71,6 +73,7 @@ public abstract class Poder implements BatalhaSubscriber{
     public void setSacrificio(int sacrificio) {
         this.sacrificio = sacrificio;
     }
+
     /** retorna true se o poder passado é igual a instancia do poder comparando */
     public boolean acumulaPoder(BatalhaSubscriber novo){
         if (!(novo instanceof Poder))
@@ -82,6 +85,7 @@ public abstract class Poder implements BatalhaSubscriber{
 
         return true;
     }
+
     @Override
     public boolean addStack(Batalha batalha, BatalhaSubscriber novo) {
         if (!acumulaPoder(novo)){

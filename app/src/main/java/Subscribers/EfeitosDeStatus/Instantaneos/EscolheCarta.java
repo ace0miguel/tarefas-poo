@@ -1,5 +1,6 @@
 package Subscribers.EfeitosDeStatus.Instantaneos;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -10,7 +11,8 @@ import Telas.Eventos.Batalha;
 import Util.InputHandler;
 
 /** Abre um menu de seleção baseado na lista de compras
- *  e permite escolher uma carta pra puxar imediatamente */
+ *  e permite escolher uma carta pra puxar imediatamente
+ *  e dps reembaralha a pilha de compras (pq o jogador viu a ordem) */
 public class EscolheCarta extends Instantaneo {
     protected Carta carta;
 
@@ -44,6 +46,8 @@ public class EscolheCarta extends Instantaneo {
 
             h.getMaoAtual().addCartaEsp(escolha);
             h.getPilhaCompra().getPilhaCartas().remove(escolha);
+            
+            Collections.shuffle(h.getPilhaCompra().getPilhaCartas());
         }
     }
 }

@@ -63,8 +63,8 @@ public class Textos {
         limpaTela();
         boolean aux1 = false;
         boolean aux2 = false;
-        sleep(500);
-        printaLinhaDevagar(Arte.tituloSombreado); sleep(700);
+        sleep(300);
+        printaLinhaDevagar(Arte.tituloSombreado); sleep(200);
         System.out.println();
         // parte de cima da hud
         
@@ -77,7 +77,7 @@ public class Textos {
             linhaStatus += " > " + poder.getNomeColorido() + " [" + poder.getStacks() + "] " + Cor.txtCinza("|");
         }
 
-        printaColunaDevagar(linhaStatus,8);
+        printaColunaDevagar(linhaStatus,5);
         sleep(25);
         
         for (Efeito efeito : listaEfeitos) {
@@ -94,7 +94,7 @@ public class Textos {
 
         for (int i = 0; i < inimigos.length; i++){
             if (inimigos[i].estaVivo()){
-                printaColunaDevagar(inimigos[i].status(), 8); sleep(25);
+                printaColunaDevagar(inimigos[i].status(), 5); sleep(25);
                 aux2 = false;
 
                 for (Efeito efeito : listaEfeitos) {
@@ -116,20 +116,20 @@ public class Textos {
 
         // ---------------------------------
         
-        sleep(400);
+        sleep(200);
         System.out.println();
 
         for (Inimigo inimigo : inimigos) {
                 inimigo.anunciarIntencao(heroi);
         }
 
-        sleep(300);
+        sleep(100);
 
         System.out.println();
-        System.out.println(heroi.statusEnergia()); 
+        printaBonito(heroi.statusEnergia(), 5 ,2); 
         System.out.println();
 
-        sleep(200);
+        sleep(100);
     }
 
     /** imprime o estado atual da batalha sem delay (aparece tudo de uma vez) */

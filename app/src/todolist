@@ -17,3 +17,5 @@ criar um efeito Instantaneo, pra todos os instantaneos herdarem deckBuilder
 adicionar mais poderes fracos
 
 organizar os checks de limpar no batalha (limpasubscribers, adicionaefieto, notifica morte e tal)
+
+implementar cartaAtaqueEfeitoCondicionalg

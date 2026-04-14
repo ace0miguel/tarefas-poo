@@ -25,13 +25,16 @@ import Visual.Textos;
 
 public class Batalha extends Evento {
     private int turno; // 0 -> heroi, 1 -> inimigos
+    private boolean fimBatalha = false;
 
     private List<Inimigo> inimigos; // lista viva dos inimigos no combate atual
     private Inimigo[] moldesInimigos; // moldes imutaveis para recriar a batalha
     private List<Inimigo> novosInimigos = new ArrayList<>(); // lista de inimigos a serem adicionados na batalha quando possivel
 
+    private int sleepFimRodada = 200; // tempo de sleep depois de printar as mensagens de fim de rodada
     private int recompensa = 0; // recompensa em dinheiro pela batalha, baseada no tier dos inimigos
     private int dificuldadeTotal = 0; // soma da dificuldade(tier) de cada inimigo
+    private boolean primeiraRodada = true;
 
     private Mao mao = new Mao();
     private PilhaCompra pilhaCompra = new PilhaCompra();
@@ -95,6 +98,10 @@ public class Batalha extends Evento {
         notificaMorte();
     }
 
+    public void adicionarFuturoSubscriber(BatalhaSubscriber novo) {
+        novosSubscribers.add(novo);
+    }
+
     /** adiciona novos subscribers */
     private void addNovosSubscribers() {
         if (novosSubscribers.isEmpty()) {
@@ -148,22 +155,32 @@ public class Batalha extends Evento {
         for (Inimigo inimigo : inimigos) 
             inimigo.escolheAcao();
 
+        for (BatalhaSubscriber sub : subscribers) {
+            sub.onBattleStart(this, heroi);
+        }
+
         batalha();
     }
 
         public void batalha(){
         // loop principal: checa se o heroi ou ao menos um inimigo esta vivo
-        while(heroi.estaVivo() == true && inimigos.stream().anyMatch(i -> i.estaVivo() == true)){
-
-            if (turno == 0) turnoHeroi();
-            else turnoInimigos();
+        while(heroi.estaVivo() == true && inimigos.stream().anyMatch(i -> i.estaVivo() == true && fimBatalha == false)){
+            if (turno == 0 && !fimBatalha) turnoHeroi();
+            else if (turno != 0 && !fimBatalha) turnoInimigos();
         }
         
         fimBatalha(); 
     }
 
     public void turnoHeroi(){
-        mao.addCinco(pilhaCompra, pilhaDescarte);
+        if (primeiraRodada) {
+            mao.inicioBatalha(pilhaCompra, pilhaDescarte);
+            primeiraRodada = false;
+        }
+        else {
+            mao.addCinco(pilhaCompra, pilhaDescarte);
+        }
+        
         boolean primeiroLoop = true; // se true, printa a animaçao de batalha
         boolean escolhaInvalida = false; // se true, mostra escolha invalida
 
@@ -198,10 +215,10 @@ public class Batalha extends Evento {
                 continue;
 
             if (notificaMorte() == 0) {
-                fimBatalha();
+                return;
             }
 
-            // ta aqui principalmente pelo purificra
+            // ta aqui principalmente pelo purificar
             limpaSubscribers();
 
             // se conseguir usar todas as cartas da mao puxa mais 5 e ganha 2 de energia bonus, injeçao de dopamina assim q vc mantem um jogador preso
@@ -225,7 +242,7 @@ public class Batalha extends Evento {
 
     public void turnoInimigos(){
         Textos.limpaTela();
-        Textos.printaBonito(Cor.txtCinza(Arte.bordaHud9), 2,2); Textos.sleep(300);
+        Textos.printaBonito(Cor.txtCinza(Arte.bordaHud9), 2,2); Textos.sleep(sleepFimRodada);
 
         for (Inimigo inimigo : inimigos) {
             if (inimigo.estaVivo()){ // adicionei isso pq joguei uma partida aqui e tomei hit de um inimigo morto.
@@ -258,6 +275,10 @@ public class Batalha extends Evento {
         heroi.setPilhaCompra(null);
         heroi.setPilhaDescarte(null);
 
+        for (BatalhaSubscriber sub : subscribers) {
+            sub.onBattleEnd(this, heroi);
+        }
+
         if(heroi.estaVivo()){
             vitoria();
         } else {
@@ -268,7 +289,11 @@ public class Batalha extends Evento {
     /** troca de turno e se voltar pra vez do heroi chama o passaRodada  */
     public void passaTurno(){
         turno = (turno == 0) ? 1 : 0;
-        notificaMorte();
+
+        if (notificaMorte() == 0) {
+            return;
+        }
+
         if (turno == 0) passaRodada();
         
         addNovosInimigos();
@@ -286,8 +311,8 @@ public class Batalha extends Evento {
         
         for (BatalhaSubscriber subscriber : subscribers) {
             subscriber.onRoundStart(this, heroi);
-            Textos.printaBonito(subscriber.getMsgFimRodada(this, heroi) + "\n", 2,2);
-            Textos.sleep(300);
+            Textos.printaBonito(subscriber.getMsgFimRodada(this, heroi) + "\n", 5,2);
+            Textos.sleep(sleepFimRodada);
         }
 
         // se alguma msgfimrodada nao for vazio pula uma linha
@@ -296,14 +321,15 @@ public class Batalha extends Evento {
             System.out.println();
         }
 
-        Textos.printaBonito(Cor.txtCinza(Arte.bordaHud9), 2,2); Textos.sleep(300);
+        Textos.printaBonito(Cor.txtCinza(Arte.bordaHud9), 2,2);
+        Textos.sleep(sleepFimRodada);
         InputHandler.esperar();
 
-        if (notificaMorte() == 0) {
-            fimBatalha();
-        }
-
         limpaSubscribers();
+
+        if (notificaMorte() == 0) {
+            return;
+        }
 
         // notifica possiveis meia vida
         for (Inimigo inimigo : inimigos) {
@@ -421,7 +447,10 @@ public class Batalha extends Evento {
         for (Inimigo inimigo : inimigos) {
             if (inimigo.estaVivo()) todosMortos = false;
         }
-        if (todosMortos) return 0;
+        if (todosMortos) {
+            fimBatalha = true;
+            return 0;
+        }
 
         for (Inimigo i : inimigos) {
             if (!i.estaVivo()){
@@ -432,6 +461,9 @@ public class Batalha extends Evento {
         } 
 
         inimigos.removeIf(inimigo -> inimigo.estaVivo() == false);
+
+        addNovosSubscribers();
+
         return inimigos.size();
     }
 

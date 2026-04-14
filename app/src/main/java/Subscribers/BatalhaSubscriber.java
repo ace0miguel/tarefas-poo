@@ -6,10 +6,17 @@ import Entidades.Heroi;
 import Telas.Eventos.Batalha;
 
 public interface BatalhaSubscriber {
-    /** chamado quando o efeito é adicionado a batalha */
+
+    /** chamado quando um batalha começa */
+    default public void onBattleStart(Batalha batalha, Heroi heroi){};
+
+    /** chamado quando uma batalha termina */
+    default public void onBattleEnd(Batalha batalha, Heroi heroi){};
+
+    /** chamado quando a instancia é adicionada a batalha */
     default public void onCreate(Batalha batalha, Heroi heroi){};
 
-    /** chamado sempre que o efeito vai ser removido da batalha */
+    /** chamado sempre que a instancia vai ser removida da batalha */
     default public void onRemove(Batalha batalha, Heroi heroi){};
 
     /** chamado no inicio de cada rodada */
@@ -34,7 +41,7 @@ public interface BatalhaSubscriber {
         return "";
     };
 
-    /** padrao: 1. Menor prioridade age primeiro */
+    /** Menor prioridade age primeiro. padrão: 1 */
     default public int getPrioridade(){
         return 1;
     }   

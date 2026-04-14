@@ -5,7 +5,10 @@ import static Visual.Textos.menuStatus;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
+import Cartas.Carta;
 import Entidades.Heroi;
 import Util.InputHandler;
 import Util.Recompensas;
@@ -15,7 +18,7 @@ import Visual.Textos;
 
 /** evento aleatório onde o jogador pode pagar pra se curar ou pra receber cartas aleatórias */
 public class Loja extends Evento{
-    List<String> opcoes = new ArrayList<>(Arrays.asList("Poções de vida", "Pacotes de carta"));
+    List<String> opcoes = new ArrayList<>(Arrays.asList("Poções de vida", "Pacotes de carta", "Edição de tags"));
 
     
     @Override 
@@ -60,6 +63,9 @@ public class Loja extends Evento{
                         }
                     }
                 }
+                case 2-> {
+                    edicaoTags(heroi);
+                }
             }
         }
     }
@@ -82,6 +88,73 @@ public class Loja extends Evento{
             System.out.println(Cor.txtVermelho("Você não tem dinheiro suficiente!"));
             InputHandler.esperar();
         }  
+    }
+
+    public void edicaoTags(Heroi heroi){
+        List<String> opcoes = new ArrayList<>(Arrays.asList("Adicionar tag", "Remover tag"));
+
+        while (true){
+            int escolha = InputHandler.selecionar(opcoes, true, Cor.txtAmareloClaro("O que você deseja fazer? " + menuStatus(heroi)));
+            AtomicInteger pagina = new AtomicInteger(0);
+
+            if (escolha == -1) return;
+
+            List<List<String>> matrizPaginas = InputHandler.montaPaginas(heroi.getBaralho());
+
+            Carta carta = heroi.getBaralho().get(InputHandler.menu(matrizPaginas, pagina, false));
+
+            switch (escolha) {
+                case 0 -> { // ADICIONAR TAG
+                    List<String> disponiveis = new ArrayList<>();
+
+                    for (String t : carta.tagsCompraveis) {
+                        if (!carta.getTags().contains(t)) {
+                            disponiveis.add(t);
+                        }
+                    }
+
+                    if (disponiveis.isEmpty()) {
+                        System.out.println(Cor.txtAmarelo("esta carta já possui todas as tags compráveis."));
+                        InputHandler.esperar();
+                        break;
+                    }
+
+                    int opcao = InputHandler.selecionar(disponiveis, true, Cor.txtAmareloClaro("escolha uma tag para " + Cor.txtVerde("adicionar:")));
+                    if (opcao != -1) {
+                        String tagEscolhida = disponiveis.get(opcao);
+
+                        carta.aplicarTag(tagEscolhida, true);
+
+                        System.out.println(Cor.txtReset("tag < " + Cor.txtRosa(tagEscolhida) + " > adicionada com sucesso!"));
+                        InputHandler.esperar();
+                    }
+                }
+                case 1 -> { // REMOVER TAG
+                    List<String> disponiveis = new ArrayList<>();
+
+                    for (String t : carta.tagsRemoviveis) {
+                        if (carta.getTags().contains(t)) {
+                            disponiveis.add(t);
+                        }
+                    }
+
+                    if (disponiveis.isEmpty()) {
+                        System.out.println(Cor.txtAmarelo("esta carta não possui tags para remover!"));
+                        InputHandler.esperar();
+                        break;
+                    }
+
+                    int opcao = InputHandler.selecionar(disponiveis, true, Cor.txtAmareloClaro("escolha uma tag para " + Cor.txtVermelho("remover:")));
+
+                    if (opcao != -1) {
+                        String tagEscolhida = disponiveis.get(opcao);
+                        carta.aplicarTag(tagEscolhida, false);
+                        System.out.println(Cor.txtReset("tag < " + Cor.txtRosa(tagEscolhida) + " > removida com sucesso!"));
+                        InputHandler.esperar();
+                    }
+                }
+            }   
+        }
     }
 
     @Override

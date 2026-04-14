@@ -63,7 +63,7 @@ public class CartaAtaque extends Carta
         String retorno = this.getNome();
 
         if (!tags.isEmpty()) {
-            retorno += " - [" + String.join(", ",  tags) + "]";
+            retorno += " - <" + String.join(", ",  tags) + ">";
         }
 
         if (!this.getDescricao().equals("")) {

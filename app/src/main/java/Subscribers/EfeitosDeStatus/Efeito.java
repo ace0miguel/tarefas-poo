@@ -167,6 +167,13 @@ public abstract class Efeito implements BatalhaSubscriber{
         return e;
     }
 
+    /** coloca na lista de espera pra adicionar subscriber */
+    public void setAdicionar(Entidade alvo, Batalha batalha) {
+        Efeito e = this.criaCopia();
+        e.setAlvo(alvo); 
+        batalha.adicionarFuturoSubscriber(e);
+    }
+
     /** cria copia */
     public Efeito criaCopia(){ return this;};
 

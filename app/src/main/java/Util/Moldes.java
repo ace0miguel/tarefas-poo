@@ -124,7 +124,6 @@ public class Moldes {
 
     public static EscolheCarta escolheCarta = new EscolheCarta("Escolhe uma carta", "Escolha uma carta da pilha de compra");
 
-
     // poderes -------------
     public static Poder dedoNervoso = new MaosLeves(("JOHN WICK!"), "Sempre que atirar, ATIRE NOVAMENTE! pelo tanto de acumulos desse poder.", 1);
 
@@ -175,7 +174,8 @@ public class Moldes {
         desprezo = new CartaAtaqueComEfeito("Desprezo.", "causa muito dano porém irrita seu adversario", 4, 26, ego, false);
         desprezo.setResenha(Arte.DESPREZO); desprezo.setRaridade(2);
 
-        presenteMaldito = new CartaAtaqueComEfeito("Presente maldito", "Um presente de um anfitrião misterioso... " + Cor.txtVermelho("[Sacrifício: 5]"), 4, 24, sangramento, false); presenteMaldito.setResenha((Arte.hahaha).repeat(18)); presenteMaldito.setRaridade(4); 
+        presenteMaldito = new CartaAtaqueComEfeito("Presente sinistro", "Um presente de um anfitrião misterioso... " + Cor.txtVermelho("[Sacrifício: 5]"), 4, 24, sangramento, false); 
+        presenteMaldito.setResenha((Arte.hahaha).repeat(18)); presenteMaldito.setRaridade(4); 
         presenteMaldito.setConsumir(true); presenteMaldito.setSacrificio(5); presenteMaldito.setEfeitoEmArea(true);
 
         // cartas habilidade
@@ -214,10 +214,10 @@ public class Moldes {
 
         // cartas poder
         dedoNervosoCarta = new CartaPoder("JOHN WICK", "Atire novamente sempre que usar uma carta de tiro!", 3, dedoNervoso); 
-        dedoNervosoCarta.setRaridade(3);
+        dedoNervosoCarta.setRaridade(3); 
 
         mestreLaminasCarta = new CartaPoder("Mestre das lâminas", "Corte novamente sempre que usar uma carta de corte!", 3, mestreLaminas); 
-        mestreLaminasCarta.setRaridade(3);
+        mestreLaminasCarta.setRaridade(3); mestreLaminasCarta.setManter(true);
 
         contratoSangue = new CartaPoder("Contrato de sangue", "No início de cada turno, puxe 1 carta adicional e perca 1 ponto de vida.", 3, cartaAdicional); 
         contratoSangue.setRaridade(3);
