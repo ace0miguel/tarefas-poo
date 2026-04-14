@@ -20,8 +20,8 @@ public class CartaAdicional extends Poder {
 
     @Override
     public void onRoundStart(Batalha batalha, Heroi heroi){
-        heroi.getMaoAtual().addCartas(heroi.getPilhaCompra(), heroi.getPilhaDescarte(), this.quantidade);
-        heroi.receberDanoDireto(sacrificio);
+        heroi.setCartasBonus(heroi.getCartasBonus() + (this.quantidade*this.getStacks()));
+        heroi.receberDanoDireto(this.sacrificio*this.getStacks());
     }
 
     @Override

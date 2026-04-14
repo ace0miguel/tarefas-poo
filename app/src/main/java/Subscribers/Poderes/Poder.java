@@ -1,8 +1,5 @@
 package Subscribers.Poderes;
 
-import Cartas.Carta;
-import Entidades.Entidade;
-import Entidades.Heroi;
 import Subscribers.BatalhaSubscriber;
 import Telas.Eventos.Batalha;
 import Visual.Cor;
@@ -13,7 +10,8 @@ public abstract class Poder implements BatalhaSubscriber{
     private String nome;
     private String desc;
     private int stacks = 1;
-    // poderes que custam vida pra serem usados
+
+    // vida ao ser subtraida ao usar o poder (cada subclasse usa de uma maneira)
     protected int sacrificio = 0;
 
     public Poder(String nome, String desc) {
@@ -27,12 +25,16 @@ public abstract class Poder implements BatalhaSubscriber{
         this.sacrificio = copiado.sacrificio;
     }
 
-    public Poder criaCopia(){ return null; };
+    public abstract Poder criaCopia();
     
-    public String status(){ return null; };
+    public abstract String status();
     
     // getters ------------
     public String getNome() {
+        return this.nome;
+    }
+
+    public String getNomeColorido() {
         return Cor.txtRoxo(this.nome);
     }
     
@@ -69,4 +71,26 @@ public abstract class Poder implements BatalhaSubscriber{
     public void setSacrificio(int sacrificio) {
         this.sacrificio = sacrificio;
     }
+    /** retorna true se o poder passado é igual a instancia do poder comparando */
+    public boolean acumulaPoder(BatalhaSubscriber novo){
+        if (!(novo instanceof Poder))
+            return false;
+
+        else if (novo instanceof Poder p)
+            if (p.getClass() != this.getClass() || !p.getNome().equals(this.nome))
+                return false;
+
+        return true;
+    }
+    @Override
+    public boolean addStack(Batalha batalha, BatalhaSubscriber novo) {
+        if (!acumulaPoder(novo)){
+            return false;
+        }
+
+        stackar();
+        return true;
+    }
+
+    
 }

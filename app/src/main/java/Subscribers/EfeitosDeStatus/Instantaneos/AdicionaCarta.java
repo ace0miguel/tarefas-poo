@@ -1,9 +1,7 @@
 package Subscribers.EfeitosDeStatus.Instantaneos;
 
 import Cartas.Carta;
-import Entidades.Entidade;
 import Entidades.Heroi;
-import Subscribers.BatalhaSubscriber;
 import Subscribers.EfeitosDeStatus.Efeito;
 import Telas.Eventos.Batalha;
 import Util.InputHandler;
@@ -32,17 +30,6 @@ public class AdicionaCarta extends Instantaneo {
     }
 
     @Override
-    public boolean addStack(Batalha batalha, BatalhaSubscriber novo){
-        this.stacks++;
-
-        if (this.getAlvo() instanceof Heroi h)
-            this.onCreate(batalha, h);
-
-        if (this.stacks > 1) return true;
-        
-    }
-
-    @Override
     public void onCreate(Batalha batalha, Heroi heroi) {
         if (this.getAlvo() instanceof Heroi h) {
             h.getPilhaCompra().addCartaPilha(this.carta.criaCopia());
@@ -56,10 +43,4 @@ public class AdicionaCarta extends Instantaneo {
     public Efeito criaCopia() {
         return new AdicionaCarta(this);
     }
-
-    @Override
-    public String status() {
-        return "";    
-    }
-    
 }

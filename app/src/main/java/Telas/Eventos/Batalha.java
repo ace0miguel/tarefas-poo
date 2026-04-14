@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import Cartas.Carta;
 import Cartas.CartaAtaqueComEfeito;
@@ -15,10 +16,6 @@ import Entidades.Heroi;
 import Entidades.Inimigo;
 import Subscribers.BatalhaSubscriber;
 import Subscribers.EfeitosDeStatus.Efeito;
-import Subscribers.EfeitosDeStatus.Energizar;
-import Subscribers.EfeitosDeStatus.DanosConstantes.DanoConstante;
-import Subscribers.EfeitosDeStatus.DanosConstantes.Veneno;
-import Subscribers.EfeitosDeStatus.Instantaneos.Purificar;
 import Subscribers.Poderes.Poder;
 import Util.InputHandler;
 import Util.Recompensas;
@@ -44,6 +41,8 @@ public class Batalha extends Evento {
     // subscribers --------
     private ArrayList<BatalhaSubscriber> subscribers = new ArrayList<>();
     private ArrayList<BatalhaSubscriber> novosSubscribers = new ArrayList<>();
+
+    // listas pra printar o estado da batalha
     private ArrayList<Efeito> listaEfeitos = new ArrayList<>(); 
     private ArrayList<Poder> listaPoderes = new ArrayList<>();
     // -------------
@@ -89,6 +88,13 @@ public class Batalha extends Evento {
         novosInimigos.clear();
     }
 
+    private void checkAcaoHeroi(){
+        addNovosSubscribers();
+        addNovosInimigos();
+        limpaSubscribers();
+        notificaMorte();
+    }
+
     /** adiciona novos subscribers */
     private void addNovosSubscribers() {
         if (novosSubscribers.isEmpty()) {
@@ -101,7 +107,6 @@ public class Batalha extends Evento {
             }
         }
         
-        subscribers.sort(Comparator.comparing(BatalhaSubscriber::getPrioridade));
         novosSubscribers.clear();
     }
 
@@ -146,6 +151,130 @@ public class Batalha extends Evento {
         batalha();
     }
 
+        public void batalha(){
+        // loop principal: checa se o heroi ou ao menos um inimigo esta vivo
+        while(heroi.estaVivo() == true && inimigos.stream().anyMatch(i -> i.estaVivo() == true)){
+
+            if (turno == 0) turnoHeroi();
+            else turnoInimigos();
+        }
+        
+        fimBatalha(); 
+    }
+
+    public void turnoHeroi(){
+        mao.addCinco(pilhaCompra, pilhaDescarte);
+        boolean primeiroLoop = true; // se true, printa a animaçao de batalha
+        boolean escolhaInvalida = false; // se true, mostra escolha invalida
+
+        // loop da escolha de ação
+        while(true){ 
+            Textos.limpaTela();
+
+            if (escolhaInvalida){
+                System.out.println();
+                System.out.println(Textos.escolhaInvalida(mao.getSize()));
+                InputHandler.esperar();
+                Textos.limpaTela();
+                escolhaInvalida = false;  
+            }
+
+            // mostra a animaçao de batalha apenas caso seja o inicio da rodada e o jogador nao esteja usando deck teste
+            printaBatalha(primeiroLoop);
+            primeiroLoop = false;
+
+            int escolha = mao.mostrar(); 
+
+            if (escolha == mao.getSize()) // opção de passar o turno
+                break; 
+
+            if (escolha > mao.getSize() || escolha < 0){  // opçao inválida
+                escolhaInvalida = true;
+                continue;
+            }
+
+
+            if (usaCarta(escolha) == -1)
+                continue;
+
+            if (notificaMorte() == 0) {
+                fimBatalha();
+            }
+
+            // ta aqui principalmente pelo purificra
+            limpaSubscribers();
+
+            // se conseguir usar todas as cartas da mao puxa mais 5 e ganha 2 de energia bonus, injeçao de dopamina assim q vc mantem um jogador preso
+            if (mao.getSize() == 0){
+                rodadaBonus();
+            }
+
+            // notifica possiveis meia vida
+            for (Inimigo inimigo : inimigos) {
+                inimigo.checkMeiaVida(inimigo, heroi, this);
+            }
+            heroi.checkMeiaVida(heroi, heroi, this);
+
+            addNovosInimigos();
+        }            
+
+        mao.limpa(pilhaDescarte);    
+        passaTurno();
+    }
+
+
+    public void turnoInimigos(){
+        Textos.limpaTela();
+        Textos.printaBonito(Cor.txtCinza(Arte.bordaHud9), 2,2); Textos.sleep(300);
+
+        for (Inimigo inimigo : inimigos) {
+            if (inimigo.estaVivo()){ // adicionei isso pq joguei uma partida aqui e tomei hit de um inimigo morto.
+                inimigo.passaRodada(); // reseta os bonus (escudo por enquanto)
+                inimigo.resultadoAcao(heroi); // printa oq ele ta fazendo (antes de fazer pq as vezes ele se mata)
+                inimigo.realizarAcao(heroi, this); // faz oq ele ia fazer
+                inimigo.escolheAcao(); // escolhe prox ação
+
+                // checa possiveis meia vida
+                inimigo.checkMeiaVida(inimigo, heroi, this);
+                heroi.checkMeiaVida(heroi, heroi, this);
+            }
+        }
+
+        System.out.println();
+    
+        passaTurno();
+    }
+
+    public void fimBatalha(){
+        System.out.println();
+        Cor.printaAmarelo("DUELO ENCERRADO!\n");
+        System.out.println();
+
+        Textos.sleep(1500);
+        Textos.limpaTela();
+
+        // tira as referencias de mao e pilha do heroi
+        heroi.setMaoAtual(null);
+        heroi.setPilhaCompra(null);
+        heroi.setPilhaDescarte(null);
+
+        if(heroi.estaVivo()){
+            vitoria();
+        } else {
+            derrota();
+        }
+    }
+
+    /** troca de turno e se voltar pra vez do heroi chama o passaRodada  */
+    public void passaTurno(){
+        turno = (turno == 0) ? 1 : 0;
+        notificaMorte();
+        if (turno == 0) passaRodada();
+        
+        addNovosInimigos();
+    }
+
+
     public void passaRodada(){
         heroi.resetEfeitos();
 
@@ -157,11 +286,17 @@ public class Batalha extends Evento {
         
         for (BatalhaSubscriber subscriber : subscribers) {
             subscriber.onRoundStart(this, heroi);
-            Textos.printaBonito(subscriber.getMsgFimRodada(this, heroi), 2,2);
+            Textos.printaBonito(subscriber.getMsgFimRodada(this, heroi) + "\n", 2,2);
             Textos.sleep(300);
         }
 
-        Textos.printaBonito(Cor.txtCinza( "\n" + Arte.bordaHud9), 2,2); Textos.sleep(300);
+        // se alguma msgfimrodada nao for vazio pula uma linha
+        boolean msgPrintada = subscribers.stream().anyMatch(subscriber -> !subscriber.getMsgFimRodada(this, heroi).equals(""));
+        if (msgPrintada) {
+            System.out.println();
+        }
+
+        Textos.printaBonito(Cor.txtCinza(Arte.bordaHud9), 2,2); Textos.sleep(300);
         InputHandler.esperar();
 
         if (notificaMorte() == 0) {
@@ -179,24 +314,31 @@ public class Batalha extends Evento {
         heroi.passaRodada(); // remove os bonus que acabam (escudo, etc) e reseta energia
     }
 
-    /** troca de turno e se voltar pra vez do heroi chama o passaRodada  */
-    public void passaTurno(){
-        turno = (turno == 0) ? 1 : 0;
-        notificaMorte();
-        if (turno == 0) passaRodada();
-        
-        addNovosInimigos();
-    }
-
     /** notifica onRemove e remove os subscribers*/
     public void limpaSubscribers(){     
+        List<BatalhaSubscriber> toRemove = new ArrayList<>();
+
         for (BatalhaSubscriber subscriber : subscribers ) {
             if (subscriber.getRemover()){
-                subscriber.onRemove(this, heroi);
+                toRemove.add(subscriber);
             }
         }
 
-        subscribers.removeIf(subscriber -> (subscriber.getRemover()== true));
+        for (BatalhaSubscriber subscriber : toRemove) {
+            subscriber.onRemove(this, heroi);
+        }
+
+        subscribers.removeAll(toRemove);
+
+        listaEfeitos.removeIf(efeito -> !subscribers.contains(efeito));
+        listaPoderes.removeIf(poder -> !subscribers.contains(poder));
+    }
+
+    /** retorna os subscribers da entidade passada */
+    public List<BatalhaSubscriber> getSubscribers(Entidade alvo) {
+        return subscribers.stream()
+                .filter(subscriber -> subscriber.getAlvo() == alvo)
+                .collect(Collectors.toList());
     }
 
     /** printa os inimigos vivos, valida a escolha e retorna o q vc escolheu. retorno -1: voltar*/
@@ -260,6 +402,12 @@ public class Batalha extends Evento {
         this.subscribers.add(novoSubscriber);
         novoSubscriber.onCreate(this, heroi);
         this.subscribers.sort(Comparator.comparing(BatalhaSubscriber::getPrioridade)); // ordena os efeitos por prioridade pra sangramento sobrepor resistencia
+
+        /** adiciona nas listas correspondentes, pra printar o estado da batalha corretamente */
+        if (novoSubscriber instanceof Efeito e)
+            this.listaEfeitos.add(e);
+        else if (novoSubscriber instanceof Poder p)
+            this.listaPoderes.add(p);
     }
     
 
@@ -275,7 +423,6 @@ public class Batalha extends Evento {
         }
         if (todosMortos) return 0;
 
-        // adicionar aqui nesse loop os efeitos que fazem algo quando o alvo morre
         for (Inimigo i : inimigos) {
             if (!i.estaVivo()){
                 for (BatalhaSubscriber subscriber : subscribers) {
@@ -288,94 +435,14 @@ public class Batalha extends Evento {
         return inimigos.size();
     }
 
-    public void turnoHeroi(){
-        mao.addCinco(pilhaCompra, pilhaDescarte);
-        boolean primeiroLoop = true; // se true, printa a animaçao de batalha
-        boolean escolhaInvalida = false; // se true, mostra escolha invalida
+    public void rodadaBonus(){
+        Textos.sobeTela();
 
-        // loop da escolha de ação
-        while(true){ 
-            Textos.limpaTela();
+        Textos.printaLinhaDevagar(Cor.rosa + (Arte.bonus).repeat(15) + Cor.reset);
 
-            if (escolhaInvalida){
-                System.out.println();
-                System.out.println(Textos.escolhaInvalida(mao.getSize()));
-                InputHandler.esperar();
-                Textos.limpaTela();
-                escolhaInvalida = false;  
-            }
-
-            // mostra a animaçao de batalha apenas caso seja o inicio da rodada e o jogador nao esteja usando deck teste
-            printaBatalha(primeiroLoop);
-            primeiroLoop = false;
-
-            // trecos pra mostrar os buffs pra debugar
-            // System.out.println(Cor.txtVermelho("resist extra" + heroi.getResistencia()));
-            // System.out.println(Cor.txtLaranja("dano extra" + heroi.getDanoExtra()));
-
-            int escolha = mao.mostrar(); 
-
-            // avaliando as escolhas que não são cartas --
-
-            if (escolha == mao.getSize()) break; // opção de passar o turno
-
-            if (escolha > mao.getSize() || escolha < 0){ 
-                escolhaInvalida = true;
-                continue;
-            }
-
-            // -- 
-
-            if (usaCarta(escolha) == -1)
-                continue;
-
-            if (notificaMorte() == 0) {
-                fimBatalha();
-            }
-
-            // se conseguir usar todas as cartas da mao puxa mais 5 e ganha 2 de energia bonus, injeçao de dopamina assim q vc mantem um jogador preso
-            if (mao.getSize() == 0){
-                Textos.sobeTela();
-
-                Textos.printaLinhaDevagar(Cor.rosa + (Arte.bonus).repeat(15) + Cor.reset);
-
-                heroi.ganhaEnergia(2);
-                InputHandler.esperar();
-                mao.addCinco(pilhaCompra, pilhaDescarte);
-            }
-
-            // notifica possiveis meia vida
-            for (Inimigo inimigo : inimigos) {
-                inimigo.checkMeiaVida(inimigo, heroi, this);
-            }
-            heroi.checkMeiaVida(heroi, heroi, this);
-
-            addNovosInimigos();
-        }            
-        mao.limpa(pilhaDescarte);    
-        passaTurno();
-    }
-
-
-    public void turnoInimigos(){
-        Textos.limpaTela();
-        Textos.printaBonito(Cor.txtCinza(Arte.bordaHud9), 2,2); Textos.sleep(300);
-
-        for (Inimigo inimigo : inimigos) {
-            if (inimigo.estaVivo()){ // adicionei isso pq joguei uma partida aqui e tomei hit de um inimigo morto.
-                inimigo.passaRodada(); // reseta os bonus (escudo por enquanto)
-                inimigo.resultadoAcao(heroi); // printa oq ele ta fazendo (antes de fazer pq as vezes ele se mata)
-                inimigo.realizarAcao(heroi, this); // faz oq ele ia fazer
-                inimigo.escolheAcao(); // escolhe prox ação
-
-                // checa possiveis meia vida
-                inimigo.checkMeiaVida(inimigo, heroi, this);
-                heroi.checkMeiaVida(heroi, heroi, this);
-            }
-        }
-        
+        heroi.ganhaEnergia(2);
         InputHandler.esperar();
-        passaTurno();
+        mao.addCinco(pilhaCompra, pilhaDescarte);
     }
 
     public int usaCarta(int escolha){
@@ -439,37 +506,6 @@ public class Batalha extends Evento {
             primeiroLoop = false;
         } else {
             Textos.batalhaSemDelay(heroi, listaEfeitos, listaPoderes, inimigosAtuaisArray());
-        }
-    }
-
-    public void batalha(){
-        // loop principal: checa se o heroi ou ao menos um inimigo esta vivo
-        while(heroi.estaVivo() == true && inimigos.stream().anyMatch(i -> i.estaVivo() == true)){
-
-            if (turno == 0) turnoHeroi();
-            else turnoInimigos();
-        }
-        
-        fimBatalha(); 
-    }
-
-    public void fimBatalha(){
-        System.out.println();
-        Cor.printaAmarelo("DUELO ENCERRADO!\n");
-        System.out.println();
-
-        Textos.sleep(1500);
-        Textos.limpaTela();
-
-        // tira as referencias de mao e pilha do heroi
-        heroi.setMaoAtual(null);
-        heroi.setPilhaCompra(null);
-        heroi.setPilhaDescarte(null);
-
-        if(heroi.estaVivo()){
-            vitoria();
-        } else {
-            derrota();
         }
     }
 

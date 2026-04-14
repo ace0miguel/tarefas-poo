@@ -1,7 +1,6 @@
 package Subscribers.EfeitosDeStatus.Buffs;
-import Cartas.Carta;
-import Entidades.Entidade;
 import Entidades.Heroi;
+import Subscribers.BatalhaSubscriber;
 import Subscribers.EfeitosDeStatus.Efeito;
 import Telas.Eventos.Batalha;
 
@@ -18,22 +17,14 @@ public class AumentaDano extends Buff {
     }
 
     @Override
-    public boolean getResetDur() {
-        return true;
-    }
+    public boolean addStack(Batalha batalha, BatalhaSubscriber novo){
+        if (!acumulaEfeito(novo))
+            return false;
 
-    @Override
-    public void addStack(){
         this.stacks++;
         this.getAlvo().somaDanoExtra(this.valor);
-    }
 
-    @Override
-    public void onRoundStart(Batalha batalha, Heroi heroi){
-    }
-
-    @Override
-    public void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha) {
+        return true;
     }
 
     @Override
@@ -45,14 +36,9 @@ public class AumentaDano extends Buff {
     public Efeito criaCopia() {
         return new AumentaDano(this);
     }
-
-    @Override
-    public String status() {
-        return this.getNome() + " [" + this.valor * this.stacks + "] > " + this.getDur(); 
-    }
     
     @Override
-    public void onRemove() {
+    public void onRemove(Batalha batalha, Heroi heroi) {
         this.getAlvo().somaDanoExtra(valor * this.stacks * -1);
     }
 }

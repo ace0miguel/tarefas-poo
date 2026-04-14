@@ -1,7 +1,6 @@
 package Subscribers.EfeitosDeStatus.Instantaneos;
 
 import Cartas.Carta;
-import Entidades.Entidade;
 import Entidades.Heroi;
 import Subscribers.EfeitosDeStatus.Efeito;
 import Telas.Eventos.Batalha;
@@ -31,19 +30,6 @@ public class PuxaCartaEsp extends PuxaCarta {
     }
 
     @Override
-    public void addStack(){
-        this.onCreate(Batalha batalha, Heroi heroi);
-    }
-
-    @Override
-    public void onRoundStart(Batalha batalha, Heroi heroi) {
-    }
-
-    @Override
-    public void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha) {
-    }
-
-    @Override
     public void onCreate(Batalha batalha, Heroi heroi) {
        if (this.getAlvo() instanceof Heroi h) {
             h.getMaoAtual().addCartaEsp(this.carta.criaCopia());
@@ -56,15 +42,6 @@ public class PuxaCartaEsp extends PuxaCarta {
     @Override
     public Efeito criaCopia() {
         return new PuxaCartaEsp(this);
-    }
-
-    @Override
-    public String status() {
-        return "";    
-    }
-
-    @Override
-    public void onRemove() {
     }
     
 }

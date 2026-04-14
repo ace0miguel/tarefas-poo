@@ -1,8 +1,7 @@
 package Subscribers.EfeitosDeStatus.DanosConstantes;
 
-import Cartas.Carta;
-import Entidades.Entidade;
 import Entidades.Heroi;
+import Subscribers.BatalhaSubscriber;
 import Subscribers.EfeitosDeStatus.Efeito;
 import Telas.Eventos.Batalha;
 import Util.InputHandler;
@@ -25,12 +24,10 @@ public class Sangramento extends DanoConstante{
     }
 
     @Override
-    public boolean getResetDur() {
-        return true;
-    }
+    public boolean addStack(Batalha batalha, BatalhaSubscriber novo){
+        if (!acumulaEfeito(novo))
+            return false;
 
-    @Override
-    public void addStack(){
         this.stacks++;
         
         if (this.stacks >= 5){
@@ -45,6 +42,8 @@ public class Sangramento extends DanoConstante{
             this.setDur(0);
             this.stacks = 0;
         }
+
+        return true;
     }
 
     @Override
@@ -56,15 +55,17 @@ public class Sangramento extends DanoConstante{
         if (this.getDur() > 1)
             this.getAlvo().setSangrando(true);
 
-    }
-
-    @Override
-    public void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha) {   
+        passaTurno();
     }
 
     @Override
     public void onCreate(Batalha batalha, Heroi heroi) {
         this.getAlvo().setSangrando(true);
+    }
+
+    @Override
+    public void onRemove(Batalha batalha, Heroi heroi) {
+        this.getAlvo().setSangrando(false);
     }
 
     @Override
@@ -77,6 +78,11 @@ public class Sangramento extends DanoConstante{
         return (this.stacks < 4) 
         ? Cor.vermelho + this.getNome() + "!".repeat(Math.max(this.stacks - 1, 0)) + " > " + this.getDur() + Cor.reset
         : Cor.vermelho + this.getUpperNome() + "!".repeat(Math.max(this.stacks - 1, 0)) + " > " + this.getDur() + Cor.reset; 
+    }
+
+    @Override
+    public String getMsgFimRodada(Batalha batalha, Heroi heroi){
+        return "> " +this.getAlvo().getNome() + Cor.cinza  + " sofreu " + this.getDano() * this.stacks + " pontos de dano de " + this.getNomeColorido() + "!";
     }
 
 }

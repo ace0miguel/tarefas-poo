@@ -1,10 +1,15 @@
 package Subscribers.EfeitosDeStatus.DanosConstantes;
 
-import Cartas.Carta;
+import java.util.List;
+
 import Entidades.Entidade;
 import Entidades.Heroi;
+import Entidades.Inimigo;
+import Subscribers.BatalhaSubscriber;
 import Subscribers.EfeitosDeStatus.Efeito;
 import Telas.Eventos.Batalha;
+import Util.InputHandler;
+import Visual.Arte;
 import Visual.Cor;
 import Visual.Textos;
 
@@ -26,16 +31,51 @@ public class Veneno extends DanoConstante{
         if (this.getDur() > 1)
             this.getAlvo().setEnvenenado(true);
 
-        System.out.println(); Textos.sleep(300);
+        passaTurno();
     }
 
     @Override
-    public void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha) {
+    public void onDeath(Batalha batalha, Entidade alvo) {
+        if (alvo != this.getAlvo())
+            return;
+
+        boolean espalhou = false;
+        List<Inimigo> listaInimigos = batalha.getInimigos();
+        for (Inimigo i : listaInimigos){
+            if (i != alvo){
+                adicionar(i, batalha);
+                if (!espalhou){
+                    Textos.printaBonito(Cor.txtVerdeEscuro(Arte.TOXICO), 1 ,1);
+                    espalhou = true;
+                }
+            }
+        }
+
+    }
+    
+    @Override
+    public boolean addStack(Batalha batalha, BatalhaSubscriber novo) {
+        if (!acumulaEfeito(novo))
+            return false;
+
+        if (novo instanceof Veneno v) {
+            this.setDur(this.getDur() + (v).getDur());
+        } else {
+            System.out.println("erro: tentou stackar veneno com algo que nao e veneno");
+            InputHandler.esperar("pressione ENTER para admitir o erro e prometer que vai arrumar");
+        }
+
+        return true;
     }
 
     @Override
     public void onCreate(Batalha batalha, Heroi heroi) {
         this.getAlvo().setEnvenenado(true);
+    }
+
+    @Override
+    public void onRemove(Batalha batalha, Heroi heroi) {
+        this.getAlvo().setEnvenenado(false);
     }
 
     @Override
@@ -46,5 +86,10 @@ public class Veneno extends DanoConstante{
     @Override
     public String status() {
         return Cor.verdeEscuro + this.getNome() + " > " + this.getDur() + Cor.reset; 
+    }
+
+    @Override
+    public String getMsgFimRodada(Batalha batalha, Heroi heroi){
+        return "> " +this.getAlvo().getNome() + Cor.cinza  + " sofreu " + (this.getDur() + 1) + " pontos de dano de " + this.getNomeColorido() + "!";
     }
 }

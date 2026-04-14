@@ -1,40 +1,28 @@
 package Subscribers.EfeitosDeStatus.Instantaneos;
-import Cartas.Carta;
-import Entidades.Entidade;
 import Entidades.Heroi;
 import Subscribers.EfeitosDeStatus.Efeito;
 import Telas.Eventos.Batalha;
 
 /** remove todos os efeitos (incluindo positivos) */
-public class Purificar extends Efeito {
+public class Purificar extends Instantaneo {
     public Purificar(String nome, String desc){
-        super(nome, desc, 0);
+        super(nome, desc);
     }
 
     public Purificar(Purificar copiado){
         super(copiado);
     }
 
-    @Override
-    public void addStack(){
-        this.stacks++;
-        this.getAlvo().setPurificar(true);
-        this.setDur(0);
-    }
 
     @Override
-    public void onRoundStart(Batalha batalha, Heroi heroi){
-    }
-
-    @Override
-    public void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha) {
+    public int getPrioridade() {
+        return 9;
     }
 
     @Override
     public void onCreate(Batalha batalha, Heroi heroi) {
         this.getAlvo().setPurificar(true);
         this.getAlvo().setPurificado(true);
-        this.setDur(0);
     }
 
     @Override
@@ -43,12 +31,7 @@ public class Purificar extends Efeito {
     }
 
     @Override
-    public String status() {
-        return "";      
-    }
-    
-    @Override
-    public void onRemove() {
+    public void onRemove(Batalha batalha, Heroi heroi) {
         this.getAlvo().setPurificar(false);
     }
 }

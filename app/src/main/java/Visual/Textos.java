@@ -74,7 +74,7 @@ public class Textos {
 
         String linhaStatus = heroi.status();
         for (Poder poder : listaPoderes) {
-            linhaStatus += " > " + poder.getNome() + " [" + poder.getStacks() + "] " + Cor.txtCinza("|");
+            linhaStatus += " > " + poder.getNomeColorido() + " [" + poder.getStacks() + "] " + Cor.txtCinza("|");
         }
 
         printaColunaDevagar(linhaStatus,8);
@@ -90,7 +90,7 @@ public class Textos {
 
         if (aux1) System.out.println();
 
-        System.out.println(Cor.txtCinza("VERSUS!\n")); sleep(25);
+        System.out.println(Cor.txtAmareloClaro("VERSUS!\n")); sleep(25);
 
         for (int i = 0; i < inimigos.length; i++){
             if (inimigos[i].estaVivo()){
@@ -151,7 +151,7 @@ public class Textos {
 
         System.out.print(heroi.status());
         for (Poder poder : listaPoderes) {
-            System.out.print(" > " + poder.getNome() +" ["+poder.getStacks()+"] " + Cor.txtCinza("|"));
+            System.out.print(" > " + poder.getNomeColorido() +" ["+poder.getStacks()+"] " + Cor.txtCinza("|"));
         }
 
         System.out.println();
@@ -167,7 +167,7 @@ public class Textos {
 
         if (aux1) System.out.println();
 
-        Cor.printaCinza("VERSUS!\n");
+        Cor.printaAmareloClaro("VERSUS!\n");
 
         System.out.println();
 

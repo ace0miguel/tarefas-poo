@@ -9,7 +9,6 @@ import Cartas.Carta;
 import Entidades.Heroi;
 import Util.InputHandler;
 import static Util.Moldes.armadura;
-import static Util.Moldes.bomba;
 import static Util.Moldes.bombaSuprema;
 import static Util.Moldes.contratoSangue;
 import static Util.Moldes.corteDefensivo;
@@ -93,8 +92,8 @@ public class DeckBuilder {
             }  
             // deck pra testar carta
             case 2 -> {
-                heroi.addCarta(bomba);
-                heroi.addCarta(bomba);
+                // heroi.addCarta(bomba);
+                // heroi.addCarta(bomba);
                 
                 heroi.addCarta(bombaSuprema);
                 heroi.addCarta(bombaSuprema);
@@ -102,6 +101,11 @@ public class DeckBuilder {
            
                 heroi.addCarta(puxaCarta);
                 heroi.addCarta(puxaCarta); 
+                
+                heroi.addCarta(corteDefensivo);
+                heroi.addCarta(corteProfundo);
+                heroi.addCarta(corteVenenoso);
+                heroi.addCarta(corteRapido);
 
                 heroi.addCarta(energiaSupremo);
                 heroi.addCarta(energiaSupremo);
@@ -117,8 +121,26 @@ public class DeckBuilder {
                 heroi.addCarta(presenteMaldito);
 
                 heroi.addCarta(contratoSangue);
+                heroi.addCarta(contratoSangue);
+
+                // heroi.addCarta(mestreLaminasCarta);
+                // heroi.addCarta(mestreLaminasCarta);
+
+                // heroi.addCarta(egoCarta);
+                // heroi.addCarta(armadura);
+                // heroi.addCarta(purificar);
+                // heroi.addCarta(egoCarta);
+                // heroi.addCarta(armadura);
+                // heroi.addCarta(purificar);
+                // heroi.addCarta(egoCarta);
+                // heroi.addCarta(armadura);
+                // heroi.addCarta(purificar);
+                // heroi.addCarta(egoCarta);
+                // heroi.addCarta(armadura);
+                // heroi.addCarta(purificar);
 
                 heroi.ganhaDinheiro(100);
+                heroi.setEnergiaMax(60);
                 heroi.setTestMode(true);
             }
         }

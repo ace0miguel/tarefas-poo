@@ -1,12 +1,10 @@
 package Subscribers.EfeitosDeStatus;
 
-import Cartas.Carta;
-import Entidades.Entidade;
 import Entidades.Heroi;
+import Subscribers.BatalhaSubscriber;
 import Telas.Eventos.Batalha;
 import Util.InputHandler;
 import Visual.Cor;
-import Visual.Textos;
 
 /** ganha o valor em energia quando a duraçao acabar */
 public class Energizar extends Efeito {
@@ -26,22 +24,18 @@ public class Energizar extends Efeito {
     }
 
     @Override
-    public void addStack(){
+    public boolean addStack(Batalha batalha, BatalhaSubscriber novo){
+        if (!acumulaEfeito(novo))
+            return false;
+
         this.stacks++;
-        this.valor += this.valorBase;
+        this.valor += valorBase;
+        return true;
     }
 
     @Override
     public String getMsgFimRodada(Batalha batalha, Heroi heroi) {
         return ("> " +this.getAlvo().getNome() + Cor.cinza + " recebeu " + Cor.amarelo + this.valor + " pontos de energia!");
-    }
-
-    @Override
-    public void onRoundStart(Batalha batalha , Heroi heroi ) {   
-    }
-
-    @Override
-    public void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha) {
     }
 
     @Override
@@ -63,7 +57,7 @@ public class Energizar extends Efeito {
     public void onRemove(Batalha batalha, Heroi heroi) {
         if (!this.getAlvo().getPurificar()){
             if (this.getAlvo() instanceof Heroi h){
-                h.setEnergiaBonus(this.valor);
+                h.setEnergiaBonus(h.getEnergiaBonus() + this.valor);
                 h.setEnergizado(false);
             }
             else {

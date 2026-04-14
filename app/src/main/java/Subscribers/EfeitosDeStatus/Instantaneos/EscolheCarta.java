@@ -6,6 +6,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import Cartas.Carta;
 import Entidades.Heroi;
 import Subscribers.EfeitosDeStatus.Efeito;
+import Telas.Eventos.Batalha;
 import Util.InputHandler;
 
 /** Abre um menu de seleção baseado na lista de compras
@@ -28,21 +29,21 @@ public class EscolheCarta extends Instantaneo {
 
     @Override
     public void onCreate(Batalha batalha, Heroi heroi) {
-        Heroi heroi = (Heroi) this.getAlvo();
-        List<List<String>> matrizPaginas = InputHandler.montaPaginas(heroi.getPilhaCompra().getPilhaCartas());
+        if (this.getAlvo() instanceof Heroi h) {
+            if (h.getPilhaCompra().getPilhaCartas().size() <= 0) {
+                System.out.println("Não há cartas para escolher!");
+                InputHandler.esperar();
+                this.cancelarJogada();
 
-        if (heroi.getPilhaCompra().getPilhaCartas().size() <= 0) {
-            System.out.println("Não há cartas para escolher!");
-            InputHandler.esperar();
-            this.cancelarJogada();
+                return;
+            }
 
-            return;
+            List<List<String>> matrizPaginas = InputHandler.montaPaginas(h.getPilhaCompra().getPilhaCartas());
+
+            Carta escolha = h.getPilhaCompra().getPilhaCartas().get(InputHandler.menu(matrizPaginas, new AtomicInteger(0), false));
+
+            h.getMaoAtual().addCartaEsp(escolha);
+            h.getPilhaCompra().getPilhaCartas().remove(escolha);
         }
-
-        
-        Carta escolha = heroi.getPilhaCompra().getPilhaCartas().get(InputHandler.menu(matrizPaginas, new AtomicInteger(0), false));
-
-        heroi.getMaoAtual().addCartaEsp(escolha);
-        heroi.getPilhaCompra().getPilhaCartas().remove(escolha);
     }
 }

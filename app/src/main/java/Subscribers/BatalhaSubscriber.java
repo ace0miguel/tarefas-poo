@@ -3,7 +3,6 @@ package Subscribers;
 import Cartas.Carta;
 import Entidades.Entidade;
 import Entidades.Heroi;
-import Subscribers.EfeitosDeStatus.Efeito;
 import Telas.Eventos.Batalha;
 
 public interface BatalhaSubscriber {
@@ -22,10 +21,10 @@ public interface BatalhaSubscriber {
     /** chamado quando o heroi é atacado */
     default public void onReceivedHit(Batalha batalha, Heroi heroi, Entidade atacante, int danoRecebido){};
 
-    /** chamado quando o alvo morre */
+    /** chamado quando QUALQUER INIMIGO morre */
     default public void onDeath(Batalha batalha, Entidade alvo){};
 
-    /** adiciona um acumulo. retorna true se não for o primeiro */
+    /** adiciona um acumulo. retorna true se o acumulo novo foi absorvido */
     default public boolean addStack(Batalha batalha, BatalhaSubscriber novo){
         return false;
     }
@@ -40,7 +39,13 @@ public interface BatalhaSubscriber {
         return 1;
     }   
 
+    /** se true, será removido na proxima limpeza */
     default public boolean getRemover(){
         return false;
+    }
+
+    /** retorna o alvo */
+    default public Entidade getAlvo(){
+        return null;
     }
 }

@@ -6,8 +6,8 @@ import Telas.Eventos.Batalha;
 
 /** adiciona escudo ao alvo */
 public class Escudo extends Instantaneo {
-
     private int valor;
+    
     public Escudo(String nome, String desc, int valor){
         super(nome, desc);
         this.valor = valor;

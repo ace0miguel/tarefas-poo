@@ -14,7 +14,8 @@ import Visual.Textos;
 public class Heroi extends Entidade {
     private int energia;
     private int energiaMax;
-    private int energiaBonus; // energia extra a ganhar no começo da rodada
+    private int energiaBonus = 0; // energia extra a ganhar no começo da rodada
+    private int cartasBonus = 0; // cartas extras a ganhar no começo da rodada
 
     private int dinheiro = 0; 
 
@@ -76,6 +77,11 @@ public class Heroi extends Entidade {
         return testMode;
     }
 
+    public int getCartasBonus() {
+        return cartasBonus;
+    }
+
+
     // setters -----
 
     public void setDeck(List<Carta> deck) {
@@ -92,6 +98,10 @@ public class Heroi extends Entidade {
 
     public void setEnergiaBonus(int energiaBonus) {
         this.energiaBonus = energiaBonus;
+    }
+
+    public void setCartasBonus(int cartasBonus) {
+        this.cartasBonus = cartasBonus;
     }
 
     public void setEnergiaMax(int energiaMax) {
@@ -227,12 +237,20 @@ public class Heroi extends Entidade {
         InputHandler.esperar();
     }
 
+    /** aplica os bonus de inicio de rodadae reseta */
+    public void aplicaBonus(){
+        ganhaEnergia(this.energiaBonus);
+        maoAtual.addCartas(pilhaCompra, pilhaDescarte, this.cartasBonus);
+
+        energiaBonus = 0;
+        cartasBonus = 0;
+    }
+
     /** reseta o estado do heroi e soma a energia bonus */
     @Override
     public void passaRodada(){
         resetarBonus();
         resetarEnergia();
-        ganhaEnergia(this.energiaBonus);
-        this.energiaBonus = 0;
+        aplicaBonus();
     }
 }
