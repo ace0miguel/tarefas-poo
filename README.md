@@ -25,6 +25,8 @@ Você joga como Jack Sparrow e enfrenta encontros no mapa utilizando cartas. A i
 #### Tags:
 - Consumir: só pode ser utilizada uma vez por encontro.
 - Área: a carta afeta TODOS os inimigos no encontro.
+- Manter: a carta fica na sua mão até ser utilizada.
+- Sacrificio: a carta cobra um custo em vida para ser usada.
 
 ### Ataque
 - Tiro de revolver
