@@ -12,7 +12,9 @@ public class Tesouro extends Evento {
     public void iniciar(Heroi heroi) {
         Textos.limpaTela();
 
-        Textos.printaBonito(Cor.txtAmarelo(Arte.tesouro), 2 ,2);
+        String arteTitulo = Textos.colorirPartes(Arte.tesouro, Cor.marromClaro, Cor.marromClaro, 6);
+
+        Textos.printaBonito(arteTitulo, 2 ,2);
 
         System.out.println();
         
