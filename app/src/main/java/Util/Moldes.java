@@ -24,6 +24,8 @@ import Subscribers.EfeitosDeStatus.Instantaneos.Escudo;
 import Subscribers.EfeitosDeStatus.Instantaneos.GanhaEnergia;
 import Subscribers.EfeitosDeStatus.Instantaneos.Purificar;
 import Subscribers.EfeitosDeStatus.Instantaneos.PuxaCarta;
+import Subscribers.Itens.AumentaDanoItem;
+import Subscribers.Itens.AumentaResistItem;
 import Subscribers.Itens.CartasInicioBatalha;
 import Subscribers.Itens.CuraFimBatalha;
 import Subscribers.Itens.EfeitoPorCusto;
@@ -143,6 +145,14 @@ public class Moldes {
     public static Item marmita = new CuraFimBatalha("marmita", "cura 6 pontos de vida no fim da batalha", 6);
 
     public static Item amuletoVelho = new CartasInicioBatalha("amuleto velho", "receba 2 cartas adicionais no inicio da batalha", 2);
+
+    public static Item jarroTerra = new AumentaResistItem("jarro de terra", "receba 10% de redução de dano", 10);
+
+    public static Item item20Resist = new AumentaResistItem("colete a prova de tudo", "receba 20% de redução de dano", 20);
+
+    public static Item item10Dano = new AumentaDanoItem("to sem criatividade sei la espada", "cause 10% de dano extra", 10);
+
+    public static Item item20Dano = new AumentaDanoItem("espada grande sei la", "cause 20% de dano extra", 20);
 
     /** inicializa os moldes */
     public static void carregar(){
