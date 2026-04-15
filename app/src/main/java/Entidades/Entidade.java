@@ -16,7 +16,7 @@ public abstract class Entidade {
     private int danoExtra = 0; // aumenta em todo dano causado diretamente
     private int resistencia = 0; // reduz de todo dano recebido diretamente
     
-    private boolean purificar = false;
+    private boolean purificar = false; // se ativa, todos os efeitos de status sao removidos
     protected boolean meiaVida = false; // flag que ativa quando a vida da entidade fica abaixo de 50% pela primeira vez
 
     // booleans pra defini a cor do nome

@@ -1,9 +1,9 @@
 package Cartas;
 
-import EfeitosDeStatus.Efeito;
 import Entidades.Entidade;
 import Entidades.Heroi;
 import Entidades.Inimigo;
+import Subscribers.EfeitosDeStatus.Efeito;
 import Telas.Eventos.Batalha;
 import Visual.Cor;
 
@@ -47,6 +47,8 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
     public void usar(Heroi heroi, Entidade alvo, Batalha batalha){
         int energiaAtual = heroi.getEnergia();
         if(energiaAtual >= this.getCusto()){
+            acertos = 0;
+            
             heroi.receberDanoDireto(this.sacrificio);
             
             aplicarEfeito(heroi, alvo, batalha);
@@ -75,6 +77,8 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
             }
         }
 
+        acertos++;
+
         printaResenha();
     }
 
@@ -83,7 +87,7 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
         String retorno = this.getNome();
 
         if (!tags.isEmpty()) {
-            retorno += " - [" + String.join(", ",  tags) + "]";
+            retorno += " - <" + String.join(", ",  tags) + ">";
         }
 
         if (!this.getDescricao().equals("")) {

@@ -1,7 +1,10 @@
 package Cartas;
+import java.util.ArrayList;
+import java.util.List;
+
 import Entidades.Entidade;
 import Entidades.Heroi;
-import Poderes.Poder;
+import Subscribers.Poderes.Poder;
 import Telas.Eventos.Batalha;
 import Visual.Cor;
 
@@ -9,7 +12,9 @@ import Visual.Cor;
 public class CartaPoder extends Carta
 {
     private Poder poder;
-    
+
+    { this.tagsRemoviveis = new ArrayList<>(List.of("Area", "Manter", "Sacrificio", "Inata")); }
+
     public CartaPoder(String nome, String descricao, int custo, Poder poder){
         super(nome, descricao, custo);
         this.poder = poder;
@@ -41,7 +46,7 @@ public class CartaPoder extends Carta
     public void aplicarEfeito(Heroi heroi, Entidade alvo, Batalha batalha) {
         Poder p = poder.criaCopia();
 
-        batalha.adicionarPoder(p);
+        batalha.adicionarSubscriber(p);
         
         printaResenha();
     }
@@ -50,7 +55,7 @@ public class CartaPoder extends Carta
         String retorno = this.getNome();
 
         if (!tags.isEmpty()) {
-            retorno += " - [" + String.join(", ",  tags) + "]";
+            retorno += " - <" + String.join(", ",  tags) + ">";
         }
 
         if (!this.getDescricao().equals("")) {

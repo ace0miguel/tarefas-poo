@@ -1,17 +1,18 @@
-package Poderes;
+package Subscribers.Poderes;
 
-import Cartas.Carta;
 import Entidades.Entidade;
-import Entidades.Heroi;
+import Subscribers.BatalhaSubscriber;
 import Telas.Eventos.Batalha;
 import Visual.Cor;
 
 /* aplica um efeito no heroi, duraçao infinita, nao volta pra pilha descarte ao ser usado. Normalmente stacka */
-public abstract class Poder {
+public abstract class Poder implements BatalhaSubscriber{
 
     private String nome;
     private String desc;
     private int stacks = 1;
+
+    // vida ao ser subtraida ao usar o poder (cada subclasse usa de uma maneira)
     protected int sacrificio = 0;
 
     public Poder(String nome, String desc) {
@@ -25,22 +26,16 @@ public abstract class Poder {
         this.sacrificio = copiado.sacrificio;
     }
 
-    public void aplicar(){};
-
-    public void roundStart(Heroi heroi){};
-
-    public void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha){};
-
-    public Poder criaCopia(){ return null; };
+    public abstract Poder criaCopia();
     
-    public void onCreate(Heroi heroi){
-        heroi.receberDanoDireto(this.sacrificio);
-    };
-
-    public String status(){ return null; };
+    public abstract String status();
     
     // getters ------------
     public String getNome() {
+        return this.nome;
+    }
+
+    public String getNomeColorido() {
         return Cor.txtRoxo(this.nome);
     }
     
@@ -70,6 +65,7 @@ public abstract class Poder {
         this.stacks = stacks;
     }
 
+    /** adiciona um acumulo */
     public void stackar(){
         this.stacks++;
     }
@@ -77,4 +73,28 @@ public abstract class Poder {
     public void setSacrificio(int sacrificio) {
         this.sacrificio = sacrificio;
     }
+
+    /** retorna true se o poder passado é igual a instancia do poder comparando */
+    public boolean acumulaPoder(BatalhaSubscriber novo){
+        if (!(novo instanceof Poder))
+            return false;
+
+        else if (novo instanceof Poder p)
+            if (p.getClass() != this.getClass() || !p.getNome().equals(this.nome))
+                return false;
+
+        return true;
+    }
+
+    @Override
+    public boolean addStack(Batalha batalha, BatalhaSubscriber novo) {
+        if (!acumulaPoder(novo)){
+            return false;
+        }
+
+        stackar();
+        return true;
+    }
+
+    
 }

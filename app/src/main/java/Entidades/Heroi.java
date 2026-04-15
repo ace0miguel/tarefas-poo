@@ -7,6 +7,7 @@ import Cartas.CartaMaldicao;
 import Deck.Mao;
 import Deck.PilhaCompra;
 import Deck.PilhaDescarte;
+import Subscribers.Itens.Item;
 import Util.InputHandler;
 import Visual.Cor;
 import Visual.Textos;
@@ -14,12 +15,14 @@ import Visual.Textos;
 public class Heroi extends Entidade {
     private int energia;
     private int energiaMax;
-    private int energiaBonus; // energia extra a ganhar no começo da rodada
+    private int energiaBonus = 0; // energia extra a ganhar no começo da rodada
+    private int cartasBonus = 0; // cartas extras a ganhar no começo da rodada
 
     private int dinheiro = 0; 
 
     private List<Carta> baralho = new ArrayList<>(); // todas as cartas q o jogador tem e ta usando
     private List<Carta> inventarioCartas = new ArrayList<>(); // todas as cartas q o jogador tem mas nao ta usando
+    private List<Item> listaItens = new ArrayList<>(); // todos os itens q o jogador tem
 
     // guarda a mao e as pilhas por referencia
     private Mao maoAtual;
@@ -76,6 +79,14 @@ public class Heroi extends Entidade {
         return testMode;
     }
 
+    public int getCartasBonus() {
+        return cartasBonus;
+    }
+
+    public List<Item> getListaItens() {
+        return listaItens;
+    }
+
     // setters -----
 
     public void setDeck(List<Carta> deck) {
@@ -92,6 +103,10 @@ public class Heroi extends Entidade {
 
     public void setEnergiaBonus(int energiaBonus) {
         this.energiaBonus = energiaBonus;
+    }
+
+    public void setCartasBonus(int cartasBonus) {
+        this.cartasBonus = cartasBonus;
     }
 
     public void setEnergiaMax(int energiaMax) {
@@ -121,7 +136,22 @@ public class Heroi extends Entidade {
     public void setTestMode(boolean testMode) {
         this.testMode = testMode;
     }
-    
+
+    public void fimBatalhaReset(){
+        this.cartasBonus = 0;
+        this.energiaBonus = 0;
+    }
+
+    public void ganhaItem(Item item){
+        this.listaItens.add(item.criaCopia());
+        System.out.println("Voce ganhou o item " + Cor.txtAzul(item.getNome()) + "!");
+        InputHandler.esperar();
+    }
+
+    public void perdeItem(Item item){
+        this.listaItens.remove(item);
+    }
+
     // ----
 
     public void ganhaDinheiro(int valor) {
@@ -227,12 +257,20 @@ public class Heroi extends Entidade {
         InputHandler.esperar();
     }
 
+    /** aplica os bonus de inicio de rodadae reseta */
+    public void aplicaBonus(){
+        ganhaEnergia(this.energiaBonus);
+        maoAtual.setCartasBonus(maoAtual.getCartasBonus() + this.cartasBonus);
+
+        energiaBonus = 0;
+        cartasBonus = 0;    
+    }
+
     /** reseta o estado do heroi e soma a energia bonus */
     @Override
     public void passaRodada(){
         resetarBonus();
         resetarEnergia();
-        ganhaEnergia(this.energiaBonus);
-        this.energiaBonus = 0;
+        aplicaBonus();
     }
 }

@@ -1,5 +1,6 @@
 package Deck;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import Cartas.Carta;
@@ -13,9 +14,18 @@ acabou a pilha de compra: reembaralha a pilha de descarte */
 public class Mao {
     // uma boa mudança seria adicionar um construtor com a pilha de compras e a pilha de descarte, ai nao teria q ficar passando toda vez que chama
     private int quantMax = 5;
-    private ArrayList<Carta> cartas = new ArrayList<>(); 
+    private List<Carta> cartas = new ArrayList<>(); 
+    private int cartasBonus = 0; // cartas extras a serem adicionadas no inicio do turno, depois de puxar as 5 cartas normais
 
     Scanner ler = InputHandler.getLeitor();
+
+    public int getCartasBonus() {
+        return cartasBonus;
+    }
+
+    public void setCartasBonus(int cartasBonus) {
+        this.cartasBonus = cartasBonus;
+    }
 
     public void addCarta(PilhaCompra pilhaCompra, PilhaDescarte pilhaDescarte){
         cartas.add(pilhaCompra.puxaCarta(pilhaDescarte));
@@ -36,6 +46,45 @@ public class Mao {
             this.addCarta(pilhaCompra, pilhaDescarte);
     }
 
+    /** completa ate dar 5 cartas na mao e dps adiciona as cartas bonus. chamado todo inicio de rodada. */
+    public void completaCinco(PilhaCompra pilhaCompra, PilhaDescarte pilhaDescarte){
+        if (cartas.size() < quantMax){
+            int faltantes = quantMax - cartas.size();
+            for (int i = 0; i < faltantes; i++)
+                this.addCarta(pilhaCompra, pilhaDescarte);
+        }
+
+        this.addCartas(pilhaCompra, pilhaDescarte, cartasBonus);
+        cartasBonus = 0;
+    }
+
+    /** adiciona as cartas obrigatoras na mao inicial, e se forem menos que quantMax completa com cartas aleatórias */
+    public void inicioBatalha(PilhaCompra pilhaCompra, PilhaDescarte pilhaDescarte){
+        List<Carta> obrigatorias = new ArrayList<>();
+        
+        for (Carta carta : pilhaCompra.getPilhaCartas()) {
+            if (carta.getInata()) {
+                obrigatorias.add(carta);
+            }
+        }
+
+        // remove as obrigatorias da pilha de compra
+        pilhaCompra.getPilhaCartas().removeAll(obrigatorias);
+
+        // adiciona as obrigatorias a mao
+        this.cartas.addAll(obrigatorias);
+
+        int cartasRestantes = quantMax - obrigatorias.size();
+
+        // se tiver menos que o tamanho padrao da mao, completa com cartas aleatórias
+        if (cartasRestantes > 0) {
+            this.addCartas(pilhaCompra, pilhaDescarte, cartasRestantes);
+        }
+
+        this.addCartas(pilhaCompra, pilhaDescarte, cartasBonus);
+        cartasBonus = 0;
+    }
+
     public int getQuantMax() {
         return quantMax;
     }
@@ -49,7 +98,7 @@ public class Mao {
 
         for (int i = 0; i < cartas.size(); i++){
             Carta cartaAtual = cartas.get(i);
-            System.out.println("["+i+"] > "+cartaAtual.descricao()+""); Textos.sleep(50);
+            Textos.printaBonito("["+i+"] > "+cartaAtual.descricao()+"\n", 1, 2); Textos.sleep(3);
             ultimoNumero = i;
         }
         ultimoNumero++;
@@ -70,17 +119,27 @@ public class Mao {
         return opcao;
     }
 
+    /** remove a carta de indice opçao da mao e manda pra pilha de descarte
+     *  (chamar essa funçao aqui so quando a carta realmente for USADA)
+     */
     public void removeCarta(int opcao, PilhaDescarte pilhaDescarte){
         pilhaDescarte.descarta(cartas.get(opcao));
         cartas.remove(opcao);   
     }
 
+    /** remove todas as cartas da mao e manda pra pilha de descarte
+     * (não remove com tag manter)
+     * chamar essa funçao no fim do turno
+     */
     public void limpa(PilhaDescarte pilhaDescarte){
-        for (Carta carta : cartas) {
+        List<Carta> cartasParaRemover = cartas.stream().
+        filter(carta -> !carta.getManter()).toList();
+
+        for (Carta carta : cartasParaRemover) {
             pilhaDescarte.descarta(carta);
         }
-        
-        cartas.clear();
+
+        cartas.removeAll(cartasParaRemover);
     }
 
     /** retorna a carta no indice opcao */

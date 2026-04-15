@@ -1,7 +1,7 @@
 package Cartas;
-import EfeitosDeStatus.Efeito;
 import Entidades.Entidade;
 import Entidades.Heroi;
+import Subscribers.EfeitosDeStatus.Efeito;
 import Telas.Eventos.Batalha;
 import Visual.Cor;
 
@@ -59,7 +59,7 @@ public class CartaHabilidade extends Carta // aplica um efeito em um alvo
         String retorno = this.getNome();
 
         if (!tags.isEmpty()) {
-            retorno += " - [" + String.join(", ",  tags) + "]";
+            retorno += " - <" + String.join(", ",  tags) + ">";
         }
 
         if (!this.getDescricao().equals("")) {

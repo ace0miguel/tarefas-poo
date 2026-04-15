@@ -1,10 +1,10 @@
     package Cartas;
 
-    import EfeitosDeStatus.Efeito;
     import Entidades.Entidade;
     import Entidades.Heroi;
+    import Subscribers.EfeitosDeStatus.Efeito;
     import Telas.Eventos.Batalha;
-import Visual.Cor;
+    import Visual.Cor;
 
     /** cartas que te prejudicam (te aplicam um efeito negativo) ou nao fazem nada 
     (normalmente inimigos vao colocar ela no seu deck ou vao ser consequencia de algo.) */
@@ -53,7 +53,7 @@ import Visual.Cor;
             String retorno = "" + this.getNome() + " - " + this.getDescricao();
             
             if (!tags.isEmpty()) {
-            retorno += " - [" + String.join(", ",  tags) + "]";
+            retorno += " - <" + String.join(", ",  tags) + ">";
             }
 
             retorno += Cor.txtAmareloClaro(" < custo: " + this.getCusto());

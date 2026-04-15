@@ -1,19 +1,19 @@
-package EfeitosDeStatus;
+package Subscribers.EfeitosDeStatus;
 
-import Cartas.Carta;
-import EfeitosDeStatus.Buffs.AumentaDano;
-import EfeitosDeStatus.DanosConstantes.DanoConstante;
-import EfeitosDeStatus.DanosConstantes.Sangramento;
-import EfeitosDeStatus.DanosConstantes.Veneno;
-import EfeitosDeStatus.Instantaneos.Escudo;
-import EfeitosDeStatus.Instantaneos.GanhaEnergia;
-import EfeitosDeStatus.Instantaneos.Purificar;
 import Entidades.Entidade;
 import Entidades.Heroi;
+import Subscribers.BatalhaSubscriber;
+import Subscribers.EfeitosDeStatus.Buffs.AumentaDano;
+import Subscribers.EfeitosDeStatus.DanosConstantes.DanoConstante;
+import Subscribers.EfeitosDeStatus.DanosConstantes.Sangramento;
+import Subscribers.EfeitosDeStatus.DanosConstantes.Veneno;
+import Subscribers.EfeitosDeStatus.Instantaneos.Escudo;
+import Subscribers.EfeitosDeStatus.Instantaneos.GanhaEnergia;
+import Subscribers.EfeitosDeStatus.Instantaneos.Purificar;
 import Telas.Eventos.Batalha;
 import Visual.Cor;
 
-public abstract class Efeito {
+public abstract class Efeito implements BatalhaSubscriber{
     private String nome;
     private String desc;
     private int dur;
@@ -22,6 +22,7 @@ public abstract class Efeito {
     private boolean cancelarJogada = false;
 
     protected boolean onHit = true;
+
 
     public Efeito(String nome, String desc, int dur) {
         this.nome = nome;
@@ -90,9 +91,21 @@ public abstract class Efeito {
         return 1;
     }
 
-    /** flag pra efeitos que resetam a duraçao ao inves de somar quando stackam */
-    public boolean getResetDur() {
-        return false;
+    @Override
+    public boolean getRemover(){
+        return (this.dur <= 0 || this.alvo.getPurificar());
+    }
+
+    /** retorna true se o efeito passado é igual a instancia do efeito comparando */
+    public boolean acumulaEfeito(BatalhaSubscriber novo){
+        if (!(novo instanceof Efeito))
+            return false;
+
+        else if (novo instanceof Efeito e)
+            if (e.getAlvo() != this.alvo || e.getClass() != this.getClass() || !e.getNome().equals(this.nome))
+                return false;
+
+        return true;
     }
 
     // ------------ setters
@@ -135,31 +148,31 @@ public abstract class Efeito {
         return false;
     }
 
-    public void addStack(){
-        this.stacks++;
+    @Override
+    /** por padrao, onRoundStart apenas reduz a duraçao */
+    public void onRoundStart(Batalha batalha, Heroi heroi){
+        passaTurno();
+    }
+
+    @Override
+    public boolean addStack(Batalha batalha, BatalhaSubscriber novo){
+        return false;
     }
 
     /** adiciona uma cópia do efeito à batalha. Retorna a cópia do efeito para validaçao da jogada*/
     public Efeito adicionar(Entidade alvo, Batalha batalha){ 
         Efeito e = this.criaCopia();
         e.setAlvo(alvo); 
-        batalha.adicionarEfeito(e);
+        batalha.adicionarSubscriber(e);
         return e;
     }
 
-    // ----------- abstratos
-
-    /** chamado no inicio de cada rodada */
-    public void aplicar(){};
-
-    /** chamado sempre que uma carta é usada */
-    public void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha){};
-
-    /** chamado sempre que o efeito vai ser removido da batalha */
-    public void acabar(){};
-
-    /** chamado quando o efeito é adicionado a batalha */
-    public void onCreate(){};
+    /** coloca na lista de espera pra adicionar subscriber */
+    public void setAdicionar(Entidade alvo, Batalha batalha) {
+        Efeito e = this.criaCopia();
+        e.setAlvo(alvo); 
+        batalha.adicionarFuturoSubscriber(e);
+    }
 
     /** cria copia */
     public Efeito criaCopia(){ return this;};

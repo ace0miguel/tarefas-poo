@@ -1,4 +1,4 @@
-package Poderes;
+package Subscribers.Poderes;
 
 import Cartas.Carta;
 import Entidades.Entidade;

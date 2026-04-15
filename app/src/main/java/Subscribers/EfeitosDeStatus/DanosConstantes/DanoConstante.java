@@ -1,11 +1,9 @@
-package EfeitosDeStatus.DanosConstantes;
-import Cartas.Carta;
-import EfeitosDeStatus.Efeito;
-import Entidades.Entidade;
+package Subscribers.EfeitosDeStatus.DanosConstantes;
 import Entidades.Heroi;
+import Subscribers.BatalhaSubscriber;
+import Subscribers.EfeitosDeStatus.Efeito;
 import Telas.Eventos.Batalha;
 import Visual.Cor;
-import Visual.Textos;
 
 /** efeitos de dano constante, dano depende do efeito especifico
 causam dano direto (ignoram resistencias) */
@@ -20,10 +18,23 @@ public class DanoConstante extends Efeito {
     public DanoConstante(DanoConstante copiado){
         super(copiado);
         this.dano = copiado.dano;
+        
     }
 
     public int getDano() {
         return dano;
+    }
+
+    @Override
+    public boolean addStack(Batalha batalha, BatalhaSubscriber novo) {
+        if (!acumulaEfeito(novo))
+            return false;
+
+        this.stacks++;
+             
+        this.setDur(this.getDur() + ((Efeito) novo).getDur());
+
+        return true;
     }
 
     @Override
@@ -32,14 +43,9 @@ public class DanoConstante extends Efeito {
     }
     
     @Override
-    public void aplicar(){
+    public void onRoundStart(Batalha batalha, Heroi heroi){
         this.getAlvo().receberDanoDireto(dano);
- 
-        System.out.println("> " +this.getAlvo().getNome() + Cor.cinza + " sofreu " + this.dano + " pontos de dano de " + this.getNomeColorido() + "!"); Textos.sleep(300);
-    }
-
-    @Override
-    public void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha) {
+        this.passaTurno();
     }
 
     @Override
@@ -53,10 +59,7 @@ public class DanoConstante extends Efeito {
     }
 
     @Override
-    public void acabar() {
+    public String getMsgFimRodada(Batalha batalha, Heroi heroi){
+        return "> " +this.getAlvo().getNome() + Cor.cinza  + " sofreu " + this.dano + " pontos de dano de " + this.getNomeColorido() + "!";
     }
-
-    @Override
-    public void onCreate() {
-    }  
 }

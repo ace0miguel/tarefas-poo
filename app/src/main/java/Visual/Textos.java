@@ -2,10 +2,10 @@ package Visual;
 import java.util.ArrayList;
 import java.util.List;
 
-import EfeitosDeStatus.Efeito;
 import Entidades.Heroi;
 import Entidades.Inimigo;
-import Poderes.Poder;
+import Subscribers.EfeitosDeStatus.Efeito;
+import Subscribers.Poderes.Poder;
 import Util.RNGHandler;
 
 public class Textos {
@@ -63,21 +63,21 @@ public class Textos {
         limpaTela();
         boolean aux1 = false;
         boolean aux2 = false;
-        sleep(500);
-        printaLinhaDevagar(Arte.tituloSombreado); sleep(700);
+        sleep(300);
+        printaLinhaDevagar(Arte.tituloSombreado); sleep(200);
         System.out.println();
         // parte de cima da hud
         
-        printaBonito(bordaHudBatalha, 2, 1);
+        printaBonito(bordaHudBatalha, 1, 1);
 
         // ---------------------------------
 
         String linhaStatus = heroi.status();
         for (Poder poder : listaPoderes) {
-            linhaStatus += " > " + poder.getNome() + " [" + poder.getStacks() + "] " + Cor.txtCinza("|");
+            linhaStatus += " > " + poder.getNomeColorido() + " [" + poder.getStacks() + "] " + Cor.txtCinza("|");
         }
 
-        printaColunaDevagar(linhaStatus,8);
+        printaColunaDevagar(linhaStatus,5);
         sleep(25);
         
         for (Efeito efeito : listaEfeitos) {
@@ -90,11 +90,11 @@ public class Textos {
 
         if (aux1) System.out.println();
 
-        System.out.println(Cor.txtCinza("VERSUS!\n")); sleep(25);
+        System.out.println(Cor.txtAmareloClaro("VERSUS!\n")); sleep(25);
 
         for (int i = 0; i < inimigos.length; i++){
             if (inimigos[i].estaVivo()){
-                printaColunaDevagar(inimigos[i].status(), 8); sleep(25);
+                printaColunaDevagar(inimigos[i].status(), 5); sleep(25);
                 aux2 = false;
 
                 for (Efeito efeito : listaEfeitos) {
@@ -112,24 +112,24 @@ public class Textos {
 
         // parte de baixo da hud
         
-        printaBonito(bordaHudBatalha, 2, 1);
+        printaBonito(bordaHudBatalha, 1, 1);
 
         // ---------------------------------
         
-        sleep(700);
+        sleep(200);
         System.out.println();
 
         for (Inimigo inimigo : inimigos) {
                 inimigo.anunciarIntencao(heroi);
         }
 
-        sleep(500);
+        sleep(100);
 
         System.out.println();
-        System.out.println(heroi.statusEnergia()); 
+        printaBonito(heroi.statusEnergia(), 5 ,2); 
         System.out.println();
 
-        sleep(500);
+        sleep(100);
     }
 
     /** imprime o estado atual da batalha sem delay (aparece tudo de uma vez) */
@@ -151,7 +151,7 @@ public class Textos {
 
         System.out.print(heroi.status());
         for (Poder poder : listaPoderes) {
-            System.out.print(" > " + poder.getNome() +" ["+poder.getStacks()+"] " + Cor.txtCinza("|"));
+            System.out.print(" > " + poder.getNomeColorido() +" ["+poder.getStacks()+"] " + Cor.txtCinza("|"));
         }
 
         System.out.println();
@@ -167,7 +167,7 @@ public class Textos {
 
         if (aux1) System.out.println();
 
-        Cor.printaCinza("VERSUS!\n");
+        Cor.printaAmareloClaro("VERSUS!\n");
 
         System.out.println();
 
@@ -361,6 +361,20 @@ public class Textos {
 
         return resultado.toString();
     }
+
+    /** retorna a primeira palavra de uma string */
+    public static String getPrimeiraPalavra(String texto) {
+    if (texto == null || texto.isBlank()) return "";
+    
+    texto = texto.trim();
+    int primeiroEspaco = texto.indexOf(" ");
+    if (primeiroEspaco == -1) {
+        return texto; 
+    }
+    
+    // Recorta do início (0) até chegar no espaço!
+    return texto.substring(0, primeiroEspaco); 
+}
 
     /* BARQUINHO Q EU TINHA FEITO PRA HUD ANTIGA TO COM DÓ DE APAGAR DEU MO TRABALHO :(
 

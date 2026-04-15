@@ -10,23 +10,27 @@ import Cartas.CartaAtaqueComEfeito;
 import Cartas.CartaHabilidade;
 import Cartas.CartaMaldicao;
 import Cartas.CartaPoder;
-import EfeitosDeStatus.Buffs.AumentaDano;
-import EfeitosDeStatus.Buffs.AumentaResistencia;
-import EfeitosDeStatus.DanosConstantes.DanoConstante;
-import EfeitosDeStatus.DanosConstantes.Sangramento;
-import EfeitosDeStatus.DanosConstantes.Veneno;
-import EfeitosDeStatus.Efeito;
-import EfeitosDeStatus.Energizar;
-import EfeitosDeStatus.Instantaneos.AdicionaCarta;
-import EfeitosDeStatus.Instantaneos.EscolheCarta;
-import EfeitosDeStatus.Instantaneos.Escudo;
-import EfeitosDeStatus.Instantaneos.GanhaEnergia;
-import EfeitosDeStatus.Instantaneos.Purificar;
-import EfeitosDeStatus.Instantaneos.PuxaCarta;
 import Entidades.Inimigo;
-import Poderes.CartaAdicional;
-import Poderes.MaosLeves;
-import Poderes.Poder;
+import Subscribers.EfeitosDeStatus.Buffs.AumentaDano;
+import Subscribers.EfeitosDeStatus.Buffs.AumentaResistencia;
+import Subscribers.EfeitosDeStatus.DanosConstantes.DanoConstante;
+import Subscribers.EfeitosDeStatus.DanosConstantes.Sangramento;
+import Subscribers.EfeitosDeStatus.DanosConstantes.Veneno;
+import Subscribers.EfeitosDeStatus.Efeito;
+import Subscribers.EfeitosDeStatus.Energizar;
+import Subscribers.EfeitosDeStatus.Instantaneos.AdicionaCarta;
+import Subscribers.EfeitosDeStatus.Instantaneos.EscolheCarta;
+import Subscribers.EfeitosDeStatus.Instantaneos.Escudo;
+import Subscribers.EfeitosDeStatus.Instantaneos.GanhaEnergia;
+import Subscribers.EfeitosDeStatus.Instantaneos.Purificar;
+import Subscribers.EfeitosDeStatus.Instantaneos.PuxaCarta;
+import Subscribers.Itens.CartasInicioBatalha;
+import Subscribers.Itens.CuraFimBatalha;
+import Subscribers.Itens.EfeitoPorCusto;
+import Subscribers.Itens.Item;
+import Subscribers.Poderes.CartaAdicional;
+import Subscribers.Poderes.MaosLeves;
+import Subscribers.Poderes.Poder;
 import Visual.Arte;
 import Visual.Cor;
 
@@ -124,13 +128,20 @@ public class Moldes {
 
     public static EscolheCarta escolheCarta = new EscolheCarta("Escolhe uma carta", "Escolha uma carta da pilha de compra");
 
-
     // poderes -------------
     public static Poder dedoNervoso = new MaosLeves(("JOHN WICK!"), "Sempre que atirar, ATIRE NOVAMENTE! pelo tanto de acumulos desse poder.", 1);
 
     public static Poder mestreLaminas = new MaosLeves(("MESTRE DAS LÂMINAS"), "Sempre que cortar, CORTE NOVAMENTE! pelo tanto de acumulos desse poder.", 2);
 
     public static Poder cartaAdicional = new CartaAdicional("CONTRATO DE SANGUE", "No início de cada turno, puxe 1 carta adicional e perca 1 ponto de vida.", 1);
+
+    // itens -------------
+
+    public static Item facaAcougueiro = new EfeitoPorCusto("faca de açougueiro", "cartas de ataque custo 1 aplicam um acumulo de sangramento adicional", sangramento, 1);
+
+    public static Item marmita = new CuraFimBatalha("marmita", "cura 6 pontos de vida no fim da batalha", 6);
+
+    public static Item amuletoVelho = new CartasInicioBatalha("amuleto velho", "receba 2 cartas adicionais no inicio da batalha", 2);
 
     /** inicializa os moldes */
     public static void carregar(){
@@ -166,7 +177,7 @@ public class Moldes {
         corteDefensivo = new CartaAtaqueComEfeito("Corte defensivo", "ganha escudo!", 1, 3, escudo2, true, 2); 
         corteDefensivo.setResenha(Cor.txtAzulClaro(Arte.CORTE5)); corteDefensivo.setRaridade(1);
 
-        corteRapido = new CartaAtaqueComEfeito("Corte rapido", " ganha 1 ponto de energia!", 1, 3, ganhaEnergia2, true, 2); 
+        corteRapido = new CartaAtaqueComEfeito("Corte rapido", " ganha 1 ponto de energia!", 1, 3, ganhaEnergia1, true, 2); 
         corteRapido.setResenha(Cor.txtAmareloClaro(Arte.CORTE4)); corteRapido.setRaridade(2);
 
         bombaVeneno = new CartaAtaqueComEfeito("BOMBA DE VENENO!", "jogue uma " + Cor.txtVerdeEscuro("BOMBA TÓXICA") + " que atinge TODOS os inimigos e aplica " + veneno.getNomeColorido(), 3, 6, veneno4, false);
@@ -175,7 +186,8 @@ public class Moldes {
         desprezo = new CartaAtaqueComEfeito("Desprezo.", "causa muito dano porém irrita seu adversario", 4, 26, ego, false);
         desprezo.setResenha(Arte.DESPREZO); desprezo.setRaridade(2);
 
-        presenteMaldito = new CartaAtaqueComEfeito("Presente maldito", "Um presente de um anfitrião misterioso... " + Cor.txtVermelho("[Sacrifício: 5]"), 4, 24, sangramento, false); presenteMaldito.setResenha((Arte.hahaha).repeat(18)); presenteMaldito.setRaridade(4); 
+        presenteMaldito = new CartaAtaqueComEfeito("Presente sinistro", "Um presente de um anfitrião misterioso... " + Cor.txtVermelho("[Sacrifício: 5]"), 4, 24, sangramento, false); 
+        presenteMaldito.setResenha((Arte.hahaha).repeat(18)); presenteMaldito.setRaridade(4); 
         presenteMaldito.setConsumir(true); presenteMaldito.setSacrificio(5); presenteMaldito.setEfeitoEmArea(true);
 
         // cartas habilidade
@@ -214,10 +226,10 @@ public class Moldes {
 
         // cartas poder
         dedoNervosoCarta = new CartaPoder("JOHN WICK", "Atire novamente sempre que usar uma carta de tiro!", 3, dedoNervoso); 
-        dedoNervosoCarta.setRaridade(3);
+        dedoNervosoCarta.setRaridade(3); 
 
         mestreLaminasCarta = new CartaPoder("Mestre das lâminas", "Corte novamente sempre que usar uma carta de corte!", 3, mestreLaminas); 
-        mestreLaminasCarta.setRaridade(3);
+        mestreLaminasCarta.setRaridade(3); mestreLaminasCarta.setManter(true);
 
         contratoSangue = new CartaPoder("Contrato de sangue", "No início de cada turno, puxe 1 carta adicional e perca 1 ponto de vida.", 3, cartaAdicional); 
         contratoSangue.setRaridade(3);
@@ -229,11 +241,11 @@ public class Moldes {
         beberVeneno = new CartaMaldicao("Beber veneno.", "Bebe veneno.", 1, veneno, true); beberVeneno.setResenha(Cor.txtCinza(Arte.algoRuim));
 
         // cartas pro deck de teste
-        bombaSuprema = new CartaAtaque("BOMBA!!!!!!!!!", "joga uma bomba que atinge TODOS os inimigos!", 0, 50); bombaSuprema.setEfeitoEmArea(true); 
-        bombaSuprema.setRaridade(10);
+        bombaSuprema = new CartaAtaque("BOMBA!!!!!!!!!", "joga uma bomba que atinge TODOS os inimigos!", 0, 150); bombaSuprema.setEfeitoEmArea(true); 
+        bombaSuprema.setRaridade(10); bombaSuprema.setInata(true);
 
         energiaSupremo = new CartaHabilidade("Energia!!!!!!!!!!!", "Ganhe muitos ponto de energia", 0, ganhaEnergiaTest, true); 
-        energiaSupremo.setRaridade(10);
+        energiaSupremo.setRaridade(10); energiaSupremo.setInata(true);
 
         // inimigos --
         // tier 1 -----------------

@@ -1,8 +1,7 @@
-package EfeitosDeStatus.Buffs;
-import Cartas.Carta;
-import EfeitosDeStatus.Efeito;
-import Entidades.Entidade;
+package Subscribers.EfeitosDeStatus.Buffs;
 import Entidades.Heroi;
+import Subscribers.BatalhaSubscriber;
+import Subscribers.EfeitosDeStatus.Efeito;
 import Telas.Eventos.Batalha;
 
 /** altera a resistencia ( se quiser diminuir so passar um valor negativo ) */
@@ -15,28 +14,20 @@ public class AumentaResistencia extends Buff {
     public AumentaResistencia(AumentaResistencia copiado){
         super(copiado);
     }
-    
+
     @Override
-    public boolean getResetDur() {
+    public boolean addStack(Batalha batalha, BatalhaSubscriber novo){
+        if (!acumulaEfeito(novo))
+            return false;
+
+        this.stacks++;
+        this.getAlvo().somaResistencia(this.valor);
+
         return true;
     }
 
     @Override
-    public void addStack(){
-        this.stacks++;
-        this.getAlvo().somaResistencia(this.valor);
-    }
-
-    @Override
-    public void aplicar(){
-    }
-
-    @Override
-    public void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha) {
-    }
-
-    @Override
-    public void onCreate() {
+    public void onCreate(Batalha batalha, Heroi heroi) {
         this.getAlvo().somaResistencia(valor);
     }
 
@@ -46,12 +37,7 @@ public class AumentaResistencia extends Buff {
     }
 
     @Override
-    public String status() {
-        return this.getNome() + " [" + this.valor * this.stacks + "] > " + this.getDur(); 
-    }
-    
-    @Override
-    public void acabar() {
+    public void onRemove(Batalha batalha, Heroi heroi) {
         this.getAlvo().somaResistencia(this.valor * this.stacks * -1);
     }
 }

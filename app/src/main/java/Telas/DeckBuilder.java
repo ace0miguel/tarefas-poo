@@ -8,9 +8,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 import Cartas.Carta;
 import Entidades.Heroi;
 import Util.InputHandler;
+import static Util.Moldes.amuletoVelho;
 import static Util.Moldes.armadura;
-import static Util.Moldes.bomba;
 import static Util.Moldes.bombaSuprema;
+import static Util.Moldes.bombaVeneno;
 import static Util.Moldes.contratoSangue;
 import static Util.Moldes.corteDefensivo;
 import static Util.Moldes.corteProfundo;
@@ -19,6 +20,9 @@ import static Util.Moldes.corteVenenoso;
 import static Util.Moldes.egoCarta;
 import static Util.Moldes.energiaSupremo;
 import static Util.Moldes.energizar;
+import static Util.Moldes.facaAcougueiro;
+import static Util.Moldes.marmita;
+import static Util.Moldes.mestreLaminasCarta;
 import static Util.Moldes.pactoSangue;
 import static Util.Moldes.presenteMaldito;
 import static Util.Moldes.puxaCarta;
@@ -33,7 +37,7 @@ import Visual.Textos;
 /** permite passar cartas do inventário para o baralho ou, por um preço, remover cartas do baralho */
 public class DeckBuilder {
     private static List<String> decksPadrao = new ArrayList<>(); // decks padrao pra testagem ate ter o deckbuilder de vdd
-    private static List<String> menuInicial = new ArrayList<>(Arrays.asList("inventario", "baralho"));
+    private static List<String> menuInicial = new ArrayList<>(Arrays.asList("inventario", "baralho " + Cor.txtAmareloClaro("(50 dolares pra remover)")));
 
     // limite minimo de cartas q vc precisa ter no baralho pra poder sair daqui.
     private static int limiteMinimoCartas = 10;
@@ -42,9 +46,9 @@ public class DeckBuilder {
     /** exibe os decks padrao ja montados */
     public static void mostrarDecksPadrao(Heroi heroi){
         // nomes dos decks padrao
-        decksPadrao.add(Cor.txtVermelho("Samurai: Cartas de corte (menos dano, aplicam efeito)"));
-        decksPadrao.add(Cor.txtAmarelo("John wick: Cartas de tiro (dano direto, sem efeito)"));
-        decksPadrao.add(Cor.txtCinza("deck de teste: ganha automaticamente e 100 de gold logo de cara."));
+        decksPadrao.add(Cor.txtVermelho("Samurai: Cartas de corte (menos dano, aplicam efeito)" + Cor.azulClaro +" + amuleto velho"));
+        decksPadrao.add(Cor.txtAmarelo("John wick: Cartas de tiro (dano direto, sem efeito)" + Cor.azulClaro +" + marmita"));
+        decksPadrao.add(Cor.txtCinza("deck de teste: ativa o modo teste."));
 
         Textos.limpaTela();
         int escolha = InputHandler.selecionar(decksPadrao, Cor.reset + "Escolha um baralho inicial: \n" + Cor.txtCinza("(se voce ganhar a primeira batalha eu te deixo personalizar o deck!)")); 
@@ -70,6 +74,8 @@ public class DeckBuilder {
                 heroi.addCarta(shieldinho);
 
                 heroi.addCarta(energizar);
+
+                heroi.ganhaItem(amuletoVelho);
             }
             /* deck de dano direto */
             case 1 -> {
@@ -90,21 +96,30 @@ public class DeckBuilder {
 
                 heroi.addCarta(egoCarta);
                 heroi.addCarta(armadura);
+
+                heroi.ganhaItem(marmita);
+                
             }  
             // deck pra testar carta
             case 2 -> {
-                heroi.addCarta(bomba);
-                heroi.addCarta(bomba);
+                heroi.addCarta(mestreLaminasCarta);
+                heroi.addCarta(mestreLaminasCarta);
+
+                heroi.addCarta(bombaVeneno);
+                heroi.addCarta(bombaVeneno);
+                heroi.addCarta(bombaVeneno);
+                heroi.addCarta(bombaVeneno);
                 
-                heroi.addCarta(bombaSuprema);
-                heroi.addCarta(bombaSuprema);
                 heroi.addCarta(bombaSuprema);
            
                 heroi.addCarta(puxaCarta);
                 heroi.addCarta(puxaCarta); 
+                
+                heroi.addCarta(corteDefensivo);
+                heroi.addCarta(corteProfundo);
+                heroi.addCarta(corteVenenoso);
+                heroi.addCarta(corteRapido);
 
-                heroi.addCarta(energiaSupremo);
-                heroi.addCarta(energiaSupremo);
                 heroi.addCarta(energiaSupremo);
                 
                 heroi.addCarta(pactoSangue);
@@ -117,8 +132,17 @@ public class DeckBuilder {
                 heroi.addCarta(presenteMaldito);
 
                 heroi.addCarta(contratoSangue);
+                heroi.addCarta(contratoSangue);
 
-                heroi.ganhaDinheiro(100);
+                heroi.addCarta(mestreLaminasCarta);
+                heroi.addCarta(mestreLaminasCarta);
+
+                heroi.ganhaItem(facaAcougueiro);
+                heroi.ganhaItem(marmita);
+                heroi.ganhaItem(amuletoVelho );
+
+                heroi.ganhaDinheiro(300);
+                heroi.setEnergiaMax(60);
                 heroi.setTestMode(true);
             }
         }
@@ -131,7 +155,7 @@ public class DeckBuilder {
      */
     public static void iniciar(Heroi heroi){
         while (true){
-            int opcao = InputHandler.selecionar(menuInicial, true, Cor.txtAmareloClaro(Arte.deckBuilder) + "\n" + Textos.menuStatus(heroi));
+            int opcao = InputHandler.selecionar(menuInicial, true, Cor.txtAmareloClaro(Arte.deckBuilder) + "\n" + Textos.menuStatus(heroi), "voltar para o mapa.");
 
             // escolheu voltar, sai do loop. mas so se tiver acima do limite minimo.
             if (opcao == -1) {

@@ -1,31 +1,26 @@
-package EfeitosDeStatus.Instantaneos;
+package Subscribers.EfeitosDeStatus.Instantaneos;
 
-import EfeitosDeStatus.Efeito;
+import Entidades.Heroi;
+import Subscribers.EfeitosDeStatus.Efeito;
+import Telas.Eventos.Batalha;
 
 /** adiciona escudo ao alvo */
-public class Escudo extends Efeito {
-
+public class Escudo extends Instantaneo {
     private int valor;
+    
     public Escudo(String nome, String desc, int valor){
-        super(nome, desc, 0);
+        super(nome, desc);
         this.valor = valor;
     }
 
     public Escudo(Escudo copiado){
         super(copiado);
-        this.setDur(0);
         this.valor = copiado.valor;
     }
 
     @Override
-    public void addStack(){
-        this.onCreate();
-    }
-
-    @Override
-    public void onCreate() {
+    public void onCreate(Batalha batalha, Heroi heroi) {
         this.getAlvo().ganharEscudo(valor);
-        this.setDur(0);
     }
 
     @Override

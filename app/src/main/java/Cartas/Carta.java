@@ -20,14 +20,26 @@ public abstract class Carta {
     private boolean selfCast;
     /** exibido ao utilizar a carta (de preferencia uma arte ascii) */
     private String resenha = "";
+    /** vida perdida ao usar a carta. */
+    protected int sacrificio = 0; // variavel pra definir um custo em vida ao se usar a carta.
+
+    /** lista de tags que sao exibidas antes da descriçao da carta */
+    protected List<String> tags = new ArrayList<>();
+
+    /** lista publica static que guarda todas as tags existentes e que podem ser compradas */
+    public List<String> tagsCompraveis = new ArrayList<>(List.of("Area", "Consumir", "Manter", "Inata"));
+
+    public List<String> tagsRemoviveis = new ArrayList<>(List.of("Area", "Consumir", "Manter", "Inata", "Sacrificio"));
+
     /** true: afeta TODOS os inimigos */
     protected boolean efeitoEmArea = false;
     /** true: ao ser utilizada vai pra uma pilha de descartes separada */
-    protected boolean consumir = false; // se verdadeiro, a carta vai pra uma pilha de descarte especial ao ser usada. (nao volta pra mao)
-    /** vida perdida ao usar a carta. */
-    protected int sacrificio = 0; // variavel pra definir um custo em vida ao se usar a carta.
-    /** lista de tags que sao exibidas antes da descriçao da carta */
-    protected List<String> tags = new ArrayList<>();
+    protected boolean consumir = false; 
+    /** true: não é descartada da mão até ser utilizada */
+    protected boolean manter = false;
+    /** true: sempre aparece na primeira mão em cada batalha */
+    protected boolean inata = false;
+
 
     /** tipos de ação:
     0 - nenhum
@@ -65,9 +77,13 @@ public abstract class Carta {
         this.selfCast = copia.selfCast;
         this.tipo = copia.tipo;
         this.resenha = copia.resenha;
+        
+        this.sacrificio = copia.sacrificio;
         this.consumir = copia.consumir;
         this.efeitoEmArea = copia.efeitoEmArea;
-        this.sacrificio = copia.sacrificio;
+        this.manter = copia.manter;
+        this.inata = copia.inata;
+
         this.raridade = copia.raridade;
         this.tags = new ArrayList<>(copia.tags);
     }
@@ -148,6 +164,23 @@ public abstract class Carta {
     public boolean getUsoCancelado() {
         return usoCancelado;
     }
+
+    public boolean getManter() {
+        return manter;
+    }
+
+    public boolean getInata() {
+        return inata;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    /** retorna todas as tags que a carta nao tem e que podem ser compradas */
+    public List<String> getTagsDisponiveis(){
+        return new ArrayList<>(this.tagsCompraveis.stream().filter(tag -> !this.tags.contains(tag)).toList());
+    }
     // Setters --------------------------------------
     
     public void setSelfCast(boolean selfCast) {
@@ -192,8 +225,35 @@ public abstract class Carta {
         }
     }
 
+    public void setManter(boolean _manter) {
+        this.manter = _manter;
+        if (_manter) {
+            if (!tags.contains("Manter")) {
+                tags.add("Manter");
+            }
+        } else {
+            tags.remove("Manter");
+        }
+    }
+
+    public void setInata(boolean _inata) {
+        this.inata = _inata;
+        if (_inata) {
+            if (!tags.contains("Inata")) {
+                tags.add("Inata");
+            }
+        } else {
+            tags.remove("Inata");
+        }
+    }
+
     public void setSacrificio(int sacrificio) {
         this.sacrificio = sacrificio;
+        if (sacrificio  > 0) {
+            tags.add("Sacrificio");
+        } else {
+            tags.remove("Sacrificio");
+        }
     }
 
     public void setRaridade(int raridade) {
@@ -202,6 +262,20 @@ public abstract class Carta {
 
     public void setUsoCancelado(boolean usoCancelado) {
         this.usoCancelado = usoCancelado;
+    }
+
+    public void aplicarTag(String tag, boolean adicionar) {
+        switch (tag) {
+            case "Area" -> setEfeitoEmArea(adicionar);
+            case "Consumir" -> setConsumir(adicionar);
+            case "Manter" -> setManter(adicionar);
+            case "Sacrificio" -> {
+                if (!adicionar) {
+                    setSacrificio(0);
+                }
+            }
+            case "Inata" -> setInata(adicionar);
+        }
     }
 
     // ---------------------------------------------
@@ -238,6 +312,25 @@ public abstract class Carta {
 
     /** string a ser printada ao ganhar a carta */
     public String recompensa(){
-        return this.getNomeRaridade() + " (Custo: " + this.getCusto() + Cor.txtAmarelo(" energia") +") - " + this.getDescricao();
+        String retorno = this.getNomeRaridade() + " - " + this.getDescricao() ;
+    
+        if (!tags.isEmpty()) {
+            retorno += " - <" + Cor.txtRosa(String.join( Cor.txtReset(", ") + Cor.rosa,  tags)) + ">";
+        }
+
+        retorno +=  " (Custo: " + this.getCusto() + Cor.txtAmarelo(" energia") +")" ;
+        return retorno;
+    }
+
+    public List<String> getTagsCompraveis() {
+        return tagsCompraveis;
+    }
+
+    public List<String> getTagsRemoviveis() {
+        return tagsRemoviveis;
+    }
+
+    public boolean isInata() {
+        return inata;
     }
 }
