@@ -50,6 +50,7 @@ public class Moldes {
     public static Inimigo endrick;
     public static Inimigo drake;
     public static Inimigo paulAtreides;
+    public static Inimigo paulAtreidesSupremo;
     public static Inimigo sabrinaCarpenter;
     public static Inimigo tripleT;
     public static Inimigo loudSacy;
@@ -146,7 +147,7 @@ public class Moldes {
     /** inicializa os moldes */
     public static void carregar(){
         /* base do balanceamento: carta de 1 de energia: 5 pontos de dano ou 4 de escudo
-        um inimigo fraco deve ter por volta de uns 50 pontos de vida e causar uns 9 de dano
+        um inimigo fraco deve ter por volta de uns 40 pontos de vida e causar uns 9 de dano
         tiros: cartas de ataque sem efeito secundário, cortes aplicam efeito (em geral)
         cartas com efeito adicional com o mesmo custo de energia devem causar menos dano
         cartas que custam mais de 1 de energia devem causar mais que o seu custo * 5 pontos de dano, pra compensar pela inflexibilidade*/
@@ -177,7 +178,7 @@ public class Moldes {
         corteDefensivo = new CartaAtaqueComEfeito("Corte defensivo", "ganha escudo!", 1, 3, escudo2, true, 2); 
         corteDefensivo.setResenha(Cor.txtAzulClaro(Arte.CORTE5)); corteDefensivo.setRaridade(1);
 
-        corteRapido = new CartaAtaqueComEfeito("Corte rapido", " ganha 1 ponto de energia!", 1, 3, ganhaEnergia1, true, 2); 
+        corteRapido = new CartaAtaqueComEfeito("Corte rapido", "ganha 1 ponto de energia!", 1, 3, ganhaEnergia1, true, 2); 
         corteRapido.setResenha(Cor.txtAmareloClaro(Arte.CORTE4)); corteRapido.setRaridade(2);
 
         bombaVeneno = new CartaAtaqueComEfeito("BOMBA DE VENENO!", "jogue uma " + Cor.txtVerdeEscuro("BOMBA TÓXICA") + " que atinge TODOS os inimigos e aplica " + veneno.getNomeColorido(), 3, 6, veneno4, false);
@@ -249,52 +250,56 @@ public class Moldes {
 
         // inimigos --
         // tier 1 -----------------
-        endrick = new Inimigo("Endrick", 50, 9,
-            new Acao.Atacar(), new Acao.AtacarEfeito(veneno), new Acao.AplicarEfeitoAliadoMaisForte(ego)
+        endrick = new Inimigo("Endrick", 50, 8,
+            new Acao.Atacar(), new Acao.AtacarEfeito(veneno)
         ); endrick.setTier(1);
 
         // suporte
-        drake = new Inimigo("Drake", 40, 7,
-            new Acao.AplicarEfeitoAliadoMaisForte(ego), new Acao.AplicarEfeitoAliadoMaisForte(escudo10), new Acao.Atacar()
+        drake = new Inimigo("Drake", 25, 6,
+            new Acao.AplicarEfeitoAliadoMaisForte(ego), new Acao.AplicarEfeitoAliadoMaisForte(escudo10)
         ); drake.setTier(1);
 
         // duplica ao chegar na metade da vida
-        amoeba = new Inimigo("Amoeba", 20, 4,
+        amoeba = new Inimigo("Amoeba", 25, 4,
             new Acao.AtacarEfeito(veneno1)
         ); amoeba.setTier(1); amoeba.setAcaoMeiaVida(new Acao.multiplicar(2));
 
         // tier 2 -----------------
         // ganha escudo ao chegar na metade da vida 
-        barbossa = new Inimigo("Capitão Hector Barbossa", 70, 13,
+        barbossa = new Inimigo("Capitão Hector Barbossa", 60, 10,
             new Acao.Atacar(), new Acao.AtacarEfeito(sangramento)
         ); barbossa.setTier(2); barbossa.setAcaoMeiaVida(new Acao.ReceberEfeito(escudo10));
 
         // assassino
-        loudCoringa = new Inimigo("LOUD Coringa", 50, 11, 
+        loudCoringa = new Inimigo("LOUD Coringa", 50, 8, 
             new Acao.AtacarVidaPerdida(), new Acao.AtacarEfeito(sangramento), new Acao.AdicionarCarta(sangrar)
         ); loudCoringa.setTier(2);
 
-        // suporte
-        loudSacy = new Inimigo("LOUD Sacy", 60, 0, 
+        // suporte, mas ataca 1 vez quando chega na meia vida
+        loudSacy = new Inimigo("LOUD Sacy", 40,6, 
             new Acao.AdicionarCarta(sangrar), new Acao.AplicarEfeitoAliadoMaisForte(ego), 
             new Acao.AplicarEfeitoAliadoMaisForte(escudo10), new Acao.AplicarEfeitoAliadoMaisForte(pactoSinistro)
-        ); loudSacy.setTier(2);
+        ); loudSacy.setTier(2); loudSacy.setAcaoMeiaVida(new Acao.AtacarEfeito(sangramento));
 
         // tier 3 -----------------
-        sabrinaCarpenter = new Inimigo("SABRINA CARPENTER", 80, 20,
+        sabrinaCarpenter = new Inimigo("Sabrina Carpenter", 65, 15,
             new Acao.Atacar(), new Acao.AtacarEfeito(sangramento), new Acao.ReceberEfeito(ego)
-        ); sabrinaCarpenter.setTier(3);
+        ); sabrinaCarpenter.setTier(3); sabrinaCarpenter.setAcaoMeiaVida(new Acao.ReceberEfeito(ego));
             
-        tripleT = new Inimigo("TUNG TUNG TUNG SAHUR", 67, 29, // pouca vida mas bate forte
+        tripleT = new Inimigo("Tung Tung Tung \"Triple T\" Sahur", 67, 10, // pouca vida mas bate forte
             new Acao.AdicionarCarta(beberVeneno), new Acao.AtacarEfeito(sangramento), new Acao.AtacarVidaPerdida()
         ); tripleT.setTier(3);
 
         // tier 4 (goats) -----------------
-        paulAtreides = new Inimigo("PAUL MUAD'DIB ATREIDES, DUKE OF ARRAKIS, LISAN AL GAIB", 100, 35, // ESSE AQUI E FORTE VIU MEIO QUE O BOSS
+        paulAtreides = new Inimigo("Paul Muad'Dib Atreides", 80, 16, // ESSE AQUI E FORTE VIU MEIO QUE O BOSS
             new Acao.AtacarVidaPerdida(), new Acao.ReceberEfeito(pactoSinistro), new Acao.AtacarEfeito(sangramento), new Acao.AtacarVidaPerdida()
         ); paulAtreides.setTier(4);
 
-        
+        // tier 5 (boss de area) -----------------
+        paulAtreidesSupremo = new Inimigo("PAUL MUAD'DIB ATREIDES, DUKE OF ARRAKIS, LISAN AL GAIB, KWISATZ HADERACH.", 100, 25, // ESSE AQUI E FORTE VIU MEIO QUE O BOSS
+            new Acao.AtacarVidaPerdida(), new Acao.ReceberEfeito(pactoSinistro), new Acao.AtacarEfeito(sangramento), new Acao.AtacarVidaPerdida()
+        ); paulAtreidesSupremo.setTier(5); paulAtreides.setAcaoMeiaVida(new Acao.ReceberEfeito(escudo10));
+
         // efeitos que referenciam cartas precisam ser setados aqui, pq as cartas sao criadas depois.
         ganhaResenhax.setCarta(resenhax);
         ganhaClubex.setCarta(clubex);

@@ -62,7 +62,7 @@ public class Batalha extends Evento {
 
     /** retorna al ista de inimigos vivos convertidas pra array */
     private Inimigo[] inimigosAtuaisArray() {
-        return inimigos.toArray(Inimigo[]::new);
+        return inimigos.stream().filter(i -> i.estaVivo()).toArray(Inimigo[]::new);
     }
 
     /** retorna todos os inimigos e o heroi */
@@ -316,13 +316,15 @@ public class Batalha extends Evento {
         limpaSubscribers();
         
         for (BatalhaSubscriber subscriber : subscribers) {
-            subscriber.onRoundStart(this, heroi);
-            Textos.printaBonito(subscriber.getMsgFimRodada(this, heroi) + "\n", 5,2);
-            Textos.sleep(sleepFimRodada);
+            Entidade alvo = subscriber.getAlvo();
+            if (alvo != null && alvo.estaVivo()){
+                subscriber.onRoundStart(this, heroi);
+                Textos.printaBonito(subscriber.getMsgFimRodada(this, heroi) + "\n", 5,2);
+                Textos.sleep(sleepFimRodada);
+            }
         }
-
-        // se alguma msgfimrodada nao for vazio pula uma linha
-        boolean msgPrintada = subscribers.stream().anyMatch(subscriber -> !subscriber.getMsgFimRodada(this, heroi).equals(""));
+        // se alguma msgfimrodada nao for vazio pula uma linha ( que linha horrenda meu deus do ceu )
+        boolean msgPrintada = subscribers.stream().filter(s -> s.getAlvo() != null && s.getAlvo().estaVivo()).anyMatch(subscriber -> !subscriber.getMsgFimRodada(this, heroi).equals(""));
         if (msgPrintada) {
             System.out.println();
         }
@@ -433,7 +435,12 @@ public class Batalha extends Evento {
 
         this.subscribers.add(novoSubscriber);
         novoSubscriber.onCreate(this, heroi);
-        this.subscribers.sort(Comparator.comparing(BatalhaSubscriber::getPrioridade)); // ordena os efeitos por prioridade pra sangramento sobrepor resistencia
+        
+        // coloca os subscribers que afetam o heroi por ultimo e depois ordenam pela prioridade.
+        this.subscribers.sort(
+            Comparator.comparing((BatalhaSubscriber subscriber) -> subscriber.getAlvo() == heroi)
+                .thenComparing(BatalhaSubscriber::getPrioridade)
+        );
 
         /** adiciona nas listas correspondentes, pra printar o estado da batalha corretamente */
         if (novoSubscriber instanceof Efeito e)
@@ -454,12 +461,18 @@ public class Batalha extends Evento {
      */
     public int notificaMorte(){
 
-        // ve se morreu todo mundo e ja retorna
+        // ve se morreu todo mundo ou se so sobraram inimigos passivos e ja retorna
         boolean todosMortos = true;
         for (Inimigo inimigo : inimigos) {
-            if (inimigo.estaVivo()) todosMortos = false;
+            if (inimigo.estaVivo() && !inimigo.getPassivo()) todosMortos = false;
         }
+
         if (todosMortos) {
+            if (inimigos.stream().anyMatch(Inimigo::estaVivo)) {
+                Textos.limpaTela();
+                Cor.printaAmarelo("Todos os inimigos agressivos foram mortos!");
+                InputHandler.esperar();
+            }
             fimBatalha = true;
             return 0;
         }
@@ -567,6 +580,7 @@ public class Batalha extends Evento {
             case 2 -> Recompensas.ganharOpcoes(1, 3, heroi);
             case 3 -> Recompensas.ganharOpcoes(2, 3, heroi);
             case 4 -> Recompensas.ganharOpcoes(3, 3, heroi);
+            case 5 -> Recompensas.ganharCartas(3, 5, heroi);
         }
     }
 
@@ -587,13 +601,16 @@ public class Batalha extends Evento {
     }
 
     public int getNivelDificuldade() {
-        if (dificuldadeTotal < 4) {
+        if (inimigos.stream().anyMatch(inimigo -> inimigo.getTier() == 5)) {
+            return 5; // BOSS
+        }
+        else if (dificuldadeTotal < 3) {
             return 1; // trivial
         }
-        else if (dificuldadeTotal < 7) {
+        else if (dificuldadeTotal < 6) {
             return 2; // normal
         }
-        else if (dificuldadeTotal <= 8) {
+        else if (dificuldadeTotal <= 7) {
             return 3; // desafiador
         }
         else {
@@ -610,6 +627,7 @@ public class Batalha extends Evento {
             case 2 -> retorno += " <" + Cor.verde + "normal" + Cor.reset + ">";
             case 3 -> retorno += " <" + Cor.amarelo + "desafiador" + Cor.reset + ">";
             case 4 -> retorno += " <" + Cor.vermelho + "elite" + Cor.reset + ">";
+            case 5 -> retorno += " <" + Cor.roxo + "BOSS" + Cor.reset + ">";
         }
 
         retorno += Cor.txtCinza(" VERSUS:");

@@ -12,7 +12,8 @@ import Visual.Textos;
 public abstract class Acao {
     protected Efeito efeito;
     protected Carta carta;
-    
+    protected boolean agressiva = true; // se false, é uma ação de suporte (aplica efeito em aliado, etc)
+
     /** realiza a açao */
     public void executar(Inimigo executor, Heroi heroi, Batalha batalha){};
     
@@ -25,6 +26,11 @@ public abstract class Acao {
     /** retorna o valor passado ou 0 se for menor q 0 */
     public int validarDano(int dano){
         return Math.max(dano,0);
+    }
+
+    /** retorna true se a açao causa dano direto ao jogador */
+    public boolean getAgressiva() {
+        return agressiva;
     }
     
     /** Causa o dano base */
@@ -96,6 +102,7 @@ public abstract class Acao {
     public static class ReceberEfeito extends Acao {
         public ReceberEfeito(Efeito efeito){
             this.efeito = efeito;
+            this.agressiva = false;
         }
 
         @Override
@@ -118,6 +125,7 @@ public abstract class Acao {
     public static class AdicionarCarta extends Acao {
         public AdicionarCarta(Carta carta) {
             this.carta = carta.criaCopia();
+            this.agressiva = false;
         }
 
         @Override
@@ -144,6 +152,7 @@ public abstract class Acao {
         Inimigo novoAlvo;
         public AplicarEfeitoAliadoMaisForte(Efeito efeito){
             this.efeito = efeito;
+            this.agressiva = false;
         }
 
         @Override
@@ -183,6 +192,7 @@ public abstract class Acao {
 
         public multiplicar(int fator){
             this.fator = fator;
+            this.agressiva = false;
         }
 
         @Override

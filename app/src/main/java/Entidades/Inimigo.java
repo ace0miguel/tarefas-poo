@@ -21,6 +21,8 @@ public class Inimigo extends Entidade{
     protected Acao[] acoesArray; // array de acoes :(
     protected List<Acao> acoes; // arraylist de acoes! :)
 
+    private boolean passivo = false; //true se o inimigo nao realiza ataques, apenas recebe efeitos e ativa efeitos ao morrer
+
     private Acao acaoMeiaVida; // ação que o inimigo realiza quando chega na metade da vida pela primeira vez
 
     protected boolean removerDaBatalha = false; // flag para remover um inimigo da batalha ativar efeitos ao morrer
@@ -41,6 +43,9 @@ public class Inimigo extends Entidade{
         this.tier = copiado.tier;
         this.acaoMeiaVida = copiado.acaoMeiaVida;
         this.meiaVida = copiado.meiaVida; // garante que nao ative dnv o meia vida
+
+        if (this.acoes.stream().filter(a -> a.getAgressiva()).toList().isEmpty()) 
+            this.passivo = true;
     }
 
     public Inimigo criaCopia() {
@@ -120,6 +125,10 @@ public class Inimigo extends Entidade{
     }
     public boolean getRemoverDaBatalha() {
         return removerDaBatalha;
+    }
+
+    public boolean getPassivo() {
+        return passivo;
     }
 
     public void setTier(int tier) {

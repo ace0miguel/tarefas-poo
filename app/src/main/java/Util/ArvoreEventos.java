@@ -19,6 +19,7 @@ import static Util.Moldes.endrick;
 import static Util.Moldes.loudCoringa;
 import static Util.Moldes.loudSacy;
 import static Util.Moldes.paulAtreides;
+import static Util.Moldes.paulAtreidesSupremo;
 import static Util.Moldes.sabrinaCarpenter;
 import static Util.Moldes.tripleT;
 
@@ -47,24 +48,26 @@ public class ArvoreEventos {
 
     // moldes de batalhas
 
-    // triviais ( dificuldade < 4 )
+    // triviais ( dificuldade < 3 )
     Batalha amoebas = new Batalha(amoeba.criaCopia(), amoeba.criaCopia());
-    Batalha coringaSolo = new Batalha(loudCoringa.criaCopia());
     Batalha barbossaSolo = new Batalha(barbossa.criaCopia());
     Batalha drakendrick = new Batalha(drake.criaCopia(), endrick.criaCopia());
 
-    // medias ( dificuldade entre 4 e 6 )
-    Batalha media1 = new Batalha(sabrinaCarpenter.criaCopia(), loudSacy.criaCopia());
+    // medias ( dificuldade entre 4 e 5 )
+    Batalha media1 = new Batalha(sabrinaCarpenter.criaCopia());
     Batalha media2 = new Batalha(loudCoringa.criaCopia(), barbossa.criaCopia());
     Batalha media3 = new Batalha(amoeba.criaCopia(), amoeba.criaCopia(), loudCoringa.criaCopia());
     Batalha loud = new Batalha(loudCoringa.criaCopia(), loudSacy.criaCopia());
 
-    // desafiadoras ( dificuldade entre 7 e 8 )
-    Batalha desafiadora1 = new Batalha(endrick.criaCopia(), loudSacy.criaCopia(), barbossa.criaCopia());
-    Batalha desafiadora2 = new Batalha(sabrinaCarpenter.criaCopia(), loudSacy.criaCopia(), loudCoringa.criaCopia());
+    // desafiadoras ( dificuldade entre 6 e 7 )
+    Batalha desafiadora1 = new Batalha(loudCoringa.criaCopia(), loudSacy.criaCopia(), barbossa.criaCopia());
+    Batalha desafiadora2 = new Batalha(sabrinaCarpenter.criaCopia(), drake.criaCopia(), loudCoringa.criaCopia());
 
-    // elite ( maior que 8 )
-    Batalha sabrinaAtreides = new Batalha(loudSacy.criaCopia(), paulAtreides.criaCopia(), sabrinaCarpenter.criaCopia());
+    // elite ( maior que 7 )
+    Batalha sabrinaAtreides = new Batalha(drake.criaCopia(), paulAtreides.criaCopia(), sabrinaCarpenter.criaCopia());
+
+    // boss ( contem inimigo de tier 5 )
+    Batalha lisanAlGaib = new Batalha(paulAtreidesSupremo.criaCopia(), drake.criaCopia(), amoeba.criaCopia()); 
 
     public ArvoreEventos(int n, int p){
         this.n = n;
@@ -72,7 +75,6 @@ public class ArvoreEventos {
 
         // adicionar as batalhas triviais --
         batalhasTriviais.add(amoebas);
-        batalhasTriviais.add(coringaSolo);
         batalhasTriviais.add(barbossaSolo);
         batalhasTriviais.add(drakendrick);
 
@@ -122,15 +124,12 @@ public class ArvoreEventos {
         // primeiro andar (batalha facil)
         if (profundidadeAtual == 0) { 
             // adiciona aqui opcoes.add evento que vc quer testar
-            // opcoes.add(loja.criaCopia());
+            // opcoes.add(drakendrick.criaCopia());
             sorteados.addAll(getEventosAleatorios(batalhasTriviais));
         }    
         // ultimo andar (boss)
         else if (profundidadeAtual == p) { 
-            sorteados.add(new Batalha(
-            barbossa.criaCopia(), loudCoringa.criaCopia(), amoeba.criaCopia(),
-            endrick.criaCopia(), drake.criaCopia(), paulAtreides.criaCopia(), 
-            sabrinaCarpenter.criaCopia(), tripleT.criaCopia(), loudSacy.criaCopia()));
+            sorteados.add(lisanAlGaib.criaCopia());
         }
         // recompensa do meio do mapa (andar pacifico)
         else if (profundidadeAtual == p/2) { 

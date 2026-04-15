@@ -48,7 +48,7 @@ public class DeckBuilder {
         // nomes dos decks padrao
         decksPadrao.add(Cor.txtVermelho("Samurai: Cartas de corte (menos dano, aplicam efeito)" + Cor.azulClaro +" + amuleto velho"));
         decksPadrao.add(Cor.txtAmarelo("John wick: Cartas de tiro (dano direto, sem efeito)" + Cor.azulClaro +" + marmita"));
-        decksPadrao.add(Cor.txtCinza("deck de teste: ativa o modo teste."));
+        decksPadrao.add(Cor.txtCinza("deck de teste (ativa o modo teste)"));
 
         Textos.limpaTela();
         int escolha = InputHandler.selecionar(decksPadrao, Cor.reset + "Escolha um baralho inicial: \n" + Cor.txtCinza("(se voce ganhar a primeira batalha eu te deixo personalizar o deck!)")); 

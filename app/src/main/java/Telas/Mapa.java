@@ -17,7 +17,7 @@ public class Mapa {
         this.heroi = _heroi;
     }
 
-    ArvoreEventos arvoreEventos = new ArvoreEventos(3, 7); // QUANTIDADE TOTAL DE ILHAS/ANDARES: P + 1 (COMEÇA DO PROFUNDIDADE 0)
+    ArvoreEventos arvoreEventos = new ArvoreEventos(3, 11); // QUANTIDADE TOTAL DE ILHAS/ANDARES: P + 1 (COMEÇA DO PROFUNDIDADE 0)
 
     // gera a raiz da arvore
     DefaultMutableTreeNode nodeInicial = new DefaultMutableTreeNode(arvoreEventos.escolherEvento(0).get(0));
