@@ -11,13 +11,13 @@ import Cartas.CartaHabilidade;
 import Cartas.CartaMaldicao;
 import Cartas.CartaPoder;
 import Entidades.Inimigo;
-import Subscribers.EfeitosDeStatus.Efeito;
-import Subscribers.EfeitosDeStatus.Energizar;
 import Subscribers.EfeitosDeStatus.Buffs.AumentaDano;
 import Subscribers.EfeitosDeStatus.Buffs.AumentaResistencia;
 import Subscribers.EfeitosDeStatus.DanosConstantes.DanoConstante;
 import Subscribers.EfeitosDeStatus.DanosConstantes.Sangramento;
 import Subscribers.EfeitosDeStatus.DanosConstantes.Veneno;
+import Subscribers.EfeitosDeStatus.Efeito;
+import Subscribers.EfeitosDeStatus.Energizar;
 import Subscribers.EfeitosDeStatus.Instantaneos.AdicionaCarta;
 import Subscribers.EfeitosDeStatus.Instantaneos.EscolheCarta;
 import Subscribers.EfeitosDeStatus.Instantaneos.Escudo;
@@ -229,11 +229,11 @@ public class Moldes {
         beberVeneno = new CartaMaldicao("Beber veneno.", "Bebe veneno.", 1, veneno, true); beberVeneno.setResenha(Cor.txtCinza(Arte.algoRuim));
 
         // cartas pro deck de teste
-        bombaSuprema = new CartaAtaque("BOMBA!!!!!!!!!", "joga uma bomba que atinge TODOS os inimigos!", 0, 50); bombaSuprema.setEfeitoEmArea(true); 
-        bombaSuprema.setRaridade(10);
+        bombaSuprema = new CartaAtaque("BOMBA!!!!!!!!!", "joga uma bomba que atinge TODOS os inimigos!", 0, 150); bombaSuprema.setEfeitoEmArea(true); 
+        bombaSuprema.setRaridade(10); bombaSuprema.setInata(true);
 
         energiaSupremo = new CartaHabilidade("Energia!!!!!!!!!!!", "Ganhe muitos ponto de energia", 0, ganhaEnergiaTest, true); 
-        energiaSupremo.setRaridade(10);
+        energiaSupremo.setRaridade(10); energiaSupremo.setInata(true);
 
         // inimigos --
         // tier 1 -----------------

@@ -6,10 +6,9 @@ import java.util.List;
 
 import Cartas.Carta;
 import Entidades.Heroi;
+import static Util.Moldes.listaCartasMoldes;
 import Visual.Cor;
 import Visual.Textos;
-
-import static Util.Moldes.listaCartasMoldes;
 
 /** Aqui ficam todos os metodos pra dar recompensas ao jogador (cartas, dinheiro, etc) */
 public class Recompensas {
@@ -135,5 +134,14 @@ public class Recompensas {
         System.out.println();
         System.out.println("Nova carta adicionada ao inventário! Visite o deckBuilder para equipá-la.");
         InputHandler.esperar();
+    }
+
+    /** concede uma escolha de cartas ao heroi, com uma raridade minima
+     * @param raridade a raridade minima das cartas a serem escolhidas
+     * @param quantidade a quantidade de opcoes
+     */
+    public static void ganharOpcoes(int raridade, int quantidade, Heroi heroi){
+        Carta cartaEscolhida = escolheCarta(raridade, quantidade);
+        ganharCartaEsp(cartaEscolhida, heroi);
     }
 }

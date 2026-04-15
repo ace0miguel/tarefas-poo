@@ -1,11 +1,10 @@
 package Telas.Eventos;
 
-import static Visual.Textos.menuStatus;
-
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import Cartas.Carta;
@@ -15,6 +14,7 @@ import Util.Recompensas;
 import Visual.Arte;
 import Visual.Cor;
 import Visual.Textos;
+import static Visual.Textos.menuStatus;
 
 /** evento aleatório onde o jogador pode pagar pra se curar ou pra receber cartas aleatórias */
 public class Loja extends Evento{
@@ -93,15 +93,27 @@ public class Loja extends Evento{
     public void edicaoTags(Heroi heroi){
         List<String> opcoes = new ArrayList<>(Arrays.asList("Adicionar tag", "Remover tag"));
 
+        // criando a lista de preço para adicionar/remover uma tag
+        Map<String, Integer> precoTags = new HashMap<>();
+        precoTags.put("Area", 50);
+        precoTags.put("Consumir", 45);
+        precoTags.put("Manter", 35);
+        precoTags.put("Inata", 35);
+        precoTags.put("Sacrificio", 40);
+
         while (true){
-            int escolha = InputHandler.selecionar(opcoes, true, Cor.txtAmareloClaro("O que você deseja fazer? " + menuStatus(heroi)));
+            var escolha = InputHandler.selecionar(opcoes, true, Cor.txtAmareloClaro("O que você deseja fazer? " + menuStatus(heroi)));
             AtomicInteger pagina = new AtomicInteger(0);
 
             if (escolha == -1) return;
 
             List<List<String>> matrizPaginas = InputHandler.montaPaginas(heroi.getBaralho());
 
-            Carta carta = heroi.getBaralho().get(InputHandler.menu(matrizPaginas, pagina, false));
+            int opcaoCarta = InputHandler.menu(matrizPaginas, pagina);
+
+            if (opcaoCarta == -1) continue;
+
+            Carta carta = heroi.getBaralho().get(opcaoCarta);
 
             switch (escolha) {
                 case 0 -> { // ADICIONAR TAG
@@ -109,7 +121,7 @@ public class Loja extends Evento{
 
                     for (String t : carta.tagsCompraveis) {
                         if (!carta.getTags().contains(t)) {
-                            disponiveis.add(t);
+                            disponiveis.add(t + " " + Cor.txtAmarelo("- " + precoTags.getOrDefault(t, 50) + " dol"));
                         }
                     }
 
@@ -120,12 +132,21 @@ public class Loja extends Evento{
                     }
 
                     int opcao = InputHandler.selecionar(disponiveis, true, Cor.txtAmareloClaro("escolha uma tag para " + Cor.txtVerde("adicionar:")));
+
                     if (opcao != -1) {
                         String tagEscolhida = disponiveis.get(opcao);
+                        String tagLimpa = Textos.getPrimeiraPalavra(tagEscolhida);
 
-                        carta.aplicarTag(tagEscolhida, true);
+                        if (precoTags.getOrDefault(tagLimpa, 50) > heroi.getDinheiro()) {
+                            System.out.println(Cor.txtVermelho("Você não tem dinheiro suficiente para comprar essa tag!"));
+                            InputHandler.esperar();
+                            break;
+                        }
 
-                        System.out.println(Cor.txtReset("tag < " + Cor.txtRosa(tagEscolhida) + " > adicionada com sucesso!"));
+                        carta.aplicarTag(tagLimpa, true);
+                        heroi.gastaDinheiro(precoTags.getOrDefault(tagLimpa, 50));
+
+                        System.out.println(Cor.txtReset("tag < " + Cor.txtRosa(tagLimpa) + " > adicionada com sucesso!"));
                         InputHandler.esperar();
                     }
                 }
@@ -134,7 +155,7 @@ public class Loja extends Evento{
 
                     for (String t : carta.tagsRemoviveis) {
                         if (carta.getTags().contains(t)) {
-                            disponiveis.add(t);
+                            disponiveis.add(t + " " + Cor.txtAmarelo(" - " + precoTags.getOrDefault(t, 50) + " dol"));
                         }
                     }
 
@@ -148,8 +169,18 @@ public class Loja extends Evento{
 
                     if (opcao != -1) {
                         String tagEscolhida = disponiveis.get(opcao);
-                        carta.aplicarTag(tagEscolhida, false);
-                        System.out.println(Cor.txtReset("tag < " + Cor.txtRosa(tagEscolhida) + " > removida com sucesso!"));
+                        String tagLimpa = Textos.getPrimeiraPalavra(tagEscolhida);
+
+                        if (precoTags.getOrDefault(tagLimpa, 50) > heroi.getDinheiro()) {
+                            System.out.println(Cor.txtVermelho("Você não tem dinheiro suficiente para comprar essa tag!"));
+                            InputHandler.esperar();
+                            break;
+                        }
+
+                        carta.aplicarTag(tagLimpa, false);
+                        heroi.gastaDinheiro(precoTags.getOrDefault(tagLimpa, 50));
+
+                        System.out.println(Cor.txtReset("tag < " + Cor.txtRosa(tagLimpa) + " > removida com sucesso!"));
                         InputHandler.esperar();
                     }
                 }

@@ -77,12 +77,13 @@ public abstract class Carta {
         this.selfCast = copia.selfCast;
         this.tipo = copia.tipo;
         this.resenha = copia.resenha;
-
+        
+        this.sacrificio = copia.sacrificio;
         this.consumir = copia.consumir;
         this.efeitoEmArea = copia.efeitoEmArea;
         this.manter = copia.manter;
-        this.sacrificio = copia.sacrificio;
-        
+        this.inata = copia.inata;
+
         this.raridade = copia.raridade;
         this.tags = new ArrayList<>(copia.tags);
     }

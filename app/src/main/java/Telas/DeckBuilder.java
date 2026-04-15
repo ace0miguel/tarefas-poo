@@ -19,9 +19,9 @@ import static Util.Moldes.corteVenenoso;
 import static Util.Moldes.egoCarta;
 import static Util.Moldes.energiaSupremo;
 import static Util.Moldes.energizar;
+import static Util.Moldes.mestreLaminasCarta;
 import static Util.Moldes.pactoSangue;
 import static Util.Moldes.presenteMaldito;
-import static Util.Moldes.mestreLaminasCarta;
 import static Util.Moldes.puxaCarta;
 import static Util.Moldes.shieldao;
 import static Util.Moldes.shieldinho;
@@ -34,7 +34,7 @@ import Visual.Textos;
 /** permite passar cartas do inventário para o baralho ou, por um preço, remover cartas do baralho */
 public class DeckBuilder {
     private static List<String> decksPadrao = new ArrayList<>(); // decks padrao pra testagem ate ter o deckbuilder de vdd
-    private static List<String> menuInicial = new ArrayList<>(Arrays.asList("inventario", "baralho"));
+    private static List<String> menuInicial = new ArrayList<>(Arrays.asList("inventario", "baralho " + Cor.txtAmareloClaro("(50 dolares pra remover)")));
 
     // limite minimo de cartas q vc precisa ter no baralho pra poder sair daqui.
     private static int limiteMinimoCartas = 10;
@@ -105,8 +105,6 @@ public class DeckBuilder {
                 heroi.addCarta(bombaVeneno);
                 
                 heroi.addCarta(bombaSuprema);
-                heroi.addCarta(bombaSuprema);
-                heroi.addCarta(bombaSuprema);
            
                 heroi.addCarta(puxaCarta);
                 heroi.addCarta(puxaCarta); 
@@ -117,8 +115,6 @@ public class DeckBuilder {
                 heroi.addCarta(corteRapido);
 
                 heroi.addCarta(energiaSupremo);
-                heroi.addCarta(energiaSupremo);
-                heroi.addCarta(energiaSupremo);
                 
                 heroi.addCarta(pactoSangue);
                 heroi.addCarta(pactoSangue);
@@ -132,10 +128,6 @@ public class DeckBuilder {
                 heroi.addCarta(contratoSangue);
                 heroi.addCarta(contratoSangue);
 
-                heroi.addCarta(mestreLaminasCarta);
-                heroi.addCarta(mestreLaminasCarta);
-                heroi.addCarta(mestreLaminasCarta);
-                heroi.addCarta(mestreLaminasCarta);
                 heroi.addCarta(mestreLaminasCarta);
                 heroi.addCarta(mestreLaminasCarta);
 
@@ -166,7 +158,7 @@ public class DeckBuilder {
      */
     public static void iniciar(Heroi heroi){
         while (true){
-            int opcao = InputHandler.selecionar(menuInicial, true, Cor.txtAmareloClaro(Arte.deckBuilder) + "\n" + Textos.menuStatus(heroi));
+            int opcao = InputHandler.selecionar(menuInicial, true, Cor.txtAmareloClaro(Arte.deckBuilder) + "\n" + Textos.menuStatus(heroi), "voltar para o mapa.");
 
             // escolheu voltar, sai do loop. mas so se tiver acima do limite minimo.
             if (opcao == -1) {

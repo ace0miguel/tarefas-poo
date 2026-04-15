@@ -13,7 +13,7 @@ public class CartaPoder extends Carta
 {
     private Poder poder;
 
-    { this.tagsRemoviveis = new ArrayList<>(List.of("Area", "Manter", "Sacrificio")); }
+    { this.tagsRemoviveis = new ArrayList<>(List.of("Area", "Manter", "Sacrificio", "Inata")); }
 
     public CartaPoder(String nome, String descricao, int custo, Poder poder){
         super(nome, descricao, custo);

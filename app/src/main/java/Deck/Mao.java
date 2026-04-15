@@ -14,9 +14,18 @@ acabou a pilha de compra: reembaralha a pilha de descarte */
 public class Mao {
     // uma boa mudança seria adicionar um construtor com a pilha de compras e a pilha de descarte, ai nao teria q ficar passando toda vez que chama
     private int quantMax = 5;
-    private ArrayList<Carta> cartas = new ArrayList<>(); 
+    private List<Carta> cartas = new ArrayList<>(); 
+    private int cartasBonus = 0; // cartas extras a serem adicionadas no inicio do turno, depois de puxar as 5 cartas normais
 
     Scanner ler = InputHandler.getLeitor();
+
+    public int getCartasBonus() {
+        return cartasBonus;
+    }
+
+    public void setCartasBonus(int cartasBonus) {
+        this.cartasBonus = cartasBonus;
+    }
 
     public void addCarta(PilhaCompra pilhaCompra, PilhaDescarte pilhaDescarte){
         cartas.add(pilhaCompra.puxaCarta(pilhaDescarte));
@@ -37,6 +46,19 @@ public class Mao {
             this.addCarta(pilhaCompra, pilhaDescarte);
     }
 
+    /** completa ate dar 5 cartas na mao e dps adiciona as cartas bonus. chamado todo inicio de rodada. */
+    public void completaCinco(PilhaCompra pilhaCompra, PilhaDescarte pilhaDescarte){
+        if (cartas.size() < quantMax){
+            int faltantes = quantMax - cartas.size();
+            for (int i = 0; i < faltantes; i++)
+                this.addCarta(pilhaCompra, pilhaDescarte);
+        }
+
+        this.addCartas(pilhaCompra, pilhaDescarte, cartasBonus);
+        cartasBonus = 0;
+    }
+
+    /** adiciona as cartas obrigatoras na mao inicial, e se forem menos que quantMax completa com cartas aleatórias */
     public void inicioBatalha(PilhaCompra pilhaCompra, PilhaDescarte pilhaDescarte){
         List<Carta> obrigatorias = new ArrayList<>();
         for (Carta carta : pilhaCompra.getPilhaCartas()) {
@@ -57,6 +79,9 @@ public class Mao {
         if (cartasRestantes > 0) {
             this.addCartas(pilhaCompra, pilhaDescarte, cartasRestantes);
         }
+
+        this.addCartas(pilhaCompra, pilhaDescarte, cartasBonus);
+        cartasBonus = 0;
     }
 
     public int getQuantMax() {

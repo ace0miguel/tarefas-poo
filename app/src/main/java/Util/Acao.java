@@ -123,7 +123,7 @@ public abstract class Acao {
         @Override
         public void executar(Inimigo executor, Heroi heroi, Batalha batalha) {
             heroi.getPilhaCompra().addCartaPilha(carta);
-            heroi.getPilhaCompra().shuffle();
+            heroi.getPilhaCompra().shuffleStack();
         }
 
         @Override

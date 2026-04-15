@@ -17,7 +17,7 @@ public class Mapa {
         this.heroi = _heroi;
     }
 
-    ArvoreEventos arvoreEventos = new ArvoreEventos(3, 15); // QUANTIDADE TOTAL DE ILHAS/ANDARES: P + 1 (COMEÇA DO PROFUNDIDADE 0)
+    ArvoreEventos arvoreEventos = new ArvoreEventos(3, 7); // QUANTIDADE TOTAL DE ILHAS/ANDARES: P + 1 (COMEÇA DO PROFUNDIDADE 0)
 
     // gera a raiz da arvore
     DefaultMutableTreeNode nodeInicial = new DefaultMutableTreeNode(arvoreEventos.escolherEvento(0).get(0));
@@ -36,7 +36,7 @@ public class Mapa {
         return criarCaminhos(nodeAtual);
     }
     
-    /** retorna os filhos da posiçao passada e printa um menu de seleçao com seus eventos (usar para arvores completas)*/
+    /** retorna os filhos da posiçao passada e printa um menu de seleçao com seus evento s (usar para arvores completas)*/
     public int escolherCaminho(DefaultMutableTreeNode posicaoAtual){ 
         return InputHandler.selecionar(arvoreEventos.getEventos(posicaoAtual),true, Arte.mapa + "\n" + Cor.txtAzul(Arte.bordaHud4) + 
         "\n" + Textos.menuStatus(heroi) + Cor.reset +

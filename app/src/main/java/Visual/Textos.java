@@ -362,6 +362,20 @@ public class Textos {
         return resultado.toString();
     }
 
+    /** retorna a primeira palavra de uma string */
+    public static String getPrimeiraPalavra(String texto) {
+    if (texto == null || texto.isBlank()) return "";
+    
+    texto = texto.trim();
+    int primeiroEspaco = texto.indexOf(" ");
+    if (primeiroEspaco == -1) {
+        return texto; 
+    }
+    
+    // Recorta do início (0) até chegar no espaço!
+    return texto.substring(0, primeiroEspaco); 
+}
+
     /* BARQUINHO Q EU TINHA FEITO PRA HUD ANTIGA TO COM DÓ DE APAGAR DEU MO TRABALHO :(
 
     // parte de cima do barco 

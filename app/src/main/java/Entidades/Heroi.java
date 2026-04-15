@@ -131,7 +131,11 @@ public class Heroi extends Entidade {
     public void setTestMode(boolean testMode) {
         this.testMode = testMode;
     }
-    
+
+    public void fimBatalhaReset(){
+        this.cartasBonus = 0;
+        this.energiaBonus = 0;
+    }
     // ----
 
     public void ganhaDinheiro(int valor) {
@@ -240,10 +244,10 @@ public class Heroi extends Entidade {
     /** aplica os bonus de inicio de rodadae reseta */
     public void aplicaBonus(){
         ganhaEnergia(this.energiaBonus);
-        maoAtual.addCartas(pilhaCompra, pilhaDescarte, this.cartasBonus);
+        maoAtual.setCartasBonus(maoAtual.getCartasBonus() + this.cartasBonus);
 
         energiaBonus = 0;
-        cartasBonus = 0;
+        cartasBonus = 0;    
     }
 
     /** reseta o estado do heroi e soma a energia bonus */

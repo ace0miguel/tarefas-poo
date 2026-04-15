@@ -142,7 +142,7 @@ public class Batalha extends Evento {
         heroi.setPilhaDescarte(pilhaDescarte);
 
         pilhaCompra.addBaralho(new ArrayList<>(heroi.getBaralho())); // pilha de compras recebe o baralho do heroi e embaralha
-        pilhaCompra.shuffleAll(pilhaDescarte);
+        pilhaCompra.shuffleStack();
         
         // resetando os bonus do heroi q possam ter sobrado da rodada passada
         heroi.passaRodada();
@@ -178,7 +178,7 @@ public class Batalha extends Evento {
             primeiraRodada = false;
         }
         else {
-            mao.addCinco(pilhaCompra, pilhaDescarte);
+            mao.completaCinco(pilhaCompra, pilhaDescarte);
         }
         
         boolean primeiroLoop = true; // se true, printa a animaçao de batalha
@@ -274,6 +274,7 @@ public class Batalha extends Evento {
         heroi.setMaoAtual(null);
         heroi.setPilhaCompra(null);
         heroi.setPilhaDescarte(null);
+        heroi.fimBatalhaReset();
 
         for (BatalhaSubscriber sub : subscribers) {
             sub.onBattleEnd(this, heroi);
@@ -548,18 +549,14 @@ public class Batalha extends Evento {
         System.out.println();
         InputHandler.esperar();
         heroi.ganhaDinheiro(this.recompensa);
-        Recompensas.ganharCarta(1, heroi);
 
-        if (getNivelDificuldade() == 3) {
-            System.out.println("Parabens por vencer uma batalha desafiadora!\n");
-            Recompensas.ganharCarta(2, heroi);
+        // recompensa baseada na dificuldade total da batalha
+        switch (getNivelDificuldade()) {
+            case 1 -> Recompensas.ganharCarta(1, heroi);
+            case 2 -> Recompensas.ganharOpcoes(1, 3, heroi);
+            case 3 -> Recompensas.ganharOpcoes(2, 3, heroi);
+            case 4 -> Recompensas.ganharOpcoes(3, 3, heroi);
         }
-
-        if (getNivelDificuldade() == 4) {
-            System.out.println("Parabens por vencer uma batalha de elite!\n");
-            Recompensas.ganharCarta(3, heroi);
-        }
-
     }
 
     /** exibe a mensagem de derrota e cuida da recompensa da batalha */

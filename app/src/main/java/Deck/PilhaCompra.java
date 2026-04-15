@@ -1,5 +1,4 @@
 package Deck;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
@@ -9,8 +8,8 @@ import Visual.Cor;
 import Visual.Textos;
 
 public class PilhaCompra {
-    private List<Carta> cartas = new ArrayList<>();  
-    private Stack<Carta> pilhaCartas = new Stack<>();
+
+    private Stack<Carta> cartas = new Stack<>();
 
     public void addCarta(Carta c){
         cartas.add(c);
@@ -18,8 +17,8 @@ public class PilhaCompra {
 
     /**adiciona uma carta na pilha de compras e a embaralha */
     public void addCartaPilha(Carta c){
-        pilhaCartas.add(c);
-        shuffle();
+        cartas.add(c);
+        shuffleStack();
     }
 
     public void removeCarta(Carta c){
@@ -27,44 +26,29 @@ public class PilhaCompra {
     }
 
     public void addBaralho(List<Carta> baralho){
-        cartas = baralho;
+        cartas.clear();
+        cartas.addAll(baralho);
     }
 
-    public void shuffle(){ // embaralha a pilha de compras
-        Collections.shuffle(this.pilhaCartas);
-    }
-
-    public void reShuffleDeck(ArrayList<Carta> mao){ // reembaralha só as cartas na pilha de compra e na mão
-        ArrayList<Carta> temp = new ArrayList<>(pilhaCartas);
-        temp.addAll(mao);
-        Collections.shuffle(temp);
-        pilhaCartas.clear();
-        pilhaCartas.addAll(temp);
-    }
-
-    public void shuffleAll(PilhaDescarte pilhaDescarte){ // reembaralha todas as cartas (mao, compra e descarte)
-        cartas.addAll(pilhaDescarte.getPilha());
-        Collections.shuffle(cartas);
-        pilhaCartas.clear();
-        pilhaDescarte.clear();
-        pilhaCartas.addAll(cartas);
+    public void shuffleStack(){ // embaralha a pilha de compras
+        Collections.shuffle(this.cartas);
     }
 
     /** embaralha todas as cartas da pilha de descarte e adiciona a pilha de compra (O PRINCIPAL) */
-    public void deckReset(PilhaDescarte pilhaDescarte){
+    public void shuffle(PilhaDescarte pilhaDescarte){
         Cor.setLaranja(); 
         System.out.print("Embaralhando as cartas");
         Textos.printaBonito(" . . . ", 300, 0);
         Cor.reset();
         Textos.sleep(200);
-        ArrayList<Carta> temp = pilhaDescarte.reset();
-        this.pilhaCartas.addAll(temp);  
+        
+        this.cartas.addAll(pilhaDescarte.reset());  
     }
 
     public Carta puxaCarta(PilhaDescarte pd){
-        if (pilhaCartas.size() <= 0)
-            deckReset(pd);
-        return pilhaCartas.pop();
+        if (cartas.size() <= 0)
+            shuffle(pd);
+        return cartas.pop();
     }
 
     public void printDeck(){
@@ -75,6 +59,6 @@ public class PilhaCompra {
     }
 
     public Stack<Carta> getPilhaCartas() {
-        return pilhaCartas;
+        return cartas;
     }
 }
