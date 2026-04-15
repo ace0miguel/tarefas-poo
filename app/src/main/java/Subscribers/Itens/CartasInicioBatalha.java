@@ -1,10 +1,12 @@
 package Subscribers.Itens;
 
+import Entidades.Heroi;
+
 public class CartasInicioBatalha extends Item {
     int quantidade;
 
-    public CartasInicioBatalha(String nome, String descricao, int quantidade) {
-        super(nome, descricao);
+    public CartasInicioBatalha(String nome, String descricao, int quantidade, Heroi heroi) {
+        super(nome, descricao, heroi);
         this.quantidade = quantidade;
     }
 

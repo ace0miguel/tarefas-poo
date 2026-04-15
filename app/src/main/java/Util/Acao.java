@@ -21,7 +21,7 @@ public abstract class Acao {
     public void anunciar( Inimigo executor, Heroi heroi){};
     
     /** exibe no turno do inimigo */
-    public void resultado(Inimigo executor, Heroi heroi){};
+    public int resultado(Inimigo executor, Heroi heroi){ return 0;};
 
     /** retorna o valor passado ou 0 se for menor q 0 */
     public int validarDano(int dano){
@@ -46,8 +46,9 @@ public abstract class Acao {
         }
 
         @Override
-        public void resultado(Inimigo executor, Heroi heroi) {
+        public int resultado(Inimigo executor, Heroi heroi) {
             Textos.printaBonito(Cor.reset + "> " + executor.getNome() + Cor.txtAmarelo(" ") + Cor.vermelho + "Causou " + heroi.getDanoRecebido(executor.getDanoEfetivo()) + " pontos de dano!", 5, 2);
+            return heroi.getDanoRecebido(executor.getDanoEfetivo());
         }
     }
 
@@ -69,8 +70,9 @@ public abstract class Acao {
         }
 
         @Override
-        public void resultado(Inimigo executor, Heroi heroi) {
+        public int resultado(Inimigo executor, Heroi heroi) {
             Textos.printaBonito(Cor.reset + "> " + executor.getNome() + Cor.txtAmarelo(" ") + Cor.vermelho + "Causou " + heroi.getDanoRecebido(executor.getFracaoDanoEfetivo(2)) + " pontos de dano e aplicou " + efeito.getNomeColorido() + "!", 5, 2);
+            return heroi.getDanoRecebido(executor.getFracaoDanoEfetivo(2));
         }
     }
 
@@ -93,8 +95,9 @@ public abstract class Acao {
         }
 
         @Override
-        public void resultado(Inimigo executor, Heroi heroi) {
+        public int resultado(Inimigo executor, Heroi heroi) {
             Textos.printaBonito(Cor.reset + "> " + executor.getNome() + Cor.txtAmarelo(" ") + Cor.vermelho + "Causou " + heroi.getDanoRecebido(executor.getDanoEfetivo() + danoVidaPerdida(heroi)) + " pontos de dano!", 5, 2);
+            return heroi.getDanoRecebido(executor.getDanoEfetivo() + danoVidaPerdida(heroi));   
         }
     }
 
@@ -116,8 +119,9 @@ public abstract class Acao {
         }
 
         @Override
-        public void resultado(Inimigo executor, Heroi heroi) {
+        public int resultado(Inimigo executor, Heroi heroi) {
             Textos.printaBonito(Cor.reset + "> " + executor.getNome() + " utilizou " + efeito.getNomeColorido() + "!", 5, 2); 
+            return 0;
         }
     }
 
@@ -140,8 +144,9 @@ public abstract class Acao {
         }
 
         @Override
-        public void resultado(Inimigo executor, Heroi heroi) {
+        public int resultado(Inimigo executor, Heroi heroi) {
             Textos.printaBonito(Cor.reset + "> " + executor.getNome() + Cor.txtAmarelo(" ") + "Colocou " + Cor.txtVermelho("algo ") + "na sua pilha de compras...", 5, 2);
+            return 0;
         }
     }
 
@@ -181,8 +186,9 @@ public abstract class Acao {
         }
 
         @Override
-        public void resultado(Inimigo executor, Heroi heroi) {
+        public int resultado(Inimigo executor, Heroi heroi) {
             Textos.printaBonito(Cor.reset + "> " + executor.getNome() + " aplicou " + efeito.getNomeColorido() + " em um aliado!", 5, 2); 
+            return 0;
         }
     }
 
@@ -218,8 +224,9 @@ public abstract class Acao {
         }
 
         @Override
-        public void resultado(Inimigo executor, Heroi heroi) {
+        public int resultado(Inimigo executor, Heroi heroi) {
             Textos.printaBonito(Cor.reset + "> " + executor.getNome() + Cor.txtAmarelo(" se multiplicou em ") + fator + "!", 5, 2); 
+            return 0;
         }
     }   
 }

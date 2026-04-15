@@ -1,7 +1,8 @@
-package Subscribers.EfeitosDeStatus;
+package Subscribers.EfeitosDeStatus.Latentes;
 
 import Entidades.Heroi;
 import Subscribers.BatalhaSubscriber;
+import Subscribers.EfeitosDeStatus.Efeito;
 import Telas.Eventos.Batalha;
 import Util.InputHandler;
 import Visual.Cor;

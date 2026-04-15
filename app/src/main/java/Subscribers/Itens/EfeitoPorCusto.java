@@ -15,8 +15,8 @@ public class EfeitoPorCusto extends Item {
     private Efeito efeito;
     private int custo;
 
-    public EfeitoPorCusto(String nome, String descricao, Efeito efeito, int custo) {
-        super(nome, descricao);
+    public EfeitoPorCusto(String nome, String descricao, Efeito efeito, int custo, Heroi heroi) {
+        super(nome, descricao, heroi);
         this.efeito = efeito;
         this.custo = custo;
     }

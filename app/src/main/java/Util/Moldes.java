@@ -10,6 +10,7 @@ import Cartas.CartaAtaqueComEfeito;
 import Cartas.CartaHabilidade;
 import Cartas.CartaMaldicao;
 import Cartas.CartaPoder;
+import Entidades.Heroi;
 import Entidades.Inimigo;
 import Subscribers.EfeitosDeStatus.Buffs.AumentaDano;
 import Subscribers.EfeitosDeStatus.Buffs.AumentaResistencia;
@@ -17,13 +18,13 @@ import Subscribers.EfeitosDeStatus.DanosConstantes.DanoConstante;
 import Subscribers.EfeitosDeStatus.DanosConstantes.Sangramento;
 import Subscribers.EfeitosDeStatus.DanosConstantes.Veneno;
 import Subscribers.EfeitosDeStatus.Efeito;
-import Subscribers.EfeitosDeStatus.Energizar;
 import Subscribers.EfeitosDeStatus.Instantaneos.AdicionaCarta;
 import Subscribers.EfeitosDeStatus.Instantaneos.EscolheCarta;
 import Subscribers.EfeitosDeStatus.Instantaneos.Escudo;
 import Subscribers.EfeitosDeStatus.Instantaneos.GanhaEnergia;
 import Subscribers.EfeitosDeStatus.Instantaneos.Purificar;
 import Subscribers.EfeitosDeStatus.Instantaneos.PuxaCarta;
+import Subscribers.EfeitosDeStatus.Latentes.Energizar;
 import Subscribers.Itens.CartasInicioBatalha;
 import Subscribers.Itens.CuraFimBatalha;
 import Subscribers.Itens.EfeitoPorCusto;
@@ -37,7 +38,8 @@ import Visual.Cor;
 /*  centraliza as instancias criadas, tudo é publico e static.
 aqui so tem os moldes, sempre que for usar algo criar copia (todos tem o metodo criaCopia()) 
 pra importar essa classe aqui usar import static (import static Util.Moldes.*) */
-public class Moldes {
+public class Moldes {    
+
     public static List<Inimigo> listaInimigosMoldes = new ArrayList<>();
     public static List<Efeito> listaEfeitosMoldes = new ArrayList<>();
     public static List<Carta> listaCartasMoldes = new ArrayList<>();
@@ -137,20 +139,27 @@ public class Moldes {
     public static Poder cartaAdicional = new CartaAdicional("CONTRATO DE SANGUE", "No início de cada turno, puxe 1 carta adicional e perca 1 ponto de vida.", 1);
 
     // itens -------------
-
-    public static Item facaAcougueiro = new EfeitoPorCusto("faca de açougueiro", "cartas de ataque custo 1 aplicam um acumulo de sangramento adicional", sangramento, 1);
-
-    public static Item marmita = new CuraFimBatalha("marmita", "cura 6 pontos de vida no fim da batalha", 6);
-
-    public static Item amuletoVelho = new CartasInicioBatalha("amuleto velho", "receba 2 cartas adicionais no inicio da batalha", 2);
+    public static Item facaAcougueiro;
+    public static Item marmita;
+    public static Item amuletoVelho;
 
     /** inicializa os moldes */
-    public static void carregar(){
+    public static void carregar(Heroi _heroi){
         /* base do balanceamento: carta de 1 de energia: 5 pontos de dano ou 4 de escudo
         um inimigo fraco deve ter por volta de uns 40 pontos de vida e causar uns 9 de dano
         tiros: cartas de ataque sem efeito secundário, cortes aplicam efeito (em geral)
         cartas com efeito adicional com o mesmo custo de energia devem causar menos dano
         cartas que custam mais de 1 de energia devem causar mais que o seu custo * 5 pontos de dano, pra compensar pela inflexibilidade*/
+
+        Heroi heroi = _heroi;
+
+        // itens -------------
+
+        facaAcougueiro = new EfeitoPorCusto("faca de açougueiro", "cartas de ataque custo 1 aplicam um acumulo de sangramento adicional", sangramento, 1, heroi);
+
+        marmita = new CuraFimBatalha("marmita", "cura 6 pontos de vida no fim da batalha", 6, heroi);
+
+        amuletoVelho = new CartasInicioBatalha("amuleto velho", "receba 2 cartas adicionais no inicio da batalha", 2, heroi);
 
         // cartas ataque basicas
         tiro = new CartaAtaque("Tiro de revolver", "dispara um tiro com seu revolver", 1, 5, 1); 

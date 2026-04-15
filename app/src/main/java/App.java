@@ -20,7 +20,7 @@ public class App {
         // gerenciadorCartas.carregarCartas(false);
 
         // instancias padrao pra teste por enquanto
-        Moldes.carregar();
+    
 
         // heroi ----------- (4 de energia max pq assim 5 cartas de 1 de energia nao da pra resetar a mao)
         Heroi heroi = new Heroi("Capitão Jack Sparrow", 90, 4);
@@ -29,6 +29,7 @@ public class App {
         // DeckBuilder.mostrarDecksPadrao(heroi);
         // DeckBuilder.iniciar(heroi); 
 
+        Moldes.carregar(heroi);
 
         // tela de titulo ------------
         Textos.limpaTela();

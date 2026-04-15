@@ -7,6 +7,7 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import Cartas.Carta;
+import Cartas.CartaAtaque;
 import Cartas.CartaAtaqueComEfeito;
 import Deck.Mao;
 import Deck.PilhaCompra;
@@ -252,13 +253,19 @@ public class Batalha extends Evento {
         for (Inimigo inimigo : inimigos) {
             if (inimigo.estaVivo()){ // adicionei isso pq joguei uma partida aqui e tomei hit de um inimigo morto.
                 inimigo.passaRodada(); // reseta os bonus (escudo por enquanto)
-                inimigo.resultadoAcao(heroi); // printa oq ele ta fazendo (antes de fazer pq as vezes ele se mata)
-                inimigo.realizarAcao(heroi, this); // faz oq ele ia fazer
+                int danoCausado = inimigo.resultadoAcao(heroi); // printa oq ele ta fazendo (antes de fazer pq as vezes ele se mata)
+                boolean atacado = inimigo.realizarAcao(heroi, this); // faz oq ele ia fazer
                 inimigo.escolheAcao(); // escolhe prox ação
 
                 // checa possiveis meia vida
                 inimigo.checkMeiaVida(inimigo, heroi, this);
                 heroi.checkMeiaVida(heroi, heroi, this);
+
+                if (atacado)
+                    for (BatalhaSubscriber subscriber : subscribers) {
+                        if (subscriber.getAlvo() == heroi)
+                            subscriber.onReceivedHit(this, heroi, inimigo, danoCausado);
+                    }
             }
         }
 
@@ -553,6 +560,15 @@ public class Batalha extends Evento {
         // notifica os efeitos com on hit
         for (BatalhaSubscriber subscriber : subscribers)
             subscriber.onHit(cartaEscolhida, heroi, alvoSelecionado, this);
+
+        // notifica os inimigos acertados
+
+        if (cartaEscolhida instanceof CartaAtaque cartaAtaque){
+            for (BatalhaSubscriber subscriber : subscribers) {
+                if (cartaAtaque.getEfeitoEmArea() || subscriber.getAlvo() == alvoSelecionado)
+                    subscriber.onReceivedHit(this, heroi, heroi, cartaAtaque.getDano());
+            }
+        }
 
         return 0;
     }

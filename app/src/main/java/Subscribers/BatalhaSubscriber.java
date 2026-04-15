@@ -29,7 +29,7 @@ public interface BatalhaSubscriber {
     /** chamado sempre que uma carta é usada */
     default public void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha){};
 
-    /** chamado quando o heroi é atacado */
+    /** chamado quando o alvo é atacado */
     default public void onReceivedHit(Batalha batalha, Heroi heroi, Entidade atacante, int danoRecebido){};
 
     /** chamado quando QUALQUER INIMIGO morre */

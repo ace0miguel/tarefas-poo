@@ -65,18 +65,24 @@ public class Inimigo extends Entidade{
         }     
     }
 
-    public void realizarAcao(Heroi alvo, Batalha batalha){
+    /** retorna true se a ação for agressiva */
+    public boolean realizarAcao(Heroi alvo, Batalha batalha){
         if (this.estaVivo())
             nextAcao.executar(this, alvo, batalha);
+
+        return (nextAcao.getAgressiva());
     }
 
     /** imprime o resultado da ação do inimigo (dano causado, efeitos aplicados, etc.) */
-    public void resultadoAcao(Heroi alvo){
+    public int resultadoAcao(Heroi alvo){
+        int dano = 0;
         if (this.estaVivo()){
-            nextAcao.resultado(this, alvo);
+            dano = nextAcao.resultado(this, alvo);
         Textos.sleep(200);
             Cor.reset();
         }
+
+        return dano;
     }
 
     @Override

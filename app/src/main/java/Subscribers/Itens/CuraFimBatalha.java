@@ -7,8 +7,8 @@ import Visual.Textos;
 public class CuraFimBatalha extends Item {
     int cura;
 
-    public CuraFimBatalha(String nome, String descricao, int cura) {
-        super(nome, descricao);
+    public CuraFimBatalha(String nome, String descricao, int cura, Heroi heroi) {
+        super(nome, descricao, heroi);
         this.cura = cura;
     }
 
