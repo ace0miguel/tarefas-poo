@@ -122,7 +122,7 @@ public class ArvoreEventos {
         // primeiro andar (batalha facil)
         if (profundidadeAtual == 0) { 
             // adiciona aqui opcoes.add evento que vc quer testar
-            opcoes.add(loja.criaCopia());
+            // opcoes.add(loja.criaCopia());
             sorteados.addAll(getEventosAleatorios(batalhasTriviais));
         }    
         // ultimo andar (boss)

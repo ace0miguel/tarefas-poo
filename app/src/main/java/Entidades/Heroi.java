@@ -7,6 +7,7 @@ import Cartas.CartaMaldicao;
 import Deck.Mao;
 import Deck.PilhaCompra;
 import Deck.PilhaDescarte;
+import Subscribers.Itens.Item;
 import Util.InputHandler;
 import Visual.Cor;
 import Visual.Textos;
@@ -21,6 +22,7 @@ public class Heroi extends Entidade {
 
     private List<Carta> baralho = new ArrayList<>(); // todas as cartas q o jogador tem e ta usando
     private List<Carta> inventarioCartas = new ArrayList<>(); // todas as cartas q o jogador tem mas nao ta usando
+    private List<Item> listaItens = new ArrayList<>(); // todos os itens q o jogador tem
 
     // guarda a mao e as pilhas por referencia
     private Mao maoAtual;
@@ -81,6 +83,9 @@ public class Heroi extends Entidade {
         return cartasBonus;
     }
 
+    public List<Item> getListaItens() {
+        return listaItens;
+    }
 
     // setters -----
 
@@ -136,6 +141,17 @@ public class Heroi extends Entidade {
         this.cartasBonus = 0;
         this.energiaBonus = 0;
     }
+
+    public void ganhaItem(Item item){
+        this.listaItens.add(item.criaCopia());
+        System.out.println("Voce ganhou o item " + Cor.txtAzul(item.getNome()) + "!");
+        InputHandler.esperar();
+    }
+
+    public void perdeItem(Item item){
+        this.listaItens.remove(item);
+    }
+
     // ----
 
     public void ganhaDinheiro(int valor) {

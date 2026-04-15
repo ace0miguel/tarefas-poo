@@ -312,7 +312,14 @@ public abstract class Carta {
 
     /** string a ser printada ao ganhar a carta */
     public String recompensa(){
-        return this.getNomeRaridade() + " (Custo: " + this.getCusto() + Cor.txtAmarelo(" energia") +") - " + this.getDescricao();
+        String retorno = this.getNomeRaridade() + " - " + this.getDescricao() ;
+    
+        if (!tags.isEmpty()) {
+            retorno += " - <" + Cor.txtRosa(String.join( Cor.txtReset(", ") + Cor.rosa,  tags)) + ">";
+        }
+
+        retorno +=  " (Custo: " + this.getCusto() + Cor.txtAmarelo(" energia") +")" ;
+        return retorno;
     }
 
     public List<String> getTagsCompraveis() {

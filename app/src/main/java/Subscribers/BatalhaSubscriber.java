@@ -7,6 +7,10 @@ import Telas.Eventos.Batalha;
 
 public interface BatalhaSubscriber {
 
+    int PRIORIDADE_DANO_CONSTANTE = 0;
+    int PRIORIDADE_PADRAO = 1;
+    int PRIORIDADE_BAIXISSIMA = 100;
+
     /** chamado quando um batalha começa */
     default public void onBattleStart(Batalha batalha, Heroi heroi){};
 
@@ -43,7 +47,7 @@ public interface BatalhaSubscriber {
 
     /** Menor prioridade age primeiro. padrão: 1 */
     default public int getPrioridade(){
-        return 1;
+        return PRIORIDADE_PADRAO;
     }   
 
     /** se true, será removido na proxima limpeza */

@@ -11,7 +11,8 @@ Cartas que causam dano direto e não aplicam efeitos secundários.
 public class CartaAtaque extends Carta
 {
     private int dano;
-    
+    protected int acertos = 0;
+
     public CartaAtaque(String nome, String descricao, int custo, int dano){
         super(nome, descricao, custo);
         this.dano = dano;
@@ -32,6 +33,8 @@ public class CartaAtaque extends Carta
     public void usar(Heroi heroi, Entidade alvo, Batalha batalha){
         int energiaAtual = heroi.getEnergia();
         if(energiaAtual >= this.getCusto()){
+            acertos = 0;
+
             heroi.receberDanoDireto(this.sacrificio);
 
             aplicarEfeito(heroi, alvo, batalha);
@@ -50,12 +53,19 @@ public class CartaAtaque extends Carta
                 inimigo.receberDano(this.dano + ((this.dano * heroi.getDanoExtra()) / 100));
             }                   
         }
+
+        acertos++;
+        
         printaResenha(); 
     }
     
     
     public int getDano() {
         return dano;
+    }
+
+    public int getAcertos() {
+        return acertos;
     }
 
     @Override

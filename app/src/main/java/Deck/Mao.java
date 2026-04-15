@@ -61,6 +61,7 @@ public class Mao {
     /** adiciona as cartas obrigatoras na mao inicial, e se forem menos que quantMax completa com cartas aleatórias */
     public void inicioBatalha(PilhaCompra pilhaCompra, PilhaDescarte pilhaDescarte){
         List<Carta> obrigatorias = new ArrayList<>();
+        
         for (Carta carta : pilhaCompra.getPilhaCartas()) {
             if (carta.getInata()) {
                 obrigatorias.add(carta);

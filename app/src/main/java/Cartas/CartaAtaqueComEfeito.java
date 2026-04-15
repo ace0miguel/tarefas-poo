@@ -47,6 +47,8 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
     public void usar(Heroi heroi, Entidade alvo, Batalha batalha){
         int energiaAtual = heroi.getEnergia();
         if(energiaAtual >= this.getCusto()){
+            acertos = 0;
+            
             heroi.receberDanoDireto(this.sacrificio);
             
             aplicarEfeito(heroi, alvo, batalha);
@@ -74,6 +76,8 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
                 efeito.adicionar(inimigo, batalha);
             }
         }
+
+        acertos++;
 
         printaResenha();
     }

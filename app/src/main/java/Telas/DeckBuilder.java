@@ -8,6 +8,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import Cartas.Carta;
 import Entidades.Heroi;
 import Util.InputHandler;
+import static Util.Moldes.amuletoVelho;
 import static Util.Moldes.armadura;
 import static Util.Moldes.bombaSuprema;
 import static Util.Moldes.bombaVeneno;
@@ -19,6 +20,8 @@ import static Util.Moldes.corteVenenoso;
 import static Util.Moldes.egoCarta;
 import static Util.Moldes.energiaSupremo;
 import static Util.Moldes.energizar;
+import static Util.Moldes.facaAcougueiro;
+import static Util.Moldes.marmita;
 import static Util.Moldes.mestreLaminasCarta;
 import static Util.Moldes.pactoSangue;
 import static Util.Moldes.presenteMaldito;
@@ -43,8 +46,8 @@ public class DeckBuilder {
     /** exibe os decks padrao ja montados */
     public static void mostrarDecksPadrao(Heroi heroi){
         // nomes dos decks padrao
-        decksPadrao.add(Cor.txtVermelho("Samurai: Cartas de corte (menos dano, aplicam efeito)"));
-        decksPadrao.add(Cor.txtAmarelo("John wick: Cartas de tiro (dano direto, sem efeito)"));
+        decksPadrao.add(Cor.txtVermelho("Samurai: Cartas de corte (menos dano, aplicam efeito)" + Cor.azulClaro +" + amuleto velho"));
+        decksPadrao.add(Cor.txtAmarelo("John wick: Cartas de tiro (dano direto, sem efeito)" + Cor.azulClaro +" + marmita"));
         decksPadrao.add(Cor.txtCinza("deck de teste: ativa o modo teste."));
 
         Textos.limpaTela();
@@ -71,6 +74,8 @@ public class DeckBuilder {
                 heroi.addCarta(shieldinho);
 
                 heroi.addCarta(energizar);
+
+                heroi.ganhaItem(amuletoVelho);
             }
             /* deck de dano direto */
             case 1 -> {
@@ -91,11 +96,12 @@ public class DeckBuilder {
 
                 heroi.addCarta(egoCarta);
                 heroi.addCarta(armadura);
+
+                heroi.ganhaItem(marmita);
+                
             }  
             // deck pra testar carta
             case 2 -> {
-                // heroi.addCarta(bomba);
-                // heroi.addCarta(bomba);
                 heroi.addCarta(mestreLaminasCarta);
                 heroi.addCarta(mestreLaminasCarta);
 
@@ -131,20 +137,11 @@ public class DeckBuilder {
                 heroi.addCarta(mestreLaminasCarta);
                 heroi.addCarta(mestreLaminasCarta);
 
-                // heroi.addCarta(egoCarta);
-                // heroi.addCarta(armadura);
-                // heroi.addCarta(purificar);
-                // heroi.addCarta(egoCarta);
-                // heroi.addCarta(armadura);
-                // heroi.addCarta(purificar);
-                // heroi.addCarta(egoCarta);
-                // heroi.addCarta(armadura);
-                // heroi.addCarta(purificar);
-                // heroi.addCarta(egoCarta);
-                // heroi.addCarta(armadura);
-                // heroi.addCarta(purificar);
+                heroi.ganhaItem(facaAcougueiro);
+                heroi.ganhaItem(marmita);
+                heroi.ganhaItem(amuletoVelho );
 
-                heroi.ganhaDinheiro(100);
+                heroi.ganhaDinheiro(300);
                 heroi.setEnergiaMax(60);
                 heroi.setTestMode(true);
             }

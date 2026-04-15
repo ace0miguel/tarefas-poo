@@ -136,6 +136,8 @@ public class Batalha extends Evento {
         
         this.heroi = heroi;
 
+        adicionarSubscribers(heroi.getListaItens());
+
         // passa a referencia da mao e das pilhas pro heroi
         heroi.setMaoAtual(mao); 
         heroi.setPilhaCompra(pilhaCompra);
@@ -158,6 +160,8 @@ public class Batalha extends Evento {
         for (BatalhaSubscriber sub : subscribers) {
             sub.onBattleStart(this, heroi);
         }
+
+        heroi.aplicaBonus();
 
         batalha();
     }
@@ -218,8 +222,9 @@ public class Batalha extends Evento {
                 return;
             }
 
-            // ta aqui principalmente pelo purificar
+            // atualiza a lista de subscribers
             limpaSubscribers();
+            addNovosSubscribers();
 
             // se conseguir usar todas as cartas da mao puxa mais 5 e ganha 2 de energia bonus, injeçao de dopamina assim q vc mantem um jogador preso
             if (mao.getSize() == 0){
@@ -435,6 +440,12 @@ public class Batalha extends Evento {
             this.listaEfeitos.add(e);
         else if (novoSubscriber instanceof Poder p)
             this.listaPoderes.add(p);
+    }
+
+    public void adicionarSubscribers(List<? extends BatalhaSubscriber> _subscribers){
+        for (BatalhaSubscriber item : _subscribers) {
+            adicionarSubscriber(item);
+        }
     }
     
 

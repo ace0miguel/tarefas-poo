@@ -24,6 +24,10 @@ import Subscribers.EfeitosDeStatus.Instantaneos.Escudo;
 import Subscribers.EfeitosDeStatus.Instantaneos.GanhaEnergia;
 import Subscribers.EfeitosDeStatus.Instantaneos.Purificar;
 import Subscribers.EfeitosDeStatus.Instantaneos.PuxaCarta;
+import Subscribers.Itens.CartasInicioBatalha;
+import Subscribers.Itens.CuraFimBatalha;
+import Subscribers.Itens.EfeitoPorCusto;
+import Subscribers.Itens.Item;
 import Subscribers.Poderes.CartaAdicional;
 import Subscribers.Poderes.MaosLeves;
 import Subscribers.Poderes.Poder;
@@ -131,6 +135,14 @@ public class Moldes {
 
     public static Poder cartaAdicional = new CartaAdicional("CONTRATO DE SANGUE", "No início de cada turno, puxe 1 carta adicional e perca 1 ponto de vida.", 1);
 
+    // itens -------------
+
+    public static Item facaAcougueiro = new EfeitoPorCusto("faca de açougueiro", "cartas de ataque custo 1 aplicam um acumulo de sangramento adicional", sangramento, 1);
+
+    public static Item marmita = new CuraFimBatalha("marmita", "cura 6 pontos de vida no fim da batalha", 6);
+
+    public static Item amuletoVelho = new CartasInicioBatalha("amuleto velho", "receba 2 cartas adicionais no inicio da batalha", 2);
+
     /** inicializa os moldes */
     public static void carregar(){
         /* base do balanceamento: carta de 1 de energia: 5 pontos de dano ou 4 de escudo
@@ -165,7 +177,7 @@ public class Moldes {
         corteDefensivo = new CartaAtaqueComEfeito("Corte defensivo", "ganha escudo!", 1, 3, escudo2, true, 2); 
         corteDefensivo.setResenha(Cor.txtAzulClaro(Arte.CORTE5)); corteDefensivo.setRaridade(1);
 
-        corteRapido = new CartaAtaqueComEfeito("Corte rapido", " ganha 1 ponto de energia!", 1, 3, ganhaEnergia2, true, 2); 
+        corteRapido = new CartaAtaqueComEfeito("Corte rapido", " ganha 1 ponto de energia!", 1, 3, ganhaEnergia1, true, 2); 
         corteRapido.setResenha(Cor.txtAmareloClaro(Arte.CORTE4)); corteRapido.setRaridade(2);
 
         bombaVeneno = new CartaAtaqueComEfeito("BOMBA DE VENENO!", "jogue uma " + Cor.txtVerdeEscuro("BOMBA TÓXICA") + " que atinge TODOS os inimigos e aplica " + veneno.getNomeColorido(), 3, 6, veneno4, false);

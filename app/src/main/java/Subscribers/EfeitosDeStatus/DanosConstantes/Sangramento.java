@@ -29,7 +29,8 @@ public class Sangramento extends DanoConstante{
             return false;
 
         this.stacks++;
-        
+        this.setDur(((Sangramento) novo).getDur());
+
         if (this.stacks >= 5){
             int danoAcumulado = this.getDur() * this.stacks * this.getDano();
 
