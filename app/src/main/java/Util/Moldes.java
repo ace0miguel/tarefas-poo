@@ -25,6 +25,8 @@ import Subscribers.EfeitosDeStatus.Instantaneos.GanhaEnergia;
 import Subscribers.EfeitosDeStatus.Instantaneos.Purificar;
 import Subscribers.EfeitosDeStatus.Instantaneos.PuxaCarta;
 import Subscribers.EfeitosDeStatus.Latentes.Energizar;
+import Subscribers.Itens.AumentaDanoItem;
+import Subscribers.Itens.AumentaResistItem;
 import Subscribers.Itens.CartasInicioBatalha;
 import Subscribers.Itens.CuraFimBatalha;
 import Subscribers.Itens.EfeitoPorCusto;
@@ -142,6 +144,10 @@ public class Moldes {
     public static Item facaAcougueiro;
     public static Item marmita;
     public static Item amuletoVelho;
+    public static Item jarroTerra;
+    public static Item item20Resist;
+    public static Item item10Dano;
+    public static Item item20Dano;
 
     /** inicializa os moldes */
     public static void carregar(Heroi _heroi){
@@ -160,6 +166,14 @@ public class Moldes {
         marmita = new CuraFimBatalha("marmita", "cura 6 pontos de vida no fim da batalha", 6, heroi);
 
         amuletoVelho = new CartasInicioBatalha("amuleto velho", "receba 2 cartas adicionais no inicio da batalha", 2, heroi);
+
+        jarroTerra = new AumentaResistItem("jarro de terra", "receba 10% de redução de dano", 10, heroi);
+
+        item20Resist = new AumentaResistItem("colete a prova de tudo", "receba 20% de redução de dano", 20, heroi);
+
+        item10Dano = new AumentaDanoItem("to sem criatividade sei la espada", "cause 10% de dano extra", 10, heroi);
+
+        item20Dano = new AumentaDanoItem("espada grande sei la", "cause 20% de dano extra", 20, heroi);
 
         // cartas ataque basicas
         tiro = new CartaAtaque("Tiro de revolver", "dispara um tiro com seu revolver", 1, 5, 1); 
