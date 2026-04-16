@@ -1,13 +1,13 @@
-package Cartas;
+package cartas;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import Entidades.Entidade;
-import Entidades.Heroi;
-import Telas.Eventos.Batalha;
-import Visual.Cor;
-import Visual.Textos;
+import entidades.Entidade;
+import entidades.Heroi;
+import telas.eventos.combate.Batalha;
+import visual.Cor;
+import visual.Textos;
 
 // as classes filhas representam os diferentes tipos de carta, baseados nos tipos do jogo slay the spire.
 public abstract class Carta {

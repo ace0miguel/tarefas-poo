@@ -1,12 +1,12 @@
-package Visual;
+package visual;
 import java.util.ArrayList;
 import java.util.List;
 
-import Entidades.Heroi;
-import Entidades.Inimigo;
-import Subscribers.EfeitosDeStatus.Efeito;
-import Subscribers.Poderes.Poder;
-import Util.RNGHandler;
+import batalhaListeners.efeitos.Efeito;
+import batalhaListeners.poderes.Poder;
+import entidades.Heroi;
+import entidades.Inimigo;
+import util.RNGHandler;
 
 public class Textos {
     public static String bordaHudBatalha = Cor.txtCinza(Arte.bordaHud13);

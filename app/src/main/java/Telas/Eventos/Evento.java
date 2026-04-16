@@ -1,7 +1,7 @@
-package Telas.Eventos;
+package telas.eventos;
 
-import Entidades.Heroi;
-import Visual.Cor;
+import entidades.Heroi;
+import visual.Cor;
 
 public class Evento { // evento generico
     protected Heroi heroi;

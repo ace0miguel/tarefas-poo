@@ -1,14 +1,14 @@
-package Telas;
+package telas;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import Entidades.Heroi;
-import Telas.Eventos.Evento;
-import Util.ArvoreEventos;
-import Util.InputHandler;
-import Util.RNGHandler;
-import Visual.Arte;
-import Visual.Cor;
-import Visual.Textos;
+import entidades.Heroi;
+import telas.eventos.ArvoreEventos;
+import telas.eventos.Evento;
+import util.InputHandler;
+import util.RNGHandler;
+import visual.Arte;
+import visual.Cor;
+import visual.Textos;
 
 public class Mapa {
     private Heroi heroi;

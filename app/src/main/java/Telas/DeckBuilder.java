@@ -1,40 +1,41 @@
-package Telas;
+package telas;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import Cartas.Carta;
-import Entidades.Heroi;
-import Util.InputHandler;
-import Util.Recompensas;
-import static Util.Moldes.amuletoVelho;
-import static Util.Moldes.armadura;
-import static Util.Moldes.bombaSuprema;
-import static Util.Moldes.bombaVeneno;
-import static Util.Moldes.contratoSangue;
-import static Util.Moldes.corteDefensivo;
-import static Util.Moldes.corteProfundo;
-import static Util.Moldes.corteRapido;
-import static Util.Moldes.corteVenenoso;
-import static Util.Moldes.ecoDolor;
-import static Util.Moldes.egoCarta;
-import static Util.Moldes.energiaSupremo;
-import static Util.Moldes.energizar;
-import static Util.Moldes.facaAcougueiro;
-import static Util.Moldes.marmita;
-import static Util.Moldes.mestreLaminasCarta;
-import static Util.Moldes.pactoSangue;
-import static Util.Moldes.presenteMaldito;
-import static Util.Moldes.puxaCarta;
-import static Util.Moldes.shieldao;
-import static Util.Moldes.shieldinho;
-import static Util.Moldes.tiro;
-import static Util.Moldes.tiroEscopeta;
-import Visual.Arte;
-import Visual.Cor;
-import Visual.Textos;
+import cartas.Carta;
+import entidades.Heroi;
+import util.InputHandler;
+import util.Recompensas;
+import visual.Arte;
+import visual.Cor;
+import visual.Textos;
+
+import static fabricas.FabricaCartas.armadura;
+import static fabricas.FabricaCartas.bombaSuprema;
+import static fabricas.FabricaCartas.bombaVeneno;
+import static fabricas.FabricaCartas.contratoSangue;
+import static fabricas.FabricaCartas.corteDefensivo;
+import static fabricas.FabricaCartas.corteProfundo;
+import static fabricas.FabricaCartas.corteRapido;
+import static fabricas.FabricaCartas.corteVenenoso;
+import static fabricas.FabricaCartas.ecoDolor;
+import static fabricas.FabricaCartas.egoCarta;
+import static fabricas.FabricaCartas.energiaSupremo;
+import static fabricas.FabricaCartas.energizar;
+import static fabricas.FabricaCartas.mestreLaminasCarta;
+import static fabricas.FabricaCartas.pactoSangue;
+import static fabricas.FabricaCartas.presenteMaldito;
+import static fabricas.FabricaCartas.puxaCarta;
+import static fabricas.FabricaCartas.shieldao;
+import static fabricas.FabricaCartas.shieldinho;
+import static fabricas.FabricaCartas.tiro;
+import static fabricas.FabricaCartas.tiroEscopeta;
+import static fabricas.FabricaItens.amuletoVelho;
+import static fabricas.FabricaItens.facaAcougueiro;
+import static fabricas.FabricaItens.marmita;
 
 /** permite passar cartas do inventário para o baralho ou, por um preço, remover cartas do baralho */
 public class DeckBuilder {
@@ -48,12 +49,12 @@ public class DeckBuilder {
     /** exibe os decks padrao ja montados */
     public static void mostrarDecksPadrao(Heroi heroi){
         // nomes dos decks padrao
-        decksPadrao.add(Cor.txtVermelho("Samurai: Cartas de corte (menos dano, aplicam efeito)" + Cor.azulClaro +" + amuleto velho"));
-        decksPadrao.add(Cor.txtAmarelo("John wick: Cartas de tiro (dano direto, sem efeito)" + Cor.azulClaro +" + marmita"));
+        decksPadrao.add(Cor.txtVermelho("Samurai: Cartas de corte ( menos dano, aplicam efeito )" + Cor.reset + " +" + Cor.rosa +" amuleto velho"));
+        decksPadrao.add(Cor.txtAmarelo("John wick: Cartas de tiro ( mais dano direto, sem efeito )" + Cor.reset + " +" + Cor.rosa +" marmita"));
         decksPadrao.add(Cor.txtCinza("deck de teste (ativa o modo teste)"));
 
         Textos.limpaTela();
-        int escolha = InputHandler.selecionar(decksPadrao, Cor.reset + "Escolha um baralho inicial: \n" + Cor.txtCinza("(se voce ganhar a primeira batalha eu te deixo personalizar o deck!)")); 
+        int escolha = InputHandler.selecionar(decksPadrao, Cor.reset + "Escolha um baralho inicial: \n" + Cor.txtCinza("(voce ira ganhar mais carts pra personalizar depois!)")); 
 
         switch (escolha){
             /** deck inicial baseado em cortes */
@@ -147,7 +148,7 @@ public class DeckBuilder {
                 Recompensas.ganharItemEsp(marmita, heroi);
                 Recompensas.ganharItemEsp(amuletoVelho, heroi);
 
-                heroi.ganhaDinheiro(300);
+                Recompensas.ganharDinheiro(300, heroi);
                 heroi.setEnergiaMax(60);
                 heroi.setTestMode(true);
             }
@@ -219,7 +220,7 @@ public class DeckBuilder {
                     InputHandler.esperar();
                     continue;
                 }
-                heroi.gastaDinheiro(5);
+                Recompensas.gastarDinheiro(5, heroi);
                 carta = heroi.getBaralho().get( posicaoCarta );
             }   
             else 

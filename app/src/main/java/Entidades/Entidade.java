@@ -1,10 +1,10 @@
-package Entidades;
+package entidades;
 
 import static java.lang.Math.max;
 
-import Telas.Eventos.Batalha;
-import Visual.Cor;
-import Visual.Textos;
+import telas.eventos.combate.Batalha;
+import visual.Cor;
+import visual.Textos;
 
 public abstract class Entidade {
     protected String nome;

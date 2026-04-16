@@ -1,16 +1,16 @@
-package Entidades;
+package entidades;
 import java.util.ArrayList;
 import java.util.List;
 
-import Cartas.Carta;
-import Cartas.CartaMaldicao;
-import Deck.Mao;
-import Deck.PilhaCompra;
-import Deck.PilhaDescarte;
-import Subscribers.Itens.Item;
-import Util.InputHandler;
-import Visual.Cor;
-import Visual.Textos;
+import baralho.Mao;
+import baralho.PilhaCompra;
+import baralho.PilhaDescarte;
+import batalhaListeners.itens.Item;
+import cartas.Carta;
+import cartas.CartaMaldicao;
+import util.InputHandler;
+import visual.Cor;
+import visual.Textos;
 
 public class Heroi extends Entidade {
     private int energia;
@@ -142,41 +142,29 @@ public class Heroi extends Entidade {
         this.energiaBonus = 0;
     }
 
-    public void ganhaItem(Item item){
-        this.listaItens.add(item.criaCopia());
-        Textos.printaBonito(Cor.amareloClaro + "Voce ganhou: <" + Cor.txtRosa(item.getNome()) + 
-        Cor.amareloClaro + "> [ " + Cor.txtReset(item.getDescricao()) + Cor.amareloClaro + " ] !" + Cor.reset, 4, 2);
-        InputHandler.esperar();
+    public void addItem(Item item){
+        this.listaItens.add(item);
     }
 
-    public void perdeItem(Item item){
+    public void removeItem(Item item){
         this.listaItens.remove(item);
     }
 
-    // ----
-
-    public void ganhaDinheiro(int valor) {
-        Textos.limpaTela();
-        System.out.println("Voce recebeu " + Cor.txtAmarelo(String.valueOf(valor)) + " dinheiros!");
-        InputHandler.esperar();
+    public void addDinheiro(int valor){
         this.dinheiro += valor;
     }
 
-    public void gastaDinheiro(int valor) {
-        Textos.limpaTela();
-        System.out.println("Voce gastou " + Cor.txtVermelho(String.valueOf(valor)) + " dinheiros!");
-        InputHandler.esperar();
+    /** sempre conferir se tem suficiente antes de chamar */
+    public void removeDinheiro(int valor){
         this.dinheiro -= valor;
     }
 
-    public void ganhaVida(int valor){
+    public void addVida(int valor){
         this.vida += valor;
-        if (this.vida > this.vidaMax)
-            this.vida = this.vidaMax;
-
-        System.out.println("Voce ganhou " + Cor.txtVerde(String.valueOf(valor)) + " pontos de vida!");
-        InputHandler.esperar();
     }
+    // ----
+
+
 
     public void usarEnergia(int custo){
         this.energia -= custo;

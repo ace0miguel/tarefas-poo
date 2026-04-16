@@ -1,13 +1,17 @@
 
 
-import Entidades.Heroi;
-import Telas.Mapa;
-import Util.InputHandler;
-import Util.Moldes;
-import Util.Recompensas;
-import Visual.Arte;
-import Visual.Cor;
-import Visual.Textos;
+import entidades.Heroi;
+import fabricas.FabricaCartas;
+import fabricas.FabricaEfeitos;
+import fabricas.FabricaInimigos;
+import fabricas.FabricaItens;
+import fabricas.FabricaPoderes;
+import telas.Mapa;
+import util.InputHandler;
+import util.Recompensas;
+import visual.Arte;
+import visual.Cor;
+import visual.Textos;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -30,7 +34,13 @@ public class App {
         // DeckBuilder.mostrarDecksPadrao(heroi);
         // DeckBuilder.iniciar(heroi); 
 
-        Moldes.carregar(heroi);
+        
+        FabricaCartas.carregar();
+        FabricaEfeitos.carregar();
+        FabricaInimigos.carregar();
+        FabricaItens.carregar();
+        FabricaPoderes.carregar();
+        
         Recompensas.resetarPoolItens();
 
         // tela de titulo ------------

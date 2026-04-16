@@ -1,10 +1,10 @@
-    package Cartas;
+    package cartas;
 
-    import Entidades.Entidade;
-    import Entidades.Heroi;
-    import Subscribers.EfeitosDeStatus.Efeito;
-    import Telas.Eventos.Batalha;
-    import Visual.Cor;
+    import batalhaListeners.efeitos.Efeito;
+import entidades.Entidade;
+import entidades.Heroi;
+import telas.eventos.combate.Batalha;
+import visual.Cor;
 
     /** cartas que te prejudicam (te aplicam um efeito negativo) ou nao fazem nada 
     (normalmente inimigos vao colocar ela no seu deck ou vao ser consequencia de algo.) */

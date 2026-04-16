@@ -1,15 +1,15 @@
-package Telas.Eventos;
+package telas.eventos;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import Entidades.Heroi;
-import Util.InputHandler;
-import Util.Recompensas;
-import Visual.Arte;
-import Visual.Cor;
-import Visual.Textos;
+import entidades.Heroi;
+import util.InputHandler;
+import util.Recompensas;
+import visual.Arte;
+import visual.Cor;
+import visual.Textos;
 
 /** evento aleatório, o jogador pode escolher entre recuperar vida ou ganhar uma recompensa */
 public class Fogueira extends Evento{
@@ -24,7 +24,7 @@ public class Fogueira extends Evento{
         switch (escolha) {
             case 0 ->
             {
-                heroi.ganhaVida(heroi.getVidaMax()/3);
+                Recompensas.ganharVida(heroi.getVidaMax()/3, heroi);
                 break;
             }
             case 1 ->

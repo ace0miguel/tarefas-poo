@@ -1,17 +1,17 @@
-package Telas.Eventos;
+package telas.eventos;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import Entidades.Heroi;
-import Util.InputHandler;
-import Util.Moldes;
-import Util.RNGHandler;
-import Util.Recompensas;
-import Visual.Arte;
-import Visual.Cor;
-import Visual.Textos;
+import entidades.Heroi;
+import fabricas.FabricaCartas;
+import util.InputHandler;
+import util.RNGHandler;
+import util.Recompensas;
+import visual.Arte;
+import visual.Cor;
+import visual.Textos;
 
 /** evento aleatório de cassino, onde o jogador pode apostar vida ou dinheiro. Em breve poderá apotar as cartas tambem, mas nao esta pronto. */
 public class Tigrinho extends Evento{
@@ -123,7 +123,7 @@ public class Tigrinho extends Evento{
 
         if (dado >= valorNecessario){
             System.out.println();
-            heroi.ganhaVida(valor);
+            Recompensas.ganharVida(valor, heroi);
         } else {
             heroi.receberDanoDireto(valor);
             if (!heroi.estaVivo()){
@@ -139,7 +139,7 @@ public class Tigrinho extends Evento{
 
         if (apostaArriscada){
             Textos.printaBonito(Cor.txtVermelho("Eu aprecio sua coragem. Muito bem, eu vou te dar um presente.\n"),5 ,2);
-            Recompensas.ganharCartaEsp(Moldes.presenteMaldito, heroi);
+            Recompensas.ganharCartaEsp(FabricaCartas.presenteMaldito, heroi);
         }
     }
 

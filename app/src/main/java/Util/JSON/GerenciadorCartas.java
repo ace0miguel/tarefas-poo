@@ -1,4 +1,4 @@
-package Util.JSON;
+package util.json;
 
 import java.util.*;
 import java.io.FileNotFoundException;
@@ -8,7 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import com.google.gson.*;
 
-import Cartas.*;
+import cartas.*;
 
 public class GerenciadorCartas {
     public static class cartaList{

@@ -1,4 +1,6 @@
-package Telas.Eventos;
+package telas.eventos;
+
+import static visual.Textos.menuStatus;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,14 +9,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import Cartas.Carta;
-import Entidades.Heroi;
-import Util.InputHandler;
-import Util.Recompensas;
-import Visual.Arte;
-import Visual.Cor;
-import Visual.Textos;
-import static Visual.Textos.menuStatus;
+import cartas.Carta;
+import entidades.Heroi;
+import util.InputHandler;
+import util.Recompensas;
+import visual.Arte;
+import visual.Cor;
+import visual.Textos;
 
 /** evento aleatório onde o jogador pode pagar pra se curar ou pra receber cartas aleatórias */
 public class Loja extends Evento{
@@ -75,7 +76,7 @@ public class Loja extends Evento{
 
     public void compraBoosterPack(Heroi heroi, int raridade, int preco) {
         if (heroi.getDinheiro() >= preco) {
-            heroi.gastaDinheiro(preco);
+            Recompensas.gastarDinheiro(preco, heroi);
             Recompensas.ganharCartas(raridade, 3, heroi);
         } else {
             System.out.println(Cor.txtVermelho("Você não tem dinheiro suficiente!"));
@@ -85,8 +86,8 @@ public class Loja extends Evento{
 
     public void compraPoção(Heroi heroi, int cura, int preco) {
         if (heroi.getDinheiro() >= preco) {
-            heroi.gastaDinheiro(preco);
-            heroi.ganhaVida(cura);
+            Recompensas.gastarDinheiro(preco, heroi);
+            Recompensas.ganharVida(cura, heroi);
         } else {
             System.out.println(Cor.txtVermelho("Você não tem dinheiro suficiente!"));
             InputHandler.esperar();
@@ -147,7 +148,7 @@ public class Loja extends Evento{
                         }
 
                         carta.aplicarTag(tagLimpa, true);
-                        heroi.gastaDinheiro(precoTags.getOrDefault(tagLimpa, 50));
+                        Recompensas.gastarDinheiro(precoTags.getOrDefault(tagLimpa, 50), heroi);
 
                         System.out.println(Cor.txtReset("tag < " + Cor.txtRosa(tagLimpa) + " > adicionada com sucesso!"));
                         InputHandler.esperar();
@@ -181,7 +182,7 @@ public class Loja extends Evento{
                         }
 
                         carta.aplicarTag(tagLimpa, false);
-                        heroi.gastaDinheiro(precoTags.getOrDefault(tagLimpa, 50));
+                        Recompensas.gastarDinheiro(precoTags.getOrDefault(tagLimpa, 50), heroi);
 
                         System.out.println(Cor.txtReset("tag < " + Cor.txtRosa(tagLimpa) + " > removida com sucesso!"));
                         InputHandler.esperar();

@@ -1,11 +1,11 @@
-package Cartas;
+package cartas;
 
-import Entidades.Entidade;
-import Entidades.Heroi;
-import Entidades.Inimigo;
-import Subscribers.EfeitosDeStatus.Efeito;
-import Telas.Eventos.Batalha;
-import Visual.Cor;
+import batalhaListeners.efeitos.Efeito;
+import entidades.Entidade;
+import entidades.Heroi;
+import entidades.Inimigo;
+import telas.eventos.combate.Batalha;
+import visual.Cor;
 
 /** cartas que causam dano direto e aplicam efeitos */
 public class CartaAtaqueComEfeito extends CartaAtaque {

@@ -1,9 +1,9 @@
-package Cartas;
-import Entidades.Entidade;
-import Entidades.Heroi;
-import Entidades.Inimigo;
-import Telas.Eventos.Batalha;
-import Visual.Cor;
+package cartas;
+import entidades.Entidade;
+import entidades.Heroi;
+import entidades.Inimigo;
+import telas.eventos.combate.Batalha;
+import visual.Cor;
 
 /* 
 Cartas que causam dano direto e não aplicam efeitos secundários.

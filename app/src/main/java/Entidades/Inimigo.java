@@ -1,15 +1,15 @@
-package Entidades;
+package entidades;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import Telas.Eventos.Batalha;
-import Util.Acao;
-import Util.InputHandler;
-import Util.RNGHandler;
-import Visual.Cor;
-import Visual.Textos;
+import telas.eventos.combate.Acao;
+import telas.eventos.combate.Batalha;
+import util.InputHandler;
+import util.RNGHandler;
+import visual.Cor;
+import visual.Textos;
 
 /* inimigo base. */
 public class Inimigo extends Entidade{

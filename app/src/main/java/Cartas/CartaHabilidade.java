@@ -1,9 +1,10 @@
-package Cartas;
-import Entidades.Entidade;
-import Entidades.Heroi;
-import Subscribers.EfeitosDeStatus.Efeito;
-import Telas.Eventos.Batalha;
-import Visual.Cor;
+package cartas;
+import batalhaListeners.efeitos.Efeito;
+import entidades.Entidade;
+import entidades.Heroi;
+import entidades.Inimigo;
+import telas.eventos.combate.Batalha;
+import visual.Cor;
 
 /*
 Cartas que aplicam efeitos; não causam dano direto.
@@ -44,13 +45,29 @@ public class CartaHabilidade extends Carta // aplica um efeito em um alvo
 
     @Override
     public void aplicarEfeito(Heroi heroi, Entidade alvo, Batalha batalha) {
+        Efeito efeitoAplicado;
 
-        Efeito efeitoAplicado = efeito.adicionar(alvo, batalha);
-
-            if (efeitoAplicado.getCancelarJogada()) {
+        if (getSelfCast()) {
+            efeitoAplicado = efeito.adicionar(heroi, batalha);
+            if (efeitoAplicado != null && efeitoAplicado.getCancelarJogada()) {
                 this.setUsoCancelado(true);
                 return;
             }
+        } else if (!efeitoEmArea){
+            efeitoAplicado = efeito.adicionar(alvo, batalha);
+            if (efeitoAplicado != null && efeitoAplicado.getCancelarJogada()) {
+                this.setUsoCancelado(true);
+                return;
+            }
+        } else {
+            for (Inimigo inimigo : batalha.getInimigos() ) {
+                efeitoAplicado = efeito.adicionar(inimigo, batalha);
+                if (efeitoAplicado != null && efeitoAplicado.getCancelarJogada()) {
+                    this.setUsoCancelado(true);
+                    return;
+                }
+            }
+        }
 
         printaResenha();
     }

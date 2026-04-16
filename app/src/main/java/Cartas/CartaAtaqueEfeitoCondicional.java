@@ -1,6 +1,6 @@
-package Cartas;
+package cartas;
 
-import Subscribers.EfeitosDeStatus.Efeito;
+import batalhaListeners.efeitos.Efeito;
 
 /** ainda nao ta implementado, mas tive a ideia e criei a classe aqui */
 public class CartaAtaqueEfeitoCondicional extends CartaAtaqueComEfeito {

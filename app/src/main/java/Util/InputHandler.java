@@ -1,11 +1,11 @@
-package Util;
+package util;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import Visual.Cor;
-import Visual.Textos;
+import visual.Cor;
+import visual.Textos;
 
 public class InputHandler {
     private static Scanner leitor = new Scanner(System.in);

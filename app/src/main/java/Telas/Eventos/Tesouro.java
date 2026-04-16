@@ -1,10 +1,10 @@
-package Telas.Eventos;
+package telas.eventos;
 
-import Entidades.Heroi;
-import Util.Recompensas;
-import Visual.Arte;
-import Visual.Cor;
-import Visual.Textos;
+import entidades.Heroi;
+import util.Recompensas;
+import visual.Arte;
+import visual.Cor;
+import visual.Textos;
 
 /** ganha uma boa recompensa. no momento um pacote de cartas incomum, mas quando tiver item vai ser item. */
 public class Tesouro extends Evento {

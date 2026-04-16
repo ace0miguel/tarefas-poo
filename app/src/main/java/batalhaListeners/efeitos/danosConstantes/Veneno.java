@@ -1,0 +1,103 @@
+package batalhaListeners.efeitos.danosConstantes;
+
+import java.util.List;
+
+import batalhaListeners.batalhaListener;
+import batalhaListeners.efeitos.Efeito;
+import entidades.Entidade;
+import entidades.Heroi;
+import entidades.Inimigo;
+import telas.eventos.combate.Batalha;
+import util.InputHandler;
+import visual.Arte;
+import visual.Cor;
+import visual.Textos;
+
+/** Causa dano igual a duraçao restante; ao colocar veneno denovo soma a duraçao;
+caso um inimigo morra enquanto envenenado o veneno espalha para todos os outros com a mesma duraçao de quando ele morreu */
+public class Veneno extends DanoConstante{
+    public Veneno(String nome, String desc, int dur, int dano){ // a variavel dano nao faz nada ok nao se preocupar
+        super(nome, desc, dur, dano);
+    }
+
+    public Veneno(Veneno copiado){
+        super(copiado);
+    }
+
+    @Override
+    public void onRoundStart(Batalha batalha, Heroi heroi){
+        batalha.causarDanoDireto(this.getAlvo(), this.getDur(), null);
+        
+        if (this.getDur() > 1)
+            this.getAlvo().setEnvenenado(true);
+
+        passaTurno();
+    }
+
+    @Override
+    public void onDeath(Batalha batalha, Entidade alvo) {
+        if (alvo != this.getAlvo())
+            return;
+
+        int duracaoAtual = this.getDur();
+
+        boolean espalhou = false;
+        List<Inimigo> listaInimigos = batalha.getInimigos();
+        for (Inimigo i : listaInimigos){
+            if (i != alvo && i.estaVivo()){
+                Veneno copia = new Veneno(this);
+                copia.setDur(duracaoAtual);
+                copia.setAlvo(i);
+
+                batalha.adicionarFuturoSubscriber(copia);
+                
+                if (!espalhou){
+                    Textos.printaBonito(Cor.txtVerdeEscuro(Arte.TOXICO), 1 ,1);
+                    InputHandler.esperar();
+                    espalhou = true;
+                }
+            }
+        }
+
+    }
+    
+    @Override
+    public boolean addStack(Batalha batalha, batalhaListener novo) {
+        if (!acumulaEfeito(novo))
+            return false;
+
+        if (novo instanceof Veneno v) {
+            this.setDur(this.getDur() + (v).getDur());
+        } else {
+            System.out.println("erro: tentou stackar veneno com algo que nao e veneno");
+            InputHandler.esperar("pressione ENTER para admitir o erro e prometer que vai arrumar");
+        }
+
+        return true;
+    }
+
+    @Override
+    public void onCreate(Batalha batalha, Heroi heroi) {
+        this.getAlvo().setEnvenenado(true);
+    }
+
+    @Override
+    public void onRemove(Batalha batalha, Heroi heroi) {
+        this.getAlvo().setEnvenenado(false);
+    }
+
+    @Override
+    public Efeito criaCopia() {
+        return new Veneno(this);
+    }
+
+    @Override
+    public String status() {
+        return Cor.verdeEscuro + this.getNome() + Cor. reset + " > " + Cor.verdeEscuro + this.getDur() + Cor.reset; 
+    }
+
+    @Override
+    public String getMsgFimRodada(Batalha batalha, Heroi heroi){
+        return "> " +this.getAlvo().getNome() + Cor.cinza  + " sofreu " + (this.getDur()) + " pontos de dano de " + this.getNomeColorido() + "!";
+    }
+}

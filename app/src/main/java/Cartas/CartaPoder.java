@@ -1,12 +1,12 @@
-package Cartas;
+package cartas;
 import java.util.ArrayList;
 import java.util.List;
 
-import Entidades.Entidade;
-import Entidades.Heroi;
-import Subscribers.Poderes.Poder;
-import Telas.Eventos.Batalha;
-import Visual.Cor;
+import batalhaListeners.poderes.Poder;
+import entidades.Entidade;
+import entidades.Heroi;
+import telas.eventos.combate.Batalha;
+import visual.Cor;
 
 /** cartas que aplicam poderes (efeitos especiais, normalmente buffs permanentes dentro do combate atual) */
 public class CartaPoder extends Carta
