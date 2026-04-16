@@ -54,79 +54,6 @@ public class Batalha extends Evento {
 
     Scanner ler = InputHandler.getLeitor();
 
-    private Inimigo[] copiarInimigos(Inimigo[] inimigosOriginais) {
-        Inimigo[] copiados = new Inimigo[inimigosOriginais.length];
-        for (int i = 0; i < inimigosOriginais.length; i++) {
-            copiados[i] = inimigosOriginais[i].criaCopia();
-        }
-        return copiados;
-    }
-
-    /** retorna al ista de inimigos vivos convertidas pra array */
-    private Inimigo[] inimigosAtuaisArray() {
-        return inimigos.stream().filter(i -> i.estaVivo()).toArray(Inimigo[]::new);
-    }
-
-    /** retorna todos os inimigos e o heroi */
-    private List<Entidade> listaEntidades() {
-        List<Entidade> entidades = new ArrayList<>();
-        entidades.add(heroi);
-        entidades.addAll(inimigos);
-        return entidades;
-    }
-
-    /** adiciona os inimigos na lista novosInimigos a batalha, remove os inimigos com flag pra remover e reseta a lista */
-    private void addNovosInimigos() {
-
-        // garante q ele nao retorne estavivo ao ser removido sem morrer
-        for (Inimigo inimigo : inimigos) { 
-            if (inimigo.getRemoverDaBatalha()) {
-                inimigo.setVida(0); 
-            }
-        }
-
-        inimigos.removeIf(Inimigo::getRemoverDaBatalha);
-
-        if (novosInimigos.isEmpty()) {
-            return;
-        }
-
-        for (Inimigo novoInimigo : novosInimigos) {
-            if (novoInimigo != null) {
-                novoInimigo.escolheAcao();
-                inimigos.add(novoInimigo);
-            }
-        }
-        
-        novosInimigos.clear();
-    }
-
-    private void checkAcaoHeroi(){
-        addNovosSubscribers();
-        addNovosInimigos();
-        limpaSubscribers();
-        notificaMorte();
-    }
-
-    public void adicionarFuturoSubscriber(batalhaListener novo) {
-        novosSubscribers.add(novo);
-    }
-
-    /** adiciona novos subscribers */
-    private void addNovosSubscribers() {
-        if (novosSubscribers.isEmpty()) {
-            return;
-        }
-
-        for (batalhaListener novoSubscriber : novosSubscribers) {
-            if (novoSubscriber != null) {
-                adicionarSubscriber(novoSubscriber);
-            }
-        }
-        
-        novosSubscribers.clear();
-    }
-
     public Batalha(Inimigo... _inimigos){
         this.inimigos = new ArrayList<>(Arrays.asList(copiarInimigos(_inimigos)));
         this.moldesInimigos = copiarInimigos(_inimigos);
@@ -140,50 +67,108 @@ public class Batalha extends Evento {
         return inimigos;
     }
 
-    private void inicializaItens(){
-        for (Item item : heroi.getListaItens()) {
-            item.setAlvo(heroi);
+    public Heroi getHeroi(){
+        return this.heroi;
+    }   
+
+    public ArrayList<Efeito> getListaEfeitos() {
+        return listaEfeitos;
+    }
+
+    public ArrayList<Poder> getListaPoderes() {
+        return listaPoderes;
+    }
+
+    /** retorna al ista de inimigos vivos convertidas pra array */
+    public Inimigo[] inimigosAtuaisArray() {
+        return inimigos.stream().filter(i -> i.estaVivo()).toArray(Inimigo[]::new);
+    }
+
+    
+
+    /** aplica dano mitigado e notifica o alvo com a vida perdida */
+    public int causarDano(Entidade alvo, int dano, Entidade atacante){
+        int vidaPerdida = alvo.receberDanoRetornandoVidaPerdida(dano);
+        notificarDanoRecebido(alvo, atacante, vidaPerdida);
+        return vidaPerdida;
+    }
+
+    /** aplica dano direto e notifica o alvo com a vida pegitrdida */
+    public int causarDanoDireto(Entidade alvo, int dano, Entidade atacante){
+        int vidaPerdida = alvo.receberDanoDiretoRetornandoVidaPerdida(dano);
+        notificarDanoRecebido(alvo, atacante, vidaPerdida);
+        return vidaPerdida;
+    }
+
+    /** retorna os subscribers da entidade passada */
+    public List<batalhaListener> getSubscribers(Entidade alvo) {
+        return subscribers.stream()
+                .filter(subscriber -> subscriber.getAlvo() == alvo)
+                .collect(Collectors.toList());
+    }
+
+    /** adiciona um inimigo na lista de inimigos da batalha! */
+    public void adicionarInimigo(Inimigo inimigo){
+        if (inimigo != null) {
+            novosInimigos.add(inimigo);
+        }
+    }
+
+    /** adiciona um efeito na lista de efeitos e notifica onCreate */
+    public void adicionarSubscriber(batalhaListener novoSubscriber) { 
+        for (batalhaListener subscriber : subscribers) {
+            if (subscriber.addStack(this, novoSubscriber)){
+                return;
+            }
+        }
+
+        this.subscribers.add(novoSubscriber);
+        novoSubscriber.onCreate(this, heroi);
+        
+        // coloca os subscribers que afetam o heroi por ultimo e depois ordenam pela prioridade.
+        this.subscribers.sort(
+            Comparator.comparing((batalhaListener subscriber) -> subscriber.getAlvo() == heroi)
+                .thenComparing(batalhaListener::getPrioridade)
+        );
+
+        /** adiciona nas listas correspondentes, pra printar o estado da batalha corretamente */
+        if (novoSubscriber instanceof Efeito e)
+            this.listaEfeitos.add(e);
+        else if (novoSubscriber instanceof Poder p)
+            this.listaPoderes.add(p);
+    }
+
+    public void adicionarSubscribers(List<? extends batalhaListener> _subscribers){
+        for (batalhaListener item : _subscribers) {
             adicionarSubscriber(item);
         }
     }
 
-    /** recebe heroi, define as variáveis e chama a classe principal. */
+    public void adicionarFuturoSubscriber(batalhaListener novo) {
+        novosSubscribers.add(novo);
+    }
+
+    /** recebe heroi, define as variáveis e chama o metodo principal. */
     @Override
-    public void iniciar(Heroi heroi){
-        
+    public void iniciar(Heroi heroi){ 
         this.heroi = heroi;
 
         inicializaItens();
+        inicializaHeroi();
 
-        // passa a referencia da mao e das pilhas pro heroi
-        heroi.setMaoAtual(mao); 
-        heroi.setPilhaCompra(pilhaCompra);
-        heroi.setPilhaDescarte(pilhaDescarte);
-
-        pilhaCompra.addBaralho(new ArrayList<>(heroi.getBaralho())); // pilha de compras recebe o baralho do heroi e embaralha
+        // inicializa a pilha de compras (recebe o baralho e embaralha)
+        pilhaCompra.addBaralho(new ArrayList<>(heroi.getBaralho()));
         pilhaCompra.shuffleStack();
         
-        // resetando os bonus do heroi q possam ter sobrado da rodada passada
-        heroi.passaRodada();
-        heroi.passaRodada();
-        heroi.resetaBuffs();
-        heroi.resetEfeitos();
-
         turno = 0; // 0: turno do heroi 
         
         for (Inimigo inimigo : inimigos) 
             inimigo.escolheAcao();
 
-        for (batalhaListener sub : subscribers) {
-            sub.onBattleStart(this, heroi);
-        }
-
-        heroi.aplicaBonus();
-
         batalha();
     }
 
-        public void batalha(){
+    private void batalha(){
         // loop principal: checa se o heroi ou ao menos um inimigo esta vivo
         while(heroi.estaVivo() == true && inimigos.stream().anyMatch(i -> i.estaVivo() == true && fimBatalha == false)){
             if (turno == 0 && !fimBatalha) turnoHeroi();
@@ -193,7 +178,7 @@ public class Batalha extends Evento {
         fimBatalha(); 
     }
 
-    public void turnoHeroi(){
+    private void turnoHeroi(){
         if (primeiraRodada) {
             mao.inicioBatalha(pilhaCompra, pilhaDescarte);
             primeiraRodada = false;
@@ -203,7 +188,7 @@ public class Batalha extends Evento {
         }
         
         boolean primeiroLoop = true; // se true, printa a animaçao de batalha
-        boolean escolhaInvalida = false; // se true, mostra escolha invalida
+        boolean escolhaInvalida = false; // se true, mostra texto de escolha invalida
 
         // loop da escolha de ação
         while(true){ 
@@ -235,7 +220,6 @@ public class Batalha extends Evento {
                 continue;
             }
 
-
             if (usaCarta(escolha) == -1)
                 continue;
 
@@ -247,7 +231,8 @@ public class Batalha extends Evento {
             limpaSubscribers();
             addNovosSubscribers();
 
-            // se conseguir usar todas as cartas da mao puxa mais 5 e ganha 2 de energia bonus, injeçao de dopamina assim q vc mantem um jogador preso
+            // se conseguir usar todas as cartas da mao puxa mais 5 e ganha 2 de energia bonus, 
+            // injeçao de dopamina assim q vc mantem um jogador preso
             if (mao.getSize() == 0){
                 rodadaBonus();
             }
@@ -266,7 +251,7 @@ public class Batalha extends Evento {
     }
 
 
-    public void turnoInimigos(){
+    private void turnoInimigos(){
         Textos.limpaTela();
         Textos.printaBonito(Cor.txtCinza(Arte.bordaHud9), 2,2); Textos.sleep(sleepFimRodada);
 
@@ -288,7 +273,7 @@ public class Batalha extends Evento {
         passaTurno();
     }
 
-    public void fimBatalha(){
+    private void fimBatalha(){
         System.out.println();
         Cor.printaAmarelo("DUELO ENCERRADO!\n");
         System.out.println();
@@ -314,7 +299,7 @@ public class Batalha extends Evento {
     }
 
     /** troca de turno e se voltar pra vez do heroi chama o passaRodada  */
-    public void passaTurno(){
+    private void passaTurno(){
         turno = (turno == 0) ? 1 : 0;
 
         if (notificaMorte() == 0) {
@@ -327,7 +312,7 @@ public class Batalha extends Evento {
     }
 
 
-    public void passaRodada(){
+    private void passaRodada(){
         heroi.resetEfeitos();
 
         for (Inimigo inimigo : inimigos) {
@@ -369,22 +354,92 @@ public class Batalha extends Evento {
         heroi.passaRodada(); // remove os bonus que acabam (escudo, etc) e reseta energia
     }
 
-    /** aplica dano mitigado e notifica o alvo com a vida perdida */
-    public int causarDano(Entidade alvo, int dano, Entidade atacante){
-        int vidaPerdida = alvo.receberDanoRetornandoVidaPerdida(dano);
-        notificarDanoRecebido(alvo, atacante, vidaPerdida);
-        return vidaPerdida;
+    private void inicializaItens(){
+        for (Item item : heroi.getListaItens()) {
+            item.setAlvo(heroi);
+            adicionarSubscriber(item);
+        }
     }
 
-    /** aplica dano direto e notifica o alvo com a vida perdida */
-    public int causarDanoDireto(Entidade alvo, int dano, Entidade atacante){
-        int vidaPerdida = alvo.receberDanoDiretoRetornandoVidaPerdida(dano);
-        notificarDanoRecebido(alvo, atacante, vidaPerdida);
-        return vidaPerdida;
+    private void inicializaHeroi(){
+        // passa a referencia da mao e das pilhas pro heroi
+        heroi.setMaoAtual(mao); 
+        heroi.setPilhaCompra(pilhaCompra);
+        heroi.setPilhaDescarte(pilhaDescarte);
+
+        // resetando os bonus do heroi q possam ter sobrado da batalha passada
+        heroi.passaRodada();
+        heroi.passaRodada();
+        heroi.resetaBuffs();
+        heroi.resetEfeitos();
+
+        for (batalhaListener sub : subscribers) {
+            sub.onBattleStart(this, heroi);
+        }
+
+        heroi.aplicaBonus();
+    }
+
+    /** retorna uma copia da lista de inimigos */
+    private Inimigo[] copiarInimigos(Inimigo[] inimigosOriginais) {
+        Inimigo[] copiados = new Inimigo[inimigosOriginais.length];
+        for (int i = 0; i < inimigosOriginais.length; i++) {
+            copiados[i] = inimigosOriginais[i].criaCopia();
+        }
+        return copiados;
+    }
+
+    /** retorna todos os inimigos e o heroi (não é copia) */
+    private List<Entidade> listaEntidades() {
+        List<Entidade> entidades = new ArrayList<>();
+        entidades.add(heroi);
+        entidades.addAll(inimigos);
+        return entidades;
+    }
+
+    /** adiciona os inimigos na lista novosInimigos a batalha, remove os inimigos com flag pra remover e reseta a lista */
+    private void addNovosInimigos() {
+
+        // garante q ele nao retorne estavivo ao ser removido sem morrer
+        for (Inimigo inimigo : inimigos) { 
+            if (inimigo.getRemoverDaBatalha()) {
+                inimigo.setVida(0); 
+            }
+        }
+
+        inimigos.removeIf(Inimigo::getRemoverDaBatalha);
+
+        if (novosInimigos.isEmpty()) {
+            return;
+        }
+
+        for (Inimigo novoInimigo : novosInimigos) {
+            if (novoInimigo != null) {
+                novoInimigo.escolheAcao();
+                inimigos.add(novoInimigo);
+            }
+        }
+        
+        novosInimigos.clear();
+    }
+
+    /** adiciona novos subscribers */
+    private void addNovosSubscribers() {
+        if (novosSubscribers.isEmpty()) {
+            return;
+        }
+
+        for (batalhaListener novoSubscriber : novosSubscribers) {
+            if (novoSubscriber != null) {
+                adicionarSubscriber(novoSubscriber);
+            }
+        }
+        
+        novosSubscribers.clear();
     }
 
     /** notifica onReceivedHit */
-    public void notificarDanoRecebido(Entidade alvo, Entidade atacante, int vidaPerdida){
+    private void notificarDanoRecebido(Entidade alvo, Entidade atacante, int vidaPerdida){
         if (vidaPerdida <= 0) {
             return;
         }
@@ -397,7 +452,7 @@ public class Batalha extends Evento {
     }
 
     /** notifica onRemove e remove os subscribers*/
-    public void limpaSubscribers(){     
+    private void limpaSubscribers(){     
         List<batalhaListener> toRemove = new ArrayList<>();
 
         for (batalhaListener subscriber : subscribers ) {
@@ -416,15 +471,8 @@ public class Batalha extends Evento {
         listaPoderes.removeIf(poder -> !subscribers.contains(poder));
     }
 
-    /** retorna os subscribers da entidade passada */
-    public List<batalhaListener> getSubscribers(Entidade alvo) {
-        return subscribers.stream()
-                .filter(subscriber -> subscriber.getAlvo() == alvo)
-                .collect(Collectors.toList());
-    }
-
     /** printa os inimigos vivos, valida a escolha e retorna o q vc escolheu. retorno -1: voltar*/
-    public int selecionarAlvo(){  // falta fazer uma opçao pra voltar caso ele mude de ideia sobre a carta!
+    private int selecionarAlvo(){  // falta fazer uma opçao pra voltar caso ele mude de ideia sobre a carta!
         int opcao = -1;
         while (true) { 
             int i = 0;
@@ -465,49 +513,12 @@ public class Batalha extends Evento {
         }
         return opcao - 1; 
     }
-
-    /** adiciona um inimigo na lista de inimigos da batalha! */
-    public void adicionarInimigo(Inimigo inimigo){
-        if (inimigo != null) {
-            novosInimigos.add(inimigo);
-        }
-    }
-
-    /** adiciona um efeito na lista de efeitos e notifica onCreate */
-    public void adicionarSubscriber(batalhaListener novoSubscriber) { 
-        for (batalhaListener subscriber : subscribers) {
-            if (subscriber.addStack(this, novoSubscriber)){
-                return;
-            }
-        }
-
-        this.subscribers.add(novoSubscriber);
-        novoSubscriber.onCreate(this, heroi);
-        
-        // coloca os subscribers que afetam o heroi por ultimo e depois ordenam pela prioridade.
-        this.subscribers.sort(
-            Comparator.comparing((batalhaListener subscriber) -> subscriber.getAlvo() == heroi)
-                .thenComparing(batalhaListener::getPrioridade)
-        );
-
-        /** adiciona nas listas correspondentes, pra printar o estado da batalha corretamente */
-        if (novoSubscriber instanceof Efeito e)
-            this.listaEfeitos.add(e);
-        else if (novoSubscriber instanceof Poder p)
-            this.listaPoderes.add(p);
-    }
-
-    public void adicionarSubscribers(List<? extends batalhaListener> _subscribers){
-        for (batalhaListener item : _subscribers) {
-            adicionarSubscriber(item);
-        }
-    }
     
 
     /** avisa os efeitos com aplicação quando o alvo morre, antes de remover da lista de inimigos
      *  e retorna o tamanho da lista de inimigos.
      */
-    public int notificaMorte(){
+    private int notificaMorte(){
 
         // ve se morreu todo mundo ou se so sobraram inimigos passivos e ja retorna
         boolean todosMortos = true;
@@ -540,7 +551,7 @@ public class Batalha extends Evento {
         return inimigos.size();
     }
 
-    public void rodadaBonus(){
+    private void rodadaBonus(){
         Textos.sobeTela();
 
         Textos.printaLinhaDevagar(Cor.rosa + (Arte.bonus).repeat(15) + Cor.reset);
@@ -550,7 +561,7 @@ public class Batalha extends Evento {
         mao.addCinco(pilhaCompra, pilhaDescarte);
     }
 
-    public int usaCarta(int escolha){
+    private int usaCarta(int escolha){
         Carta cartaEscolhida = mao.escolheCarta(escolha); 
 
         if (!cartaEscolhida.podeGastar(heroi)){
@@ -609,12 +620,12 @@ public class Batalha extends Evento {
         return 0;
     }
 
-    public void printaBatalha (boolean primeiroLoop){
+    private void printaBatalha (boolean primeiroLoop){
         if (primeiroLoop && !heroi.getTestMode()){
-            Textos.batalha(heroi, listaEfeitos, listaPoderes, inimigosAtuaisArray());
+            Textos.batalha(this);
             primeiroLoop = false;
         } else {
-            Textos.batalhaSemDelay(heroi, listaEfeitos, listaPoderes, inimigosAtuaisArray());
+            Textos.batalhaSemDelay(this);
         }
     }
 

@@ -41,7 +41,7 @@ public class Tesouro extends Evento {
     public String toString() {
         String retorno = Cor.txtAmarelo("Tesouro.");
 
-        if (util.RNGHandler.check(30) && getNivelDificuldade() < 3) {
+        if (util.RNGHandler.check(30)) {
             return Cor.txtCinza("[ ? ]");
         }
         

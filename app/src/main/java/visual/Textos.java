@@ -6,6 +6,7 @@ import batalhaListeners.efeitos.Efeito;
 import batalhaListeners.poderes.Poder;
 import entidades.Heroi;
 import entidades.Inimigo;
+import telas.eventos.combate.Batalha;
 import util.RNGHandler;
 
 public class Textos {
@@ -59,10 +60,16 @@ public class Textos {
     }
 
     /** imprime o estado atual da batalha */
-    public static void batalha(Heroi heroi, ArrayList<Efeito> listaEfeitos, List<Poder> listaPoderes,  Inimigo... inimigos){
+    public static void batalha(Batalha batalha){
         limpaTela();
         boolean aux1 = false;
         boolean aux2 = false;
+
+        Heroi heroi = batalha.getHeroi();
+        Inimigo inimigos[] = batalha.inimigosAtuaisArray();
+        List<Poder> listaPoderes = batalha.getListaPoderes();
+        List<Efeito> listaEfeitos = batalha.getListaEfeitos();
+        
         sleep(300);
         printaLinhaDevagar(Arte.tituloSombreado); sleep(200);
         System.out.println();
@@ -133,10 +140,15 @@ public class Textos {
     }
 
     /** imprime o estado atual da batalha sem delay (aparece tudo de uma vez) */
-    public static void batalhaSemDelay(Heroi heroi, ArrayList<Efeito> listaEfeitos, List<Poder> listaPoderes,  Inimigo... inimigos){
+    public static void batalhaSemDelay(Batalha batalha){
         limpaTela();
         boolean aux1 = false;
         boolean aux2 = false;
+
+        Heroi heroi = batalha.getHeroi();
+        Inimigo inimigos[] = batalha.inimigosAtuaisArray();
+        List<Poder> listaPoderes = batalha.getListaPoderes();
+        List<Efeito> listaEfeitos = batalha.getListaEfeitos();
 
         System.out.println((Arte.tituloSombreado));
         System.out.println();
