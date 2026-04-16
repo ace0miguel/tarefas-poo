@@ -6,7 +6,8 @@ import Telas.Eventos.Batalha;
 import Visual.Cor;
 
 /** efeitos de dano constante, dano depende do efeito especifico
-causam dano direto (ignoram resistencias) */
+causam dano direto (ignoram resistencias) 
+stacks somam a duraçao e multiplicam o dano*/
 public class DanoConstante extends Efeito {
     private int dano;
 
@@ -44,7 +45,7 @@ public class DanoConstante extends Efeito {
     
     @Override
     public void onRoundStart(Batalha batalha, Heroi heroi){
-        this.getAlvo().receberDanoDireto(dano);
+        batalha.causarDanoDireto(this.getAlvo(), dano*stacks, null);
         this.passaTurno();
     }
 
@@ -55,11 +56,11 @@ public class DanoConstante extends Efeito {
 
     @Override
     public String status() {
-        return Cor.amarelo + this.getNome() + Cor.reset + " > " + this.getDur() ; 
+        return Cor.amarelo + this.getNome() + Cor.reset + " > " + Cor.amarelo + this.getDur() ; 
     }
 
     @Override
     public String getMsgFimRodada(Batalha batalha, Heroi heroi){
-        return "> " +this.getAlvo().getNome() + Cor.cinza  + " sofreu " + this.dano + " pontos de dano de " + this.getNomeColorido() + "!";
+        return "> " +this.getAlvo().getNome() + Cor.cinza  + " sofreu " + (this.dano * this.stacks) + " pontos de dano de " + this.getNomeColorido() + "!";
     }
 }

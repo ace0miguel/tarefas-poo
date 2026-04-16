@@ -7,7 +7,6 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import Cartas.Carta;
-import Cartas.CartaAtaque;
 import Cartas.CartaAtaqueComEfeito;
 import Deck.Mao;
 import Deck.PilhaCompra;
@@ -193,6 +192,10 @@ public class Batalha extends Evento {
         while(true){ 
             Textos.limpaTela();
 
+            if (notificaMorte() == 0) {
+                return;
+            }
+
             if (escolhaInvalida){
                 System.out.println();
                 System.out.println(Textos.escolhaInvalida(mao.getSize()));
@@ -253,19 +256,13 @@ public class Batalha extends Evento {
         for (Inimigo inimigo : inimigos) {
             if (inimigo.estaVivo()){ // adicionei isso pq joguei uma partida aqui e tomei hit de um inimigo morto.
                 inimigo.passaRodada(); // reseta os bonus (escudo por enquanto)
-                int danoCausado = inimigo.resultadoAcao(heroi); // printa oq ele ta fazendo (antes de fazer pq as vezes ele se mata)
-                boolean atacado = inimigo.realizarAcao(heroi, this); // faz oq ele ia fazer
+                inimigo.resultadoAcao(heroi); // printa oq ele ta fazendo (antes de fazer pq as vezes ele se mata)
+                inimigo.realizarAcao(heroi, this); // faz oq ele ia fazer
                 inimigo.escolheAcao(); // escolhe prox ação
 
                 // checa possiveis meia vida
                 inimigo.checkMeiaVida(inimigo, heroi, this);
                 heroi.checkMeiaVida(heroi, heroi, this);
-
-                if (atacado)
-                    for (BatalhaSubscriber subscriber : subscribers) {
-                        if (subscriber.getAlvo() == heroi)
-                            subscriber.onReceivedHit(this, heroi, inimigo, danoCausado);
-                    }
             }
         }
 
@@ -324,9 +321,9 @@ public class Batalha extends Evento {
         
         for (BatalhaSubscriber subscriber : subscribers) {
             Entidade alvo = subscriber.getAlvo();
-            if (alvo != null && alvo.estaVivo()){
-                subscriber.onRoundStart(this, heroi);
+            if (alvo != null && alvo.estaVivo()){     
                 Textos.printaBonito(subscriber.getMsgFimRodada(this, heroi) + "\n", 5,2);
+                subscriber.onRoundStart(this, heroi);
                 Textos.sleep(sleepFimRodada);
             }
         }
@@ -353,6 +350,33 @@ public class Batalha extends Evento {
         heroi.checkMeiaVida(heroi, heroi, this);
 
         heroi.passaRodada(); // remove os bonus que acabam (escudo, etc) e reseta energia
+    }
+
+    /** aplica dano mitigado e notifica o alvo com a vida perdida */
+    public int causarDano(Entidade alvo, int dano, Entidade atacante){
+        int vidaPerdida = alvo.receberDanoRetornandoVidaPerdida(dano);
+        notificarDanoRecebido(alvo, atacante, vidaPerdida);
+        return vidaPerdida;
+    }
+
+    /** aplica dano direto e notifica o alvo com a vida perdida */
+    public int causarDanoDireto(Entidade alvo, int dano, Entidade atacante){
+        int vidaPerdida = alvo.receberDanoDiretoRetornandoVidaPerdida(dano);
+        notificarDanoRecebido(alvo, atacante, vidaPerdida);
+        return vidaPerdida;
+    }
+
+    /** notifica onReceivedHit */
+    public void notificarDanoRecebido(Entidade alvo, Entidade atacante, int vidaPerdida){
+        if (vidaPerdida <= 0) {
+            return;
+        }
+
+        for (BatalhaSubscriber subscriber : subscribers) {
+            if (subscriber.getAlvo() == alvo) {
+                subscriber.onReceivedHit(this, heroi, atacante, vidaPerdida);
+            }
+        }
     }
 
     /** notifica onRemove e remove os subscribers*/
@@ -561,13 +585,8 @@ public class Batalha extends Evento {
         for (BatalhaSubscriber subscriber : subscribers)
             subscriber.onHit(cartaEscolhida, heroi, alvoSelecionado, this);
 
-        // notifica os inimigos acertados
-
-        if (cartaEscolhida instanceof CartaAtaque cartaAtaque){
-            for (BatalhaSubscriber subscriber : subscribers) {
-                if (cartaAtaque.getEfeitoEmArea() || subscriber.getAlvo() == alvoSelecionado)
-                    subscriber.onReceivedHit(this, heroi, heroi, cartaAtaque.getDano());
-            }
+        if (notificaMorte() == 0) {
+            return 0;
         }
 
         return 0;

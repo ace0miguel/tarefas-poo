@@ -24,8 +24,12 @@ public class EcoaDano extends Efeito {
         this.porcento = copiado.porcento;
     }
 
-    private int getTaxa(){
-        return (this.porcento * this.stacks) / 100;
+    private double getTaxa(){
+        return calcularRetornoDecrescente(porcento, stacks) / 100.0;
+    }
+
+    private int danoFinal(){
+        return (int) (this.danoAcumulado * this.getTaxa());
     }
 
     @Override
@@ -56,8 +60,20 @@ public class EcoaDano extends Efeito {
 
     @Override
     public String getMsgFimRodada(Batalha batalha, Heroi heroi) {
-        return (this.getDur() == 1) 
-        ? Cor.txtAmareloClaro(this.getAlvo().getNome()) + " recebeu " + Cor.txtVermelho(String.valueOf(danoAcumulado * this.getTaxa())) + " pontos de dano acumulados!" 
-        : "";
+        return (this.getDur() <= 1) 
+        ? "> " + (this.getAlvo().getNome()) + Cor.cinza + " recebeu " + Cor.txtVermelho(String.valueOf(this.danoFinal())) + Cor.cinza+ " pontos de dano acumulados!" 
+        : "> " + (this.getAlvo().getNome()) + Cor.cinza + " está com dano acumulado: " + Cor.txtRoxo(String.valueOf(this.danoFinal()));
+    }
+
+    @Override
+    public String status() {
+        String retorno =  Cor.txtRoxo(this.getNome());
+
+        if (stacks > 1)
+            retorno += "x" + Cor.amareloClaro + stacks + Cor.reset;
+
+        retorno += " (" + Cor.txtRoxo(String.valueOf(this.danoFinal())) + ") > " + Cor.roxo + this.getDur() + Cor.reset;
+
+        return retorno;
     }
 }

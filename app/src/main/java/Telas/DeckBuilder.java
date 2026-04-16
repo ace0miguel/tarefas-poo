@@ -8,6 +8,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import Cartas.Carta;
 import Entidades.Heroi;
 import Util.InputHandler;
+import Util.Recompensas;
 import static Util.Moldes.amuletoVelho;
 import static Util.Moldes.armadura;
 import static Util.Moldes.bombaSuprema;
@@ -17,6 +18,7 @@ import static Util.Moldes.corteDefensivo;
 import static Util.Moldes.corteProfundo;
 import static Util.Moldes.corteRapido;
 import static Util.Moldes.corteVenenoso;
+import static Util.Moldes.ecoDolor;
 import static Util.Moldes.egoCarta;
 import static Util.Moldes.energiaSupremo;
 import static Util.Moldes.energizar;
@@ -75,7 +77,7 @@ public class DeckBuilder {
 
                 heroi.addCarta(energizar);
 
-                heroi.ganhaItem(amuletoVelho);
+                Recompensas.ganharItemEsp(amuletoVelho, heroi);
             }
             /* deck de dano direto */
             case 1 -> {
@@ -97,11 +99,15 @@ public class DeckBuilder {
                 heroi.addCarta(egoCarta);
                 heroi.addCarta(armadura);
 
-                heroi.ganhaItem(marmita);
+                Recompensas.ganharItemEsp(marmita, heroi);
                 
             }  
             // deck pra testar carta
             case 2 -> {
+                heroi.addCarta(ecoDolor);
+                heroi.addCarta(ecoDolor);
+                heroi.addCarta(ecoDolor);
+
                 heroi.addCarta(mestreLaminasCarta);
                 heroi.addCarta(mestreLaminasCarta);
 
@@ -137,9 +143,9 @@ public class DeckBuilder {
                 heroi.addCarta(mestreLaminasCarta);
                 heroi.addCarta(mestreLaminasCarta);
 
-                heroi.ganhaItem(facaAcougueiro);
-                heroi.ganhaItem(marmita);
-                heroi.ganhaItem(amuletoVelho );
+                Recompensas.ganharItemEsp(facaAcougueiro, heroi);
+                Recompensas.ganharItemEsp(marmita, heroi);
+                Recompensas.ganharItemEsp(amuletoVelho, heroi);
 
                 heroi.ganhaDinheiro(300);
                 heroi.setEnergiaMax(60);

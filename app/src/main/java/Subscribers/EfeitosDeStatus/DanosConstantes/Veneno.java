@@ -26,7 +26,7 @@ public class Veneno extends DanoConstante{
 
     @Override
     public void onRoundStart(Batalha batalha, Heroi heroi){
-        this.getAlvo().receberDanoDireto(this.getDur());
+        batalha.causarDanoDireto(this.getAlvo(), this.getDur(), null);
         
         if (this.getDur() > 1)
             this.getAlvo().setEnvenenado(true);
@@ -93,7 +93,7 @@ public class Veneno extends DanoConstante{
 
     @Override
     public String status() {
-        return Cor.verdeEscuro + this.getNome() + " > " + this.getDur() + Cor.reset; 
+        return Cor.verdeEscuro + this.getNome() + Cor. reset + " > " + Cor.verdeEscuro + this.getDur() + Cor.reset; 
     }
 
     @Override

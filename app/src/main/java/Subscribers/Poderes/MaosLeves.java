@@ -43,4 +43,9 @@ public class MaosLeves extends Poder {
     public String status() {
         return "Sempre que utilizar uma carta do tipo " + this.tipo + ", aplica o efeito dela mais " + this.getStacks() + " vezes.";
     }
+    
+    @Override
+    public int getPrioridade() {
+        return 0;
+    }
 }

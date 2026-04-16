@@ -123,7 +123,14 @@ public class Inimigo extends Entidade{
 
     /** retorna a recompensa por matar o inimigo. valor atual: 3^tier */
     public int getRecompensa() {
-        return (int) Math.pow(3,tier);
+        return switch(this.tier) {
+            case 0 -> 1;
+            case 1 -> 15;
+            case 2 -> 30;
+            case 3 -> 60;
+            case 4 -> 100;
+            default -> (int) Math.pow(3, this.tier); // por padrao retorna 3^tier
+        };
     }
 
     public Acao getAcaoMeiaVida() {

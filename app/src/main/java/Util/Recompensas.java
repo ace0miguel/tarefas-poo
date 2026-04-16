@@ -6,13 +6,54 @@ import java.util.List;
 
 import Cartas.Carta;
 import Entidades.Heroi;
+import Subscribers.Itens.Item;
 import static Util.Moldes.listaCartasMoldes;
+import static Util.Moldes.listaItensMoldes;
 import Visual.Cor;
 import Visual.Textos;
 
-/** Aqui ficam todos os metodos pra dar recompensas ao jogador (cartas, dinheiro, etc) */
+/** Aqui ficam todos os metodos pra dar recompensas ao jogador (cartas, itens, etc) */
 public class Recompensas {
-    /**  retorna uma carta aleatoria
+    private static final List<Item> poolItensUnicos = new ArrayList<>();
+
+    /** reseta o pool global de itens unicos da run */
+    public static void resetarPoolItens() {
+        poolItensUnicos.clear();
+        poolItensUnicos.addAll(listaItensMoldes);
+    }
+
+    public static int getQuantidadeItensDisponiveis() {
+        return poolItensUnicos.size();
+    }
+
+    /** concede um item especifico caso ainda esteja disponivel no pool global */
+    public static boolean ganharItemEsp(Item item, Heroi heroi) {
+        if (!poolItensUnicos.remove(item)) {
+            return false;
+        }
+
+        heroi.ganhaItem(item);
+        return true;
+    }
+
+    /** concede um item aleatorio unico */
+    public static boolean ganharItemAleatorio(Heroi heroi) {
+        if (poolItensUnicos.isEmpty()) {
+            return false;
+        }
+
+        int idx = RNGHandler.getGen().nextInt(poolItensUnicos.size());
+        int last = poolItensUnicos.size() - 1;
+
+        Item escolhido = poolItensUnicos.get(idx);
+        poolItensUnicos.set(idx, poolItensUnicos.get(last));
+        poolItensUnicos.remove(last);
+
+        heroi.ganhaItem(escolhido);
+        return true;
+    }
+
+    /** retorna uma carta aleatoria
      * @param raridade a raridade minima da carta a ser retornada (1 - comum, 2 - incomum, 3 - rara, 4 - especial)
      */
     public static Carta cartaAleatoria(int raridade){

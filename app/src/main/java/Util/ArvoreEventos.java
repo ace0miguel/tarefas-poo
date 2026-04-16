@@ -21,7 +21,6 @@ import static Util.Moldes.loudSacy;
 import static Util.Moldes.paulAtreides;
 import static Util.Moldes.paulAtreidesSupremo;
 import static Util.Moldes.sabrinaCarpenter;
-import static Util.Moldes.tripleT;
 
 /** cria uma arvore onde cada nó representa um evento
  * @param n quantidade de filhos por nó
@@ -124,7 +123,7 @@ public class ArvoreEventos {
         // primeiro andar (batalha facil)
         if (profundidadeAtual == 0) { 
             // adiciona aqui opcoes.add evento que vc quer testar
-            // opcoes.add(drakendrick.criaCopia());
+            opcoes.add(tesouro.criaCopia());
             sorteados.addAll(getEventosAleatorios(batalhasTriviais));
         }    
         // ultimo andar (boss)
@@ -268,6 +267,7 @@ public class ArvoreEventos {
 
     
     /** recebe listas de eventos e retorna uma lista só, com todos os itens, já embaralhada */
+    @SafeVarargs
     public final List<Evento> getEventosAleatorios(List<Evento>... listasEventos) {
         List<Evento> eventos = new ArrayList<>();
 

@@ -29,7 +29,7 @@ public interface BatalhaSubscriber {
     /** chamado sempre que uma carta é usada */
     default public void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha){};
 
-    /** chamado quando o alvo é atacado */
+    /** chamado quando o alvo é atacado. atacante pode ser null se for causado por fontes que nao sejam entidades, como efeitos. */
     default public void onReceivedHit(Batalha batalha, Heroi heroi, Entidade atacante, int danoRecebido){};
 
     /** chamado quando QUALQUER INIMIGO morre */
@@ -58,5 +58,19 @@ public interface BatalhaSubscriber {
     /** retorna o alvo */
     default public Entidade getAlvo(){
         return null;
+    }
+
+    /**
+     * retorna o valor final com retorno decrescente.
+     * O primeiro stack tem 100% de eficácia, o segundo 50%, o terceiro 25%, etc.
+     * @param valorBase o valor ou porcentagem concedida por 1 stack
+     * @param stacks a quantidade de stacks acumulados
+     */
+    default public double calcularRetornoDecrescente(double valorBase, int stacks) {
+        if (stacks <= 0) {
+            return 0.0;
+        }
+
+        return valorBase * 2.0 * (1.0 - Math.pow(0.5, stacks));
     }
 }

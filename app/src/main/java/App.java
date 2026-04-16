@@ -4,6 +4,7 @@ import Entidades.Heroi;
 import Telas.Mapa;
 import Util.InputHandler;
 import Util.Moldes;
+import Util.Recompensas;
 import Visual.Arte;
 import Visual.Cor;
 import Visual.Textos;
@@ -30,6 +31,7 @@ public class App {
         // DeckBuilder.iniciar(heroi); 
 
         Moldes.carregar(heroi);
+        Recompensas.resetarPoolItens();
 
         // tela de titulo ------------
         Textos.limpaTela();

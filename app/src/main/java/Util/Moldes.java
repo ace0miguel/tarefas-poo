@@ -24,6 +24,7 @@ import Subscribers.EfeitosDeStatus.Instantaneos.Escudo;
 import Subscribers.EfeitosDeStatus.Instantaneos.GanhaEnergia;
 import Subscribers.EfeitosDeStatus.Instantaneos.Purificar;
 import Subscribers.EfeitosDeStatus.Instantaneos.PuxaCarta;
+import Subscribers.EfeitosDeStatus.Latentes.EcoaDano;
 import Subscribers.EfeitosDeStatus.Latentes.Energizar;
 import Subscribers.Itens.AumentaDanoItem;
 import Subscribers.Itens.AumentaResistItem;
@@ -45,6 +46,7 @@ public class Moldes {
     public static List<Inimigo> listaInimigosMoldes = new ArrayList<>();
     public static List<Efeito> listaEfeitosMoldes = new ArrayList<>();
     public static List<Carta> listaCartasMoldes = new ArrayList<>();
+    public static List<Item> listaItensMoldes = new ArrayList<>();
 
     // instancias aqui guardadas pra teste
 
@@ -91,6 +93,7 @@ public class Moldes {
     public static Carta energiaSupremo;
     public static Carta presenteMaldito;
     public static Carta bombaSuprema;
+    public static Carta ecoDolor;
 
     // efeitos ------------
     public static Efeito sangramento = new Sangramento("Sangramento", "Causa 1 de dano por rodada ao alvo", 3, 1);
@@ -133,6 +136,8 @@ public class Moldes {
 
     public static EscolheCarta escolheCarta = new EscolheCarta("Escolhe uma carta", "Escolha uma carta da pilha de compra");
 
+    public static Efeito ecoaDano50 = new EcoaDano("Eco Dolor", "Causa uma parte do dano acumulado no fim da duraçao", 4, 50);
+
     // poderes -------------
     public static Poder dedoNervoso = new MaosLeves(("JOHN WICK!"), "Sempre que atirar, ATIRE NOVAMENTE! pelo tanto de acumulos desse poder.", 1);
 
@@ -151,6 +156,11 @@ public class Moldes {
 
     /** inicializa os moldes */
     public static void carregar(Heroi _heroi){
+        listaInimigosMoldes.clear();
+        listaEfeitosMoldes.clear();
+        listaCartasMoldes.clear();
+        listaItensMoldes.clear();
+
         /* base do balanceamento: carta de 1 de energia: 5 pontos de dano ou 4 de escudo
         um inimigo fraco deve ter por volta de uns 40 pontos de vida e causar uns 9 de dano
         tiros: cartas de ataque sem efeito secundário, cortes aplicam efeito (em geral)
@@ -248,6 +258,9 @@ public class Moldes {
         pactoSangue = new CartaHabilidade("Pacto de sangue", "Pague (4) vida e escolha uma carta da sua pilha de compras.", 1, escolheCarta, true); 
         pactoSangue.setSacrificio(4); pactoSangue.setRaridade(2);
 
+        ecoDolor = new CartaHabilidade("Eco Dolor", "Causa uma parte do dano acumulado durante a duraçao em dano direto no final da duraçao", 2, ecoaDano50, false);
+        ecoDolor.setRaridade(3);
+
         // cartas poder
         dedoNervosoCarta = new CartaPoder("JOHN WICK", "Atire novamente sempre que usar uma carta de tiro!", 3, dedoNervoso); 
         dedoNervosoCarta.setRaridade(3); 
@@ -344,6 +357,9 @@ public class Moldes {
         listaCartasMoldes.addAll(Arrays.asList(tiro, tiroEscopeta, tiroCanhao, corteProfundo, 
             corteVenenoso, corteDefensivo, corteRapido, desprezo, armadura, shieldao, 
             shieldinho, purificar, egoCarta, puxaCarta, energizar, energiaGratis, dedoNervosoCarta, 
-            mestreLaminasCarta, bomba, bombaVeneno, chocolex,contratoSangue, pactoSangue));
+            mestreLaminasCarta, bomba, bombaVeneno, chocolex, contratoSangue, pactoSangue, ecoDolor));
+
+        // itens --------
+        listaItensMoldes.addAll(Arrays.asList(facaAcougueiro, marmita, amuletoVelho, jarroTerra, item20Resist, item10Dano, item20Dano));
     }
 }

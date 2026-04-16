@@ -144,7 +144,8 @@ public class Heroi extends Entidade {
 
     public void ganhaItem(Item item){
         this.listaItens.add(item.criaCopia());
-        System.out.println("Voce ganhou o item " + Cor.txtAzul(item.getNome()) + "!");
+        Textos.printaBonito(Cor.amareloClaro + "Voce ganhou: <" + Cor.txtRosa(item.getNome()) + 
+        Cor.amareloClaro + "> [ " + Cor.txtReset(item.getDescricao()) + Cor.amareloClaro + " ] !" + Cor.reset, 4, 2);
         InputHandler.esperar();
     }
 

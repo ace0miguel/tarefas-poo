@@ -71,6 +71,7 @@ public abstract class Efeito implements BatalhaSubscriber{
         return this.dur;
     }
 
+    @Override
     public Entidade getAlvo() {
         return this.alvo;
     }
@@ -87,7 +88,8 @@ public abstract class Efeito implements BatalhaSubscriber{
         return cancelarJogada;
     }
 
-    public int getPrioridade() { // se quiser q um efeito va antes os outros reduz, os danos constantes tao 0.
+    @Override
+    public int getPrioridade() {
         return 1;
     }
 

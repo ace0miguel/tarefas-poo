@@ -37,7 +37,7 @@ public abstract class Acao {
     public static class Atacar extends Acao {
         @Override
         public void executar(Inimigo executor, Heroi heroi, Batalha batalha){
-            heroi.receberDano(executor.getDanoEfetivo());
+            batalha.causarDano(heroi, executor.getDanoEfetivo(), executor);
         }
 
         @Override
@@ -47,8 +47,8 @@ public abstract class Acao {
 
         @Override
         public int resultado(Inimigo executor, Heroi heroi) {
-            Textos.printaBonito(Cor.reset + "> " + executor.getNome() + Cor.txtAmarelo(" ") + Cor.vermelho + "Causou " + heroi.getDanoRecebido(executor.getDanoEfetivo()) + " pontos de dano!", 5, 2);
-            return heroi.getDanoRecebido(executor.getDanoEfetivo());
+            Textos.printaBonito(Cor.reset + "> " + executor.getNome() + Cor.txtAmarelo(" ") + Cor.vermelho + "Causou " + heroi.getDanoReduzido(executor.getDanoEfetivo()) + " pontos de dano!", 5, 2);
+            return heroi.getDanoReduzido(executor.getDanoEfetivo());
         }
     }
 
@@ -60,7 +60,7 @@ public abstract class Acao {
 
         @Override
         public void executar(Inimigo executor, Heroi heroi, Batalha batalha){
-            heroi.receberDano(executor.getFracaoDanoEfetivo(2));
+            batalha.causarDano(heroi, executor.getFracaoDanoEfetivo(2), executor);
             efeito.adicionar(heroi, batalha);
         };
 
@@ -71,8 +71,8 @@ public abstract class Acao {
 
         @Override
         public int resultado(Inimigo executor, Heroi heroi) {
-            Textos.printaBonito(Cor.reset + "> " + executor.getNome() + Cor.txtAmarelo(" ") + Cor.vermelho + "Causou " + heroi.getDanoRecebido(executor.getFracaoDanoEfetivo(2)) + " pontos de dano e aplicou " + efeito.getNomeColorido() + "!", 5, 2);
-            return heroi.getDanoRecebido(executor.getFracaoDanoEfetivo(2));
+            Textos.printaBonito(Cor.reset + "> " + executor.getNome() + Cor.txtAmarelo(" ") + Cor.vermelho + "Causou " + heroi.getDanoReduzido(executor.getFracaoDanoEfetivo(2)) + " pontos de dano e aplicou " + efeito.getNomeColorido() + "!", 5, 2);
+            return heroi.getDanoReduzido(executor.getFracaoDanoEfetivo(2));
         }
     }
 
@@ -86,7 +86,7 @@ public abstract class Acao {
 
         @Override
         public void executar(Inimigo executor, Heroi heroi, Batalha batalha) {
-            heroi.receberDano(executor.getDanoEfetivo() + danoVidaPerdida(heroi));
+            batalha.causarDano(heroi, executor.getDanoEfetivo() + danoVidaPerdida(heroi), executor);
         }
 
         @Override
@@ -96,8 +96,8 @@ public abstract class Acao {
 
         @Override
         public int resultado(Inimigo executor, Heroi heroi) {
-            Textos.printaBonito(Cor.reset + "> " + executor.getNome() + Cor.txtAmarelo(" ") + Cor.vermelho + "Causou " + heroi.getDanoRecebido(executor.getDanoEfetivo() + danoVidaPerdida(heroi)) + " pontos de dano!", 5, 2);
-            return heroi.getDanoRecebido(executor.getDanoEfetivo() + danoVidaPerdida(heroi));   
+            Textos.printaBonito(Cor.reset + "> " + executor.getNome() + Cor.txtAmarelo(" ") + Cor.vermelho + "Causou " + heroi.getDanoReduzido(executor.getDanoEfetivo() + danoVidaPerdida(heroi)) + " pontos de dano!", 5, 2);
+            return heroi.getDanoReduzido(executor.getDanoEfetivo() + danoVidaPerdida(heroi));   
         }
     }
 
@@ -192,7 +192,7 @@ public abstract class Acao {
         }
     }
 
-    /** se divide em (fator) inimigos, com a vida atual */
+    /** se divide em (fator) inimigos, com a vida atual. Se livra de todos os efeitos aplicados. */
     public static class multiplicar extends Acao {
         private int fator;
 

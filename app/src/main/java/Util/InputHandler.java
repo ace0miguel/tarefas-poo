@@ -99,7 +99,7 @@ public class InputHandler {
             Textos.limpaTela();
 
             if (!mensagemInicial.equals("")){
-                Textos.printaBonito(mensagemInicial,2 ,2);
+                Textos.printaBonito(mensagemInicial,1 ,1);
                 System.out.println();   
             }
 

@@ -60,11 +60,11 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
     @Override
     public void aplicarEfeito(Heroi heroi, Entidade alvo, Batalha batalha) {
         if (!efeitoEmArea){
-                alvo.receberDano(this.getDano() + ((this.getDano() * heroi.getDanoExtra()) / 100));
+                batalha.causarDano(alvo, this.getDano() + ((this.getDano() * heroi.getDanoExtra()) / 100), heroi);
             }    
             else {
                 for (Inimigo inimigo : batalha.getInimigos() ) {
-                    inimigo.receberDano(this.getDano() + ((this.getDano() * heroi.getDanoExtra()) / 100));
+                    batalha.causarDano(inimigo, this.getDano() + ((this.getDano() * heroi.getDanoExtra()) / 100), heroi);
                 }
             }
         if (getSelfCast()){

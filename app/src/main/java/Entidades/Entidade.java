@@ -182,6 +182,12 @@ public abstract class Entidade {
 
     /** aplica um valor de dano considerando resistencia e escudo */
     public void receberDano(int dano){
+        receberDanoRetornandoVidaPerdida(dano);
+    }
+
+    /** aplica dano considerando resistencia e escudo e retorna a vida perdida de fato */
+    public int receberDanoRetornandoVidaPerdida(int dano){
+        int vidaAntes = this.vida;
         int danoEfetivo = max(dano - ((dano * this.resistencia) / 100), 0);
   
         if (this.escudo >= danoEfetivo){
@@ -191,16 +197,26 @@ public abstract class Entidade {
             this.escudo = 0;
             this.vida-= danoEfetivo;
         }
+
+        return max(vidaAntes - max(this.vida, 0), 0);
     }
 
     /** retorna o dano recebido levando em consideraçao escudo e resistencia*/
-    public int getDanoRecebido(int dano){
+    public int getDanoReduzido(int dano){
         return max(getDanoEfetivo(dano) - this.escudo, 0);
     }
 
     /** aplica um valor de dano que ignora resistencia e escudo */
     public void receberDanoDireto(int dano){ 
+        receberDanoDiretoRetornandoVidaPerdida(dano);
+    }
+
+    /** aplica dano direto e retorna a vida perdida de fato */
+    public int receberDanoDiretoRetornandoVidaPerdida(int dano){
+        int vidaAntes = this.vida;
         this.vida -= dano;
+
+        return max(vidaAntes - max(this.vida, 0), 0);
     }
 
     public void passaRodada(){

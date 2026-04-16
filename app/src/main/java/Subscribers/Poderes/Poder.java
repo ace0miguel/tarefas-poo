@@ -1,6 +1,5 @@
 package Subscribers.Poderes;
 
-import Entidades.Entidade;
 import Subscribers.BatalhaSubscriber;
 import Telas.Eventos.Batalha;
 import Visual.Cor;

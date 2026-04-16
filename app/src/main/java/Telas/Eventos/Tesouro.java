@@ -23,6 +23,8 @@ public class Tesouro extends Evento {
         System.out.println();
 
         Recompensas.ganharCartas(2, 5, heroi);
+
+        Recompensas.ganharItemAleatorio(heroi);
     }
     
     @Override

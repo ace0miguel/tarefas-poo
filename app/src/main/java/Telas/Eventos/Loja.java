@@ -32,34 +32,37 @@ public class Loja extends Evento{
             if (escolha == -1) break;
             switch (escolha) {
                 case 0 ->{
-                    List<String> opcoes = new ArrayList<>(Arrays.asList("Poção pequena (15 de vida, 10 reais)", "Poção média (25 de vida, 25 reais)", "Poção grande (40 de vida, 35 reais)"));
+                    List<String> opcoes = new ArrayList<>(Arrays.asList("Poção P (15 de vida, 10 reais)", "Poção M (25 de vida, 25 reais)", "Poção L (40 de vida, 35 reais)", "Poção XL (60 de vida, 50 reais)"));
                     int escolha2 = InputHandler.selecionar(opcoes, true, Cor.txtAmareloClaro("\n\nQual poção deseja comprar? "+ menuStatus(heroi)));
                     if (escolha2 == -1) break;
                     switch (escolha2) {
                         case 0 -> {
-                            compraPoção(heroi, 15, 10);
+                            compraPoção(heroi, 15, 15);
                         }
                         case 1 -> {
-                            compraPoção(heroi, 25, 25);  
+                            compraPoção(heroi, 30, 25);  
                         }
                         case 2 -> {
-                            compraPoção(heroi, 40, 35);  
+                            compraPoção(heroi, 45, 35);  
+                        }
+                        case 3 -> {
+                            compraPoção(heroi, 60, 50);  
                         }
                     }
                 }
                 case 1 -> {
-                    List<String> opcoes = new ArrayList<>(Arrays.asList("Booster pack comum (35 reais)", "Booster pack incomum (50 reais)", "Booster pack raro (70 reais)"));
+                    List<String> opcoes = new ArrayList<>(Arrays.asList("Booster pack comum (25 reais)", "Booster pack incomum (55 reais)", "Booster pack raro (100 reais)"));
                     int escolha3 = InputHandler.selecionar(opcoes, true, Cor.txtAmareloClaro("\n\nQual Booster deseja comprar? "+ menuStatus(heroi)));
                     if (escolha3 == -1) break;
                     switch (escolha3) {
                         case 0 -> {
-                            compraBoosterPack(heroi, 1, 35);
+                            compraBoosterPack(heroi, 1, 25);
                         }
                         case 1 -> {
-                            compraBoosterPack(heroi, 2, 50); 
+                            compraBoosterPack(heroi, 2, 55); 
                         }
                         case 2 -> {
-                            compraBoosterPack(heroi, 3, 70);   
+                            compraBoosterPack(heroi, 3, 100);   
                         }
                     }
                 }
@@ -95,11 +98,11 @@ public class Loja extends Evento{
 
         // criando a lista de preço para adicionar/remover uma tag
         Map<String, Integer> precoTags = new HashMap<>();
-        precoTags.put("Area", 50);
-        precoTags.put("Consumir", 45);
-        precoTags.put("Manter", 35);
-        precoTags.put("Inata", 35);
-        precoTags.put("Sacrificio", 40);
+        precoTags.put("Area", 80);
+        precoTags.put("Consumir", 50);
+        precoTags.put("Manter", 45);
+        precoTags.put("Inata", 45);
+        precoTags.put("Sacrificio", 50);
 
         while (true){
             var escolha = InputHandler.selecionar(opcoes, true, Cor.txtAmareloClaro("O que você deseja fazer? " + menuStatus(heroi)));

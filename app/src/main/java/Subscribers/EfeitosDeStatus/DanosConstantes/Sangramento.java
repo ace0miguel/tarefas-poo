@@ -38,7 +38,7 @@ public class Sangramento extends DanoConstante{
 
             InputHandler.esperar();
 
-            this.getAlvo().receberDanoDireto(danoAcumulado);
+            batalha.causarDanoDireto(this.getAlvo(), danoAcumulado, null);
             this.getAlvo().setSangrando(false);
             this.setDur(0);
             this.stacks = 0;
@@ -51,7 +51,7 @@ public class Sangramento extends DanoConstante{
     public void onRoundStart(Batalha batalha, Heroi heroi){
         int danoEfetivo = this.stacks * this.getDano();
 
-        this.getAlvo().receberDanoDireto(danoEfetivo);
+        batalha.causarDanoDireto(this.getAlvo(), danoEfetivo, null);
         
         if (this.getDur() > 1)
             this.getAlvo().setSangrando(true);
@@ -77,8 +77,8 @@ public class Sangramento extends DanoConstante{
     @Override
     public String status() {
         return (this.stacks < 4) 
-        ? Cor.vermelho + this.getNome() + "!".repeat(Math.max(this.stacks - 1, 0)) + " > " + this.getDur() + Cor.reset
-        : Cor.vermelho + this.getUpperNome() + "!".repeat(Math.max(this.stacks - 1, 0)) + " > " + this.getDur() + Cor.reset; 
+        ? Cor.vermelho + this.getNome() + "!".repeat(Math.max(this.stacks - 1, 0)) + Cor.reset + " > " + Cor.vermelho + this.getDur() + Cor.reset
+        : Cor.vermelho + this.getUpperNome() + "!".repeat(Math.max(this.stacks - 1, 0)) + Cor.reset + " > " + Cor.vermelho + this.getDur() + Cor.reset; 
     }
 
     @Override
