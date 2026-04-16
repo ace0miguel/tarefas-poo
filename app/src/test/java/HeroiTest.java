@@ -55,4 +55,23 @@ public class HeroiTest {
         h.removeDinheiro(15);
         assertEquals(35, h.getDinheiro());
     }
+
+    @Test
+    public void passarTurnoZeraEscudoEBuffs() {
+        Heroi h = new Heroi("Cavaleiro", 50, 3);
+        
+        // Simula o herói ganhando escudo e ativando um buff no turno dele
+        h.ganharEscudo(15);
+        h.setPurificar(true);
+        
+        assertEquals(15, h.getEscudo());
+        assertEquals(true, h.getPurificar());
+        
+        // Simula a passagem de turno (fim do turno do herói)
+        h.passaTurno();
+        
+        // Tudo isso deve ser resetado para o próximo turno
+        assertEquals(0, h.getEscudo());
+        assertEquals(false, h.getPurificar());
+    }
 }

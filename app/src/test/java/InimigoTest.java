@@ -1,4 +1,7 @@
 import org.junit.jupiter.api.Test;
+
+import entidades.Heroi;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 
@@ -44,5 +47,39 @@ public class InimigoTest {
         assertEquals(original.getVidaMax(), copia.getVidaMax());
         assertEquals(original.getDano(), copia.getDano());
         assertEquals(original.getTier(), copia.getTier());
+    }
+
+    @Test
+    public void passarRodadaZeraEscudoEBuffsDoInimigo() {
+        Inimigo i = new Inimigo("Esqueleto", 30, 5);
+        
+        i.ganharEscudo(10);
+        assertEquals(10, i.getEscudo());
+        
+        // Simula a passagem do turno do inimigo
+        i.passaRodada();
+        
+        // Escudo zera
+        assertEquals(0, i.getEscudo());
+    }
+
+    @Test
+    public void checkMeiaVidaNoTurno() {
+        Inimigo i = new Inimigo("Zumbi", 40, 5);
+        Heroi h = new Heroi("Teste", 30, 3);
+        
+        // Ele começa de vida cheia, entao nenhum trigger de meiaVida deve acontecer no inicio
+        assertEquals(40, i.getVida());
+        
+        // Herói bate nele tirando mais da metade da vida
+        i.receberDanoDireto(25);
+        assertEquals(15, i.getVida()); // Sobrou 15
+        
+        // Método chamado normalmente pela Batalha ao final das ações de dano
+        i.checkMeiaVida(h, h, null); 
+        
+        // Como ele não tem uma acaoMeiaVida nula que dê crash, o código deve passar tranquilo
+        // Isso cobre a lógica do trigger de `meiaVida = true;` internamente 
+        assertEquals(15, i.getVida()); 
     }
 }

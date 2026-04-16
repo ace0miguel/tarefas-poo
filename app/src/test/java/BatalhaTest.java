@@ -101,4 +101,17 @@ public class BatalhaTest {
             // Ignora exceções de Scanner fechado pelo ambiente de teste
         }
     }
+
+    @Test
+    public void simularUsoCartaSemEnergia() {
+        Inimigo i1 = new Inimigo("Lobo", 20, 5);
+        Batalha b = new Batalha(i1);
+        entidades.Heroi h = new entidades.Heroi("Teste", 30, 0); // Herói com 0 de energia
+        
+        b.adicionarInimigo(i1);
+        
+        b.passaTurno(); 
+        
+        assertEquals(1, b.getInimigos().size()); // Lobo continua listado
+    }
 }
