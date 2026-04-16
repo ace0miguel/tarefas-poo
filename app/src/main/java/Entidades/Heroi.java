@@ -161,6 +161,7 @@ public class Heroi extends Entidade {
 
     public void addVida(int valor){
         this.vida += valor;
+        if (this.vida > this.vidaMax) this.vida = this.vidaMax;
     }
     // ----
 

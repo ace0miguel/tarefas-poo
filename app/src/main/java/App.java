@@ -1,5 +1,3 @@
-
-
 import entidades.Heroi;
 import fabricas.FabricaCartas;
 import fabricas.FabricaEfeitos;
@@ -20,13 +18,7 @@ public class App {
         // opcoesMenuInicial.add("Iniciar avebtura");
         // opcoesMenuInicial.add("Sair");
 
-        // GERENCIADOR DE CARTAS Q ERA PRA CUIDAR DO JSON MAS NAO FUNCIONA
-        // GerenciadorCartas gerenciadorCartas = new GerenciadorCartas();
-        // gerenciadorCartas.carregarCartas(false);
-
-        // instancias padrao pra teste por enquanto
     
-
         // heroi ----------- (4 de energia max pq assim 5 cartas de 1 de energia nao da pra resetar a mao)
         Heroi heroi = new Heroi("Capitão Jack Sparrow", 90, 4);
       

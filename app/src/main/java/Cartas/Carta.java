@@ -40,6 +40,12 @@ public abstract class Carta {
     /** true: sempre aparece na primeira mão em cada batalha */
     protected boolean inata = false;
 
+    protected enum tipoTags {
+        Area,
+        Consumir,
+        Manter,
+        Inata
+    }
 
     /** tipos de ação:
     0 - nenhum

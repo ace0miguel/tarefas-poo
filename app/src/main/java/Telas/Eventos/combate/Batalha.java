@@ -689,6 +689,11 @@ public class Batalha extends Evento {
         }
 
         retorno += Cor.txtCinza(" VERSUS:");
+
+        if (util.RNGHandler.check(30) && getNivelDificuldade() < 3) {
+            return Cor.txtCinza("[ ? ]");
+        }
+
         for (Inimigo inimigo : moldesInimigos) {
             retorno += " [ " + inimigo.getNome() + " ]";
         }
