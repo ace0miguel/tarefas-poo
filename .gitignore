@@ -7,7 +7,8 @@ build/
 app/build/
 *.bin
 *.lock
-.vscode/**
+.vscode/settings.json
 build-output.txt
 build.log
 clean-build-output.txt
+.vscode/launch.json
