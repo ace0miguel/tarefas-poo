@@ -8,3 +8,6 @@ app/build/
 *.bin
 *.lock
 .vscode/settings.json
+build-output.txt
+build.log
+clean-build-output.txt
