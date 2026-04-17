@@ -6,7 +6,6 @@ import telas.eventos.ArvoreEventos;
 import telas.eventos.Evento;
 import util.InputHandler;
 import util.RNGHandler;
-import util.json.GerenciadorHeroi;
 import visual.Arte;
 import visual.Cor;
 import visual.Textos;
@@ -110,9 +109,7 @@ public class Mapa {
                 System.out.println(Cor.txtAmarelo("Parabéns!"));
                 InputHandler.esperar();
                 return;
-            } 
-
-            GerenciadorHeroi.salvar(heroi);
+            }
 
             int escolha = criarCaminhos();
 
