@@ -96,12 +96,10 @@ public class Recompensas {
         Carta recompensa = Recompensas.cartaAleatoria(raridade, pool);
         
         Textos.printaBonito(recompensa.recompensa(), 5, 2);
-        heroi.addCartaInventario(recompensa);
-        Textos.sleep(500);
 
-        System.out.println();
-        System.out.println("Nova carta adicionada ao inventário! Visite o deckBuilder para equipá-la.");
         InputHandler.esperar();
+        
+        guardaOuEquipa(recompensa, heroi);
     }
 
     /** concede uma carta ao heroi e imprime uma mensagem bonitinha mostrando a carta ganha
@@ -121,12 +119,10 @@ public class Recompensas {
         System.out.println();
    
         Textos.printaBonito(carta.recompensa(), 5, 2);
-        heroi.addCartaInventario(carta);
-        Textos.sleep(500);
 
-        System.out.println();
-        System.out.println("Nova carta adicionada ao inventário! Visite o deckBuilder para equipá-la.");
         InputHandler.esperar();
+
+        guardaOuEquipa(carta, heroi);
     }
 
     /** concede uma escolha de cartas ao heroi, com uma raridade minima
@@ -170,8 +166,56 @@ public class Recompensas {
         return poolItensUnicos.size();
     }
 
+    public static void ganhaTagAleatoria(Carta carta) {
+        carta = aplicaTagAleatoria(carta);
+
+        System.out.println(Cor.txtVerde("A carta " + carta.getNome() + " ganhou a tag " + 
+        Cor.txtRosa(carta.getTags().get(carta.getTags().size() - 1)) + Cor.reset + "!"));
+        
+        InputHandler.esperar();
+    }
+
 
     // metodos privados ---------------------------------
+
+    public static Carta aplicaTagAleatoria(Carta _carta) {
+        Carta carta = _carta.criaCopia();
+        if (carta.getTags().size() == Carta.tipoTags.size())
+            return carta;
+
+        String tagSorteada = RNGHandler.sorteiaDeLista(carta.tipoTags);
+
+        while (true) {
+            if (!carta.aplicarTag(tagSorteada, true)){
+                continue;
+            }
+            break;
+        }
+
+        return carta;
+    }
+
+    private static void guardaOuEquipa(Carta carta, Heroi heroi) {
+        List<String> opcoes = new ArrayList<>();
+        opcoes.add("Adicionar ao baralho");
+        opcoes.add("Guardar no inventário");
+
+        int escolha = InputHandler.selecionar(opcoes, Cor.txtAmareloClaro("O que deseja fazer com a carta?"));
+
+        if (escolha == 0) {
+            heroi.addCarta(carta);
+            System.out.println();
+            System.out.println("Nova carta adicionada ao baralho!");
+        } else {
+            heroi.addCartaInventario(carta);
+            System.out.println();
+            System.out.println("Nova carta adicionada ao inventário! Visite o deckBuilder para equipá-la.");
+        }
+
+        Textos.sleep(500);
+
+        InputHandler.esperar();
+    }
 
     private static void imprimeGanhoDinheiro(int valor) {
         Textos.limpaTela();

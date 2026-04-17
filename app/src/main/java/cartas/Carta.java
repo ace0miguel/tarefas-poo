@@ -29,7 +29,7 @@ public abstract class Carta {
     /** lista publica static que guarda todas as tags existentes e que podem ser compradas */
     public List<String> tagsCompraveis = new ArrayList<>(List.of("Area", "Consumir", "Manter", "Inata"));
 
-    public List<String> tagsRemoviveis = new ArrayList<>(List.of("Area", "Consumir", "Manter", "Inata", "Sacrificio"));
+    public List<String> tagsRemoviveis = new ArrayList<>(List.of("Area", "Consumir", "Manter", "Inata"));
 
     /** true: afeta TODOS os inimigos */
     protected boolean efeitoEmArea = false;
@@ -40,12 +40,13 @@ public abstract class Carta {
     /** true: sempre aparece na primeira mão em cada batalha */
     protected boolean inata = false;
 
-    protected enum tipoTags {
-        Area,
-        Consumir,
-        Manter,
-        Inata
-    }
+    public static List<String> tipoTags = List.of(
+        "Area",
+        "Consumir",
+        "Manter",
+        "Inata"
+    );
+    
 
     /** tipos de ação:
     0 - nenhum
@@ -255,11 +256,6 @@ public abstract class Carta {
 
     public void setSacrificio(int sacrificio) {
         this.sacrificio = sacrificio;
-        if (sacrificio  > 0) {
-            tags.add("Sacrificio");
-        } else {
-            tags.remove("Sacrificio");
-        }
     }
 
     public void setRaridade(int raridade) {
@@ -270,7 +266,10 @@ public abstract class Carta {
         this.usoCancelado = usoCancelado;
     }
 
-    public void aplicarTag(String tag, boolean adicionar) {
+    /** retorna false se ja tinha a tag */
+    public boolean aplicarTag(String tag, boolean adicionar) {
+        if (tags.contains(tag)) return false;
+
         switch (tag) {
             case "Area" -> setEfeitoEmArea(adicionar);
             case "Consumir" -> setConsumir(adicionar);
@@ -282,6 +281,16 @@ public abstract class Carta {
             }
             case "Inata" -> setInata(adicionar);
         }
+
+        return true;
+    }
+
+    public void limpaTags(){
+        setEfeitoEmArea(false);
+        setConsumir(false);
+        setManter(false);
+        setSacrificio(0);
+        setInata(false);
     }
 
     // ---------------------------------------------

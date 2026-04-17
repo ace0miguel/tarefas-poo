@@ -1,5 +1,6 @@
 package util;
 
+import java.util.List;
 import java.util.Random;
 
 public class RNGHandler {
@@ -17,5 +18,15 @@ public class RNGHandler {
     exemplo: check(50) -> 50% de chance de retornar true, check(40) -> 40% de chance de retornar true*/
     public static boolean check(int valor){
         return (gen.nextInt(100) < valor);
+    }
+
+    public static <T> T sorteiaDeLista(List<T> lista){   
+        if (lista == null || lista.isEmpty()) {
+            System.out.println("Tentou sortear de uma lista vazia");
+            InputHandler.esperar();
+        }
+        
+        int index = gen.nextInt(lista.size());
+        return lista.get(index);
     }
 }

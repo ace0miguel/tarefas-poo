@@ -1,5 +1,4 @@
 package visual;
-import java.util.ArrayList;
 import java.util.List;
 
 import batalhaListeners.efeitos.Efeito;

@@ -201,7 +201,5 @@ public class Loja extends Evento{
     @Override
     public Loja criaCopia() {
         return new Loja();
-    }
-
-    
+    } 
 }

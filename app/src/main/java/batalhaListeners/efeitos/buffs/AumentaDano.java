@@ -23,6 +23,7 @@ public class AumentaDano extends Buff {
 
         this.stacks++;
         this.getAlvo().somaDanoExtra(this.valor);
+        this.setDur(((Efeito) novo).getDur());
 
         return true;
     }

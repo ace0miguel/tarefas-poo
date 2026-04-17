@@ -22,6 +22,7 @@ public class AumentaResistencia extends Buff {
 
         this.stacks++;
         this.getAlvo().somaResistencia(this.valor);
+        this.setDur(((Efeito) novo).getDur());
 
         return true;
     }

@@ -48,7 +48,7 @@ public class ArvoreEventos {
     // triviais ( dificuldade < 3 )
     Batalha amoebas = new Batalha(amoeba.criaCopia(), amoeba.criaCopia());
     Batalha barbossaSolo = new Batalha(barbossa.criaCopia());
-    Batalha drakendrick = new Batalha(drake.criaCopia(), endrick.criaCopia());
+    Batalha drakendrick = new Batalha(endrick.criaCopia(), drake.criaCopia());
     Batalha pandaSolo = new Batalha(kungFuPanda.criaCopia());
 
     // medias ( dificuldade entre 4 e 5 )
