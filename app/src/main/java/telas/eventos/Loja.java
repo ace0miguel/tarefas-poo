@@ -1,5 +1,6 @@
 package telas.eventos;
 
+import static fabricas.FabricaItens.*;
 import static visual.Textos.menuStatus;
 
 import java.util.ArrayList;
@@ -9,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import batalhaListeners.itens.Item;
+import batalhaListeners.itens.ativos.ItemAtivo;
 import cartas.Carta;
 import entidades.Heroi;
 import util.InputHandler;
@@ -19,7 +22,7 @@ import visual.Textos;
 
 /** evento aleatório onde o jogador pode pagar pra se curar ou pra receber cartas aleatórias */
 public class Loja extends Evento{
-    List<String> opcoes = new ArrayList<>(Arrays.asList("Poções de vida", "Pacotes de carta", "Edição de tags"));
+    List<String> opcoes = new ArrayList<>(Arrays.asList("Sessão de spa (cura)", "Pacotes de carta", "Itens", "Edição de tags"));
 
     
     @Override 
@@ -33,26 +36,35 @@ public class Loja extends Evento{
             if (escolha == -1) break;
             switch (escolha) {
                 case 0 ->{
-                    List<String> opcoes = new ArrayList<>(Arrays.asList("Poção P (15 de vida, 10 reais)", "Poção M (25 de vida, 25 reais)", "Poção L (40 de vida, 35 reais)", "Poção XL (60 de vida, 50 reais)"));
-                    int escolha2 = InputHandler.selecionar(opcoes, true, Cor.txtAmareloClaro("\n\nQual poção deseja comprar? "+ menuStatus(heroi)));
+                    List<String> opcoes = new ArrayList<>(Arrays.asList(
+                    "Pacote básico (15 de vida, 10 reais)",
+                    "Pacote medio (25 de vida, 25 reais)", 
+                    "Pacote completo (40 de vida, 35 reais)",    
+                    "Pacote deluxe (60 de vida, 50 reais)"));
+
+                    int escolha2 = InputHandler.selecionar(opcoes, true, Cor.txtAmareloClaro("\n\nQual dos serviços voce deseja socilitar? "+ menuStatus(heroi)));
                     if (escolha2 == -1) break;
                     switch (escolha2) {
                         case 0 -> {
-                            compraPoção(heroi, 15, 15);
+                            compraCura(heroi, 15, 15);
                         }
                         case 1 -> {
-                            compraPoção(heroi, 30, 25);  
+                            compraCura(heroi, 30, 25);  
                         }
                         case 2 -> {
-                            compraPoção(heroi, 45, 35);  
+                            compraCura(heroi, 45, 35);  
                         }
                         case 3 -> {
-                            compraPoção(heroi, 60, 50);  
+                            compraCura(heroi, 60, 50);  
                         }
                     }
                 }
                 case 1 -> {
-                    List<String> opcoes = new ArrayList<>(Arrays.asList("Booster pack comum (25 reais)", "Booster pack incomum (55 reais)", "Booster pack raro (100 reais)"));
+                    List<String> opcoes = new ArrayList<>(Arrays.asList(
+                        "Booster pack comum (25 reais)", 
+                        "Booster pack incomum (55 reais)", 
+                        "Booster pack raro (100 reais)"));
+
                     int escolha3 = InputHandler.selecionar(opcoes, true, Cor.txtAmareloClaro("\n\nQual Booster deseja comprar? "+ menuStatus(heroi)));
                     if (escolha3 == -1) break;
                     switch (escolha3) {
@@ -68,6 +80,26 @@ public class Loja extends Evento{
                     }
                 }
                 case 2-> {
+                    List<String> opcoes = new ArrayList<>(Arrays.asList(
+                    "Poção de cura P (20 de vida, 15 reais)",
+                    "Poção de cura M (30 de vida, 25 reais)", 
+                    "Poção de cura G (40 de vida, 35 reais)"));
+
+                    int escolha2 = InputHandler.selecionar(opcoes, true, Cor.txtAmareloClaro("\n\nQual poção deseja comprar? "+ menuStatus(heroi)));
+                    if (escolha2 == -1) break;
+                    switch (escolha2) {
+                        case 0 -> {
+                            compraItem(heroi, pocaoCura20, 15);
+                        }
+                        case 1 -> {
+                            compraItem(heroi, pocaoCura30, 25);
+                        }
+                        case 2 -> {
+                            compraItem(heroi, pocaoCura40, 35);
+                        }
+                    }
+                }
+                case 3-> {
                     edicaoTags(heroi);
                 }
             }
@@ -84,10 +116,20 @@ public class Loja extends Evento{
         }  
     }
 
-    public void compraPoção(Heroi heroi, int cura, int preco) {
+    public void compraCura(Heroi heroi, int cura, int preco) {
         if (heroi.getDinheiro() >= preco) {
             Recompensas.gastarDinheiro(preco, heroi);
             Recompensas.ganharVida(cura, heroi);
+        } else {
+            System.out.println(Cor.txtVermelho("Você não tem dinheiro suficiente!"));
+            InputHandler.esperar();
+        }  
+    }
+
+    public void compraItem(Heroi heroi, ItemAtivo item, int preco) {
+        if (heroi.getDinheiro() >= preco) {
+            Recompensas.gastarDinheiro(preco, heroi);
+            Recompensas.ganharItemAtivoEsp(item, heroi);
         } else {
             System.out.println(Cor.txtVermelho("Você não tem dinheiro suficiente!"));
             InputHandler.esperar();

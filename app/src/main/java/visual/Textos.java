@@ -54,7 +54,7 @@ public class Textos {
 
     /** retorna a vida e o dinheiro atual. */
     public static String menuStatus(Heroi heroi){
-        return Cor.cinza + "[ Saldo atual: ( " + Cor.amarelo + heroi.getDinheiro() + Cor.cinza + " ) ] |" +
+        return Cor.cinza + " [ Saldo atual: ( " + Cor.amarelo + heroi.getDinheiro() + Cor.cinza + " ) ] |" +
             "| [ Vida atual: ( " + heroi.getVida()+ " / " + Cor.reset + heroi.getVidaMax() + Cor.cinza + " ) ]";
     }
 

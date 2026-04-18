@@ -342,7 +342,7 @@ public abstract class Carta {
         retorno.append(Cor.txtAmareloClaro(" < custo: " + this.getCusto()));
     }
 
-    protected String fecharColchete(StringBuilder retorno) {
+    protected String finalizarDescricao(StringBuilder retorno) {
         return retorno.append(Cor.vinho).append(" ]").toString();
     }
 

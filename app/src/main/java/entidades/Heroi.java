@@ -184,7 +184,7 @@ public class Heroi extends Entidade {
     }
 
     public void addItemAtivo(ItemAtivo item){
-        this.listaItensAtivos.add(item);
+        this.listaItensAtivos.add(item.criaCopia());
     }
 
     public void removeItemAtivo(ItemAtivo item){

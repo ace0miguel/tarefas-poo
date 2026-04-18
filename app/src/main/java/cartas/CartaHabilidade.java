@@ -80,7 +80,7 @@ public class CartaHabilidade extends Carta // aplica um efeito em um alvo
         appendSacrificio(retorno);
         appendCustoDescricao(retorno);
 
-        return fecharColchete(retorno);
+        return finalizarDescricao(retorno);
     }
 
     @Override

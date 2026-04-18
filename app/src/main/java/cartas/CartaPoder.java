@@ -6,14 +6,16 @@ import batalhaListeners.poderes.Poder;
 import entidades.Entidade;
 import entidades.Heroi;
 import telas.eventos.combate.Batalha;
-import visual.Cor;
 
 /** cartas que aplicam poderes (efeitos especiais, normalmente buffs permanentes dentro do combate atual) */
 public class CartaPoder extends Carta
 {
     private Poder poder;
 
-    { this.tagsRemoviveis = new ArrayList<>(List.of("Area", "Manter", "Sacrificio", "Inata")); }
+    { // definindo as tags removiveis e compraveis para cartas de poder. sao obrigatoriamente consumir e nao causam efeito em area
+        this.tagsRemoviveis = new ArrayList<>(List.of("Manter", "Inata")); 
+        this.tagsCompraveis = new ArrayList<>(List.of("Manter", "Inata"));
+    }
 
     public CartaPoder(String nome, String descricao, int custo, Poder poder){
         super(nome, descricao, custo);
@@ -46,7 +48,6 @@ public class CartaPoder extends Carta
     public void aplicarEfeito(Heroi heroi, Entidade alvo, Batalha batalha) {
         Poder p = poder.criaCopia();
         p.setAlvo(heroi);
-
         batalha.adicionarSubscriber(p);
         
         printaResenha();
@@ -61,7 +62,7 @@ public class CartaPoder extends Carta
 
         appendCustoDescricao(retorno);
 
-        return fecharColchete(retorno);
+        return finalizarDescricao(retorno);
     }
 
     @Override

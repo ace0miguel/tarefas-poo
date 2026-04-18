@@ -548,8 +548,9 @@ public class Batalha extends Evento {
     }
     
 
-    /** avisa os efeitos com aplicação quando o alvo morre, antes de remover da lista de inimigos
-     *  e retorna o tamanho da lista de inimigos.
+    /** checa inimigos mortos. Se sim, notifica subscribers onDeath e remove o inimigo da lista.
+     * depois adiciona novos subscribers pendentes.
+     * @return tamanho da lista de inimigos (quantidade de inimigos vivos)
      */
     private int notificaMorte(){
 
@@ -584,6 +585,7 @@ public class Batalha extends Evento {
         return inimigos.size();
     }
 
+    /** exibe uma mensagem e da outra mao e 2 energias pro jogador */
     private void rodadaBonus(){
         Textos.sobeTela();
 
@@ -594,15 +596,20 @@ public class Batalha extends Evento {
         mao.addCinco(pilhaCompra, pilhaDescarte);
     }
 
+    /** mostra as opções de escolha para o jogador durante o turno: encerrar, cartas, itens, e ver as pilhas */
     private void mostrarEscolhas() {
+        // adiciona a descriçao de todas as cartas da mao atual em uma lista
         List<String> escolhas = new ArrayList<>(mao.mostrar().stream().map(Carta::descricao).toList());
 
         // pula uma linha depois da ultima carta pra separar as cartas das outras opçoes
         escolhas.set(escolhas.size() - 1, escolhas.get(escolhas.size() - 1) + "\n"); 
 
+        // adiciona as outras opçoes de escolha na lista
         escolhas.add(Cor.azulClaro + "Itens" + Cor.reset + " ( " + Cor.amareloClaro + heroi.getListaItensAtivos().size() + Cor.reset + " )");
         escolhas.add(Cor.verdeClaro + "Ver pilha de compra (embaralhada) " + Cor.cinza + "( " + Cor.amareloClaro + pilhaCompra.getSize() + Cor.cinza + " )" + Cor.reset);
         escolhas.add(Cor.vermelho + "Ver pilha de descarte " + Cor.cinza + "( " + Cor.amareloClaro + pilhaDescarte.getSize() + Cor.cinza + " )" + Cor.reset);
+
+        //printa um menu de seleção com as opçoes (não retorna nada, o turnoHeroi que lida com a escolha)
         InputHandler.exibirMenuSelecao(escolhas, true, Cor.txtLaranja("- - - - - - = = = = = = - - - - - -"), "Encerrar turno", true);
         return;
     }

@@ -59,14 +59,16 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
 
     @Override
     public void aplicarEfeito(Heroi heroi, Entidade alvo, Batalha batalha) {
+        printaResenha();
+
         if (!efeitoEmArea){
                 batalha.causarDano(alvo, this.getDano() + ((this.getDano() * heroi.getDanoExtra()) / 100), heroi);
             }    
-            else {
-                for (Inimigo inimigo : batalha.getInimigos() ) {
-                    batalha.causarDano(inimigo, this.getDano() + ((this.getDano() * heroi.getDanoExtra()) / 100), heroi);
-                }
+        else {
+            for (Inimigo inimigo : batalha.getInimigos() ) {
+                batalha.causarDano(inimigo, this.getDano() + ((this.getDano() * heroi.getDanoExtra()) / 100), heroi);
             }
+        }
         if (getSelfCast()){
             efeito.adicionar(heroi, batalha);
         } else if (!efeitoEmArea){
@@ -78,8 +80,6 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
         }
 
         acertos++;
-
-        printaResenha();
     }
 
     @Override
@@ -96,7 +96,7 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
         appendSacrificio(retorno);
         appendCustoDescricao(retorno);
 
-        return fecharColchete(retorno);
+        return finalizarDescricao(retorno);
     }
 
     @Override

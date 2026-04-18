@@ -1,6 +1,6 @@
-    package cartas;
+package cartas;
 
-    import batalhaListeners.efeitos.Efeito;
+import batalhaListeners.efeitos.Efeito;
 import entidades.Entidade;
 import entidades.Heroi;
 import telas.eventos.combate.Batalha;
@@ -56,7 +56,7 @@ import visual.Cor;
             appendTagsDescricao(retorno);
             appendCustoDescricao(retorno);
 
-            return fecharColchete(retorno);
+            return finalizarDescricao(retorno);
         }
 
         @Override

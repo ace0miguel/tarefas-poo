@@ -45,6 +45,8 @@ public class CartaAtaque extends Carta
 
     @Override
     public void aplicarEfeito(Heroi heroi, Entidade alvo, Batalha batalha) {
+        printaResenha(); 
+
         if (!efeitoEmArea) {
             batalha.causarDano(alvo, this.dano + ((this.dano * heroi.getDanoExtra()) / 100), heroi);             
         }
@@ -55,8 +57,6 @@ public class CartaAtaque extends Carta
         }
 
         acertos++;
-        
-        printaResenha(); 
     }
     
     
@@ -78,7 +78,7 @@ public class CartaAtaque extends Carta
         appendCustoDescricao(retorno);
         appendSacrificio(retorno);
 
-        return fecharColchete(retorno);
+        return finalizarDescricao(retorno);
     }
 
     @Override
