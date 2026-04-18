@@ -18,7 +18,6 @@ public class Heroi extends Entidade {
     private int energia;
     private int energiaMax;
     private int energiaBonus = 0; // energia extra a ganhar no começo da rodada
-    private int cartasBonus = 0; // cartas extras a ganhar no começo da rodada
 
     private int dinheiro = 0; 
 
@@ -84,7 +83,7 @@ public class Heroi extends Entidade {
     }
 
     public int getCartasBonus() {
-        return cartasBonus;
+        return maoAtual.getCartasBonus();
     }
 
     public List<ItemPassivo> getListaItensPassivos() {
@@ -135,7 +134,12 @@ public class Heroi extends Entidade {
     }
 
     public void setCartasBonus(int cartasBonus) {
-        this.cartasBonus = cartasBonus;
+        maoAtual.setCartasBonus(cartasBonus);
+
+    }
+
+    public void addCartasBonus(int cartasBonus) {
+        maoAtual.setCartasBonus(maoAtual.getCartasBonus() + cartasBonus);
     }
 
     public void setEnergiaMax(int energiaMax) {
@@ -167,7 +171,7 @@ public class Heroi extends Entidade {
     }
 
     public void fimBatalhaReset(){
-        this.cartasBonus = 0;
+        setCartasBonus(0);
         this.energiaBonus = 0;
     }
 
@@ -281,10 +285,7 @@ public class Heroi extends Entidade {
     /** aplica os bonus de inicio de rodadae reseta */
     public void aplicaBonus(){
         ganhaEnergia(this.energiaBonus);
-        maoAtual.setCartasBonus(maoAtual.getCartasBonus() + this.cartasBonus);
-
-        energiaBonus = 0;
-        cartasBonus = 0;    
+        energiaBonus = 0; 
     }
 
     /** reseta o estado do heroi e soma a energia bonus */

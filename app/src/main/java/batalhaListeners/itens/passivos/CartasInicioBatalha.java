@@ -20,6 +20,6 @@ public class CartasInicioBatalha extends ItemPassivo {
 
      @Override
      public void onBattleStart(telas.eventos.combate.Batalha batalha, entidades.Heroi heroi) {
-        heroi.setCartasBonus(heroi.getCartasBonus() + (this.quantidade));
+        heroi.addCartasBonus(this.quantidade);
     }
 }

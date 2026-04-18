@@ -200,7 +200,7 @@ public class Batalha extends Evento {
 
             if (escolhaInvalida){
                 System.out.println();
-                System.out.println(Textos.escolhaInvalida(mao.getSize()));
+                System.out.println(Textos.escolhaInvalida(mao.getSize() + 3)); // considera o itens, pilhacompra e pilha descarte
                 InputHandler.esperar();
                 Textos.limpaTela();
                 escolhaInvalida = false;  
@@ -210,7 +210,9 @@ public class Batalha extends Evento {
             printaBatalha(primeiroLoop);
             primeiroLoop = false;
 
-            int escolha = mostrarEscolhas();
+            mostrarEscolhas();
+
+            int escolha = InputHandler.lerInt() - 1;
 
             if (escolha == -1) // opção de passar o turno
                 break; 
@@ -230,7 +232,16 @@ public class Batalha extends Evento {
                 continue;
             }
 
-            if (usaCarta(escolha) == -1)
+            else if ( 0 <= escolha && escolha < mao.getSize()) { // usar carta, validada depois
+                // continua a execuçao normalmente
+            }
+
+            else { // opcao invalida
+                escolhaInvalida = true;
+                continue;
+            }
+
+            if (usaCarta(escolha) == -1) // uso cancelado
                 continue;
 
             if (notificaMorte() == 0) {
@@ -292,11 +303,11 @@ public class Batalha extends Evento {
         Textos.limpaTela();
 
         // tira as referencias de mao e pilha do heroi
+        heroi.fimBatalhaReset();
         heroi.setMaoAtual(null);
         heroi.setPilhaCompra(null);
         heroi.setPilhaDescarte(null);
-        heroi.fimBatalhaReset();
-
+        
         for (batalhaListener sub : subscribers) {
             sub.onBattleEnd(this, heroi);
         }
@@ -333,6 +344,7 @@ public class Batalha extends Evento {
 
         boolean msgPrintada = false;
         
+        // chama onRoundStart de todos os subscribers, e printa as mensagens de fim de rodada caso tenham.
         for (batalhaListener subscriber : subscribers) {
             Entidade alvo = subscriber.getAlvo();
             if (alvo != null && alvo.estaVivo()){
@@ -582,17 +594,17 @@ public class Batalha extends Evento {
         mao.addCinco(pilhaCompra, pilhaDescarte);
     }
 
-    private int mostrarEscolhas() {
+    private void mostrarEscolhas() {
         List<String> escolhas = new ArrayList<>(mao.mostrar().stream().map(Carta::descricao).toList());
 
         // pula uma linha depois da ultima carta pra separar as cartas das outras opçoes
         escolhas.set(escolhas.size() - 1, escolhas.get(escolhas.size() - 1) + "\n"); 
 
         escolhas.add(Cor.azulClaro + "Itens" + Cor.reset + " ( " + Cor.amareloClaro + heroi.getListaItensAtivos().size() + Cor.reset + " )");
-        escolhas.add(Cor.reset + "Ver pilha de compra (embaralhada) ( "+ Cor.amareloClaro + pilhaCompra.getSize() + Cor.cinza + " )" + Cor.reset);
-        escolhas.add(Cor.reset + "Ver pilha de descarte ( "+ Cor.amareloClaro + pilhaDescarte.getSize() + Cor.cinza + " )" + Cor.reset);
-        int opcao = InputHandler.selecionar(escolhas, true, Cor.txtLaranja("- - - - - - = = = = = = - - - - - -"), "Encerrar turno", true);
-        return opcao;
+        escolhas.add(Cor.verdeClaro + "Ver pilha de compra (embaralhada) " + Cor.cinza + "( " + Cor.amareloClaro + pilhaCompra.getSize() + Cor.cinza + " )" + Cor.reset);
+        escolhas.add(Cor.vermelho + "Ver pilha de descarte " + Cor.cinza + "( " + Cor.amareloClaro + pilhaDescarte.getSize() + Cor.cinza + " )" + Cor.reset);
+        InputHandler.exibirMenuSelecao(escolhas, true, Cor.txtLaranja("- - - - - - = = = = = = - - - - - -"), "Encerrar turno", true);
+        return;
     }
 
     private int usaCarta(int escolha){
@@ -655,7 +667,7 @@ public class Batalha extends Evento {
     }
 
     public int mostrarItensAtivos(){
-        int escolha = InputHandler.selecionar(heroi.getListaItensAtivos(), true, "Itens:", "Voltar");
+        int escolha = InputHandler.selecionar(heroi.getListaItensAtivos(), true, Cor.azulClaro + "Itens:" + Cor.reset, "Voltar");
         if (escolha == -1) 
             return -1;
 

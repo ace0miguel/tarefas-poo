@@ -45,6 +45,7 @@ public class CartaPoder extends Carta
     @Override
     public void aplicarEfeito(Heroi heroi, Entidade alvo, Batalha batalha) {
         Poder p = poder.criaCopia();
+        p.setAlvo(heroi);
 
         batalha.adicionarSubscriber(p);
         

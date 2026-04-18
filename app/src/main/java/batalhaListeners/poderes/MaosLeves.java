@@ -1,5 +1,6 @@
 package batalhaListeners.poderes;
 
+import batalhaListeners.batalhaListener;
 import cartas.Carta;
 import entidades.Entidade;
 import entidades.Heroi;
@@ -21,6 +22,12 @@ public class MaosLeves extends Poder {
     public MaosLeves(MaosLeves copiado){
         super(copiado);
         this.tipo = copiado.tipo;
+    }
+
+    @Override
+    public boolean addStack(Batalha batalha, batalhaListener novo) {
+        // TODO Auto-generated method stub
+        return super.addStack(batalha, novo);
     }
 
     @Override

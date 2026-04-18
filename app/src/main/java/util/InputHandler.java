@@ -10,6 +10,49 @@ import visual.Textos;
 public class InputHandler {
     private static final Scanner leitor = new Scanner(System.in);
 
+    private static void prepararRedesenhoMenu(boolean naoLimpaTela, boolean[] ancoraMenuDefinida) {
+        if (!naoLimpaTela) {
+            Textos.limpaTela();
+            return;
+        }
+
+        if (!ancoraMenuDefinida[0]) {
+            // Salva o ponto inicial do menu para redesenhar sem deixar lixo no terminal.
+            System.out.print("\u001B[s");
+            System.out.flush();
+            ancoraMenuDefinida[0] = true;
+            return;
+        }
+
+        // Volta para a ancora e limpa ate o fim da tela.
+        System.out.print("\u001B[u\u001B[J\u001B[s");
+        System.out.flush();
+    }
+
+    private static <T> void imprimirMenuSelecao(List<T> lista, boolean exit, String mensagemInicial, String exitMsg, int tempoSleep) {
+        if (!mensagemInicial.equals("")) {
+            Textos.printaBonito(mensagemInicial, 1, 1);
+            System.out.println();
+        }
+
+        if (exit) {
+            System.out.println(Cor.cinza + 0 + Cor.txtAmarelo(" > ") +
+                Cor.txtCinza((exitMsg.equals("") ? "Voltar." : exitMsg)));
+            Textos.sleep(tempoSleep);
+            System.out.println();
+        }
+
+        // se tiver exit, ele vai ser o 0 entao tem q printar a partir do 1
+        int corretor = exit ? 1 : 0;
+
+        for (int i = 0; i < lista.size(); i++) {
+            System.out.println(Cor.txtReset(String.valueOf(i + corretor)) + Cor.txtAmarelo(" > ") + lista.get(i));
+            Textos.sleep(tempoSleep);
+        }
+
+        System.out.println(); // linha vazia entre a lista e o input do usuario
+    }
+
     public static Scanner getLeitor() {
         return leitor;
     }
@@ -52,32 +95,12 @@ public class InputHandler {
         if (exit) tamanhoEfetivo++;
 
         // fiz isso aqui por motivo de estetica, toda lista vai ser imprimida durando o msm tempo, a velocidade depende da quantidade de itens.
-        int tempoSleep = (lista.size() != 0) ? 300 / lista.size() : 500; 
+        int tempoSleep = (lista.size() != 0) ? 300 / lista.size() : 500;
+        boolean[] ancoraMenuDefinida = { false };
 
         while (true){
-            if (!naoLimpaTela) {
-                Textos.limpaTela();
-            }
-
-            if (!mensagemInicial.equals("")){
-                Textos.printaBonito(mensagemInicial,1 ,1);
-                System.out.println();   
-            }
-
-            if (exit) {
-                System.out.println((Cor.cinza + 0 + Cor.txtAmarelo(" > ") + 
-                Cor.txtCinza((exitMsg.equals("") ? "Voltar." : exitMsg)))); Textos.sleep(tempoSleep);
-                System.out.println();
-            }
-            
-            // se tiver exit, ele vai ser o 0 entao tem q printar a partir do 1
-            int corretor = exit? 1 : 0;
-
-            for(int i = 0; i < lista.size(); i++) {
-                System.out.println((Cor.txtReset(String.valueOf(i + corretor)) + Cor.txtAmarelo(" > ") + lista.get(i))); Textos.sleep(tempoSleep);
-            }
-
-            System.out.println(); // linha vazia entre a lista e o input do usuario
+            prepararRedesenhoMenu(naoLimpaTela, ancoraMenuDefinida);
+            imprimirMenuSelecao(lista, exit, mensagemInicial, exitMsg, tempoSleep);
 
             try {
                 escolha = leitor.nextInt();
@@ -99,13 +122,29 @@ public class InputHandler {
 
             System.out.println();
 
-            if ((escolha >= 0 && escolha < lista.size()) || (escolha == -1 && exit)) // valida a escolha
+            if ((escolha >= 0 && escolha < lista.size()) || (escolha == -1 && exit)) { // valida a escolha
                 break;         
+            }
             
             System.out.println(Textos.escolhaInvalida(tamanhoEfetivo));
             esperar();
         }
         return escolha;
+    }
+
+    /** exibe o menu com o mesmo layout do selecionar, mas nao le input nem retorna opcao. */
+    public static <T> void exibirMenuSelecao(List<T> lista, boolean exit, String mensagemInicial, String exitMsg, boolean naoLimpaTela) {
+        if (lista.isEmpty() && !exit) {
+            Cor.printaVermelho(">> ERRO << LISTA VAZIA E NAO TEM EXIT\n");
+            esperar();
+            return;
+        }
+
+        int tempoSleep = (lista.size() != 0) ? 300 / lista.size() : 500;
+        boolean[] ancoraMenuDefinida = { false };
+
+        prepararRedesenhoMenu(naoLimpaTela, ancoraMenuDefinida);
+        imprimirMenuSelecao(lista, exit, mensagemInicial, exitMsg, tempoSleep);
     }
 
     /** Recebe uma lista de objetos e divide em páginas com 7 elementos cada e opções voltar
@@ -316,6 +355,38 @@ public class InputHandler {
     */
     public static <T> int selecionar(List<T> lista, boolean exit, String mensagemInicial, String exitMsg) {
         return selecionar(lista, exit, mensagemInicial, exitMsg, false);
+    }
+
+    public static <T> void exibirMenuSelecao(List<T> lista) {
+        exibirMenuSelecao(lista, false, "", "", false);
+    }
+
+    public static <T> void exibirMenuSelecao(List<T> lista, String mensagem) {
+        exibirMenuSelecao(lista, false, mensagem, "", false);
+    }
+
+    public static <T> void exibirMenuSelecao(List<T> lista, String mensagem, boolean naoLimpaTela) {
+        exibirMenuSelecao(lista, false, mensagem, "", naoLimpaTela);
+    }
+
+    public static <T> void exibirMenuSelecao(List<T> lista, boolean exit) {
+        exibirMenuSelecao(lista, exit, "", "", false);
+    }
+
+    public static <T> void exibirMenuSelecao(List<T> lista, boolean exit, boolean naoLimpaTela) {
+        exibirMenuSelecao(lista, exit, "", "", naoLimpaTela);
+    }
+
+    public static <T> void exibirMenuSelecao(List<T> lista, boolean exit, String mensagemInicial) {
+        exibirMenuSelecao(lista, exit, mensagemInicial, "", false);
+    }
+
+    public static <T> void exibirMenuSelecao(List<T> lista, boolean exit, String mensagemInicial, boolean naoLimpaTela) {
+        exibirMenuSelecao(lista, exit, mensagemInicial, "", naoLimpaTela);
+    }
+
+    public static <T> void exibirMenuSelecao(List<T> lista, boolean exit, String mensagemInicial, String exitMsg) {
+        exibirMenuSelecao(lista, exit, mensagemInicial, exitMsg, false);
     }
 }
 

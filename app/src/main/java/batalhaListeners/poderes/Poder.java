@@ -1,6 +1,7 @@
 package batalhaListeners.poderes;
 
 import batalhaListeners.batalhaListener;
+import entidades.Entidade;
 import telas.eventos.combate.Batalha;
 import visual.Cor;
 
@@ -10,6 +11,7 @@ public abstract class Poder implements batalhaListener{
     private String nome;
     private String desc;
     private int stacks = 1;
+    private Entidade alvo;
 
     // vida ao ser subtraida ao usar o poder (cada subclasse usa de uma maneira)
     protected int sacrificio = 0;
@@ -50,6 +52,11 @@ public abstract class Poder implements batalhaListener{
         return sacrificio;
     }
 
+    @Override
+    public Entidade getAlvo() {
+        return alvo;
+    }
+
     // setters ------------
 
     public void setDesc(String desc) {
@@ -71,6 +78,10 @@ public abstract class Poder implements batalhaListener{
 
     public void setSacrificio(int sacrificio) {
         this.sacrificio = sacrificio;
+    }
+
+    public void setAlvo(Entidade alvo) {
+        this.alvo = alvo;
     }
 
     /** retorna true se o poder passado é igual a instancia do poder comparando */

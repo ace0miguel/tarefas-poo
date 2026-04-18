@@ -323,8 +323,8 @@ public class Recompensas {
     }
 
     private static void imprimeGanhoDeItem(Item item) {
-        Textos.printaBonito("Voce ganhou: " + (item.getNomeColorido()) + 
-        " < " + Cor.txtAmareloClaro(item.getDescricao()) + " >" + Cor.reset, 4, 2);
+        Textos.printaBonito("Voce ganhou: [ " + (item.getNomeColorido()) + 
+        " ] ( " + Cor.txtAmareloClaro(item.getDescricao()) + " )" + Cor.reset, 4, 2);
         InputHandler.esperar();
     }
 
