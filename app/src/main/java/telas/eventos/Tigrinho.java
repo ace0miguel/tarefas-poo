@@ -147,10 +147,6 @@ public class Tigrinho extends Evento{
     @Override
     public String toString() {
         String retorno = Cor.txtLaranja("Cassino!");
-
-        if (util.RNGHandler.check(30)) {
-            return Cor.txtCinza("[ ? ]");
-        }
         
         return retorno;
     }   

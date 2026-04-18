@@ -11,7 +11,7 @@ import baralho.PilhaCompra;
 import baralho.PilhaDescarte;
 import batalhaListeners.batalhaListener;
 import batalhaListeners.efeitos.Efeito;
-import batalhaListeners.itens.Item;
+import batalhaListeners.itens.passivos.ItemPassivo;
 import batalhaListeners.poderes.Poder;
 import cartas.Carta;
 import cartas.CartaAtaqueComEfeito;
@@ -210,13 +210,23 @@ public class Batalha extends Evento {
             printaBatalha(primeiroLoop);
             primeiroLoop = false;
 
-            int escolha = mao.mostrar(); 
+            int escolha = mostrarEscolhas();
 
-            if (escolha == mao.getSize()) // opção de passar o turno
+            if (escolha == -1) // opção de passar o turno
                 break; 
 
-            if (escolha > mao.getSize() || escolha < 0){  // opçao inválida
-                escolhaInvalida = true;
+            else if (escolha == mao.getSize()) { // ver itens
+                mostrarItensAtivos();
+                continue;
+            }
+
+            else if (escolha == mao.getSize() + 1) {  // ver pilha de compras
+                pilhaCompra.mostrar();
+                continue;
+            }
+
+            else if (escolha == mao.getSize() + 2) { // ver pilha de descarte
+                pilhaDescarte.mostrar();
                 continue;
             }
 
@@ -320,17 +330,28 @@ public class Batalha extends Evento {
         }
         
         limpaSubscribers();
+
+        boolean msgPrintada = false;
         
         for (batalhaListener subscriber : subscribers) {
             Entidade alvo = subscriber.getAlvo();
-            if (alvo != null && alvo.estaVivo()){     
-                Textos.printaBonito(subscriber.getMsgFimRodada(this, heroi) + "\n", 5,2);
+            if (alvo != null && alvo.estaVivo()){
+                String msgFimRodada = subscriber.getMsgFimRodada(this, heroi);
+
+                if (!msgFimRodada.equals("")) {
+                    Textos.printaBonito(msgFimRodada + "\n", 5,2);
+                    msgPrintada = true;
+                }
+
                 subscriber.onRoundStart(this, heroi);
-                Textos.sleep(sleepFimRodada);
+
+                if (!msgFimRodada.equals("")) {
+                    Textos.sleep(sleepFimRodada);
+                }
             }
         }
-        // se alguma msgfimrodada nao for vazio pula uma linha ( que linha horrenda meu deus do ceu )
-        boolean msgPrintada = subscribers.stream().filter(s -> s.getAlvo() != null && s.getAlvo().estaVivo()).anyMatch(subscriber -> !subscriber.getMsgFimRodada(this, heroi).equals(""));
+
+        // se alguma msgfimrodada nao for vazio pula uma linha
         if (msgPrintada) {
             System.out.println();
         }
@@ -355,7 +376,7 @@ public class Batalha extends Evento {
     }
 
     private void inicializaItens(){
-        for (Item item : heroi.getListaItens()) {
+        for (ItemPassivo item : heroi.getListaItensPassivos()) {
             item.setAlvo(heroi);
             adicionarSubscriber(item);
         }
@@ -561,6 +582,19 @@ public class Batalha extends Evento {
         mao.addCinco(pilhaCompra, pilhaDescarte);
     }
 
+    private int mostrarEscolhas() {
+        List<String> escolhas = new ArrayList<>(mao.mostrar().stream().map(Carta::descricao).toList());
+
+        // pula uma linha depois da ultima carta pra separar as cartas das outras opçoes
+        escolhas.set(escolhas.size() - 1, escolhas.get(escolhas.size() - 1) + "\n"); 
+
+        escolhas.add(Cor.azulClaro + "Itens" + Cor.reset + " ( " + Cor.amareloClaro + heroi.getListaItensAtivos().size() + Cor.reset + " )");
+        escolhas.add(Cor.reset + "Ver pilha de compra (embaralhada) ( "+ Cor.amareloClaro + pilhaCompra.getSize() + Cor.cinza + " )" + Cor.reset);
+        escolhas.add(Cor.reset + "Ver pilha de descarte ( "+ Cor.amareloClaro + pilhaDescarte.getSize() + Cor.cinza + " )" + Cor.reset);
+        int opcao = InputHandler.selecionar(escolhas, true, Cor.txtLaranja("- - - - - - = = = = = = - - - - - -"), "Encerrar turno", true);
+        return opcao;
+    }
+
     private int usaCarta(int escolha){
         Carta cartaEscolhida = mao.escolheCarta(escolha); 
 
@@ -620,6 +654,16 @@ public class Batalha extends Evento {
         return 0;
     }
 
+    public int mostrarItensAtivos(){
+        int escolha = InputHandler.selecionar(heroi.getListaItensAtivos(), true, "Itens:", "Voltar");
+        if (escolha == -1) 
+            return -1;
+
+        heroi.usarItemAtivo(escolha, this);
+
+        return 1;
+    }
+
     private void printaBatalha (boolean primeiroLoop){
         if (primeiroLoop && !heroi.getTestMode()){
             Textos.batalha(this);
@@ -648,7 +692,7 @@ public class Batalha extends Evento {
             }
             case 5 -> {
                 Recompensas.ganharCartas(3, 5, heroi);
-                Recompensas.ganharOpcoes(4, 3, heroi);
+                Recompensas.ganharOpcoes(3, 3, heroi);
             }
         }
     }
@@ -700,10 +744,6 @@ public class Batalha extends Evento {
         }
 
         retorno += Cor.txtCinza(" VERSUS:");
-
-        if (util.RNGHandler.check(30) && getNivelDificuldade() < 3) {
-            return Cor.txtCinza("[ ? ]");
-        }
 
         for (Inimigo inimigo : moldesInimigos) {
             retorno += " [ " + inimigo.getNome() + " ]";

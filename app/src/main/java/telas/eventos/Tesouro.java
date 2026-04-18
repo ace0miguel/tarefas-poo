@@ -33,17 +33,13 @@ public class Tesouro extends Evento {
         // }
 
         Recompensas.ganharCartas(2, 5, heroi);
-        Recompensas.ganharItemAleatorio(heroi);
+        Recompensas.ganharItemPassivo(heroi);
     }
 
 
     @Override
     public String toString() {
         String retorno = Cor.txtAmarelo("Tesouro.");
-
-        if (util.RNGHandler.check(30)) {
-            return Cor.txtCinza("[ ? ]");
-        }
         
         return retorno;
     }

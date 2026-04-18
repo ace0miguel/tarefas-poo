@@ -73,22 +73,14 @@ public class CartaHabilidade extends Carta // aplica um efeito em um alvo
     }
 
     public String descricao(){
-        String retorno = this.getNome();
+        StringBuilder retorno = iniciarDescricao();
 
-        if (!tags.isEmpty()) {
-            retorno += " - <" + String.join(", ",  tags) + ">";
-        }
+        appendTagsDescricao(retorno);
+        appendDescricao(retorno);
+        appendSacrificio(retorno);
+        appendCustoDescricao(retorno);
 
-        if (!this.getDescricao().equals("")) {
-            retorno += " - " + this.getDescricao();
-        }
-
-        if (this.getSacrificio() != 0){
-            retorno += " - " + Cor.txtVermelho("[Sacrifício: " + this.getSacrificio() + "]");
-        }
-
-        retorno += Cor.cinza + " (" + this.efeito.getNomeColorido() + ")"  +  Cor.txtAmareloClaro(" < custo: " + this.getCusto());
-        return retorno;
+        return fecharColchete(retorno);
     }
 
     @Override

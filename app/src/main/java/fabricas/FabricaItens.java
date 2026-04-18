@@ -4,26 +4,34 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import batalhaListeners.itens.AumentaDanoItem;
-import batalhaListeners.itens.AumentaResistItem;
-import batalhaListeners.itens.CartasInicioBatalha;
-import batalhaListeners.itens.CuraFimBatalha;
-import batalhaListeners.itens.EfeitoPorCusto;
-import batalhaListeners.itens.Item;
+import batalhaListeners.itens.ativos.ItemAtivo;
+import batalhaListeners.itens.ativos.PocaoVida;
+import batalhaListeners.itens.passivos.AumentaDanoItem;
+import batalhaListeners.itens.passivos.AumentaResistItem;
+import batalhaListeners.itens.passivos.CartasInicioBatalha;
+import batalhaListeners.itens.passivos.CuraFimBatalha;
+import batalhaListeners.itens.passivos.EfeitoPorCusto;
+import batalhaListeners.itens.passivos.ItemPassivo;
 
 import static fabricas.FabricaEfeitos.sangramento;
 
 public class FabricaItens {
     
-    public static Item facaAcougueiro;
-    public static Item marmita;
-    public static Item amuletoVelho;
-    public static Item jarroTerra;
-    public static Item item20Resist;
-    public static Item item10Dano;
-    public static Item item20Dano;
+    public static ItemPassivo facaAcougueiro;
+    public static ItemPassivo marmita;
+    public static ItemPassivo amuletoVelho;
+    public static ItemPassivo jarroTerra;
+    public static ItemPassivo item20Resist;
+    public static ItemPassivo item10Dano;
+    public static ItemPassivo item20Dano;
 
-    public static List<Item> listaItensMoldes = new ArrayList<>();
+    public static ItemAtivo pocaoCura20;
+    public static ItemAtivo pocaoCura30;
+    public static ItemAtivo pocaoCura40;
+
+
+    public static List<ItemPassivo> listaItensMoldes = new ArrayList<>();
+    public static List<ItemAtivo> listaItensAtivosMoldes = new ArrayList<>();
 
     public static void carregar(){
         listaItensMoldes.clear();
@@ -42,7 +50,13 @@ public class FabricaItens {
 
         item20Dano = new AumentaDanoItem("espada grande sei la", "cause 20% de dano extra", 20);
 
+        // itens ativos 
+
+        pocaoCura20 = new PocaoVida("poção de cura", "recupere 20 pontos de vida", 20);
+        pocaoCura30 = new PocaoVida("poção de cura", "recupere 30 pontos de vida", 30);
+        pocaoCura40 = new PocaoVida("poção de cura", "recupere 40 pontos de vida", 40);
 
         listaItensMoldes.addAll(Arrays.asList(facaAcougueiro, marmita, amuletoVelho, jarroTerra, item20Resist, item10Dano, item20Dano));
+        listaItensAtivosMoldes.addAll(Arrays.asList(pocaoCura20, pocaoCura30, pocaoCura40));
     }
 }

@@ -246,7 +246,7 @@ public class Textos {
             barraFinal = Cor.vermelho + barraFinal + Cor.reset;
         }
 
-        return barraFinal + Cor.cinza + " " + vidaAtual + Cor.reset + " / " + Cor.reset + vidaMax + Cor.reset;
+        return "|" + barraFinal + "|" + Cor.cinza + " " + vidaAtual + Cor.reset + " / " + Cor.reset + vidaMax + Cor.reset;
     }
 
     /** recebe uma string e printa linha a linha com um pequeno delay, proporcional ao tamanho da string. */

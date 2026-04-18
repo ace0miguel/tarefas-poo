@@ -36,6 +36,8 @@ import static fabricas.FabricaCartas.tiroEscopeta;
 import static fabricas.FabricaItens.amuletoVelho;
 import static fabricas.FabricaItens.facaAcougueiro;
 import static fabricas.FabricaItens.marmita;
+import static fabricas.FabricaItens.*;
+import static fabricas.FabricaItens.pocaoCura20;
 
 /** permite passar cartas do inventário para o baralho ou, por um preço, remover cartas do baralho */
 public class DeckBuilder {
@@ -78,7 +80,7 @@ public class DeckBuilder {
 
                 heroi.addCarta(energizar);
 
-                Recompensas.ganharItemEsp(amuletoVelho, heroi);
+                Recompensas.ganharItemPassivoEsp(amuletoVelho, heroi);
             }
             /* deck de dano direto */
             case 1 -> {
@@ -100,7 +102,7 @@ public class DeckBuilder {
                 heroi.addCarta(egoCarta);
                 heroi.addCarta(armadura);
 
-                Recompensas.ganharItemEsp(marmita, heroi);
+                Recompensas.ganharItemPassivoEsp(marmita, heroi);
                 
             }  
             // deck pra testar carta
@@ -144,9 +146,13 @@ public class DeckBuilder {
                 heroi.addCarta(mestreLaminasCarta);
                 heroi.addCarta(mestreLaminasCarta);
 
-                Recompensas.ganharItemEsp(facaAcougueiro, heroi);
-                Recompensas.ganharItemEsp(marmita, heroi);
-                Recompensas.ganharItemEsp(amuletoVelho, heroi);
+                Recompensas.ganharItemPassivoEsp(facaAcougueiro, heroi);
+                Recompensas.ganharItemPassivoEsp(marmita, heroi);
+                Recompensas.ganharItemPassivoEsp(amuletoVelho, heroi);
+
+                Recompensas.ganharItemAtivoEsp(pocaoCura20, heroi);
+                Recompensas.ganharItemAtivoEsp(pocaoCura30, heroi);
+                Recompensas.ganharItemAtivoEsp(pocaoCura40, heroi);
 
                 Recompensas.ganharDinheiro(300, heroi);
                 heroi.setEnergiaMax(60);

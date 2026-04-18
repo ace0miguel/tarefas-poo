@@ -52,22 +52,15 @@ public class CartaPoder extends Carta
     }
 
     public String descricao(){
-        String retorno = this.getNome();
+        StringBuilder retorno = iniciarDescricao();
 
-        if (!tags.isEmpty()) {
-            retorno += " - <" + String.join(", ",  tags) + ">";
-        }
+        appendTagsDescricao(retorno);
+        appendDescricao(retorno);
+        appendSacrificio(retorno);
 
-        if (!this.getDescricao().equals("")) {
-            retorno += " - " + this.getDescricao();
-        }
+        appendCustoDescricao(retorno);
 
-        if (this.getSacrificio() != 0){
-            retorno += " - " + Cor.txtVermelho("[Sacrifício: " + this.getSacrificio() + "]");
-        }
-
-        retorno += Cor.cinza + " (" + this.poder.getNome() + ")"  +  Cor.txtAmareloClaro(" < custo: " + this.getCusto());
-        return retorno;
+        return fecharColchete(retorno);
     }
 
     @Override

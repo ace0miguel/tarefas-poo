@@ -146,6 +146,12 @@ public abstract class Entidade {
         this.danoExtra += valor;
     }
 
+    /** adiciona o valor passado em vida, sem passar da vida max. */
+    public void addVida(int valor){
+        this.vida += valor;
+        if (this.vida > this.vidaMax) this.vida = this.vidaMax;
+    }
+
     /** garante que onMeiaVida() seja chamado apenas uma vez */
     public void checkMeiaVida(Entidade executor, Heroi heroi, Batalha batalha){
         if (!this.meiaVida && this.vida <= this.vidaMax / 2 && this.vida > 0){

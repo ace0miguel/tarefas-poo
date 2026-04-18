@@ -50,15 +50,13 @@ import visual.Cor;
         
         @Override
         public String descricao(){
-            String retorno = "" + this.getNome() + " - " + this.getDescricao();
-            
-            if (!tags.isEmpty()) {
-            retorno += " - <" + String.join(", ",  tags) + ">";
-            }
+            StringBuilder retorno = iniciarDescricao();
+            retorno.append(" - ").append(this.getDescricao());
 
-            retorno += Cor.txtAmareloClaro(" < custo: " + this.getCusto());
-            
-            return retorno;
+            appendTagsDescricao(retorno);
+            appendCustoDescricao(retorno);
+
+            return fecharColchete(retorno);
         }
 
         @Override

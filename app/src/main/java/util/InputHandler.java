@@ -8,7 +8,7 @@ import visual.Cor;
 import visual.Textos;
 
 public class InputHandler {
-    private static Scanner leitor = new Scanner(System.in);
+    private static final Scanner leitor = new Scanner(System.in);
 
     public static Scanner getLeitor() {
         return leitor;
@@ -33,47 +33,6 @@ public class InputHandler {
         esperar(Cor.txtCinza("\n[ Pressione ENTER para continuar ]"));
     }
 
-    // versoes do selecionar (o unico parametro obrigatorio é a lista).
-
-     /** recebe uma lista e printa, se for de objetos ele vai usar o metodo .toString(), se for string ela so printa.
-    valida a escolha e retorna o numero escolhido, se tiver a opçao exit e o usuario escolher vai retonar -1.
-    @param lista : lista de opções
-    @param exit : opção de voltar
-    @param mensagemInicial : mensagem a ser exibida acima das opções
-    @param exitMsg : substitui a opção voltar pela string desejada*/
-    public static <T> int selecionar(List<T> lista) {
-        return selecionar(lista, false, "", "");
-    }
-
-     /** recebe uma lista e printa, se for de objetos ele vai usar o metodo .toString(), se for string ela so printa.
-    valida a escolha e retorna o numero escolhido, se tiver a opçao exit e o usuario escolher vai retonar -1.
-    @param lista : lista de opções
-    @param exit : opção de voltar
-    @param mensagemInicial : mensagem a ser exibida acima das opções
-    @param exitMsg : substitui a opção voltar pela string desejada*/
-    public static <T> int selecionar(List<T> lista, String mensagem) {
-        return selecionar(lista, false, mensagem, "");
-    }
-
-     /** recebe uma lista e printa, se for de objetos ele vai usar o metodo .toString(), se for string ela so printa.
-    valida a escolha e retorna o numero escolhido, se tiver a opçao exit e o usuario escolher vai retonar -1.
-    @param lista : lista de opções
-    @param exit : opção de voltar
-    @param mensagemInicial : mensagem a ser exibida acima das opções
-    @param exitMsg : substitui a opção voltar pela string desejada*/
-    public static <T> int selecionar(List<T> lista, boolean exit) {
-        return selecionar(lista, exit, "", "");
-    }
-
-     /** recebe uma lista e printa, se for de objetos ele vai usar o metodo .toString(), se for string ela so printa.
-    valida a escolha e retorna o numero escolhido, se tiver a opçao exit e o usuario escolher vai retonar -1.
-    @param lista : lista de opções
-    @param exit : opção de voltar
-    @param mensagemInicial : mensagem a ser exibida acima das opções
-    @param exitMsg : substitui a opção voltar pela string desejada*/
-    public static <T> int selecionar(List<T> lista, boolean exit, String mensagemInicial) {
-        return selecionar(lista, exit, mensagemInicial, "");
-    }
 
     /** recebe uma lista e printa, se for de objetos ele vai usar o metodo .toString(), se for string ela so printa.
     valida a escolha e retorna o numero escolhido, se tiver a opçao exit e o usuario escolher vai retonar -1.
@@ -81,7 +40,7 @@ public class InputHandler {
     @param exit : opção de voltar
     @param mensagemInicial : mensagem a ser exibida acima das opções
     @param exitMsg : substitui a opção voltar pela string desejada*/
-    public static <T> int selecionar(List<T> lista, boolean exit, String mensagemInicial, String exitMsg) { 
+    public static <T> int selecionar(List<T> lista, boolean exit, String mensagemInicial, String exitMsg, boolean naoLimpaTela) { 
         if (lista.isEmpty() && !exit) { // se a lista vier vazia e nao tiver nada pra voltar retorna
             Cor.printaVermelho(">> ERRO << LISTA VAZIA E NAO TEM EXIT\n");
             esperar();
@@ -96,7 +55,9 @@ public class InputHandler {
         int tempoSleep = (lista.size() != 0) ? 300 / lista.size() : 500; 
 
         while (true){
-            Textos.limpaTela();
+            if (!naoLimpaTela) {
+                Textos.limpaTela();
+            }
 
             if (!mensagemInicial.equals("")){
                 Textos.printaBonito(mensagemInicial,1 ,1);
@@ -106,15 +67,17 @@ public class InputHandler {
             if (exit) {
                 System.out.println((Cor.cinza + 0 + Cor.txtAmarelo(" > ") + 
                 Cor.txtCinza((exitMsg.equals("") ? "Voltar." : exitMsg)))); Textos.sleep(tempoSleep);
+                System.out.println();
             }
             
             // se tiver exit, ele vai ser o 0 entao tem q printar a partir do 1
             int corretor = exit? 1 : 0;
 
             for(int i = 0; i < lista.size(); i++) {
-                System.out.println(((i + corretor) + Cor.txtAmarelo(" > ") + lista.get(i))); Textos.sleep(tempoSleep);
+                System.out.println((Cor.txtReset(String.valueOf(i + corretor)) + Cor.txtAmarelo(" > ") + lista.get(i))); Textos.sleep(tempoSleep);
             }
 
+            System.out.println(); // linha vazia entre a lista e o input do usuario
 
             try {
                 escolha = leitor.nextInt();
@@ -267,6 +230,92 @@ public class InputHandler {
             }
         }
         return input;
+    }
+
+    // SUPERPOSIÇOES DO SELECIONAR (TINHA MUITOS GUARDEI AQUI EMBAIXO)
+
+    // versoes do selecionar (o unico parametro obrigatorio é a lista).
+
+     /** recebe uma lista e printa, se for de objetos ele vai usar o metodo .toString(), se for string ela so printa.
+    valida a escolha e retorna o numero escolhido, se tiver a opçao exit e o usuario escolher vai retonar -1.
+    @param lista : lista de opções
+    @param exit : opção de voltar
+    @param mensagemInicial : mensagem a ser exibida acima das opções
+    @param exitMsg : substitui a opção voltar pela string desejada*/
+    public static <T> int selecionar(List<T> lista) {
+        return selecionar(lista, false, "", "", false);
+    }
+
+     /** recebe uma lista e printa, se for de objetos ele vai usar o metodo .toString(), se for string ela so printa.
+    valida a escolha e retorna o numero escolhido, se tiver a opçao exit e o usuario escolher vai retonar -1.
+    @param lista : lista de opções
+    @param exit : opção de voltar
+    @param mensagemInicial : mensagem a ser exibida acima das opções
+    @param exitMsg : substitui a opção voltar pela string desejada*/
+    public static <T> int selecionar(List<T> lista, String mensagem) {
+        return selecionar(lista, false, mensagem, "", false);
+    }
+
+    /** recebe uma lista e printa, se for de objetos ele vai usar o metodo .toString(), se for string ela so printa.
+    valida a escolha e retorna o numero escolhido, se tiver a opçao exit e o usuario escolher vai retonar -1.
+    @param lista : lista de opções
+    @param mensagem : mensagem a ser exibida acima das opções
+    @param naoLimpaTela : se true nao limpa a tela antes de mostrar o menu
+    */
+    public static <T> int selecionar(List<T> lista, String mensagem, boolean naoLimpaTela) {
+        return selecionar(lista, false, mensagem, "", naoLimpaTela);
+    }
+
+     /** recebe uma lista e printa, se for de objetos ele vai usar o metodo .toString(), se for string ela so printa.
+    valida a escolha e retorna o numero escolhido, se tiver a opçao exit e o usuario escolher vai retonar -1.
+    @param lista : lista de opções
+    @param exit : opção de voltar
+    @param mensagemInicial : mensagem a ser exibida acima das opções
+    @param exitMsg : substitui a opção voltar pela string desejada*/
+    public static <T> int selecionar(List<T> lista, boolean exit) {
+        return selecionar(lista, exit, "", "", false);
+    }
+
+    /** recebe uma lista e printa, se for de objetos ele vai usar o metodo .toString(), se for string ela so printa.
+    valida a escolha e retorna o numero escolhido, se tiver a opçao exit e o usuario escolher vai retonar -1.
+    @param lista : lista de opções
+    @param exit : opção de voltar
+    @param naoLimpaTela : se true nao limpa a tela antes de mostrar o menu
+    */
+    public static <T> int selecionar(List<T> lista, boolean exit, boolean naoLimpaTela) {
+        return selecionar(lista, exit, "", "", naoLimpaTela);
+    }
+
+     /** recebe uma lista e printa, se for de objetos ele vai usar o metodo .toString(), se for string ela so printa.
+    valida a escolha e retorna o numero escolhido, se tiver a opçao exit e o usuario escolher vai retonar -1.
+    @param lista : lista de opções
+    @param exit : opção de voltar
+    @param mensagemInicial : mensagem a ser exibida acima das opções
+    @param exitMsg : substitui a opção voltar pela string desejada*/
+    public static <T> int selecionar(List<T> lista, boolean exit, String mensagemInicial) {
+        return selecionar(lista, exit, mensagemInicial, "", false);
+    }
+
+    /** recebe uma lista e printa, se for de objetos ele vai usar o metodo .toString(), se for string ela so printa.
+    valida a escolha e retorna o numero escolhido, se tiver a opçao exit e o usuario escolher vai retonar -1.
+    @param lista : lista de opções
+    @param exit : opção de voltar
+    @param mensagemInicial : mensagem a ser exibida acima das opções
+    @param naoLimpaTela : se true nao limpa a tela antes de mostrar o menu
+    */
+    public static <T> int selecionar(List<T> lista, boolean exit, String mensagemInicial, boolean naoLimpaTela) {
+        return selecionar(lista, exit, mensagemInicial, "", naoLimpaTela);
+    }
+
+    /** recebe uma lista e printa, se for de objetos ele vai usar o metodo .toString(), se for string ela so printa.
+    valida a escolha e retorna o numero escolhido, se tiver a opçao exit e o usuario escolher vai retonar -1.
+    @param lista : lista de opções
+    @param exit : opção de voltar
+    @param mensagemInicial : mensagem a ser exibida acima das opções
+    @param exitMsg : substitui a opção voltar pela string desejada
+    */
+    public static <T> int selecionar(List<T> lista, boolean exit, String mensagemInicial, String exitMsg) {
+        return selecionar(lista, exit, mensagemInicial, exitMsg, false);
     }
 }
 

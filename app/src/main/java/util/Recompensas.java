@@ -5,17 +5,19 @@ import java.util.Collections;
 import java.util.List;
 
 import batalhaListeners.itens.Item;
+import batalhaListeners.itens.ativos.ItemAtivo;
+import batalhaListeners.itens.passivos.ItemPassivo;
 import cartas.Carta;
 import entidades.Heroi;
+import static fabricas.FabricaCartas.listaCartasMoldes;
+import static fabricas.FabricaItens.listaItensMoldes;
+import static fabricas.FabricaItens.listaItensAtivosMoldes;
 import visual.Cor;
 import visual.Textos;
 
-import static fabricas.FabricaCartas.listaCartasMoldes;
-import static fabricas.FabricaItens.listaItensMoldes;
-
 /** Aqui ficam todos os metodos pra dar recompensas ao jogador (cartas, itens, etc) */
 public class Recompensas {
-    private static final List<Item> poolItensUnicos = new ArrayList<>();
+    private static final List<ItemPassivo> poolItensUnicos = new ArrayList<>();
     private static final List<Carta> poolTodasCartas = new ArrayList<>();
 
     static {
@@ -23,32 +25,51 @@ public class Recompensas {
         resetarPoolItens();
     }
 
-    /** concede um item especifico caso ainda esteja disponivel no pool global */
-    public static boolean ganharItemEsp(Item item, Heroi heroi) {
+    /** concede um item passivo especifico caso ainda esteja disponivel no pool global */
+    public static boolean ganharItemPassivoEsp(ItemPassivo item, Heroi heroi) {
         if (!poolItensUnicos.remove(item)) {
             return false;
         }
 
-        heroi.addItem(item);
+        heroi.addItemPassivo(item);
         
         imprimeGanhoDeItem(item);
         return true;
     }
 
-    /** concede um item aleatorio unico, se houverem disponiveis na pool global */
-    public static boolean ganharItemAleatorio(Heroi heroi) {
+    /** concede um item passivo aleatorio unico, se houverem disponiveis na pool global */
+    public static boolean ganharItemPassivo(Heroi heroi) {
         if (poolItensUnicos.isEmpty()) {
             return false;
         }
 
         int sorteado = RNGHandler.getGen().nextInt(poolItensUnicos.size());
 
-        Item escolhido = poolItensUnicos.get(sorteado);
+        ItemPassivo escolhido = poolItensUnicos.get(sorteado);
         poolItensUnicos.remove(escolhido);
 
-        heroi.addItem(escolhido);
+        heroi.addItemPassivo(escolhido);
 
         imprimeGanhoDeItem(escolhido);
+        return true;
+    }
+
+    /** concede um item ativo aleatorio unico */
+    public static boolean ganharItemAtivo(Heroi heroi) {
+        int sorteado = RNGHandler.getGen().nextInt(listaItensAtivosMoldes.size());
+
+        ItemAtivo escolhido = listaItensAtivosMoldes.get(sorteado);
+
+        heroi.addItemAtivo(escolhido);
+
+        imprimeGanhoDeItem(escolhido);
+        return true;
+    }
+
+    /** concede um item ativo especifico */
+    public static boolean ganharItemAtivoEsp(ItemAtivo item, Heroi heroi) {
+        heroi.addItemAtivo(item);    
+        imprimeGanhoDeItem(item);
         return true;
     }
 
@@ -200,16 +221,14 @@ public class Recompensas {
         opcoes.add("Adicionar ao baralho");
         opcoes.add("Guardar no inventário");
 
-        int escolha = InputHandler.selecionar(opcoes, Cor.txtAmareloClaro("O que deseja fazer com a carta?"));
+        int escolha = InputHandler.selecionar(opcoes, Cor.txtAmareloClaro("O que deseja fazer com " + carta.getNomeColorido() + "?"));
 
         if (escolha == 0) {
             heroi.addCarta(carta);
-            System.out.println();
-            System.out.println("Nova carta adicionada ao baralho!");
+            System.out.println("Carta adicionada ao baralho!");
         } else {
             heroi.addCartaInventario(carta);
-            System.out.println();
-            System.out.println("Nova carta adicionada ao inventário! Visite o deckBuilder para equipá-la.");
+            System.out.println("Carta guardada no inventário! Visite o deckBuilder se desejar equipá-la.");
         }
 
         Textos.sleep(500);
@@ -304,7 +323,7 @@ public class Recompensas {
     }
 
     private static void imprimeGanhoDeItem(Item item) {
-        Textos.printaBonito("Voce ganhou: " + Cor.txtRosa(item.getNome()) + 
+        Textos.printaBonito("Voce ganhou: " + (item.getNomeColorido()) + 
         " < " + Cor.txtAmareloClaro(item.getDescricao()) + " >" + Cor.reset, 4, 2);
         InputHandler.esperar();
     }

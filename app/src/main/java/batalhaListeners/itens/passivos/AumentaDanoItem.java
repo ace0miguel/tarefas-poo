@@ -1,9 +1,9 @@
-package batalhaListeners.itens;
+package batalhaListeners.itens.passivos;
 
 import entidades.Heroi;
 import telas.eventos.combate.Batalha;
 
-public class AumentaDanoItem extends Item {
+public class AumentaDanoItem extends ItemPassivo {
     private int valor;
 
     public AumentaDanoItem(String nome, String desc, int valor) {
@@ -27,7 +27,7 @@ public class AumentaDanoItem extends Item {
     }
 
     @Override
-    public Item criaCopia() {
+    public ItemPassivo criaCopia() {
         return new AumentaDanoItem(this);
     }
 

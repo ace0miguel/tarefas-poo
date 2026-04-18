@@ -4,6 +4,10 @@ import java.util.List;
 import java.util.Scanner;
 
 import cartas.Carta;
+import cartas.CartaAtaque;
+import cartas.CartaHabilidade;
+import cartas.CartaMaldicao;
+import cartas.CartaPoder;
 import util.InputHandler;
 import visual.Cor;
 import visual.Textos;
@@ -90,33 +94,8 @@ public class Mao {
     }
 
     /** exibe uma lista de opçoes com as cartas da mão, valida a escolha e retorna o indice da carta escolhida */
-    public int mostrar(){ 
-        System.out.println("Mão atual:");
-        int ultimoNumero = 0;
-
-        if (cartas.size() <= 0) return -1;
-
-        for (int i = 0; i < cartas.size(); i++){
-            Carta cartaAtual = cartas.get(i);
-            Textos.printaBonito("["+i+"] > "+cartaAtual.descricao()+"\n", 1, 2); Textos.sleep(3);
-            ultimoNumero = i;
-        }
-        ultimoNumero++;
-        Cor.printaCinza("["+ultimoNumero+"] - Encerrar turno\n");
-        
-        int opcao = -1;
-
-        try {
-            opcao = ler.nextInt();
-            if (ler.hasNextLine()) {
-                ler.nextLine();
-            };
-        } catch (Exception e) {
-            if (ler.hasNextLine()) {
-                ler.nextLine();
-            };
-        }
-        return opcao;
+    public List<Carta> mostrar(){ 
+        return this.cartas;
     }
 
     /** remove a carta de indice opçao da mao e manda pra pilha de descarte
@@ -154,5 +133,21 @@ public class Mao {
 
     public Carta getUltima(){
         return cartas.getLast();
+    }
+
+    public List<CartaAtaque> getCartasAtaque(){
+        return cartas.stream().filter(carta -> carta instanceof CartaAtaque).map(carta -> (CartaAtaque) carta).toList();
+    }
+
+    public List<CartaHabilidade> getCartasHabilidade(){
+        return cartas.stream().filter(carta -> carta instanceof CartaHabilidade).map(carta -> (CartaHabilidade) carta).toList();
+    }
+
+    public List<CartaPoder> getCartasPoder(){
+        return cartas.stream().filter(carta -> carta instanceof CartaPoder).map(carta -> (CartaPoder) carta).toList();
+    }
+
+    public List<CartaMaldicao> getCartasMaldicao(){
+        return cartas.stream().filter(carta -> carta instanceof CartaMaldicao).map(carta -> (CartaMaldicao) carta).toList();
     }
 }

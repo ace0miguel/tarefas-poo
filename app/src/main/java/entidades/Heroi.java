@@ -5,9 +5,11 @@ import java.util.List;
 import baralho.Mao;
 import baralho.PilhaCompra;
 import baralho.PilhaDescarte;
-import batalhaListeners.itens.Item;
+import batalhaListeners.itens.ativos.ItemAtivo;
+import batalhaListeners.itens.passivos.ItemPassivo;
 import cartas.Carta;
 import cartas.CartaMaldicao;
+import telas.eventos.combate.Batalha;
 import util.InputHandler;
 import visual.Cor;
 import visual.Textos;
@@ -22,7 +24,9 @@ public class Heroi extends Entidade {
 
     private List<Carta> baralho = new ArrayList<>(); // todas as cartas q o jogador tem e ta usando
     private List<Carta> inventarioCartas = new ArrayList<>(); // todas as cartas q o jogador tem mas nao ta usando
-    private List<Item> listaItens = new ArrayList<>(); // todos os itens q o jogador tem
+    private List<ItemPassivo> listaItensPassivos = new ArrayList<>(); // todos os itens passivos q o jogador tem
+    private List<ItemAtivo> listaItensAtivos = new ArrayList<>(); // todos os itens ativos q o jogador tem
+
 
     // guarda a mao e as pilhas por referencia
     private Mao maoAtual;
@@ -83,10 +87,35 @@ public class Heroi extends Entidade {
         return cartasBonus;
     }
 
-    public List<Item> getListaItens() {
-        return listaItens;
+    public List<ItemPassivo> getListaItensPassivos() {
+        return listaItensPassivos;
     }
 
+    public List<ItemAtivo> getListaItensAtivos() {
+        return listaItensAtivos;
+    }
+
+    public void mostrarItensAtivos() {
+        if (listaItensAtivos.isEmpty()) {
+            System.out.println("Voce nao tem itens ativos.");
+            InputHandler.esperar();
+            return;
+        }
+
+        visual.Textos.limpaTela();
+        System.out.println("Itens:");
+        System.out.println();
+
+        for(int i = 0; i < listaItensAtivos.size(); i++) {
+            System.out.println(listaItensAtivos.get(i));
+            System.out.println();
+        }
+    }
+
+    public void usarItemAtivo(int i, Batalha batalha){
+        listaItensAtivos.get(i).usar(batalha);
+        listaItensAtivos.remove(i);
+    }
     // setters -----
 
     public void setDeck(List<Carta> deck) {
@@ -142,12 +171,20 @@ public class Heroi extends Entidade {
         this.energiaBonus = 0;
     }
 
-    public void addItem(Item item){
-        this.listaItens.add(item);
+    public void addItemPassivo(ItemPassivo item){
+        this.listaItensPassivos.add(item);
     }
 
-    public void removeItem(Item item){
-        this.listaItens.remove(item);
+    public void removeItemPassivo(ItemPassivo item){
+        this.listaItensPassivos.remove(item);
+    }
+
+    public void addItemAtivo(ItemAtivo item){
+        this.listaItensAtivos.add(item);
+    }
+
+    public void removeItemAtivo(ItemAtivo item){
+        this.listaItensAtivos.remove(item);
     }
 
     public void addDinheiro(int valor){
@@ -158,13 +195,7 @@ public class Heroi extends Entidade {
     public void removeDinheiro(int valor){
         this.dinheiro -= valor;
     }
-
-    public void addVida(int valor){
-        this.vida += valor;
-        if (this.vida > this.vidaMax) this.vida = this.vidaMax;
-    }
     // ----
-
 
 
     public void usarEnergia(int custo){

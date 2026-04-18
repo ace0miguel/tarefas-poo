@@ -1,10 +1,10 @@
-package batalhaListeners.itens;
+package batalhaListeners.itens.passivos;
 
 import entidades.Heroi;
 import telas.eventos.combate.Batalha;
 import visual.Textos;
 
-public class CuraFimBatalha extends Item {
+public class CuraFimBatalha extends ItemPassivo {
     int cura;
 
     public CuraFimBatalha(String nome, String descricao, int cura) {
@@ -22,7 +22,7 @@ public class CuraFimBatalha extends Item {
     }
 
     @Override
-    public Item criaCopia() {
+    public ItemPassivo criaCopia() {
         return new CuraFimBatalha(this);
     }
  

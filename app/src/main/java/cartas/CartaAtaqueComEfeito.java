@@ -84,22 +84,19 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
 
     @Override
     public String descricao(){
-        String retorno = this.getNome();
+        StringBuilder retorno = iniciarDescricao();
 
-        if (!tags.isEmpty()) {
-            retorno += " - <" + String.join(", ",  tags) + ">";
-        }
+        appendTagsDescricao(retorno);
 
         if (!this.getDescricao().equals("")) {
-            retorno += " - " + this.getDescricao();
+            retorno.append(" - ").append(this.getDescricao()).append(" -");
         }
 
-        if (this.getSacrificio() != 0){
-            retorno += " - " + Cor.txtVermelho("[Sacrifício: " + this.getSacrificio() + "]");
-        }
+        retorno.append(Cor.vermelho).append(" (").append(this.getDano()).append(") ").append("DANO");
+        appendSacrificio(retorno);
+        appendCustoDescricao(retorno);
 
-        retorno += Cor.cinza + " (" + this.getDano() + ") " + "DANO" +  Cor.txtAmareloClaro(" < custo: " + this.getCusto());
-        return retorno;
+        return fecharColchete(retorno);
     }
 
     @Override

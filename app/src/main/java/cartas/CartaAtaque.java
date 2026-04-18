@@ -70,22 +70,15 @@ public class CartaAtaque extends Carta
 
     @Override
     public String descricao(){
-        String retorno = this.getNome();
+        StringBuilder retorno = iniciarDescricao();
 
-        if (!tags.isEmpty()) {
-            retorno += " - <" + String.join(", ",  tags) + ">";
-        }
+        appendTagsDescricao(retorno);
 
-        if (!this.getDescricao().equals("")) {
-            retorno += " - " + this.getDescricao();
-        }
+        retorno.append(" - ").append(Cor.vermelho).append("(").append(this.getDano()).append(") ").append("DANO");
+        appendCustoDescricao(retorno);
+        appendSacrificio(retorno);
 
-        if (this.getSacrificio() != 0){
-            retorno += " - " + Cor.txtVermelho("[Sacrifício: " + this.getSacrificio() + "]");
-        }
-
-        retorno += Cor.cinza + " (" + this.getDano() + ") " + "DANO" +  Cor.txtAmareloClaro(" < custo: " + this.getCusto());
-        return retorno;
+        return fecharColchete(retorno);
     }
 
     @Override

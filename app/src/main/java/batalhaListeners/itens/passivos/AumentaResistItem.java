@@ -1,9 +1,9 @@
-package batalhaListeners.itens;
+package batalhaListeners.itens.passivos;
 
 import entidades.Heroi;
 import telas.eventos.combate.Batalha;
 
-public class AumentaResistItem extends Item {
+public class AumentaResistItem extends ItemPassivo {
     private int valor;
 
     public AumentaResistItem(String nome, String desc, int valor ) {
@@ -27,7 +27,7 @@ public class AumentaResistItem extends Item {
     }
 
     @Override
-    public Item criaCopia() {
+    public ItemPassivo criaCopia() {
         return new AumentaResistItem(this);
     }
 

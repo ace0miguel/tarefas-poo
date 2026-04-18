@@ -1,4 +1,4 @@
-package batalhaListeners.itens;
+package batalhaListeners.itens.passivos;
 
 import batalhaListeners.efeitos.Efeito;
 import cartas.Carta;
@@ -11,7 +11,7 @@ import telas.eventos.combate.Batalha;
  * @param efeito o efeito a ser aplicadodo
  * @param custo o custo das cartas que vao ativar o efeito
  */
-public class EfeitoPorCusto extends Item {
+public class EfeitoPorCusto extends ItemPassivo {
     private Efeito efeito;
     private int custo;
 
@@ -28,7 +28,7 @@ public class EfeitoPorCusto extends Item {
     }
 
     @Override
-    public Item criaCopia() {
+    public ItemPassivo criaCopia() {
         return new EfeitoPorCusto(this);
     }
 

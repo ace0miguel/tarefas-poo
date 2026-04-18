@@ -5,16 +5,15 @@ import java.util.Arrays;
 import java.util.List;
 
 import entidades.Inimigo;
-import telas.eventos.combate.Acao;
-
 import static fabricas.FabricaCartas.beberVeneno;
 import static fabricas.FabricaCartas.sangrar;
+import static fabricas.FabricaEfeitos.aumentaResistencia;
 import static fabricas.FabricaEfeitos.ego;
 import static fabricas.FabricaEfeitos.escudo10;
-import static fabricas.FabricaEfeitos.pactoSinistro;
 import static fabricas.FabricaEfeitos.sangramento;
 import static fabricas.FabricaEfeitos.veneno;
 import static fabricas.FabricaEfeitos.veneno1;
+import telas.eventos.combate.Acao;
 
 public class FabricaInimigos {
     public static Inimigo barbossa;
@@ -63,7 +62,7 @@ public class FabricaInimigos {
         // suporte, mas ataca 1 vez quando chega na meia vida
         loudSacy = new Inimigo("LOUD Sacy", 40,6, 
             new Acao.AdicionarCarta(sangrar), new Acao.AplicarEfeitoAliadoMaisForte(ego), 
-            new Acao.AplicarEfeitoAliadoMaisForte(escudo10), new Acao.AplicarEfeitoAliadoMaisForte(pactoSinistro)
+            new Acao.AplicarEfeitoAliadoMaisForte(escudo10), new Acao.AplicarEfeitoAliadoMaisForte(aumentaResistencia)
         ); loudSacy.setTier(2); loudSacy.setAcaoMeiaVida(new Acao.AtacarEfeito(sangramento));
 
         kungFuPanda = new Inimigo("Kung Fu Panda", 70, 8,
@@ -81,12 +80,12 @@ public class FabricaInimigos {
 
         // tier 4 (goats) -----------------
         paulAtreides = new Inimigo("Paul Muad'Dib Atreides", 80, 16, // ESSE AQUI E FORTE VIU MEIO QUE O BOSS
-            new Acao.AtacarVidaPerdida(), new Acao.ReceberEfeito(pactoSinistro), new Acao.AtacarEfeito(sangramento), new Acao.AtacarVidaPerdida()
+            new Acao.AtacarVidaPerdida(), new Acao.ReceberEfeito(ego), new Acao.AtacarEfeito(sangramento), new Acao.AtacarVidaPerdida()
         ); paulAtreides.setTier(4);
 
         // tier 5 (boss de area) -----------------
         paulAtreidesSupremo = new Inimigo("PAUL MUAD'DIB ATREIDES, DUKE OF ARRAKIS, LISAN AL GAIB, KWISATZ HADERACH.", 100, 25, // ESSE AQUI E FORTE VIU MEIO QUE O BOSS
-            new Acao.AtacarVidaPerdida(), new Acao.ReceberEfeito(pactoSinistro), new Acao.AtacarEfeito(sangramento), new Acao.AtacarVidaPerdida()
+            new Acao.ReceberEfeito(aumentaResistencia), new Acao.ReceberEfeito(ego), new Acao.AtacarEfeito(sangramento), new Acao.AtacarVidaPerdida()
         ); paulAtreidesSupremo.setTier(5); paulAtreides.setAcaoMeiaVida(new Acao.ReceberEfeito(escudo10));
 
         listaInimigosMoldes.addAll(Arrays.asList(barbossa, loudCoringa, endrick, drake, 

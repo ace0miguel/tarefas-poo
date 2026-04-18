@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import cartas.Carta;
+import util.InputHandler;
 
 public class PilhaDescarte {
     private ArrayList<Carta> cartas = new ArrayList<>();  
@@ -40,5 +41,28 @@ public class PilhaDescarte {
     /** limpa a pilha de descarte */
     public void clear(){
         cartas.clear();
+    }
+
+    public void mostrar(){
+        if (cartas.isEmpty()) {
+            System.out.println("A pilha de descarte está vazia.");
+            InputHandler.esperar();
+            return;
+        }
+
+        visual.Textos.limpaTela();
+        System.out.println("Pilha de descarte");
+        System.out.println();
+
+        for(int i = 0; i < cartas.size(); i++) {
+            System.out.println(cartas.get(i));
+            System.out.println();
+        }
+
+        InputHandler.esperar();
+    }
+    
+    public int getSize(){
+        return cartas.size();
     }
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Stack;
 
 import cartas.Carta;
+import util.InputHandler;
 import visual.Cor;
 import visual.Textos;
 
@@ -51,14 +52,33 @@ public class PilhaCompra {
         return cartas.pop();
     }
 
-    public void printDeck(){
-        System.out.println("Deck completo: --------");
-        for(int i = 0; i < cartas.size(); i++) System.out.println(cartas.get(i));
-        System.out.println("-----------------------");
-        Textos.sleep(200);
-    }
-
     public Stack<Carta> getPilhaCartas() {
         return cartas;
+    }
+
+    public void mostrar(){
+        visual.Textos.limpaTela();
+
+        if (cartas.isEmpty()) {
+            System.out.println("A pilha de compras está vazia.");
+            InputHandler.esperar();
+            return;
+        }
+
+        System.out.println("Pilha de compras");
+        System.out.println();
+
+        for(int i = 0; i < cartas.size(); i++) {
+            System.out.println(cartas.get(i));
+            System.out.println();
+        }
+
+        InputHandler.esperar();
+
+        shuffleStack();
+    }
+
+    public int getSize(){
+        return cartas.size();
     }
 }

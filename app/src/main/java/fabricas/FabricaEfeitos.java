@@ -20,7 +20,6 @@ import batalhaListeners.efeitos.latentes.EcoaDano;
 import batalhaListeners.efeitos.latentes.Energizar;
 import static fabricas.FabricaCartas.clubex;
 import static fabricas.FabricaCartas.resenhax;
-import visual.Cor;
 
 public class FabricaEfeitos {
     public static List<Efeito> listaEfeitosMoldes = new ArrayList<>();
@@ -52,8 +51,6 @@ public class FabricaEfeitos {
     public static Efeito ganhaEnergia1 = new GanhaEnergia("Ganho de energia (1)", "Ganha 1 ponto de energia", 1);
 
     public static Efeito ganhaEnergiaTest = new GanhaEnergia("Ganho de energia (60)", "Ganha 60 pontos de energia", 60);
-
-    public static Efeito pactoSinistro = new AumentaDano(Cor.txtCinza("Pacto Sinistro"), "Aumenta o dano causado em 2 por 3 rodadas", 3, 2); 
     // novos efeitos
     public static Efeito efeitoPuxaCarta2 = new PuxaCarta("Puxa duas cartas", "Puxa duas cartas", 2);
 
@@ -76,6 +73,6 @@ public class FabricaEfeitos {
         listaEfeitosMoldes.addAll(Arrays.asList(sangramento, veneno, veneno1, ego, aumentaResistencia, 
             escudo4, escudo10, purificarEfeito, feridas, ganhaEnergia2, 
             ganhaEnergia1, ganhaEnergiaTest, efeitoPuxaCarta2, efeitoEnergizado, 
-            ganhaResenhax, ganhaClubex, escolheCarta, pactoSinistro, veneno4)); 
+            ganhaResenhax, ganhaClubex, escolheCarta, veneno4)); 
     }
 }

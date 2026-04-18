@@ -97,24 +97,30 @@ public abstract class Carta {
 
     // Getters --------------------------------------
 
-    /** retorna o nome colorido baseado no tipo da carta */
-    public String getNome(){
-        if (this instanceof CartaAtaqueComEfeito)
-            return Cor.laranja + this.nome + Cor.reset;
-        
-        else if (this instanceof CartaAtaque)
-            return Cor.vermelho + this.nome + Cor.reset;
+    /** retorna a cor correspondente dependendo do tipo da carta */
+    public String corTipo(){
+        if (this instanceof CartaAtaque)
+            return Cor.vermelho;
 
         else if (this instanceof CartaHabilidade)
-            return Cor.azul + this.nome + Cor.reset;
+            return Cor.rosa;
 
         else if (this instanceof CartaPoder)
-            return Cor.rosa + this.nome + Cor.reset;
+            return Cor.laranja;
 
         else if (this instanceof CartaMaldicao)
-            return Cor.cinza + this.nome + Cor.reset;
+            return Cor.cinza;
 
-        return this.nome + Cor.reset;
+        return Cor.reset;
+    }
+
+    /** retorna o nome colorido baseado no tipo da carta */
+    public String getNome(){
+        return this.nome;
+    }
+
+    public String getNomeColorido(){
+        return corTipo() + this.nome + Cor.reset;
     }
 
     /** retorna o nome colorido baseado na raridade da carta */
@@ -307,6 +313,37 @@ public abstract class Carta {
                 Textos.sleep(600);
                 System.out.println();
             }
+    }
+
+    /** Helpers para centralizar a montagem de descricao nas subclasses. */
+    protected StringBuilder iniciarDescricao() {
+        return new StringBuilder(Cor.vinho + ("[ ")).append(Cor.reset).append(this.getNomeColorido());
+    }
+
+    protected void appendTagsDescricao(StringBuilder retorno) {
+        if (!tags.isEmpty()) {
+            retorno.append(" - <").append(Cor.cinza).append(String.join(", ", tags)).append(Cor.reset).append(">");
+        }
+    }
+
+    protected void appendDescricao(StringBuilder retorno) {
+        if (!this.getDescricao().equals("")) {
+            retorno.append(" - ").append(this.getDescricao());
+        }
+    }
+
+    protected void appendSacrificio(StringBuilder retorno) {
+        if (this.getSacrificio() != 0) {
+            retorno.append(" - ").append(Cor.txtCinza("[Sacrifício: " + this.getSacrificio() + "]"));
+        }
+    }
+
+    protected void appendCustoDescricao(StringBuilder retorno) {
+        retorno.append(Cor.txtAmareloClaro(" < custo: " + this.getCusto()));
+    }
+
+    protected String fecharColchete(StringBuilder retorno) {
+        return retorno.append(Cor.vinho).append(" ]").toString();
     }
 
     /** verifica se o heroi tem energia. Se sim, aplica o efeito da carta e subtrai o custo da energia. */

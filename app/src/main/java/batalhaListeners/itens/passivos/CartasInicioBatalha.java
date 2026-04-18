@@ -1,6 +1,6 @@
-package batalhaListeners.itens;
+package batalhaListeners.itens.passivos;
 
-public class CartasInicioBatalha extends Item {
+public class CartasInicioBatalha extends ItemPassivo {
     int quantidade;
 
     public CartasInicioBatalha(String nome, String descricao, int quantidade) {
@@ -14,7 +14,7 @@ public class CartasInicioBatalha extends Item {
     }
 
     @Override
-    public Item criaCopia() {
+    public ItemPassivo criaCopia() {
         return new CartasInicioBatalha(this);
     }
 

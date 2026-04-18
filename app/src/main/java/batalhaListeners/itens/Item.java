@@ -1,12 +1,11 @@
 package batalhaListeners.itens;
+
 import batalhaListeners.batalhaListener;
-import entidades.Entidade;
-import entidades.Heroi;
+import batalhaListeners.itens.passivos.ItemPassivo;
 
 public class Item implements batalhaListener {
     protected String nome;
     protected String descricao;
-    protected Heroi alvo;
 
     public Item(String nome, String descricao) {
         this.nome = nome;
@@ -16,11 +15,14 @@ public class Item implements batalhaListener {
     public Item(Item copia) {
         this.nome = copia.nome;
         this.descricao = copia.descricao;
-        this.alvo = copia.alvo;
     }
 
     public String getNome() {
         return nome;
+    }
+
+    public String getNomeColorido() {
+        return (this instanceof ItemPassivo) ? visual.Cor.txtRosa(nome) : visual.Cor.txtAzulClaro(nome);
     }
 
     public String getDescricao() {
@@ -30,14 +32,4 @@ public class Item implements batalhaListener {
     public Item criaCopia() {
         return new Item(this);
     }
-
-    public void setAlvo(Heroi alvo) {
-        this.alvo = alvo;
-    }
-
-    @Override
-    public Entidade getAlvo() {
-        return this.alvo;
-    }
-
 }
