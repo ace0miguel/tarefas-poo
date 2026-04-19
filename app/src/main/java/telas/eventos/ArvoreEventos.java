@@ -1,6 +1,7 @@
 package telas.eventos;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,9 +17,9 @@ import static fabricas.FabricaInimigos.loudSacy;
 import static fabricas.FabricaInimigos.paulAtreides;
 import static fabricas.FabricaInimigos.paulAtreidesSupremo;
 import static fabricas.FabricaInimigos.sabrinaCarpenter;
-
 import telas.eventos.combate.Batalha;
-import util.InputHandler;
+import util.RNGHandler;
+import visual.Cor;
 
 /** cria uma arvore onde cada nó representa um evento
  * @param n quantidade de filhos por nó
@@ -28,43 +29,58 @@ public class ArvoreEventos {
     int n; // quantidade de filhos por nó
     int p; // profundidade (QUANTIDADE TOTAL DE BATALHAS: P - 1 PQ COMEÇA DO PROFUNDIDADE 0)
 
-    private static List<Evento> eventosCuradores = new ArrayList<>(); // lista de eventos que podem curar o jogador
-    private static List<Evento> eventosNeutros = new ArrayList<>(); // lista de eventos que podem ou nao ajudar o jogador
-    private static List<Evento> todosEventos = new ArrayList<>(); // lista de todos os eventos,
+    public final static List<Evento> eventosCuradores = new ArrayList<>(); // lista de eventos que podem curar o jogador
+    public final static List<Evento> eventosNeutros = new ArrayList<>(); // lista de eventos que podem ou nao ajudar o jogador
+    public final static List<Evento> lojas = new ArrayList<>(); // lista de eventos de loja (so tem um mas precisa pro enum)
+    public final static List<Evento> recompensas = new ArrayList<>(); // lista de eventos de recompensa (so tem o tesouro)
 
-    private static List<Evento> batalhasTriviais = new ArrayList<>();
-    private static List<Evento> batalhasMedias = new ArrayList<>(); 
-    private static List<Evento> batalhasDesafiadoras = new ArrayList<>();
-    private static List<Evento> batalhasElite = new ArrayList<>(); // tipo de batalha mais dificil no meio do mapa
-    private static List<Evento> batalhasFinais = new ArrayList<>(); // batalhas de fim de andar(ato, mundo, sla como vai chamar ainda)
+    public final static List<Evento> batalhasTriviais = new ArrayList<>();
+    public final static List<Evento> batalhasMedias = new ArrayList<>(); 
+    public final static List<Evento> batalhasDesafiadoras = new ArrayList<>();
+    public final static List<Evento> batalhasElite = new ArrayList<>(); // tipo de batalha mais dificil no meio do mapa
+    public final static List<Evento> batalhasFinais = new ArrayList<>(); // batalhas de fim de andar(ato, mundo, sla como vai chamar ainda)
 
     // nao consegui implementar ainda mas acho q consta
-    private enum tipoEventos {
+    public enum tipoNode {
         // BATALHAS !
-        BATALHA_TRIVIAL(batalhasTriviais),
-        BATALHA_MEDIA(batalhasMedias),
-        BATALHA_DESAFIADORA(batalhasDesafiadoras),
-        BATALHA_ELITE(batalhasElite),
-        BATALHA_FINAL(batalhasFinais),
+        BATALHA_TRIVIAL(batalhasTriviais, Cor.azul + "Batalha trivial"),
+        BATALHA_MEDIA(batalhasMedias, Cor.verde + "Batalha média"),
+        BATALHA_DESAFIADORA(batalhasDesafiadoras, Cor.amarelo + "Batalha desafiadora"),
+        BATALHA_ELITE(batalhasElite, Cor.vermelho + "Batalha elite"),
+        BATALHA_FINAL(batalhasFinais, Cor.roxo + "Batalha final"),
         
-        EVENTO_NEUTRO(eventosNeutros),
-        CURA(eventosCuradores);
+        // outros tipos de nós
+        EVENTO_NEUTRO(eventosNeutros, Cor.cinza + "[ ? ]"),
+        CURA(eventosCuradores, Cor.verde + "Fogueira"),
+        LOJA(lojas, Cor.ciano + "Loja"),
+        RECOMPENSA(recompensas, Cor.amareloClaro + "Tesouro.");
 
         private final List<Evento> eventos;
+        private final String descricao;
 
-        tipoEventos(List<Evento> eventos) {
+        tipoNode(List<Evento> eventos, String descricao) {
             this.eventos = eventos;
+            this.descricao = descricao;
         }   
 
         public List<Evento> getEventos(int quantidade) {
             List<Evento> tempEventos = new ArrayList<>();
             tempEventos.addAll(eventos);
             Collections.shuffle(tempEventos);
-            return tempEventos.subList(0, Math.min(quantidade - 1, tempEventos.size() - 1));
+            return tempEventos.subList(0, Math.min(quantidade, tempEventos.size()));
         }
 
         public Evento getEvento(){
             return getEventos(1).get(0); 
+        }
+
+        public int getQuantidadeEventos() {
+            return eventos.size();
+        }
+
+        @Override
+        public String toString() {
+            return this.descricao + Cor.reset;
         }
     }
 
@@ -103,37 +119,53 @@ public class ArvoreEventos {
         this.p = p;
 
         // adicionar as batalhas triviais --
+        batalhasTriviais.clear();
         batalhasTriviais.add(amoebas);
         batalhasTriviais.add(barbossaSolo);
         batalhasTriviais.add(drakendrick);
         batalhasTriviais.add(pandaSolo);
 
         // adicionar as batalhas médias --
+        batalhasMedias.clear();
         batalhasMedias.add(media1);
         batalhasMedias.add(media2);
         batalhasMedias.add(media3);
         batalhasMedias.add(loud);
 
         // adicionar as batalhas desafiadoras --
+        batalhasDesafiadoras.clear();
         batalhasDesafiadoras.add(desafiadora1);
         batalhasDesafiadoras.add(desafiadora2);
 
         // adicionar as batalhas elite --
+        batalhasElite.clear();
         batalhasElite.add(sabrinaAtreides);
 
-        // lista com todos os eventos
-        todosEventos.add(loja.criaCopia());
-        todosEventos.add(fogueira.criaCopia());
-        todosEventos.add(tigrinho.criaCopia());
-        todosEventos.add(tesouro.criaCopia());
+        // adicionar as batalhas finais --
+        batalhasFinais.clear();
+        batalhasFinais.add(lisanAlGaib);
         
         // adicionar os eventos que podem cair aleatoriamente aq --
-        eventosCuradores.add(loja.criaCopia());
+        eventosCuradores.clear();
         eventosCuradores.add(fogueira.criaCopia());
-        eventosCuradores.add(tigrinho.criaCopia());
 
         // eventos neutros
+        eventosNeutros.clear();
         eventosNeutros.add(tigrinho.criaCopia());
+        eventosNeutros.add(tesouro.criaCopia());
+        eventosNeutros.add(fogueira.criaCopia());
+        eventosNeutros.add(loja.criaCopia());
+        eventosNeutros.addAll(batalhasMedias);
+        eventosNeutros.addAll(batalhasDesafiadoras);
+        eventosNeutros.addAll(batalhasTriviais);
+
+        // lojas
+        lojas.clear();
+        lojas.add(loja.criaCopia());
+
+        // recompensas
+        recompensas.clear();
+        recompensas.add(tesouro.criaCopia());
     }
 
     public int getProfundidadeMax() {
@@ -145,77 +177,60 @@ public class ArvoreEventos {
     }
 
     /** fefine como os eventos serao distribuidos para um conjunto de nós irmãos */
-    public List<Evento> escolherEvento(int profundidadeAtual) {
-        List<Evento> opcoes = new ArrayList<>();
-        List<Evento> sorteados = new ArrayList<>();
+    public List<tipoNode> escolherEvento(int profundidadeAtual) {
+        List<tipoNode> opcoes = new ArrayList<>();
 
         // andares predefinidios -----------------------------
 
         // primeiro andar (batalha facil)
         if (profundidadeAtual == 0) { 
-            // adiciona aqui opcoes.add evento que vc quer testar
-            opcoes.add(loja.criaCopia());
-            sorteados.addAll(getEventosAleatorios(batalhasTriviais));
+            // adiciona aqui opcoes.add tipo evento que vc quer testar pra ir primeir
+            opcoes.add(tipoNode.BATALHA_TRIVIAL);
         }    
         // ultimo andar (boss)
         else if (profundidadeAtual == p) { 
-            sorteados.add(lisanAlGaib.criaCopia());
+            opcoes.add(tipoNode.BATALHA_FINAL);
         }
         // recompensa do meio do mapa (andar pacifico)
         else if (profundidadeAtual == p/2) { 
-            opcoes.add(tesouro.criaCopia());
+            opcoes.add(tipoNode.RECOMPENSA);
         }
         
         // andar logo antes do boss (cura ou loja)
         else if (profundidadeAtual == p - 1) { 
-            sorteados.addAll(getEventosAleatorios(eventosCuradores));
+            opcoes.add(tipoNode.CURA);
         }
 
         // andares aleatorios -----------------------------------------
 
         // primeiros 4 andares
         else if (profundidadeAtual < 3 ) {
-            sorteados.addAll(getEventosAleatorios(batalhasTriviais));
+            opcoes.add(tipoNode.BATALHA_TRIVIAL);
         }
 
         // até chegar na metade do mapa
         else if (profundidadeAtual < p/2) {
-            sorteados.addAll(getEventosAleatorios(batalhasTriviais, batalhasMedias, eventosNeutros));
+            opcoes.addAll(Arrays.asList(tipoNode.BATALHA_TRIVIAL, tipoNode.BATALHA_MEDIA,
+                tipoNode.EVENTO_NEUTRO, tipoNode.LOJA));
         }
 
         // até 3 quartos do mapa
         else if (profundidadeAtual < 3*p/4) {
-            sorteados.addAll(getEventosAleatorios(batalhasMedias, batalhasDesafiadoras, eventosNeutros));
+            opcoes.addAll(Arrays.asList(tipoNode.BATALHA_MEDIA, tipoNode.BATALHA_DESAFIADORA, 
+                tipoNode.BATALHA_ELITE, tipoNode.EVENTO_NEUTRO, tipoNode.LOJA, tipoNode.CURA));
         }
 
         // ate o penultimo andar (curinha pre boss)
         else if (profundidadeAtual < p - 1) {
-            sorteados.addAll(getEventosAleatorios(batalhasDesafiadoras, batalhasElite, eventosNeutros));
+            opcoes.addAll(Arrays.asList(tipoNode.BATALHA_DESAFIADORA, tipoNode.BATALHA_ELITE, 
+                tipoNode.EVENTO_NEUTRO, tipoNode.LOJA, tipoNode.CURA));
         } 
 
-        // se por algum motivo tiver algum erro de logica e nao caia em nenhum, vai cair aqui (qualquer evento)
+        // se por algum motivo tiver algum erro de logica e nao caia em nenhum, vai cair nisso aqui
         else {
-            sorteados.addAll(getEventosAleatorios(todosEventos));
+            opcoes.add(tipoNode.LOJA);
         }
 
-        // se tiver menos eventos que n gera so a quantidade de eventos disponiveis
-        int quantidadeOpcoes = n;
-        if (sorteados.size() < n) {
-            quantidadeOpcoes = sorteados.size();
-        }
-
-        // adiciona os sorteados as opçoes, repetindo caso a quantidade de sorteados seja menor que n
-        if (!sorteados.isEmpty()) {
-            for (int i = 0; i < quantidadeOpcoes; i++) {
-                opcoes.add(sorteados.get(i % sorteados.size()).criaCopia());
-            }
-        }
-
-        // fallback caso opcoes acabe vindo vazio
-        if (opcoes.isEmpty()) {
-            InputHandler.esperar("Algum erro ocorreu na escolha de eventos. gerando eventos aleatórios");
-            opcoes.addAll(getEventosAleatorios(todosEventos));
-        }
         return opcoes;
     }
 
@@ -231,21 +246,22 @@ public class ArvoreEventos {
         return listaFilhos;
     }
 
-    /** retorna os eventos nos filhos do no recebido */
-        public List<Evento> getEventos (DefaultMutableTreeNode node) {
-            List<Evento> listaEventos = new ArrayList<>();
+    /** retorna os tipoNodes nos filhos do no recebido */
+        public List<tipoNode> getTipoNodes (DefaultMutableTreeNode node) {
+            List<tipoNode> listaTipoNodes = new ArrayList<>();
 
             for (int i = 0; i < node.getChildCount(); i++) {
                 DefaultMutableTreeNode filho = (DefaultMutableTreeNode) node.getChildAt(i);
-                Evento evento = (Evento) filho.getUserObject();        
-                listaEventos.add(evento);
+                tipoNode tipoNode = (tipoNode) filho.getUserObject();
+                listaTipoNodes.add(tipoNode);
             }
 
-            return listaEventos;
+            return listaTipoNodes;
         }
 
     /** gera apenas os filhos de um nó especifico, baseado nas regras do escolherEvento
      * se tiver menos opçoes disponiveis que n, gera o maximo de opçoes disponiveis
+     * (funçao feita com ajuda de ia)
      */
     public void expandirNo(DefaultMutableTreeNode node) {
         // checagens de segurança
@@ -253,28 +269,53 @@ public class ArvoreEventos {
         if (node.getLevel() >= p) return;
         if (node.getChildCount() > 0) return;
 
-        List<Evento> eventosFilhos = escolherEvento(node.getLevel() + 1);
+        List<tipoNode> tiposPossiveis = escolherEvento(node.getLevel() + 1);
+        if (tiposPossiveis.isEmpty()) return;
 
-        int quantidadeOpcoes = n;
-        if (eventosFilhos.size() < n) {
-            quantidadeOpcoes = eventosFilhos.size();
+        List<tipoNode> tiposElegiveis = new ArrayList<>();
+        List<Integer> eventosRestantesPorTipo = new ArrayList<>();
+        int totalEventosDisponiveis = 0;
+
+        for (tipoNode tipo : tiposPossiveis) {
+            int quantidadeTipo = tipo.getQuantidadeEventos();
+            if (quantidadeTipo <= 0) continue;
+
+            tiposElegiveis.add(tipo);
+            eventosRestantesPorTipo.add(quantidadeTipo);
+            totalEventosDisponiveis += quantidadeTipo;
         }
 
+        if (totalEventosDisponiveis <= 0) return;
+
+        int quantidadeOpcoes = Math.min(n, totalEventosDisponiveis);
+
         for (int i = 0; i < quantidadeOpcoes; i++) {
-            node.add(new DefaultMutableTreeNode(eventosFilhos.get(i)));
+            if (tiposElegiveis.isEmpty()) break;
+
+            int indiceSorteado = RNGHandler.getGen().nextInt(tiposElegiveis.size());
+            tipoNode tipoSorteado = tiposElegiveis.get(indiceSorteado);
+            node.add(new DefaultMutableTreeNode(tipoSorteado));
+
+            int restante = eventosRestantesPorTipo.get(indiceSorteado) - 1;
+            if (restante <= 0) {
+                tiposElegiveis.remove(indiceSorteado);
+                eventosRestantesPorTipo.remove(indiceSorteado);
+            } else {
+                eventosRestantesPorTipo.set(indiceSorteado, restante);
+            }
         }
     }
 
     /** cria uma arvore completa baseada nos parametros da instancia atual dessa classe e retorna a raiz.
     distribui os eventos para os filhos baseados na funcao escolherEvento */
-    public DefaultMutableTreeNode criarArvore(int profundidade, Evento evento) {       
+    public DefaultMutableTreeNode criarArvore(int profundidade, tipoNode evento) {       
         DefaultMutableTreeNode node = new DefaultMutableTreeNode(evento);
         
         // caso base
         if (profundidade == p) return node;
 
         // gera a lista de eventos dos filhos do no atual
-        List<Evento> eventosFilhos = escolherEvento(profundidade + 1);
+        List<tipoNode> eventosFilhos = escolherEvento(profundidade + 1);
 
         int quantidadeOpcoes = n;
         if (eventosFilhos.size() < n) {

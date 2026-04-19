@@ -16,6 +16,8 @@ public class Tesouro extends Evento {
         System.out.println();
         Textos.printaBonito("Você encontrou um tesouro!", 10, 2);
 
+        System.out.println();
+
         util.InputHandler.esperar(Cor.txtAmareloClaro("Pressione ENTER para abrir o tesouro..."));
 
         System.out.println();

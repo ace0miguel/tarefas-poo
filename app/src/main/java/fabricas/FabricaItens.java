@@ -15,7 +15,6 @@ import batalhaListeners.itens.passivos.CartasInicioBatalha;
 import batalhaListeners.itens.passivos.CuraFimBatalha;
 import batalhaListeners.itens.passivos.EfeitoPorCusto;
 import batalhaListeners.itens.passivos.ItemPassivo;
-
 import static fabricas.FabricaEfeitos.sangramento;
 
 public class FabricaItens {
@@ -67,13 +66,13 @@ public class FabricaItens {
 
         pocaoCura40 = new PocaoVida("Poção de cura G", "Recupere 40 pontos de vida", 40, 40);
 
-        pocaoEnergia2 = new PocaoEnergia("Pocão de energia", "Ganhe 2 pontos de energia", 30, 2);
+        pocaoEnergia2 = new PocaoEnergia("Pocão de energia P", "Ganhe 2 pontos de energia", 30, 2);
 
         pocaoEnergia3 = new PocaoEnergia("Pocão de energia G", "Ganhe 3 pontos de energia", 45, 3);
 
         cigarro = new RecuperaCarta("Marlboro red", "Escolha uma carta para recuperar da pilha de descarte", 40);
 
-        vape = new EscolheCartaItem("Vape", "Escolha uma carta para recuperar da pilha de compra", 35);
+        vape = new EscolheCartaItem("Vape", "Escolha uma carta para puxar da pilha de compra", 35);
 
         // listas 
         

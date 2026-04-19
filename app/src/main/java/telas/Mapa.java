@@ -3,6 +3,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 
 import entidades.Heroi;
 import telas.eventos.ArvoreEventos;
+import telas.eventos.ArvoreEventos.tipoNode;
 import telas.eventos.Evento;
 import util.InputHandler;
 import util.RNGHandler;
@@ -26,7 +27,7 @@ public class Mapa {
     /** gera os filhos da posiçao passada e printa um menu de seleçao com seus eventos. (usar quando gerando os filhos dinamicamente) */
     public int criarCaminhos(DefaultMutableTreeNode posicaoAtual){ 
         arvoreEventos.expandirNo(posicaoAtual);
-        return InputHandler.selecionar(arvoreEventos.getEventos(posicaoAtual),true, Arte.mapa + "\n" + Cor.txtAzul(Arte.bordaHud4) + 
+        return InputHandler.selecionar(arvoreEventos.getTipoNodes(posicaoAtual),true, Arte.mapa + "\n" + Cor.txtAzul(Arte.bordaHud4) + 
         "\n" + Textos.menuStatus(heroi) + Cor.reset +
         "|| Próxima ilha: [" + Cor.txtAmarelo(String.valueOf((posicaoAtual.getLevel() + 1))) + "]" , "deckBuilder.");
     }
@@ -36,9 +37,9 @@ public class Mapa {
         return criarCaminhos(nodeAtual);
     }
     
-    /** retorna os filhos da posiçao passada e printa um menu de seleçao com seus evento s (usar para arvores completas)*/
+    /** retorna os filhos da posiçao passada e printa um menu de seleçao com seus eventos (usar para arvores completas)*/
     public int escolherCaminho(DefaultMutableTreeNode posicaoAtual){ 
-        return InputHandler.selecionar(arvoreEventos.getEventos(posicaoAtual),true, Arte.mapa + "\n" + Cor.txtAzul(Arte.bordaHud4) + 
+        return InputHandler.selecionar(arvoreEventos.getTipoNodes(posicaoAtual),true, Arte.mapa + "\n" + Cor.txtAzul(Arte.bordaHud4) + 
         "\n" + Textos.menuStatus(heroi) + Cor.reset +
         "|| Próxima ilha: [" + Cor.txtAmarelo(String.valueOf((posicaoAtual.getLevel() + 1))) + "]" , "deckBuilder.");
     }
@@ -52,11 +53,15 @@ public class Mapa {
     public void irPara(DefaultMutableTreeNode posicaoAtual,int n){ 
     // tem uma chance de 8% tomar jumpscare do golden freddy
         if (RNGHandler.check(8)){ 
+            Textos.limpaTela();
             System.out.println(Cor.txtAmarelo(Arte.GOLDENFREDDY));
             System.out.println(Cor.txtVermelho("RECEBA O JUMPSCARE!"));
             InputHandler.esperar();
         }
+
         nodeAtual = (DefaultMutableTreeNode) posicaoAtual.getChildAt(n);
+
+
     }
 
     /** atualiza o nodeAtual para o filho de indice n do nó atual*/
@@ -72,6 +77,17 @@ public class Mapa {
     /** retorna o evento dentro do nó atual*/
     public Evento getEvento() {
         return getEvento(nodeAtual);
+    }
+
+    /** cria evento do no atual baseado no tipo */
+    public void iniciar() {
+        tipoNode tipo = (tipoNode) nodeAtual.getUserObject();
+
+        Evento evento = tipo.getEvento().criaCopia();
+
+        InputHandler.esperar(Cor.cinza + "Pressione ENTER para ir para " + Cor.reset + evento);
+        
+        evento.iniciar(heroi);
     }
     
 
@@ -99,8 +115,9 @@ public class Mapa {
                 Textos.printaLinhaDevagar(Arte.mapa);
                 Textos.printaLinhaDevagar(Cor.txtAzul(Arte.bordaHud4));
                 System.out.println();
-                InputHandler.esperar(Cor.cinza + "Pressione ENTER para ir para " + Cor.reset + getEvento());
-                getEvento().iniciar(heroi);
+
+                iniciar();
+
                 primeiroLoop = false;
                 continue;
             }
@@ -119,11 +136,9 @@ public class Mapa {
                 continue;
             }
 
-            InputHandler.esperar(Cor.cinza + "Pressione ENTER para ir para " + Cor.reset + getProximoEvento(escolha));
-
             irPara(escolha);
 
-            getEvento().iniciar(heroi);
+            iniciar();
         }
     }
 
