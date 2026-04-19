@@ -7,7 +7,7 @@ import cartas.Carta;
 import telas.eventos.combate.Batalha;
 import util.InputHandler;
 
-/** Abre um menu de seleção baseado na lista de compras (embaralhadagit)
+/** Abre um menu de seleção baseado na lista de compras (embaralhada)
  *  e permite escolher uma carta pra puxar imediatamente */
 public class EscolheCartaItem extends ItemAtivo {
     public EscolheCartaItem(String nome, String descricao, int custo) {
