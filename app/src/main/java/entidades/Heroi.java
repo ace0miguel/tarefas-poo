@@ -112,10 +112,13 @@ public class Heroi extends Entidade {
     }
 
     public void usarItemAtivo(int i, Batalha batalha){
-        listaItensAtivos.get(i).usar(batalha);
+        if (listaItensAtivos.get(i).usar(batalha) == -1) 
+            return;
+
         listaItensAtivos.remove(i);
     }
-    // setters -----
+
+    // -----=====----- setters -----=====-----
 
     public void setDeck(List<Carta> deck) {
         this.baralho = deck;

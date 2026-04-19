@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import batalhaListeners.itens.ativos.EscolheCartaItem;
 import batalhaListeners.itens.ativos.ItemAtivo;
+import batalhaListeners.itens.ativos.PocaoEnergia;
 import batalhaListeners.itens.ativos.PocaoVida;
+import batalhaListeners.itens.ativos.RecuperaCarta;
 import batalhaListeners.itens.passivos.AumentaDanoItem;
 import batalhaListeners.itens.passivos.AumentaResistItem;
 import batalhaListeners.itens.passivos.CartasInicioBatalha;
@@ -28,6 +31,12 @@ public class FabricaItens {
     public static ItemAtivo pocaoCura20;
     public static ItemAtivo pocaoCura30;
     public static ItemAtivo pocaoCura40;
+
+    public static ItemAtivo pocaoEnergia2;
+    public static ItemAtivo pocaoEnergia3;
+
+    public static ItemAtivo cigarro;
+    public static ItemAtivo vape;
 
 
     public static List<ItemPassivo> listaItensMoldes = new ArrayList<>();
@@ -52,15 +61,23 @@ public class FabricaItens {
 
         // itens ativos 
 
-        pocaoCura20 = new PocaoVida("Poção de cura P", "Recupere 20 pontos de vida", 20);
+        pocaoCura20 = new PocaoVida("Poção de cura P", "Recupere 20 pontos de vida", 25, 20);
 
-        pocaoCura30 = new PocaoVida("Poção de cura M", "Recupere 30 pontos de vida", 30);
+        pocaoCura30 = new PocaoVida("Poção de cura M", "Recupere 30 pontos de vida", 30, 30);
 
-        pocaoCura40 = new PocaoVida("Poção de cura G", "Recupere 40 pontos de vida", 40);
+        pocaoCura40 = new PocaoVida("Poção de cura G", "Recupere 40 pontos de vida", 40, 40);
+
+        pocaoEnergia2 = new PocaoEnergia("Pocão de energia", "Ganhe 2 pontos de energia", 30, 2);
+
+        pocaoEnergia3 = new PocaoEnergia("Pocão de energia G", "Ganhe 3 pontos de energia", 45, 3);
+
+        cigarro = new RecuperaCarta("Marlboro red", "Escolha uma carta para recuperar da pilha de descarte", 40);
+
+        vape = new EscolheCartaItem("Vape", "Escolha uma carta para recuperar da pilha de compra", 35);
 
         // listas 
         
         listaItensMoldes.addAll(Arrays.asList(facaAcougueiro, marmita, amuletoVelho, jarroTerra, item20Resist, item10Dano, item20Dano));
-        listaItensAtivosMoldes.addAll(Arrays.asList(pocaoCura20, pocaoCura30, pocaoCura40));
+        listaItensAtivosMoldes.addAll(Arrays.asList(pocaoCura20, pocaoCura30, pocaoCura40, pocaoEnergia2, pocaoEnergia3, cigarro, vape));
     }
 }

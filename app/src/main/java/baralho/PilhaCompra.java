@@ -1,4 +1,5 @@
 package baralho;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
@@ -52,8 +53,27 @@ public class PilhaCompra {
         return cartas.pop();
     }
 
-    public Stack<Carta> getPilhaCartas() {
+    public Stack<Carta> getPilha() {
         return cartas;
+    }
+
+    /** Retorna uma visualizacao da pilha em ordem real de compra (topo primeiro). */
+    public List<Carta> getCartas() {
+        List<Carta> cartasOrdenadas = new ArrayList<>(cartas);
+        Collections.reverse(cartasOrdenadas);
+        return cartasOrdenadas;
+    }
+
+    /** Retorna uma visualizacao embaralhada sem alterar a pilha original. */
+    public List<Carta> getCartasEmbaralhadas() {
+        List<Carta> cartasEmbaralhadas = new ArrayList<>(cartas);
+        Collections.shuffle(cartasEmbaralhadas);
+        return cartasEmbaralhadas;
+    }
+
+    public Carta puxaCartaEsp(Carta c){
+        this.cartas.remove(c);
+        return c;
     }
 
     public void mostrar(){
@@ -65,17 +85,17 @@ public class PilhaCompra {
             return;
         }
 
-        System.out.println("Pilha de compras");
+        List<Carta> cartasEmbaralhadas = getCartasEmbaralhadas();
+
+        System.out.println(Cor.verdeClaro + "Pilha de compras" + Cor.reset);
         System.out.println();
 
-        for(int i = 0; i < cartas.size(); i++) {
-            System.out.println(cartas.get(i));
+        for(int i = 0; i < cartasEmbaralhadas.size(); i++) {
+            System.out.println(cartasEmbaralhadas.get(i));
             System.out.println();
         }
 
         InputHandler.esperar();
-
-        shuffleStack();
     }
 
     public int getSize(){

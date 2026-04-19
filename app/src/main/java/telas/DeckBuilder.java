@@ -33,11 +33,7 @@ import static fabricas.FabricaCartas.shieldao;
 import static fabricas.FabricaCartas.shieldinho;
 import static fabricas.FabricaCartas.tiro;
 import static fabricas.FabricaCartas.tiroEscopeta;
-import static fabricas.FabricaItens.amuletoVelho;
-import static fabricas.FabricaItens.facaAcougueiro;
-import static fabricas.FabricaItens.marmita;
 import static fabricas.FabricaItens.*;
-import static fabricas.FabricaItens.pocaoCura20;
 
 /** permite passar cartas do inventário para o baralho ou, por um preço, remover cartas do baralho */
 public class DeckBuilder {
@@ -146,13 +142,21 @@ public class DeckBuilder {
                 heroi.addCarta(mestreLaminasCarta);
                 heroi.addCarta(mestreLaminasCarta);
 
-                Recompensas.ganharItemPassivoEsp(facaAcougueiro, heroi);
-                Recompensas.ganharItemPassivoEsp(marmita, heroi);
-                Recompensas.ganharItemPassivoEsp(amuletoVelho, heroi);
+                // Recompensas.ganharItemPassivoEsp(facaAcougueiro, heroi);
+                // Recompensas.ganharItemPassivoEsp(marmita, heroi);
+                // Recompensas.ganharItemPassivoEsp(amuletoVelho, heroi);
 
-                Recompensas.ganharItemAtivoEsp(pocaoCura20, heroi);
-                Recompensas.ganharItemAtivoEsp(pocaoCura30, heroi);
+                Recompensas.ganharItemAtivoEsp(cigarro, heroi);
+                Recompensas.ganharItemAtivoEsp(cigarro, heroi);
+                Recompensas.ganharItemAtivoEsp(vape, heroi);
+                Recompensas.ganharItemAtivoEsp(vape, heroi);
+                Recompensas.ganharItemAtivoEsp(vape, heroi);
+
                 Recompensas.ganharItemAtivoEsp(pocaoCura40, heroi);
+
+                Recompensas.ganharItemAtivoEsp(pocaoEnergia2, heroi);
+                Recompensas.ganharItemAtivoEsp(pocaoEnergia2, heroi);
+                
 
                 Recompensas.ganharDinheiro(300, heroi);
                 heroi.setEnergiaMax(60);

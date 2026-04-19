@@ -6,6 +6,7 @@ import batalhaListeners.itens.passivos.ItemPassivo;
 public class Item implements batalhaListener {
     protected String nome;
     protected String descricao;
+    protected int custo = 0; // custo para comprar o item na loja
 
     public Item(String nome, String descricao) {
         this.nome = nome;
@@ -32,4 +33,13 @@ public class Item implements batalhaListener {
     public Item criaCopia() {
         return new Item(this);
     }
+
+    public void setCusto(int custo) {
+        this.custo = custo;
+    }
+    
+    public int getCusto() {
+        return custo;
+    }
+
 }

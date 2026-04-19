@@ -7,13 +7,15 @@ import telas.eventos.combate.Batalha;
 public class ItemAtivo extends Item{
     protected boolean selfCast; // se true, o item é usado no heroi
 
-    public ItemAtivo(String nome, String descricao, boolean selfCast) {
+    public ItemAtivo(String nome, String descricao, int custo, boolean selfCast) {
         super(nome, descricao);
         this.selfCast = selfCast;
+        this.custo = (custo);
     }
 
     public ItemAtivo(ItemAtivo copia) {
         super(copia);
+        this.custo = copia.custo;
         this.selfCast = copia.selfCast;
     }
 
@@ -21,9 +23,18 @@ public class ItemAtivo extends Item{
         return selfCast;
     }
 
-    public void usar(Batalha batalha) {
-        // logica para usar o item ativo
+    public void setSelfCast(boolean selfCast) {
+        this.selfCast = selfCast;
     }
+
+    /** aplica o efeito do item.
+     * @return -1 cancela o uso e nao remove da lista de inventario
+     */
+    public int usar(Batalha batalha) {
+        // logica para usar o item ativo
+        return 0;
+    }
+
     @Override
     public ItemAtivo criaCopia() {
         return new ItemAtivo(this);
@@ -34,5 +45,7 @@ public class ItemAtivo extends Item{
         return this.nome + ": " + this.descricao;
     }
 
-    
+    public String descricaoLoja() {
+        return this.nome + " (Custo: " + this.custo + "): " + this.descricao;
+    }
 }

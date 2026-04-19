@@ -142,7 +142,7 @@ public class FabricaCartas {
         resenhax = new CartaHabilidade("Resenhax", "Adiciona um Clubex na sua pilha de compras.", 3, ganhaClubex, true); 
         resenhax.setConsumir(true); 
 
-        pactoSangue = new CartaHabilidade("Pacto de sangue", "Pague (4) vida e escolha uma carta da sua pilha de compras.", 1, escolheCarta, true); 
+        pactoSangue = new CartaHabilidade("Pacto de sangue", "Veja sua pilha de compras e escolha uma carta para puxar.", 1, escolheCarta, true); 
         pactoSangue.setSacrificio(4); pactoSangue.setRaridade(2);
 
         ecoDolor = new CartaHabilidade("Eco Dolor", "Causa uma parte do dano acumulado durante a duraçao em dano direto no final da duraçao", 2, ecoaDano50, false);

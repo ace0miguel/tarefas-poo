@@ -5,6 +5,7 @@ import java.util.Collections;
 
 import cartas.Carta;
 import util.InputHandler;
+import visual.Cor;
 
 public class PilhaDescarte {
     private ArrayList<Carta> cartas = new ArrayList<>();  
@@ -51,7 +52,7 @@ public class PilhaDescarte {
         }
 
         visual.Textos.limpaTela();
-        System.out.println("Pilha de descarte");
+        System.out.println(Cor.vermelho + "Pilha de descarte" + Cor.reset);
         System.out.println();
 
         for(int i = 0; i < cartas.size(); i++) {

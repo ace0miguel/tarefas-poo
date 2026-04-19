@@ -1,6 +1,7 @@
 package telas.eventos.combate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
@@ -77,6 +78,18 @@ public class Batalha extends Evento {
 
     public ArrayList<Poder> getListaPoderes() {
         return listaPoderes;
+    }
+
+    public PilhaDescarte getPilhaDescarte() {
+        return pilhaDescarte;
+    }
+
+    public PilhaCompra getPilhaCompra() {
+        return pilhaCompra;
+    }
+
+    public Mao getMao() {
+        return mao;
     }
 
     /** retorna al ista de inimigos vivos convertidas pra array */
@@ -188,7 +201,7 @@ public class Batalha extends Evento {
         }
         
         boolean primeiroLoop = true; // se true, printa a animaçao de batalha
-        boolean escolhaInvalida = false; // se true, mostra texto de escolha invalida
+        boolean escolhaInvalida = false; // se true, mostra texto
 
         // loop da escolha de ação
         while(true){ 
@@ -675,6 +688,7 @@ public class Batalha extends Evento {
 
     public int mostrarItensAtivos(){
         int escolha = InputHandler.selecionar(heroi.getListaItensAtivos(), true, Cor.azulClaro + "Itens:" + Cor.reset, "Voltar");
+
         if (escolha == -1) 
             return -1;
 

@@ -5,12 +5,13 @@ import static visual.Textos.menuStatus;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import batalhaListeners.itens.Item;
+import fabricas.FabricaItens;
 import batalhaListeners.itens.ativos.ItemAtivo;
 import cartas.Carta;
 import entidades.Heroi;
@@ -27,6 +28,11 @@ public class Loja extends Evento{
     
     @Override 
     public void iniciar (Heroi heroi){
+        List<ItemAtivo> itensDisponiveis = new ArrayList<>(listaItensAtivosMoldes);
+        Collections.shuffle(itensDisponiveis);
+        itensDisponiveis = itensDisponiveis.subList(0, Math.min(3, itensDisponiveis.size())); // seleciona 3 itens aleatórios para oferecer na loja
+        
+
         this.heroi = heroi;
         String titulo = Textos.colorirPartes(Arte.loja, Cor.reset, Cor.ciano, 1);
         while (true){
@@ -80,22 +86,19 @@ public class Loja extends Evento{
                     }
                 }
                 case 2-> {
-                    List<String> opcoes = new ArrayList<>(Arrays.asList(
-                    "Poção de cura P (20 de vida, 15 reais)",
-                    "Poção de cura M (30 de vida, 25 reais)", 
-                    "Poção de cura G (40 de vida, 35 reais)"));
+                    List<String> opcoes = new ArrayList<>(itensDisponiveis.stream().map(i -> i.descricaoLoja()).toList());
 
-                    int escolha2 = InputHandler.selecionar(opcoes, true, Cor.txtAmareloClaro("\n\nQual poção deseja comprar? "+ menuStatus(heroi)));
+                    int escolha2 = InputHandler.selecionar(opcoes, true, Cor.txtAmareloClaro("\n\nQual item deseja comprar? "+ menuStatus(heroi)));
                     if (escolha2 == -1) break;
                     switch (escolha2) {
                         case 0 -> {
-                            compraItem(heroi, pocaoCura20, 15);
+                            compraItem(heroi, itensDisponiveis.get(0), itensDisponiveis.get(0).getCusto());
                         }
                         case 1 -> {
-                            compraItem(heroi, pocaoCura30, 25);
+                            compraItem(heroi, itensDisponiveis.get(1), itensDisponiveis.get(1).getCusto());
                         }
                         case 2 -> {
-                            compraItem(heroi, pocaoCura40, 35);
+                            compraItem(heroi, itensDisponiveis.get(2), itensDisponiveis.get(2).getCusto());
                         }
                     }
                 }

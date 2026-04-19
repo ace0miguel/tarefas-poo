@@ -12,7 +12,7 @@ import util.InputHandler;
 
 /** Abre um menu de seleção baseado na lista de compras
  *  e permite escolher uma carta pra puxar imediatamente
- *  e dps reembaralha a pilha de compras (pq o jogador viu a ordem) */
+ *  e NÃO reembaralha a pilha de compras */
 public class EscolheCarta extends Instantaneo {
     protected Carta carta;
 
@@ -32,7 +32,7 @@ public class EscolheCarta extends Instantaneo {
     @Override
     public void onCreate(Batalha batalha, Heroi heroi) {
         if (this.getAlvo() instanceof Heroi h) {
-            if (h.getPilhaCompra().getPilhaCartas().size() <= 0) {
+            if (h.getPilhaCompra().getPilha().size() <= 0) {
                 System.out.println("Não há cartas para escolher!");
                 InputHandler.esperar();
                 this.cancelarJogada();
@@ -40,14 +40,13 @@ public class EscolheCarta extends Instantaneo {
                 return;
             }
 
-            List<List<String>> matrizPaginas = InputHandler.montaPaginas(h.getPilhaCompra().getPilhaCartas());
+            List<Carta> cartasEmOrdemDeCompra = h.getPilhaCompra().getCartas();
+            List<List<String>> matrizPaginas = InputHandler.montaPaginas(cartasEmOrdemDeCompra);
 
-            Carta escolha = h.getPilhaCompra().getPilhaCartas().get(InputHandler.menu(matrizPaginas, new AtomicInteger(0), false));
+            Carta escolha = cartasEmOrdemDeCompra.get(InputHandler.menu(matrizPaginas, new AtomicInteger(0), false));
 
             h.getMaoAtual().addCartaEsp(escolha);
-            h.getPilhaCompra().getPilhaCartas().remove(escolha);
-            
-            Collections.shuffle(h.getPilhaCompra().getPilhaCartas());
+            h.getPilhaCompra().getPilha().remove(escolha);
         }
     }
 }

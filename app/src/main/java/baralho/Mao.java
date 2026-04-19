@@ -66,14 +66,14 @@ public class Mao {
     public void inicioBatalha(PilhaCompra pilhaCompra, PilhaDescarte pilhaDescarte){
         List<Carta> obrigatorias = new ArrayList<>();
         
-        for (Carta carta : pilhaCompra.getPilhaCartas()) {
+        for (Carta carta : pilhaCompra.getPilha()) {
             if (carta.getInata()) {
                 obrigatorias.add(carta);
             }
         }
 
         // remove as obrigatorias da pilha de compra
-        pilhaCompra.getPilhaCartas().removeAll(obrigatorias);
+        pilhaCompra.getPilha().removeAll(obrigatorias);
 
         // adiciona as obrigatorias a mao
         this.cartas.addAll(obrigatorias);

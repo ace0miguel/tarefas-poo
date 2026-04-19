@@ -2,27 +2,28 @@ package batalhaListeners.itens.ativos;
 
 import telas.eventos.combate.Batalha;
 
-public class PocaoVida extends ItemAtivo {
+public class PocaoEnergia extends ItemAtivo {
     private int valor;
 
-    public PocaoVida(String nome, String descricao, int custo, int valor) {
+    public PocaoEnergia(String nome, String descricao, int custo, int valor) {
         super(nome, descricao, custo, true);
         this.valor = valor;
     }
 
-    public PocaoVida(PocaoVida copiado) {
+    public PocaoEnergia(PocaoEnergia copiado) {
         super(copiado);
         this.valor = copiado.valor;
     }
 
     @Override
-    public PocaoVida criaCopia() {
-        return new PocaoVida(this);
+    public PocaoEnergia criaCopia() {
+        return new PocaoEnergia(this);
     }
 
     @Override
     public int usar(Batalha batalha) {
-        batalha.getHeroi().addVida(valor); 
-        return 0;    
+        batalha.getHeroi().ganhaEnergia(valor);
+
+        return 0;
     }
 }

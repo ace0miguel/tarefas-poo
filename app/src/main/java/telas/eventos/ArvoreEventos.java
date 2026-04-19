@@ -28,14 +28,45 @@ public class ArvoreEventos {
     int n; // quantidade de filhos por nó
     int p; // profundidade (QUANTIDADE TOTAL DE BATALHAS: P - 1 PQ COMEÇA DO PROFUNDIDADE 0)
 
-    List<Evento> eventosCuradores = new ArrayList<>(); // lista de eventos que podem curar o jogador
-    List<Evento> eventosNeutros = new ArrayList<>(); // lista de eventos que podem ou nao ajudar o jogador
-    List<Evento> todosEventos = new ArrayList<>(); // lista de todos os eventos, usada caso precise sortear um evento completamente aleatorio sem se importar com a dificuldade
+    private static List<Evento> eventosCuradores = new ArrayList<>(); // lista de eventos que podem curar o jogador
+    private static List<Evento> eventosNeutros = new ArrayList<>(); // lista de eventos que podem ou nao ajudar o jogador
+    private static List<Evento> todosEventos = new ArrayList<>(); // lista de todos os eventos,
 
-    List<Evento> batalhasTriviais = new ArrayList<>();
-    List<Evento> batalhasMedias = new ArrayList<>(); 
-    List<Evento> batalhasDesafiadoras = new ArrayList<>();
-    List<Evento> batalhasElite = new ArrayList<>();
+    private static List<Evento> batalhasTriviais = new ArrayList<>();
+    private static List<Evento> batalhasMedias = new ArrayList<>(); 
+    private static List<Evento> batalhasDesafiadoras = new ArrayList<>();
+    private static List<Evento> batalhasElite = new ArrayList<>(); // tipo de batalha mais dificil no meio do mapa
+    private static List<Evento> batalhasFinais = new ArrayList<>(); // batalhas de fim de andar(ato, mundo, sla como vai chamar ainda)
+
+    // nao consegui implementar ainda mas acho q consta
+    private enum tipoEventos {
+        // BATALHAS !
+        BATALHA_TRIVIAL(batalhasTriviais),
+        BATALHA_MEDIA(batalhasMedias),
+        BATALHA_DESAFIADORA(batalhasDesafiadoras),
+        BATALHA_ELITE(batalhasElite),
+        BATALHA_FINAL(batalhasFinais),
+        
+        EVENTO_NEUTRO(eventosNeutros),
+        CURA(eventosCuradores);
+
+        private final List<Evento> eventos;
+
+        tipoEventos(List<Evento> eventos) {
+            this.eventos = eventos;
+        }   
+
+        public List<Evento> getEventos(int quantidade) {
+            List<Evento> tempEventos = new ArrayList<>();
+            tempEventos.addAll(eventos);
+            Collections.shuffle(tempEventos);
+            return tempEventos.subList(0, Math.min(quantidade - 1, tempEventos.size() - 1));
+        }
+
+        public Evento getEvento(){
+            return getEventos(1).get(0); 
+        }
+    }
 
     // moldes de eventos aleatorios
     Loja loja = new Loja();
