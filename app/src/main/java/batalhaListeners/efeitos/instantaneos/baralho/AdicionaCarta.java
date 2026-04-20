@@ -32,12 +32,8 @@ public class AdicionaCarta extends Instantaneo {
 
     @Override
     public void onCreate(Batalha batalha, Heroi heroi) {
-        if (this.getAlvo() instanceof Heroi h) {
-            h.getPilhaCompra().addCartaPilha(this.carta.criaCopia());
-        } else {
-            Cor.printaAmarelo("erro -> tentou dar cartas pra algo nao heroi");
-            InputHandler.esperar();
-        }
+
+        heroi.getPilhaCompra().addCartaPosicaoAleatoria(this.carta.criaCopia());
     }
 
     @Override

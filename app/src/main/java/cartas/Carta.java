@@ -233,7 +233,7 @@ public abstract class Carta {
         efeitosOnDiscard = efeitos;
     }
 
-    public void setEfeitosOnLimpar(Efeito[] efeitosOnLimpar) {
+    public void setEfeitosOnLimpar(Efeito... efeitosOnLimpar) {
         this.efeitosOnLimpar = efeitosOnLimpar;
     }
 

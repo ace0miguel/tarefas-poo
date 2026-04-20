@@ -108,7 +108,7 @@ public class Batalha extends Evento {
         return vidaPerdida;
     }
 
-    /** aplica dano direto e notifica o alvo com a vida pegitrdida */
+    /** aplica dano puro (direto na vida) e notifica o alvo com a vida pegitrdida */
     public int causarDanoDireto(Entidade alvo, int dano, Entidade atacante){
         int vidaPerdida = alvo.receberDanoDiretoRetornandoVidaPerdida(dano);
         notificarDanoRecebido(alvo, atacante, vidaPerdida);
@@ -271,6 +271,8 @@ public class Batalha extends Evento {
             }
 
             if (usaCarta(escolha) == -1){ // uso cancelado
+                // remove instantaneos criados durante a tentativa cancelada
+                limpaSubscribers();
                 cartaEmUso = null;
                 continue;
             }
@@ -300,7 +302,7 @@ public class Batalha extends Evento {
         }            
 
         mao.limpa(this);    
-        
+
         passaTurno();
     }
 
@@ -618,6 +620,11 @@ public class Batalha extends Evento {
         
         cartaEscolhida.usar(this);
 
+        if (cartaEscolhida.getUsoCancelado()) {
+            cartaEscolhida.setUsoCancelado(false);
+            return -1;
+        }
+
         Entidade alvoSelecionado = cartaEscolhida.getAlvoDaJogada();
 
         // se der BO no alvo definido printa um erro mas vira o heroi pra nao crasha o jogo
@@ -625,11 +632,6 @@ public class Batalha extends Evento {
             System.out.println("erro na seleçao de alvo, heroi selecionado pra nao crashar o jogo!");
             InputHandler.esperar();
             alvoSelecionado = heroi;
-        }
-
-        if (cartaEscolhida.getUsoCancelado()) {
-            cartaEscolhida.setUsoCancelado(false);
-            return -1;
         }
 
         // cartas com a flag consumir vao pra pilha secundaria e nao voltam pra pilha de compras (normalmente)
@@ -673,19 +675,32 @@ public class Batalha extends Evento {
         System.out.println();
         InputHandler.esperar();
         Recompensas.ganharDinheiro(this.recompensa, heroi);
-        Recompensas.ganharCarta(1, heroi);
 
         // recompensa baseada na dificuldade total da batalha
         switch (getNivelDificuldade()) {
-            case 2 -> Recompensas.ganharOpcoes(1, 3, heroi);
-            case 3 -> Recompensas.ganharCartas(2, 3, heroi);
+            case 1 -> {
+                Recompensas.ganharOpcoes(1, 3, heroi);
+            }
+            case 2 -> {
+                Recompensas.ganharOpcoes(1, 3, heroi);
+                Recompensas.ganharItemAtivo(heroi);
+            }
+            case 3 -> {
+                Recompensas.ganharCartas(1, 3, heroi);
+                Recompensas.ganharOpcoes(2, 3, heroi);
+                Recompensas.ganharItemAtivo(heroi);   
+            }
             case 4 -> {
                 Recompensas.ganharCartas(2, 3, heroi);
-                Recompensas.ganharOpcoes(3, 5, heroi);
+                Recompensas.ganharOpcoes(2, 5, heroi);
+                Recompensas.ganharItemAtivo(heroi); 
+                Recompensas.ganharItemPassivo(heroi);  
             }
             case 5 -> {
                 Recompensas.ganharCartas(3, 5, heroi);
                 Recompensas.ganharOpcoes(3, 3, heroi);
+                Recompensas.ganharItemAtivo(heroi);
+                Recompensas.ganharItemPassivo(heroi);
             }
         }
     }

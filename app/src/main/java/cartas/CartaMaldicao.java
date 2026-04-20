@@ -11,15 +11,15 @@ import telas.eventos.combate.Batalha;
     {
         private Efeito efeito;
 
-        public CartaMaldicao(String nome, String descricao, int custo, Efeito efeito, boolean _selfCast){
+        public CartaMaldicao(String nome, String descricao, int custo, Efeito efeito){
             super(nome, descricao, custo);
-            this.setSelfCast(_selfCast);
+            this.setSelfCast(true);
             this.efeito = efeito;
         }
 
-        public CartaMaldicao(String nome, String descricao, int custo, boolean _selfCast){
+        public CartaMaldicao(String nome, String descricao, int custo){
             super(nome, descricao, custo);
-            this.setSelfCast(_selfCast);
+            this.setSelfCast(true);
         }
 
         public CartaMaldicao(CartaMaldicao copia) {
@@ -29,18 +29,22 @@ import telas.eventos.combate.Batalha;
 
         @Override
         public void usar (Batalha batalha){
+
             Heroi heroi = batalha.getHeroi();
             int energiaAtual = heroi.getEnergia();
             if(energiaAtual >= this.getCusto()){
+
                 Entidade alvoReal = resolverAlvo(batalha);
                 if (alvoReal == null) {
                     return;
                 }
 
                 heroi.usarEnergia(this.getCusto());
+                
                 if (this.efeito != null){
                         efeito.adicionar(alvoReal,batalha);
                 }
+
                 printaResenha();
             }
         }

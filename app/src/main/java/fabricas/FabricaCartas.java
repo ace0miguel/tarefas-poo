@@ -21,9 +21,11 @@ import static fabricas.FabricaEfeitos.escudo10;
 import static fabricas.FabricaEfeitos.escudo4;
 import static fabricas.FabricaEfeitos.ganhaClubex;
 import static fabricas.FabricaEfeitos.ganhaEnergia1;
+import static fabricas.FabricaEfeitos.ganhaEnergia2;
 import static fabricas.FabricaEfeitos.ganhaEnergiaTest;
 import static fabricas.FabricaEfeitos.ganhaResenhax;
 import static fabricas.FabricaEfeitos.purificarEfeito;
+import static fabricas.FabricaEfeitos.recebeDanoPuro2;
 import static fabricas.FabricaEfeitos.sangramento;
 import static fabricas.FabricaEfeitos.veneno;
 import static fabricas.FabricaEfeitos.veneno4;
@@ -49,7 +51,7 @@ public class FabricaCartas {
     public static Carta mestreLaminasCarta;
     // novas cartas
     public static Carta puxaCarta;
-    public static Carta energizar;
+    public static Carta energizar1;
     public static Carta energiaGratis;
     public static Carta sangrar;
     public static Carta beberVeneno;
@@ -64,8 +66,11 @@ public class FabricaCartas {
     public static Carta presenteMaldito;
     public static Carta bombaSuprema;
     public static Carta ecoDolor;
-    public static Carta descartar;
+    public static Carta reciclagem;
     public static Carta freestyle;
+    public static Carta ferida;
+    public static Carta nada;
+    public static Carta espada;
 
     public static List<Carta> listaCartasMoldes = new ArrayList<>();
 
@@ -73,6 +78,9 @@ public class FabricaCartas {
         listaCartasMoldes.clear();
 
         // cartas ataque basicas
+        espada = new CartaAtaque("Espada", "Um corte simples com uma espada comum", 1, 5);
+        espada.setTipo(2); espada.setResenha(Arte.CORTE4); espada.setRaridade(1);   
+
         tiro = new CartaAtaque("Disparo de revolver", "dispara um tiro com seu revolver", 1, 5);
         tiro.setTipo(1);
         tiro.setResenha(Arte.TIRO5); tiro.setRaridade(1);
@@ -92,11 +100,11 @@ public class FabricaCartas {
         clubex.setEfeitoEmArea(true); clubex.setConsumir(true);
 
         // cartas ataque com efeito
-        corteProfundo = new CartaAtaqueComEfeito("Adaga pontiaguda", "aplica sangramento", 1, 4, false, sangramento);
+        corteProfundo = new CartaAtaqueComEfeito("Espada (muito afiada)", "aplica sangramento", 1, 4, false, sangramento);
         corteProfundo.setTipo(2);
         corteProfundo.setResenha(Cor.txtVermelho(Arte.CORTE)); corteProfundo.setRaridade(1);
 
-        corteVenenoso = new CartaAtaqueComEfeito("Adaga envenenada", "aplica dois acumulos de veneno", 1, 3, false, veneno);
+        corteVenenoso = new CartaAtaqueComEfeito("Espada (envenenada)", "aplica dois acumulos de veneno", 1, 3, false, veneno);
         corteVenenoso.setTipo(2);
         corteVenenoso.setResenha(Cor.txtVerdeClaro(Arte.CORTE2)); corteVenenoso.setRaridade(1);
 
@@ -129,8 +137,8 @@ public class FabricaCartas {
         puxaCarta = new CartaHabilidade("Ganancia", "Puxe duas cartas da sua pilha de compras", 1, true, efeitoPuxaCarta2);
         puxaCarta.setRaridade(2);
 
-        energizar = new CartaHabilidade("ENERGIZAR!", "Ganhe mais 2 pontos de energia no começo da próxima rodada!", 2, true, efeitoEnergizado); 
-        energizar.setRaridade(2);
+        energizar1 = new CartaHabilidade("Cafeína", "Ganhe um acumulo de energizar.", 1, true, efeitoEnergizado); 
+        energizar1.setRaridade(2);
 
         energiaGratis = new CartaHabilidade("Energia!", "Ganhe 1 ponto de energia", 0, true, ganhaEnergia1); 
         energiaGratis.setRaridade(2);
@@ -147,8 +155,8 @@ public class FabricaCartas {
         ecoDolor = new CartaHabilidade("Eco Dolor", "Causa uma parte do dano acumulado durante a duraçao em dano direto no final da duraçao", 2, false, ecoaDano50);
         ecoDolor.setRaridade(3);
 
-        descartar = new CartaHabilidade("Descartar", "Descarta uma carta da sua mão", 1, true, descarta1);
-        descartar.setRaridade(2);
+        reciclagem = new CartaHabilidade("Reciclagem", "Descarta uma carta da sua mão e ganha 2 pontos de energia", 1, true, descarta1, ganhaEnergia2);
+        reciclagem.setRaridade(2);
 
         freestyle = new CartaHabilidade("Freestyle", "Puxe duas cartas aleatoria da sua pilha de compra e descarte uma da sua mão", 1, true, descarta1, efeitoPuxaCarta2);
         freestyle.setRaridade(2);
@@ -166,8 +174,17 @@ public class FabricaCartas {
         // cartas que nao entram na lista de moldes ---------
 
         // maldicoes
-        sangrar = new CartaMaldicao("Sangrar.", "Recebe um acúmulo de sangramento.", 1, sangramento, true); sangrar.setResenha(Cor.txtCinza(Arte.algoRuim));
-        beberVeneno = new CartaMaldicao("Beber veneno.", "Recebe dois acúmulos de veneno.", 1, veneno, true); beberVeneno.setResenha(Cor.txtCinza(Arte.algoRuim));
+        sangrar = new CartaMaldicao("Sangrar.", "Recebe um acúmulo de sangramento.", 1, sangramento); 
+        sangrar.setResenha(Cor.txtCinza(Arte.algoRuim));
+
+        beberVeneno = new CartaMaldicao("Beber veneno.", "Recebe dois acúmulos de veneno.", 1, veneno); 
+        beberVeneno.setResenha(Cor.txtCinza(Arte.algoRuim));
+
+        ferida = new CartaMaldicao("Ferida", "No fim da rodada, receba 2 pontos de dano puro.", 2);
+        ferida.setEfeitosOnLimpar(recebeDanoPuro2);
+
+        nada = new CartaMaldicao("Nada", "Não faz nada", 1);
+        nada.setResenha(Cor.txtCinza(Arte.nada));
 
         // cartas pro deck de teste
         bombaSuprema = new CartaAtaque("BOMBA!!!!!!!!!", "joga uma bomba que atinge TODOS os inimigos!", 0, 150); bombaSuprema.setEfeitoEmArea(true); 
@@ -176,10 +193,12 @@ public class FabricaCartas {
         energiaSupremo = new CartaHabilidade("Energia!!!!!!!!!!!", "Ganhe muitos ponto de energia", 0, true, ganhaEnergiaTest); 
         energiaSupremo.setRaridade(10); energiaSupremo.setInata(true);
 
+        
+
 
         listaCartasMoldes.addAll(Arrays.asList(tiro, tiroEscopeta, tiroCanhao, corteProfundo, 
-            corteVenenoso, desprezo, armadura, shieldao, 
-            shieldinho, purificar, egoCarta, puxaCarta, energizar, energiaGratis, dedoNervosoCarta, 
-            mestreLaminasCarta, bomba, bombaVeneno, chocolex, contratoSangue, pactoSangue, ecoDolor, descartar, freestyle));
+            corteVenenoso, desprezo, armadura, shieldao, espada,
+            shieldinho, purificar, egoCarta, puxaCarta, energizar1, energiaGratis, dedoNervosoCarta, 
+            mestreLaminasCarta, bomba, bombaVeneno, chocolex, contratoSangue, pactoSangue, ecoDolor, reciclagem, freestyle));
     }
 }

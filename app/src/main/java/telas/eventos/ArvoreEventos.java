@@ -204,8 +204,8 @@ public class ArvoreEventos {
 
         // andares aleatorios -----------------------------------------
 
-        // primeiros 4 andares
-        else if (profundidadeAtual < 3 ) {
+        // primeira e segunda lutas
+        else if (profundidadeAtual < 2 ) {
             opcoes.add(tipoNode.BATALHA_TRIVIAL);
         }
 

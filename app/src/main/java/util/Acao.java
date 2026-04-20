@@ -1,9 +1,10 @@
-package telas.eventos.combate;
+package util;
 
 import batalhaListeners.efeitos.Efeito;
 import cartas.Carta;
 import entidades.Heroi;
 import entidades.Inimigo;
+import telas.eventos.combate.Batalha;
 import visual.Cor;
 import visual.Textos;
 
@@ -65,7 +66,7 @@ public abstract class Acao {
 
         @Override
         public void anunciar(Inimigo executor, Heroi heroi) {
-            Textos.printaBonito(Cor.amarelo + "> " + Cor.reset + executor.getNome() + Cor.cinza + " irá te atacar causando " + (executor.getFracaoDanoEfetivo(2)) + " pontos de dano e aplicar " + efeito.getNomeColorido()  + ".", 1, 2);
+            Textos.printaBonito(Cor.amarelo + "> " + Cor.reset + executor.getNome() + Cor.cinza + " irá te atacar causando " + (executor.getFracaoDanoEfetivo(2)) + " pontos de dano e aplicar um efeito.", 1, 2);
         }
 
         @Override
@@ -100,6 +101,35 @@ public abstract class Acao {
         }
     }
 
+    /** Ataca e embaralha uma carta na pilha de compras do heroi */
+    public static class AtacarEAdicionarCarta extends Acao{
+        public AtacarEAdicionarCarta(Carta carta){
+            this.carta = carta.criaCopia();
+            this.agressiva = true;
+        }
+
+        @Override
+        public void executar(Inimigo executor, Heroi heroi, Batalha batalha){
+            batalha.causarDano(heroi, executor.getFracaoDanoEfetivo(1.5f), executor);
+            heroi.getPilhaCompra().addCartaPosicaoAleatoria(carta);
+        };
+
+        @Override
+        public void anunciar(Inimigo executor, Heroi heroi) {
+            Textos.printaBonito(Cor.amarelo + "> " + Cor.reset + executor.getNome() + Cor.cinza + " irá te atacar causando " + 
+            (executor.getFracaoDanoEfetivo(1.5f)) + " pontos de dano e adicionar algo na sua pilha de compras.", 1, 2);
+        }
+
+        @Override
+        public int resultado(Inimigo executor, Heroi heroi) {
+            Textos.printaBonito(Cor.reset + "> " + executor.getNome() + Cor.txtAmarelo(" ") + Cor.vermelho + "Causou " 
+            + heroi.getDanoReduzido(executor.getFracaoDanoEfetivo(1.5f)) + " pontos de dano e adicionou [" 
+            + Cor.amarelo + carta.getNome() + Cor.vermelho + "] na sua pilha de compras!", 5, 2);
+
+            return heroi.getDanoReduzido(executor.getFracaoDanoEfetivo(1.5f));
+        }
+    }
+
     /** Aplica um efeito a si mesmo */
     public static class ReceberEfeito extends Acao {
         public ReceberEfeito(Efeito efeito){
@@ -114,7 +144,7 @@ public abstract class Acao {
 
         @Override
         public void anunciar(Inimigo executor, Heroi heroi) {
-            Textos.printaBonito(Cor.txtAmarelo("> ") + executor.getNome() + Cor.cinza + " irá utilizar " + efeito.getNomeColorido() + ".", 1, 2);
+            Textos.printaBonito(Cor.txtAmarelo("> ") + executor.getNome() + Cor.cinza + " irá utilizar um efeito em si mesmo.", 1, 2);
         }
 
         @Override
@@ -133,8 +163,7 @@ public abstract class Acao {
 
         @Override
         public void executar(Inimigo executor, Heroi heroi, Batalha batalha) {
-            heroi.getPilhaCompra().addCartaPilha(carta);
-            heroi.getPilhaCompra().shuffleStack();
+            heroi.getPilhaCompra().addCartaPosicaoAleatoria(carta);
         }
 
         @Override
@@ -181,7 +210,7 @@ public abstract class Acao {
 
         @Override
         public void anunciar(Inimigo executor, Heroi heroi) {
-            Textos.printaBonito(Cor.txtAmarelo("> ") + executor.getNome() + Cor.cinza + " irá aplicar o efeito " + efeito.getNomeColorido() + Cor.cinza + " em um " + Cor.txtAmarelo("aliado") + ".", 1, 2);
+            Textos.printaBonito(Cor.txtAmarelo("> ") + executor.getNome() + Cor.cinza + " irá aplicar um efeito em um " + Cor.txtAmarelo("aliado") + ".", 1, 2);
         }
 
         @Override

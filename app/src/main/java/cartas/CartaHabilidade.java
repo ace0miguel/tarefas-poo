@@ -42,17 +42,18 @@ public class CartaHabilidade extends Carta // aplica um efeito em um alvo
             
             aplicarEfeito(heroi, alvo, batalha);
 
-            heroi.usarEnergia(this.getCusto());
+            if (!this.getUsoCancelado()) {
+                heroi.usarEnergia(this.getCusto());
+            }
         }
     }
 
     @Override
-    public void aplicarEfeito(Heroi heroi, Entidade alvo, Batalha batalha) {
-        printaResenha();
-
+    public void aplicarEfeito(Heroi heroi, Entidade alvo, Batalha batalha) {       
         if (aplicarEfeitos(heroi, alvo, batalha, efeitos)) {
             this.setUsoCancelado(true);
         }
+        printaResenha();
     }
 
     @Override

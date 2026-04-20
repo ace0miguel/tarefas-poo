@@ -59,13 +59,20 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
             Textos.limpaTela();
             
             aplicarEfeito(heroi, alvo, batalha);
-    
-            heroi.usarEnergia(this.getCusto());
+
+            if (!this.getUsoCancelado()) {
+                heroi.usarEnergia(this.getCusto());
+            }
         }
     }
 
     @Override
     public void aplicarEfeito(Heroi heroi, Entidade alvo, Batalha batalha) {
+        if (aplicarEfeitos(heroi, alvo, batalha, efeitos)) {
+            this.setUsoCancelado(true);
+            return;
+        }
+
         printaResenha();
 
         if (!efeitoEmArea){
@@ -75,11 +82,6 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
             for (Inimigo inimigo : batalha.getInimigos() ) {
                 batalha.causarDano(inimigo, this.getDano() + ((this.getDano() * heroi.getDanoExtra()) / 100), heroi);
             }
-        }
-
-        if (aplicarEfeitos(heroi, alvo, batalha, efeitos)) {
-            this.setUsoCancelado(true);
-            return;
         }
 
         acertos++;

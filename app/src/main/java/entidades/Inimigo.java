@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import telas.eventos.combate.Acao;
 import telas.eventos.combate.Batalha;
+import util.Acao;
 import util.InputHandler;
 import util.RNGHandler;
 import visual.Cor;
@@ -130,10 +130,13 @@ public class Inimigo extends Entidade{
         return this.dano + ((this.dano * this.getDanoExtra()) / 100);
     }
 
-    public int getFracaoDanoEfetivo(int divisor){
-        int danoBase = this.dano / divisor;
-        return danoBase + ((danoBase * this.getDanoExtra()) / 100);
-    }
+    public int getFracaoDanoEfetivo(float divisor) {
+    float danoBase = this.dano / divisor;
+    
+    float danoTotalDecimal = danoBase + ((danoBase * this.getDanoExtra()) / 100.0f);
+    
+    return Math.round(danoTotalDecimal);
+}
 
     /** retorna a recompensa por matar o inimigo. valor atual: 3^tier */
     public int getRecompensa() {

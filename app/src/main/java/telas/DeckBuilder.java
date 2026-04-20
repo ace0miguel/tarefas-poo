@@ -7,26 +7,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import cartas.Carta;
 import entidades.Heroi;
-import static fabricas.FabricaCartas.armadura;
-import static fabricas.FabricaCartas.bombaSuprema;
-import static fabricas.FabricaCartas.bombaVeneno;
-import static fabricas.FabricaCartas.contratoSangue;
-import static fabricas.FabricaCartas.corteProfundo;
-import static fabricas.FabricaCartas.corteVenenoso;
-import static fabricas.FabricaCartas.descartar;
-import static fabricas.FabricaCartas.ecoDolor;
-import static fabricas.FabricaCartas.egoCarta;
-import static fabricas.FabricaCartas.energiaSupremo;
-import static fabricas.FabricaCartas.energizar;
-import static fabricas.FabricaCartas.freestyle;
-import static fabricas.FabricaCartas.mestreLaminasCarta;
-import static fabricas.FabricaCartas.pactoSangue;
-import static fabricas.FabricaCartas.presenteMaldito;
-import static fabricas.FabricaCartas.puxaCarta;
-import static fabricas.FabricaCartas.shieldao;
-import static fabricas.FabricaCartas.shieldinho;
-import static fabricas.FabricaCartas.tiro;
-import static fabricas.FabricaCartas.tiroEscopeta;
+
+import static fabricas.FabricaCartas.*;
 import static fabricas.FabricaItens.amuletoVelho;
 import static fabricas.FabricaItens.marmita;
 import static fabricas.FabricaItens.vape;
@@ -48,28 +30,32 @@ public class DeckBuilder {
     /** exibe os decks padrao ja montados */
     public static void mostrarDecksPadrao(Heroi heroi){
         // nomes dos decks padrao
-        decksPadrao.add(Cor.txtVermelho("Samurai: Cartas de corte ( menos dano, aplicam efeito )" + Cor.reset + " +" + Cor.rosa +" amuleto velho"));
-        decksPadrao.add(Cor.txtAmarelo("John wick: Cartas de tiro ( mais dano direto, sem efeito )" + Cor.reset + " +" + Cor.rosa +" marmita"));
-        decksPadrao.add(Cor.txtCinza("deck de teste (ativa o modo teste)"));
+        decksPadrao.add(Cor.txtVermelho("Kit tramontina" + Cor.reset + " +" + Cor.rosa +" amuleto velho"));
+        decksPadrao.add(Cor.txtAmarelo("Kit john wick" + Cor.reset + " +" + Cor.rosa +" marmita"));
+        decksPadrao.add(Cor.txtCinza("Terceira opçao secreta (DECK DE TESTE, ATIVA O MODO DEBUG)"));
 
         Textos.limpaTela();
-        int escolha = InputHandler.selecionar(decksPadrao, Cor.reset + "Escolha um baralho inicial: \n" + Cor.txtCinza("(voce ira ganhar mais carts pra personalizar depois!)")); 
+        int escolha = InputHandler.selecionar(decksPadrao, Cor.reset + "Escolha um kit inicial: \n" + Cor.txtCinza("(voce ira ganhar mais carts pra personalizar depois!)")); 
 
         switch (escolha){
             /** deck inicial baseado em cortes */
             case 0 -> { 
-                heroi.addCarta(corteVenenoso);
-                heroi.addCarta(corteVenenoso);
+                heroi.addCarta(espada);
+                heroi.addCarta(espada);
+                heroi.addCarta(espada);
+                heroi.addCarta(espada);
 
-                heroi.addCarta(corteProfundo);
+                heroi.addCarta(corteVenenoso);
                 heroi.addCarta(corteProfundo);
 
+                heroi.addCarta(shieldao);
                 heroi.addCarta(shieldao);
 
                 heroi.addCarta(shieldinho);
                 heroi.addCarta(shieldinho);
 
-                heroi.addCarta(energizar);
+                heroi.addCarta(energizar1);
+                heroi.addCarta(reciclagem);
 
                 Recompensas.ganharItemPassivoEsp(amuletoVelho, heroi);
                 
@@ -79,12 +65,11 @@ public class DeckBuilder {
             case 1 -> {
                 heroi.addCarta(tiro);
                 heroi.addCarta(tiro);
-
                 heroi.addCarta(tiro);
                 heroi.addCarta(tiro);
 
+                heroi.addCarta(tiroEscopeta);    
                 heroi.addCarta(tiroEscopeta);     
-                heroi.addCarta(tiroEscopeta);
                 
                 heroi.addCarta(shieldinho);
                 heroi.addCarta(shieldinho);
@@ -139,8 +124,8 @@ public class DeckBuilder {
                 heroi.addCarta(mestreLaminasCarta);
                 heroi.addCarta(mestreLaminasCarta);
 
-                heroi.addCarta(descartar);
-                heroi.addCarta(descartar);
+                heroi.addCarta(reciclagem);
+                heroi.addCarta(reciclagem);
 
                 heroi.addCarta(freestyle);
                 heroi.addCarta(freestyle);

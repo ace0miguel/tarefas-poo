@@ -31,22 +31,20 @@ public class EscolheCarta extends Instantaneo {
 
     @Override
     public void onCreate(Batalha batalha, Heroi heroi) {
-        if (this.getAlvo() instanceof Heroi h) {
-            if (h.getPilhaCompra().getPilha().size() <= 0) {
-                System.out.println("Não há cartas para escolher!");
-                InputHandler.esperar();
-                this.cancelarJogada();
+        if (heroi.getPilhaCompra().getPilha().size() <= 0) {
+            System.out.println("Não há cartas para escolher!");
+            InputHandler.esperar();
+            this.cancelarJogada();
 
-                return;
-            }
-
-            List<Carta> cartasEmOrdemDeCompra = h.getPilhaCompra().getCartas();
-            List<List<String>> matrizPaginas = InputHandler.montaPaginas(cartasEmOrdemDeCompra);
-
-            Carta escolha = cartasEmOrdemDeCompra.get(InputHandler.menu(matrizPaginas, new AtomicInteger(0), false));
-
-            h.getMaoAtual().addCartaEsp(escolha);
-            h.getPilhaCompra().getPilha().remove(escolha);
+            return;
         }
+
+        List<Carta> cartasEmOrdemDeCompra = heroi.getPilhaCompra().getCartas();
+        List<List<String>> matrizPaginas = InputHandler.montaPaginas(cartasEmOrdemDeCompra);
+
+        Carta escolha = cartasEmOrdemDeCompra.get(InputHandler.menu(matrizPaginas, new AtomicInteger(0), false));
+
+        heroi.getMaoAtual().addCartaEsp(escolha);
+        heroi.getPilhaCompra().getPilha().remove(escolha);
     }
 }

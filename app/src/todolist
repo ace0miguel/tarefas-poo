@@ -1,21 +1,15 @@
-adicionar ainda mais uns efeitos e cartas e poderes legais
-
 balancear o jogo (importante)
 
 adicionar mais eventos ainda
 
 implementar o json pra ter progressão
 
-fazer mais lutas na campanha
-
-luta contra o dono do cassino
-
 seleçao de personagem
-
-criar um efeito Instantaneo, pra todos os instantaneos herdarem deckBuilder
 
 adicionar mais poderes fracos
 
 organizar os checks de limpar no batalha (limpasubscribers, adicionaefieto, notifica morte e tal)
 
 implementar cartaAtaqueEfeitoCondicional
+
+implementar algum modo de mostrar a msgfimrodada de efeitos instantaneos (eles sao limpos antes da hora de printar)

@@ -31,12 +31,7 @@ public class PuxaCartaEsp extends PuxaCarta {
 
     @Override
     public void onCreate(Batalha batalha, Heroi heroi) {
-       if (this.getAlvo() instanceof Heroi h) {
-            h.getMaoAtual().addCartaEsp(this.carta.criaCopia());
-        } else {
-            Cor.printaAmarelo("erro -> tentou dar cartas pra algo nao heroi");
-            InputHandler.esperar();
-        }
+        heroi.getMaoAtual().addCartaEsp(this.carta.criaCopia());
     }
 
     @Override

@@ -23,12 +23,7 @@ public class PuxaCarta extends Instantaneo {
 
     @Override
     public void onCreate(Batalha batalha, Heroi heroi) {
-        if (this.getAlvo() instanceof Heroi h) {
-            h.getMaoAtual().addCartas(h.getPilhaCompra(), h.getPilhaDescarte(), this.valor);
-        } else {
-            Cor.printaAmarelo("erro -> tentou dar cartas pra algo nao heroi");
-            InputHandler.esperar();
-        }
+        heroi.getMaoAtual().addCartas(heroi.getPilhaCompra(), heroi.getPilhaDescarte(), this.valor);
     }
 
     @Override

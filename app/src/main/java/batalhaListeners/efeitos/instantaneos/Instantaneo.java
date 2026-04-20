@@ -5,6 +5,7 @@ import batalhaListeners.efeitos.Efeito;
 import entidades.Heroi;
 import telas.eventos.combate.Batalha;
 
+/** efeitos com 0 de duração. por padrão, ao acumular eles apenas aplicam o efeito novamente.*/
 public class Instantaneo extends Efeito {
     public Instantaneo(String nome, String desc) {
         super(nome, desc, 0);

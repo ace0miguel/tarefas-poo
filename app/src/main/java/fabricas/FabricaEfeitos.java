@@ -17,6 +17,7 @@ import batalhaListeners.efeitos.instantaneos.baralho.PuxaCarta;
 import batalhaListeners.efeitos.instantaneos.status.Escudo;
 import batalhaListeners.efeitos.instantaneos.status.GanhaEnergia;
 import batalhaListeners.efeitos.instantaneos.status.Purificar;
+import batalhaListeners.efeitos.instantaneos.status.RecebeDanoPuro;
 import batalhaListeners.efeitos.latentes.EcoaDano;
 import batalhaListeners.efeitos.latentes.Energizar;
 import static fabricas.FabricaCartas.clubex;
@@ -57,7 +58,7 @@ public class FabricaEfeitos {
     // novos efeitos
     public static Efeito efeitoPuxaCarta2 = new PuxaCarta("Puxa duas cartas", "Puxa duas cartas", 2);
 
-    public static Efeito efeitoEnergizado = new Energizar("Energizado", "Ganhe dois pontos de energia na proxima rodada", 1, 2);
+    public static Efeito efeitoEnergizado = new Energizar("Energizado", "Ganhe um pontos de energia por acumulo na proxima rodada", 1, 1);
 
     public static AdicionaCarta ganhaResenhax = new AdicionaCarta("Resenhax", "Recebe um resenhax", null); 
        
@@ -68,6 +69,8 @@ public class FabricaEfeitos {
     public static Efeito ecoaDano50 = new EcoaDano("Eco Dolor", "Causa uma parte do dano acumulado no fim da duraçao", 4, 50);
 
     public static Efeito descarta1 = new Descarta("Descarta uma carta", "Descarta uma carta", 1);
+
+    public static Efeito recebeDanoPuro2 = new RecebeDanoPuro("Ferida", "Causa dois pontos de dano puro ao alvo.", 2);
 
     public static void carregar(){
         listaEfeitosMoldes.clear();

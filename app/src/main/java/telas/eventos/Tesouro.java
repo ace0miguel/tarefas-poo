@@ -35,6 +35,8 @@ public class Tesouro extends Evento {
         // }
 
         Recompensas.ganharCartas(2, 5, heroi);
+        Recompensas.ganharItemAtivo(heroi);
+        Recompensas.ganharItemAtivo(heroi);
         Recompensas.ganharItemPassivo(heroi);
     }
 

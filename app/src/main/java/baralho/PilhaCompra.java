@@ -6,6 +6,7 @@ import java.util.Stack;
 
 import cartas.Carta;
 import util.InputHandler;
+import util.RNGHandler;
 import visual.Cor;
 import visual.Textos;
 
@@ -17,8 +18,17 @@ public class PilhaCompra {
         cartas.add(c);
     }
 
+    public void addCartaPosicaoAleatoria(Carta c){
+        if (cartas.isEmpty()) {
+            cartas.add(c);
+            return;
+        }
+
+        cartas.add(RNGHandler.getGen().nextInt(cartas.size() + 1) , c);
+    }
+
     /**adiciona uma carta na pilha de compras e a embaralha */
-    public void addCartaPilha(Carta c){
+    public void addCartaShuffle(Carta c){
         cartas.add(c);
         shuffleStack();
     }
