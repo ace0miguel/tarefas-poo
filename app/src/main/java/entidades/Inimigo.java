@@ -54,11 +54,17 @@ public class Inimigo extends Entidade{
 
     /** sorteia um numero de 0 à (quantidade de ações - 1)*/
     public void escolheAcao(){
+        if (acoes == null || acoes.isEmpty())
+            return;
+
         nextAcao = acoes.get(RNGHandler.getGen().nextInt(acoes.size()));
     }
 
     /** imprime a intenção do inimigo (próxima ação a ser realizada) */
     public void anunciarIntencao(Heroi alvo){
+        if (nextAcao == null) 
+            return;
+
         if (this.estaVivo()){
             nextAcao.anunciar(this, alvo);
             Textos.sleep(50);
@@ -67,14 +73,22 @@ public class Inimigo extends Entidade{
 
     /** retorna true se a ação for agressiva */
     public boolean realizarAcao(Heroi alvo, Batalha batalha){
+        if (nextAcao == null) 
+            return false;
+
         if (this.estaVivo())
             nextAcao.executar(this, alvo, batalha);
 
         return (nextAcao.getAgressiva());
     }
 
-    /** imprime o resultado da ação do inimigo (dano causado, efeitos aplicados, etc.) */
+    /** imprime o resultado da ação do inimigo (dano causado, efeitos aplicados, etc.) 
+     * @return o dano causado pela ação
+    */
     public int resultadoAcao(Heroi alvo){
+        if (nextAcao == null) 
+            return 0;
+
         int dano = 0;
         if (this.estaVivo()){
             dano = nextAcao.resultado(this, alvo);

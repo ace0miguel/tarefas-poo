@@ -27,7 +27,7 @@ public class AumentaResistItem extends ItemPassivo {
     }
 
     @Override
-    public ItemPassivo criaCopia() {
+    public AumentaResistItem criaCopia() {
         return new AumentaResistItem(this);
     }
 

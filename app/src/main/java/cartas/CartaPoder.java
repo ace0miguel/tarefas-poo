@@ -6,6 +6,7 @@ import batalhaListeners.poderes.Poder;
 import entidades.Entidade;
 import entidades.Heroi;
 import telas.eventos.combate.Batalha;
+import visual.Textos;
 
 /** cartas que aplicam poderes (buff permanente durante o combate atual, que normalmente acumulam). Por definiçao, sempre possuem a tag Consumir */
 public class CartaPoder extends Carta
@@ -32,13 +33,21 @@ public class CartaPoder extends Carta
     }
 
     @Override
-    public void usar (Heroi heroi, Entidade alvo, Batalha batalha){
+    public void usar (Batalha batalha){
+        
+
+        Heroi heroi = batalha.getHeroi();
+
+        setAlvoDaJogada(heroi);
+
         int energiaAtual = heroi.getEnergia();
 
         if(energiaAtual >= this.getCusto()){
             heroi.receberDanoDireto(this.sacrificio);
 
-            aplicarEfeito(heroi, alvo, batalha);
+            Textos.limpaTela();
+
+            aplicarEfeito(heroi, heroi, batalha);
 
             heroi.usarEnergia(this.getCusto());
         }

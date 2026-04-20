@@ -1,6 +1,7 @@
 package cartas;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import batalhaListeners.efeitos.Efeito;
@@ -26,6 +27,12 @@ public abstract class Carta {
     private String resenha = "";
     /** vida perdida ao usar a carta. */
     protected int sacrificio = 0; // variavel pra definir um custo em vida ao se usar a carta.
+
+    // efeitos a serem ativados caso a carta seja descartada (usar ou deixar na mao no fim da rodada nao contam)
+    protected Efeito efeitosOnDiscard[]; 
+
+    // efeitos a serem ativados caso a carta seja limpa da mao (usar a carta nao conta)
+    protected Efeito efeitosOnLimpar[];
 
     /** lista de tags que sao exibidas antes da descriçao da carta */
     protected List<String> tags = new ArrayList<>();
@@ -98,6 +105,9 @@ public abstract class Carta {
 
         this.raridade = copia.raridade;
         this.tags = new ArrayList<>(copia.tags);
+
+        this.efeitosOnDiscard = copia.efeitosOnDiscard;
+        this.efeitosOnLimpar = copia.efeitosOnLimpar;
     }
 
     // Getters --------------------------------------
@@ -208,8 +218,25 @@ public abstract class Carta {
     public List<String> getTagsDisponiveis(){
         return new ArrayList<>(this.tagsCompraveis.stream().filter(tag -> !this.tags.contains(tag)).toList());
     }
+
+    public Efeito[] getEfeitosOnDiscard() {
+        return efeitosOnDiscard;
+    }
+
+    public Efeito[] getEfeitosOnLimpar() {
+        return efeitosOnLimpar;
+    }
+
+
     // Setters --------------------------------------
-    
+    public void setEfeitosOnDiscard(Efeito... efeitos){
+        efeitosOnDiscard = efeitos;
+    }
+
+    public void setEfeitosOnLimpar(Efeito[] efeitosOnLimpar) {
+        this.efeitosOnLimpar = efeitosOnLimpar;
+    }
+
     public void setSelfCast(boolean selfCast) {
         this.selfCast = selfCast;
     }
@@ -286,8 +313,13 @@ public abstract class Carta {
         this.usoCancelado = usoCancelado;
     }
 
+    public void setAlvoDaJogada(Entidade alvoDaJogada) {
+        this.alvoDaJogada = alvoDaJogada;
+    }
+
     /** serve principalmente pra resolver o comportamento diferente de selfcast em tipos diferentes de carta e o cancelamento de uso. */
-    protected Entidade resolverAlvo(Heroi heroi, Entidade alvo, Batalha batalha) {
+    protected Entidade resolverAlvo(Batalha batalha) {
+        Heroi heroi = batalha.getHeroi();
         this.usoCancelado = false;
         this.alvoDaJogada = null;
 
@@ -379,11 +411,10 @@ public abstract class Carta {
 
     /** imprime uma string ao utilizar a carta, se existir. */
     public void printaResenha(){
-        if (!this.getResenha().equals("")){
-                Textos.sobeTela();
+        if (this.temResenha()){
                 Textos.sleep(200);
-                Textos.printaLinhaDevagar(this.getResenha(), 10);
-                Textos.sleep(600);
+                Textos.printaColunaDevagar(this.getResenha(), 2);
+                Textos.sleep(200);
                 System.out.println();
             }
     }
@@ -420,7 +451,7 @@ public abstract class Carta {
     }
 
     /** verifica se o heroi tem energia. Se sim, aplica o efeito da carta e subtrai o custo da energia. */
-    public abstract void usar(Heroi heroi, Entidade alvo, Batalha batalha);
+    public abstract void usar(Batalha batalha);
 
     /** apenas aplica o efeito da carta, sem consumir */
     public abstract void aplicarEfeito(Heroi heroi, Entidade alvo, Batalha batalha); 
@@ -459,7 +490,42 @@ public abstract class Carta {
         return inata;
     }
 
+    /** chamado quando a carta vai ser descartada: aplica os efeitos na lista efeitosOnDiscard, marcando o heroi como alvo.
+     * não precisa ter chamada de alvo, efeitos on discard ou vao aplicar no heroi ou em todos.
+    */
+    public void onDiscard(Batalha batalha) {
+        if (efeitosOnDiscard == null) {
+            return;
+        }
+
+        if (efeitosOnDiscard.length == 0) {
+            return;
+        }
+
+        Efeito[] efeitos = Arrays.copyOf(this.efeitosOnDiscard, this.efeitosOnDiscard.length);
+
+        aplicarEfeitosEmAlvo(batalha.getHeroi(), batalha, efeitos);
+    }
+
+    /** chamado quando a carta vai ser limpa da mao: aplica os efeitos na lista efeitosOnLimpar, marcando o heroi como alvo.
+     * não precisa ter chamada de alvo, efeitos on limpar ou vao aplicar no heroi ou em todos.
+    */
+    public void onLimpar(Batalha batalha) {
+        if (efeitosOnLimpar == null) {
+            return;
+        }
+
+        if (efeitosOnLimpar.length == 0) {
+            return;
+        }
+
+        Efeito[] efeitos = Arrays.copyOf(this.efeitosOnLimpar, this.efeitosOnLimpar.length);
+
+        aplicarEfeitosEmAlvo(batalha.getHeroi(), batalha, efeitos);
+    }
+
     public String descricaoLoja() {
         return this.descricao() + Cor.amarelo + " > " + Cor.reset + "[ " + Cor.amareloClaro + this.getPreco() + Cor.reset + " ] reais" + Cor.amarelo + " <"+ Cor.reset + "\n";
     }
 }
+    

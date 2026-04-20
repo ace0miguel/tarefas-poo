@@ -25,11 +25,13 @@ import static fabricas.FabricaCartas.resenhax;
 public class FabricaEfeitos {
     public static List<Efeito> listaEfeitosMoldes = new ArrayList<>();
 
-    public static Efeito sangramento = new Sangramento("Sangramento", "Causa 1 de dano por rodada ao alvo", 3, 1);
+    public static Efeito sangramento = new Sangramento("Sangramento", "Causa 2 pontos de dano por rodada ao alvo", 3, 2);
 
     public static Efeito veneno1 = new Veneno("Veneno", "Causa sua duraçao em dano por rodada ao alvo", 1, 1);
 
     public static Efeito veneno = new Veneno("Veneno", "Causa sua duraçao em dano por rodada ao alvo", 2, 1);
+
+    public static Efeito veneno3 = new Veneno("Veneno", "Causa sua duraçao em dano por rodada ao alvo", 3, 1);
 
     public static Efeito veneno4 = new Veneno("Veneno", "Causa sua duraçao em dano por rodada ao alvo", 4, 1);
 

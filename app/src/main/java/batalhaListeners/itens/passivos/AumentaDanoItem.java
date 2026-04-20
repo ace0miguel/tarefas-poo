@@ -27,7 +27,7 @@ public class AumentaDanoItem extends ItemPassivo {
     }
 
     @Override
-    public ItemPassivo criaCopia() {
+    public AumentaDanoItem criaCopia() {
         return new AumentaDanoItem(this);
     }
 

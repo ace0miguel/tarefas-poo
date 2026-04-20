@@ -6,6 +6,7 @@ import entidades.Heroi;
 import entidades.Inimigo;
 import telas.eventos.combate.Batalha;
 import visual.Cor;
+import visual.Textos;
 
 /** cartas que causam dano direto e aplicam mais de um efeito */
 public class CartaAtaqueComEfeitos extends CartaAtaque {
@@ -23,21 +24,27 @@ public class CartaAtaqueComEfeitos extends CartaAtaque {
     }
 
     @Override
-    public void usar(Heroi heroi, Entidade alvo, Batalha batalha){
+    public void usar(Batalha batalha){
+         Textos.limpaTela();
+
+        Heroi heroi = batalha.getHeroi();
         int energiaAtual = heroi.getEnergia();
         if(energiaAtual >= this.getCusto()){
             acertos = 0;
 
             // resolve a questao do selfcast
-            Entidade alvoReal = resolverAlvo(heroi, alvo, batalha);
+            Entidade alvo = resolverAlvo(batalha);
             
-            if (alvoReal == null) {
+            if (alvo == null) {
                 return;
             }
 
+            
             heroi.receberDanoDireto(this.sacrificio);
 
-            aplicarEfeito(heroi, alvoReal, batalha);
+            Textos.limpaTela();
+
+            aplicarEfeito(heroi, alvo, batalha);
 
             heroi.usarEnergia(this.getCusto());
         }
@@ -81,7 +88,7 @@ public class CartaAtaqueComEfeitos extends CartaAtaque {
     }
 
     @Override
-    public Carta criaCopia() {
+    public CartaAtaqueComEfeitos criaCopia() {
         return new CartaAtaqueComEfeitos(this);
     }
 }

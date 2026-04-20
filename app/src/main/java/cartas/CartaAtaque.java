@@ -4,6 +4,7 @@ import entidades.Heroi;
 import entidades.Inimigo;
 import telas.eventos.combate.Batalha;
 import visual.Cor;
+import visual.Textos;
 
 /* 
 Cartas que causam dano direto e não aplicam efeitos secundários.
@@ -24,20 +25,24 @@ public class CartaAtaque extends Carta
     }
 
     @Override
-    public void usar(Heroi heroi, Entidade alvo, Batalha batalha){
+    public void usar(Batalha batalha){
+
+        Heroi heroi = batalha.getHeroi();
         int energiaAtual = heroi.getEnergia();
         if(energiaAtual >= this.getCusto()){
             acertos = 0;
 
-            Entidade alvoReal = resolverAlvo(heroi, alvo, batalha);
-            
-            if (alvoReal == null) {
+            Entidade alvo = resolverAlvo(batalha);
+
+            if (alvo == null) {
                 return;
             }
 
             heroi.receberDanoDireto(this.sacrificio);
 
-            aplicarEfeito(heroi, alvoReal, batalha);
+            Textos.limpaTela();
+
+            aplicarEfeito(heroi, alvo, batalha);
 
             heroi.usarEnergia(this.getCusto());
         }

@@ -8,10 +8,11 @@ import cartas.CartaAtaque;
 import cartas.CartaHabilidade;
 import cartas.CartaMaldicao;
 import cartas.CartaPoder;
+import telas.eventos.combate.Batalha;
 import util.InputHandler;
 
-/* Início do turno : puxa 5 carta;
- tudo que voce nao usar vai pra pilha de descarte;
+/* Início do turno : puxa 5 cartas;
+tudo que voce nao usar vai pra pilha de descarte;
 acabou a pilha de compra: reembaralha a pilha de descarte */
 public class Mao {
     // uma boa mudança seria adicionar um construtor com a pilha de compras e a pilha de descarte, ai nao teria q ficar passando toda vez que chama
@@ -24,15 +25,13 @@ public class Mao {
 
     Scanner ler = InputHandler.getLeitor();
 
-    public void limpaRemover(PilhaDescarte pilhaDescarte){
+    /** manda as cartas setadas por descartar pra pilha de compras e chama onDiscard*/
+    public void limpaRemover(Batalha batalha){
         for (Carta carta : remover) {
-            removeCartaEsp(carta, pilhaDescarte);
+            carta.onDiscard(batalha);
+            removeCartaEsp(carta, batalha.getPilhaDescarte());
         }
         remover.clear();
-    }
-
-    public void setRemover(Carta carta){
-        remover.add(carta);
     }
 
     public int getCartasBonus() {
@@ -118,23 +117,28 @@ public class Mao {
         cartas.remove(opcao);   
     }
 
-    /** remove a carta passada da mao e adiciona a pilha de descarte
+    /** remove a carta por REFERENCIA passada da mao e adiciona a pilha de descarte
      */
     public void removeCartaEsp(Carta carta, PilhaDescarte pilhaDescarte){
         pilhaDescarte.descarta(carta);
         cartas.remove(carta);   
     }
 
+    /** joga um carta fora durante o turno, e deixa setado pra chamar onDiscard  (CHAMAR QUANDO UMA CARTA FOR DESCARTADA SEM SER USADA)*/
+    public void descartar(Carta carta){
+        remover.add(carta);
+    }
 
-    /** remove todas as cartas da mao e manda pra pilha de descarte (chamar essa funçao no fim do turno)
+    /** chama onLimpar em todas as cartas da mao e manda pra pilha de descarte (chamar essa funçao no fim do turno)
      * (não remove com tag manter)
      */
-    public void limpa(PilhaDescarte pilhaDescarte){
+    public void limpa(Batalha batalha){
         List<Carta> cartasParaRemover = cartas.stream().
         filter(carta -> !carta.getManter()).toList();
 
         for (Carta carta : cartasParaRemover) {
-            pilhaDescarte.descarta(carta);
+            carta.onLimpar(batalha);
+            batalha.getPilhaDescarte().descarta(carta);
         }
 
         cartas.removeAll(cartasParaRemover);

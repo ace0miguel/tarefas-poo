@@ -38,6 +38,7 @@ public class InputHandler {
         if (exit) {
             System.out.println(Cor.cinza + 0 + Cor.txtAmarelo(" > ") +
                 Cor.txtCinza((exitMsg.equals("") ? "Voltar." : exitMsg)));
+                
             Textos.sleep(tempoSleep);
             System.out.println();
         }

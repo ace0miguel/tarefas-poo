@@ -11,15 +11,14 @@ import static fabricas.FabricaCartas.armadura;
 import static fabricas.FabricaCartas.bombaSuprema;
 import static fabricas.FabricaCartas.bombaVeneno;
 import static fabricas.FabricaCartas.contratoSangue;
-import static fabricas.FabricaCartas.corteDefensivo;
 import static fabricas.FabricaCartas.corteProfundo;
-import static fabricas.FabricaCartas.corteRapido;
 import static fabricas.FabricaCartas.corteVenenoso;
 import static fabricas.FabricaCartas.descartar;
 import static fabricas.FabricaCartas.ecoDolor;
 import static fabricas.FabricaCartas.egoCarta;
 import static fabricas.FabricaCartas.energiaSupremo;
 import static fabricas.FabricaCartas.energizar;
+import static fabricas.FabricaCartas.freestyle;
 import static fabricas.FabricaCartas.mestreLaminasCarta;
 import static fabricas.FabricaCartas.pactoSangue;
 import static fabricas.FabricaCartas.presenteMaldito;
@@ -30,6 +29,7 @@ import static fabricas.FabricaCartas.tiro;
 import static fabricas.FabricaCartas.tiroEscopeta;
 import static fabricas.FabricaItens.amuletoVelho;
 import static fabricas.FabricaItens.marmita;
+import static fabricas.FabricaItens.vape;
 import util.InputHandler;
 import util.Recompensas;
 import visual.Arte;
@@ -63,12 +63,6 @@ public class DeckBuilder {
 
                 heroi.addCarta(corteProfundo);
                 heroi.addCarta(corteProfundo);
-
-                heroi.addCarta(corteRapido);
-                heroi.addCarta(corteRapido);
-
-                heroi.addCarta(corteDefensivo);
-                heroi.addCarta(corteDefensivo);
 
                 heroi.addCarta(shieldao);
 
@@ -124,10 +118,8 @@ public class DeckBuilder {
                 heroi.addCarta(puxaCarta);
                 heroi.addCarta(puxaCarta); 
                 
-                heroi.addCarta(corteDefensivo);
                 heroi.addCarta(corteProfundo);
                 heroi.addCarta(corteVenenoso);
-                heroi.addCarta(corteRapido);
 
                 heroi.addCarta(energiaSupremo);
                 
@@ -136,6 +128,7 @@ public class DeckBuilder {
                 heroi.addCarta(pactoSangue);
                 heroi.addCarta(pactoSangue);
 
+
                 heroi.addCarta(presenteMaldito);
                 heroi.addCarta(presenteMaldito);
                 heroi.addCarta(presenteMaldito);
@@ -148,6 +141,10 @@ public class DeckBuilder {
 
                 heroi.addCarta(descartar);
                 heroi.addCarta(descartar);
+
+                heroi.addCarta(freestyle);
+                heroi.addCarta(freestyle);
+                heroi.addCarta(freestyle);
 
                 // Recompensas.ganharItemPassivoEsp(facaAcougueiro, heroi);
                 // Recompensas.ganharItemPassivoEsp(marmita, heroi);
@@ -155,9 +152,9 @@ public class DeckBuilder {
 
                 // Recompensas.ganharItemAtivoEsp(cigarro, heroi);
                 // Recompensas.ganharItemAtivoEsp(cigarro, heroi);
-                // Recompensas.ganharItemAtivoEsp(vape, heroi);
-                // Recompensas.ganharItemAtivoEsp(vape, heroi);
-                // Recompensas.ganharItemAtivoEsp(vape, heroi);
+                heroi.addItemAtivo(vape);
+                heroi.addItemAtivo(vape);
+                heroi.addItemAtivo(vape);
 
                 // Recompensas.ganharItemAtivoEsp(pocaoCura40, heroi);
 

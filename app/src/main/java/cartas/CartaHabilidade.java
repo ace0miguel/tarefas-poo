@@ -3,6 +3,7 @@ import batalhaListeners.efeitos.Efeito;
 import entidades.Entidade;
 import entidades.Heroi;
 import telas.eventos.combate.Batalha;
+import visual.Textos;
 
 /*
 Cartas que aplicam efeito(s); não causam dano direto.
@@ -23,17 +24,23 @@ public class CartaHabilidade extends Carta // aplica um efeito em um alvo
     }
 
     @Override
-    public void usar (Heroi heroi, Entidade alvo, Batalha batalha){
+    public void usar (Batalha batalha){
+         Textos.limpaTela();
+
+        Heroi heroi = batalha.getHeroi();
         int energiaAtual = heroi.getEnergia();      
         if(energiaAtual >= this.getCusto()) {
-            Entidade alvoReal = resolverAlvo(heroi, alvo, batalha);
-            if (alvoReal == null) {
+            Entidade alvo = resolverAlvo(batalha);
+            if (alvo == null) {
                 return;
             }
 
             heroi.receberDanoDireto(this.sacrificio);
+
+            if (!this.temResenha())
+                Textos.limpaTela();
             
-            aplicarEfeito(heroi, alvoReal, batalha);
+            aplicarEfeito(heroi, alvo, batalha);
 
             heroi.usarEnergia(this.getCusto());
         }

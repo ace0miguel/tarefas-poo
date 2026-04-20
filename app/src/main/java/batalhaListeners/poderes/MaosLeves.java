@@ -34,7 +34,8 @@ public class MaosLeves extends Poder {
     public void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha) {
         if (carta.getTipo() == this.tipo)  {
             for(int i = 0; i < this.getStacks(); i++){         
-                Textos.printaLinhaDevagar(Arte.MAISUM);
+                Textos.printaColunaDevagar(Arte.MAISUM, 2);
+                Textos.sleep(15);
                 System.out.println();
                 carta.aplicarEfeito(heroi, alvo, batalha);
             } 

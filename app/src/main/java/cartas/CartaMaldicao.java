@@ -28,10 +28,11 @@ import telas.eventos.combate.Batalha;
         }
 
         @Override
-        public void usar (Heroi heroi, Entidade alvo, Batalha batalha){
+        public void usar (Batalha batalha){
+            Heroi heroi = batalha.getHeroi();
             int energiaAtual = heroi.getEnergia();
             if(energiaAtual >= this.getCusto()){
-                Entidade alvoReal = resolverAlvo(heroi, alvo, batalha);
+                Entidade alvoReal = resolverAlvo(batalha);
                 if (alvoReal == null) {
                     return;
                 }

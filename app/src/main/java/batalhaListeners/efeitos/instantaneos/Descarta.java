@@ -64,7 +64,7 @@ public class Descarta extends Instantaneo {
 
                 Carta cartaEscolhida = cartas.get(escolha);
                 cartasRepetidas.add(cartaEscolhida);
-                h.getMaoAtual().setRemover(cartaEscolhida);
+                h.getMaoAtual().descartar(cartaEscolhida);
             }
         }
     }

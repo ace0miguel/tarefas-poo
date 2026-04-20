@@ -296,10 +296,11 @@ public class Batalha extends Evento {
             heroi.checkMeiaVida(heroi, heroi, this);
 
             addNovosInimigos();
-            mao.limpaRemover(pilhaDescarte);
+            mao.limpaRemover(this);
         }            
 
-        mao.limpa(pilhaDescarte);    
+        mao.limpa(this);    
+        
         passaTurno();
     }
 
@@ -613,21 +614,24 @@ public class Batalha extends Evento {
             InputHandler.esperar();
             return -1;
         } 
-
-        cartaEscolhida.usar(heroi, heroi, this);
+        
+        cartaEscolhida.usar(this);
 
         Entidade alvoSelecionado = cartaEscolhida.getAlvoDaJogada();
+
+        // se der BO no alvo definido printa um erro mas vira o heroi pra nao crasha o jogo
         if (alvoSelecionado == null) {
+            System.out.println("erro na seleçao de alvo, heroi selecionado pra nao crashar o jogo!");
+            InputHandler.esperar();
             alvoSelecionado = heroi;
         }
 
-        if (cartaEscolhida.getUsoCancelado()) 
-            {
+        if (cartaEscolhida.getUsoCancelado()) {
             cartaEscolhida.setUsoCancelado(false);
             return -1;
         }
 
-        // cartas com a flag consumir vao pra pilha secundaria e nao sao embaralhadas devolta
+        // cartas com a flag consumir vao pra pilha secundaria e nao voltam pra pilha de compras (normalmente)
         if (cartaEscolhida.getConsumir())
             mao.removeCarta(escolha, pilhaConsumir);
         else 

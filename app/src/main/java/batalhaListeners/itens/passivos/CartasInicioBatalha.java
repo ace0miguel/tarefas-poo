@@ -14,7 +14,7 @@ public class CartasInicioBatalha extends ItemPassivo {
     }
 
     @Override
-    public ItemPassivo criaCopia() {
+    public CartasInicioBatalha criaCopia() {
         return new CartasInicioBatalha(this);
     }
 

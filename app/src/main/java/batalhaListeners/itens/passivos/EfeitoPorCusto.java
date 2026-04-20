@@ -9,7 +9,7 @@ import telas.eventos.combate.Batalha;
 
 /** adiciona um efeito ao utilizar cartas ataque de um custoEnergia especifico
  * @param efeito o efeito a ser aplicadodo
- * @param custoEnergia o custoEnergia das cartas que vao ativar o efeito
+ * @param custoEnergia o custo em energia das cartas que vao ativar o efeito
  */
 public class EfeitoPorCusto extends ItemPassivo {
     private Efeito efeito;
@@ -28,7 +28,7 @@ public class EfeitoPorCusto extends ItemPassivo {
     }
 
     @Override
-    public ItemPassivo criaCopia() {
+    public EfeitoPorCusto criaCopia() {
         return new EfeitoPorCusto(this);
     }
 

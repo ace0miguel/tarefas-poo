@@ -22,7 +22,7 @@ public class CuraFimBatalha extends ItemPassivo {
     }
 
     @Override
-    public ItemPassivo criaCopia() {
+    public CuraFimBatalha criaCopia() {
         return new CuraFimBatalha(this);
     }
  

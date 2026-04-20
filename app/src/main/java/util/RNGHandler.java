@@ -20,10 +20,13 @@ public class RNGHandler {
         return (gen.nextInt(100) < valor);
     }
 
+    @SuppressWarnings("null")
+    /** recebe uma lista e retorna um item aleatório contido nela dela */
     public static <T> T sorteiaDeLista(List<T> lista){   
         if (lista == null || lista.isEmpty()) {
             System.out.println("Tentou sortear de uma lista vazia");
             InputHandler.esperar();
+            return null;
         }
         
         int index = gen.nextInt(lista.size());
