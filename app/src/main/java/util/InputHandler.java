@@ -96,7 +96,7 @@ public class InputHandler {
         if (exit) tamanhoEfetivo++;
 
         // fiz isso aqui por motivo de estetica, toda lista vai ser imprimida durando o msm tempo, a velocidade depende da quantidade de itens.
-        int tempoSleep = (lista.size() != 0) ? 300 / lista.size() : 500;
+        int tempoSleep = (lista.size() != 0) ? 100 / lista.size() : 300;
         boolean[] ancoraMenuDefinida = { false };
 
         while (true){

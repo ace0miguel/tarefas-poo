@@ -41,7 +41,6 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
 
     @Override
     public void usar(Batalha batalha){
-
         Heroi heroi = batalha.getHeroi();
         int energiaAtual = heroi.getEnergia();
         if(energiaAtual >= this.getCusto()){

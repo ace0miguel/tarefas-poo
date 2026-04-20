@@ -47,7 +47,7 @@ public abstract class Acao {
 
         @Override
         public int resultado(Inimigo executor, Heroi heroi) {
-            Textos.printaBonito(Cor.reset + "> " + executor.getNome() + Cor.txtAmarelo(" ") + Cor.vermelho + "Causou " + heroi.getDanoReduzido(executor.getDanoEfetivo()) + " pontos de dano!", 5, 2);
+            Textos.printaBonito(Cor.reset + "> " + executor.getNome() + Cor.txtAmarelo(" ") + Cor.vermelho + "causou " + heroi.getDanoReduzido(executor.getDanoEfetivo()) + " pontos de dano!", 5, 2);
             return heroi.getDanoReduzido(executor.getDanoEfetivo());
         }
     }
@@ -71,7 +71,7 @@ public abstract class Acao {
 
         @Override
         public int resultado(Inimigo executor, Heroi heroi) {
-            Textos.printaBonito(Cor.reset + "> " + executor.getNome() + Cor.txtAmarelo(" ") + Cor.vermelho + "Causou " + heroi.getDanoReduzido(executor.getFracaoDanoEfetivo(2)) + " pontos de dano e aplicou " + efeito.getNomeColorido() + "!", 5, 2);
+            Textos.printaBonito(Cor.reset + "> " + executor.getNome() + Cor.txtAmarelo(" ") + Cor.vermelho + "causou " + heroi.getDanoReduzido(executor.getFracaoDanoEfetivo(2)) + " pontos de dano e aplicou " + efeito.getNomeColorido() + "!", 5, 2);
             return heroi.getDanoReduzido(executor.getFracaoDanoEfetivo(2));
         }
     }
@@ -96,7 +96,7 @@ public abstract class Acao {
 
         @Override
         public int resultado(Inimigo executor, Heroi heroi) {
-            Textos.printaBonito(Cor.reset + "> " + executor.getNome() + Cor.txtAmarelo(" ") + Cor.vermelho + "Causou " + heroi.getDanoReduzido(executor.getDanoEfetivo() + danoVidaPerdida(heroi)) + " pontos de dano!", 5, 2);
+            Textos.printaBonito(Cor.reset + "> " + executor.getNome() + Cor.txtAmarelo(" ") + Cor.vermelho + "causou " + heroi.getDanoReduzido(executor.getDanoEfetivo() + danoVidaPerdida(heroi)) + " pontos de dano!", 5, 2);
             return heroi.getDanoReduzido(executor.getDanoEfetivo() + danoVidaPerdida(heroi));   
         }
     }
@@ -122,7 +122,7 @@ public abstract class Acao {
 
         @Override
         public int resultado(Inimigo executor, Heroi heroi) {
-            Textos.printaBonito(Cor.reset + "> " + executor.getNome() + Cor.txtAmarelo(" ") + Cor.vermelho + "Causou " 
+            Textos.printaBonito(Cor.reset + "> " + executor.getNome() + Cor.txtAmarelo(" ") + Cor.vermelho + "causou " 
             + heroi.getDanoReduzido(executor.getFracaoDanoEfetivo(1.5f)) + " pontos de dano e adicionou [" 
             + Cor.amarelo + carta.getNome() + Cor.vermelho + "] na sua pilha de compras!", 5, 2);
 
@@ -173,7 +173,7 @@ public abstract class Acao {
 
         @Override
         public int resultado(Inimigo executor, Heroi heroi) {
-            Textos.printaBonito(Cor.reset + "> " + executor.getNome() + Cor.txtAmarelo(" ") + "Colocou " + Cor.txtVermelho("algo ") + "na sua pilha de compras...", 5, 2);
+            Textos.printaBonito(Cor.reset + "> " + executor.getNome() + Cor.txtAmarelo(" ") + "colocou " + Cor.txtVermelho("algo ") + "na sua pilha de compras...", 5, 2);
             return 0;
         }
     }

@@ -412,9 +412,9 @@ public abstract class Carta {
     /** imprime uma string ao utilizar a carta, se existir. */
     public void printaResenha(){
         if (this.temResenha()){
-                Textos.sleep(200);
+                Textos.sleep(100);
                 Textos.printaColunaDevagar(this.getResenha(), 2);
-                Textos.sleep(200);
+                Textos.sleep(100);
                 System.out.println();
             }
     }

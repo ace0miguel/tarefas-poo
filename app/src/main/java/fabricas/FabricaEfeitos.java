@@ -14,13 +14,14 @@ import batalhaListeners.efeitos.instantaneos.baralho.AdicionaCarta;
 import batalhaListeners.efeitos.instantaneos.baralho.Descarta;
 import batalhaListeners.efeitos.instantaneos.baralho.EscolheCarta;
 import batalhaListeners.efeitos.instantaneos.baralho.PuxaCarta;
+import batalhaListeners.efeitos.instantaneos.baralho.PuxaCartaEsp;
 import batalhaListeners.efeitos.instantaneos.status.Escudo;
 import batalhaListeners.efeitos.instantaneos.status.GanhaEnergia;
 import batalhaListeners.efeitos.instantaneos.status.Purificar;
 import batalhaListeners.efeitos.instantaneos.status.RecebeDanoPuro;
 import batalhaListeners.efeitos.latentes.EcoaDano;
 import batalhaListeners.efeitos.latentes.Energizar;
-import static fabricas.FabricaCartas.clubex;
+import static fabricas.FabricaCartas.*;
 import static fabricas.FabricaCartas.resenhax;
 
 public class FabricaEfeitos {
@@ -71,6 +72,8 @@ public class FabricaEfeitos {
     public static Efeito descarta1 = new Descarta("Descarta uma carta", "Descarta uma carta", 1);
 
     public static Efeito recebeDanoPuro2 = new RecebeDanoPuro("Ferida", "Causa dois pontos de dano puro ao alvo.", 2);
+
+    public static Efeito ganhaAdaga = new PuxaCartaEsp("Adagas", "Receba 1 adaga", 1, adaga);
 
     public static void carregar(){
         listaEfeitosMoldes.clear();

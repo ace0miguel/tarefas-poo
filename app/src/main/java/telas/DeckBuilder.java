@@ -57,6 +57,8 @@ public class DeckBuilder {
                 heroi.addCarta(energizar1);
                 heroi.addCarta(reciclagem);
 
+                heroi.addCarta(chuvaLaminas);
+
                 Recompensas.ganharItemPassivoEsp(amuletoVelho, heroi);
                 
                 Recompensas.ganharDinheiro(60, heroi);
@@ -71,6 +73,8 @@ public class DeckBuilder {
                 heroi.addCarta(tiroEscopeta);    
                 heroi.addCarta(tiroEscopeta);     
                 
+                heroi.addCarta(bomba);
+
                 heroi.addCarta(shieldinho);
                 heroi.addCarta(shieldinho);
 
@@ -137,6 +141,7 @@ public class DeckBuilder {
 
                 // Recompensas.ganharItemAtivoEsp(cigarro, heroi);
                 // Recompensas.ganharItemAtivoEsp(cigarro, heroi);
+                
                 heroi.addItemAtivo(vape);
                 heroi.addItemAtivo(vape);
                 heroi.addItemAtivo(vape);

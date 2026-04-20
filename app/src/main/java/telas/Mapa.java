@@ -12,6 +12,7 @@ import visual.Cor;
 import visual.Textos;
 
 public class Mapa {
+    String bordaHudFinal;
     private Heroi heroi;
 
     public Mapa(Heroi _heroi){
@@ -27,7 +28,7 @@ public class Mapa {
     /** gera os filhos da posiçao passada e printa um menu de seleçao com seus eventos. (usar quando gerando os filhos dinamicamente) */
     public int criarCaminhos(DefaultMutableTreeNode posicaoAtual){ 
         arvoreEventos.expandirNo(posicaoAtual);
-        return InputHandler.selecionar(arvoreEventos.getTipoNodes(posicaoAtual),true, Arte.mapa + "\n" + Cor.txtAzul(Arte.bordaHud4) + 
+        return InputHandler.selecionar(arvoreEventos.getTipoNodes(posicaoAtual),true, Arte.mapa + "\n" + bordaHudFinal + 
         "\n" + Textos.menuStatus(heroi) + Cor.reset +
         "|| Próxima ilha: [" + Cor.txtAmarelo(String.valueOf((posicaoAtual.getLevel() + 1))) + "]" , "deckBuilder.");
     }
@@ -39,7 +40,7 @@ public class Mapa {
     
     /** retorna os filhos da posiçao passada e printa um menu de seleçao com seus eventos (usar para arvores completas)*/
     public int escolherCaminho(DefaultMutableTreeNode posicaoAtual){ 
-        return InputHandler.selecionar(arvoreEventos.getTipoNodes(posicaoAtual),true, Arte.mapa + "\n" + Cor.txtAzul(Arte.bordaHud4) + 
+        return InputHandler.selecionar(arvoreEventos.getTipoNodes(posicaoAtual),true, Arte.mapa + "\n" + bordaHudFinal + 
         "\n" + Textos.menuStatus(heroi) + Cor.reset +
         "|| Próxima ilha: [" + Cor.txtAmarelo(String.valueOf((posicaoAtual.getLevel() + 1))) + "]" , "deckBuilder.");
     }
@@ -105,6 +106,7 @@ public class Mapa {
     public void explorar() {
 
         boolean primeiroLoop = true; // se quiser pular a primeira luta por motivos de teste so deixar false aqui (lembra de arruma dps)
+        bordaHudFinal = Textos.colorirPartes(Arte.bordaHud4, Cor.azulClaro, Cor.azul, 1);
 
         while (true) { 
             Textos.limpaTela();
@@ -113,7 +115,7 @@ public class Mapa {
                 DeckBuilder.mostrarDecksPadrao(heroi);
                 
                 Textos.printaLinhaDevagar(Arte.mapa);
-                Textos.printaLinhaDevagar(Cor.txtAzul(Arte.bordaHud4));
+                Textos.printaLinhaDevagar(bordaHudFinal);
                 System.out.println();
 
                 iniciar();

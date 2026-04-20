@@ -1,12 +1,10 @@
 balancear o jogo (importante)
+    - arrumar o scaling do aumentaResistencia e do aumentaDano (e pra ser diminishing)
+    - etc 
 
-adicionar mais eventos ainda
+implementar o json <-- prioridade
 
-implementar o json pra ter progressão
-
-seleçao de personagem
-
-adicionar mais poderes fracos
+adicionar mais poderes 
 
 organizar os checks de limpar no batalha (limpasubscribers, adicionaefieto, notifica morte e tal)
 

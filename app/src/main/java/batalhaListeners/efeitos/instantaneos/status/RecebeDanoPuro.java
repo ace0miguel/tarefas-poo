@@ -22,15 +22,15 @@ public class RecebeDanoPuro extends Instantaneo {
     @Override
     public void onCreate(Batalha batalha, Heroi heroi) {
         batalha.causarDanoDireto(this.getAlvo(), valor, null);
+
+        visual.Textos.limpaTela();
+        visual.Textos.printaBonito(this.getAlvo().getNomeColorido() + 
+        " Recebeu [ " + Cor.vermelho + valor + Cor.reset  + " ] dano puro.", 3, 2);
+        util.InputHandler.esperar();
     }
 
     @Override
     public Efeito criaCopia() {
         return new RecebeDanoPuro(this);
-    }
-    
-    @Override
-    public String getMsgFimRodada(Batalha batalha, Heroi heroi) {
-        return this.getAlvo().getNomeColorido() + " Recebeu [ " + Cor.vermelho + valor + Cor.reset  + " ] dano puro.";
     }
 }

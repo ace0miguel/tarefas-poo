@@ -19,6 +19,7 @@ import static fabricas.FabricaEfeitos.ego;
 import static fabricas.FabricaEfeitos.escolheCarta;
 import static fabricas.FabricaEfeitos.escudo10;
 import static fabricas.FabricaEfeitos.escudo4;
+import static fabricas.FabricaEfeitos.ganhaAdaga;
 import static fabricas.FabricaEfeitos.ganhaClubex;
 import static fabricas.FabricaEfeitos.ganhaEnergia1;
 import static fabricas.FabricaEfeitos.ganhaEnergia2;
@@ -71,6 +72,8 @@ public class FabricaCartas {
     public static Carta ferida;
     public static Carta nada;
     public static Carta espada;
+    public static Carta adaga;
+    public static Carta chuvaLaminas;
 
     public static List<Carta> listaCartasMoldes = new ArrayList<>();
 
@@ -78,7 +81,12 @@ public class FabricaCartas {
         listaCartasMoldes.clear();
 
         // cartas ataque basicas
-        espada = new CartaAtaque("Espada", "Um corte simples com uma espada comum", 1, 5);
+
+
+        adaga = new CartaAtaque("Adaga", "Uma lâmina descartavel", 0, 3);
+        adaga.setTipo(2); adaga.setResenha(Arte.CORTE3); adaga.setRaridade(10); adaga.setConsumir(true);
+
+        espada = new CartaAtaque("Espada", "Uma espada comum", 1, 5);
         espada.setTipo(2); espada.setResenha(Arte.CORTE4); espada.setRaridade(1);   
 
         tiro = new CartaAtaque("Disparo de revolver", "dispara um tiro com seu revolver", 1, 5);
@@ -93,18 +101,18 @@ public class FabricaCartas {
         tiroCanhao.setTipo(1);
         tiroCanhao.setResenha(Arte.TIRO3); tiroCanhao.setRaridade(2);
 
-        bomba = new CartaAtaque("BOMBA!", "joga uma bomba que atinge TODOS os inimigos!", 3, 14); 
+        bomba = new CartaAtaque("BOMBA!", "joga uma bomba que atinge TODOS os inimigos!", 2, 9); 
         bomba.setEfeitoEmArea(true); bomba.setRaridade(2);
 
         clubex = new CartaAtaque("Clubex", "Causa 26 pontos de dano a todos inimigos.", 4, 26);
         clubex.setEfeitoEmArea(true); clubex.setConsumir(true);
 
         // cartas ataque com efeito
-        corteProfundo = new CartaAtaqueComEfeito("Espada (muito afiada)", "aplica sangramento", 1, 4, false, sangramento);
+        corteProfundo = new CartaAtaqueComEfeito("Espada muito afiada", "aplica sangramento", 1, 4, false, sangramento);
         corteProfundo.setTipo(2);
         corteProfundo.setResenha(Cor.txtVermelho(Arte.CORTE)); corteProfundo.setRaridade(1);
 
-        corteVenenoso = new CartaAtaqueComEfeito("Espada (envenenada)", "aplica dois acumulos de veneno", 1, 3, false, veneno);
+        corteVenenoso = new CartaAtaqueComEfeito("Espada envenenada", "aplica dois acumulos de veneno", 1, 3, false, veneno);
         corteVenenoso.setTipo(2);
         corteVenenoso.setResenha(Cor.txtVerdeClaro(Arte.CORTE2)); corteVenenoso.setRaridade(1);
 
@@ -161,6 +169,9 @@ public class FabricaCartas {
         freestyle = new CartaHabilidade("Freestyle", "Puxe duas cartas aleatoria da sua pilha de compra e descarte uma da sua mão", 1, true, descarta1, efeitoPuxaCarta2);
         freestyle.setRaridade(2);
 
+        chuvaLaminas = new CartaHabilidade("Chuva de lâminas", "Recebe 3 adagas", 1, true, ganhaAdaga, ganhaAdaga, ganhaAdaga);
+        chuvaLaminas.setRaridade(2);
+
         // cartas poder
         dedoNervosoCarta = new CartaPoder("JOHN WICK", "Sempre que utilizar um disparo, utilize novamente.", 3, dedoNervoso); 
         dedoNervosoCarta.setRaridade(3); 
@@ -197,7 +208,7 @@ public class FabricaCartas {
 
 
         listaCartasMoldes.addAll(Arrays.asList(tiro, tiroEscopeta, tiroCanhao, corteProfundo, 
-            corteVenenoso, desprezo, armadura, shieldao, espada,
+            corteVenenoso, desprezo, armadura, shieldao, espada, chuvaLaminas,
             shieldinho, purificar, egoCarta, puxaCarta, energizar1, energiaGratis, dedoNervosoCarta, 
             mestreLaminasCarta, bomba, bombaVeneno, chocolex, contratoSangue, pactoSangue, ecoDolor, reciclagem, freestyle));
     }

@@ -7,7 +7,10 @@ import telas.eventos.combate.Batalha;
 import util.InputHandler;
 import visual.Cor;
 
-/** adiciona a carta passada a mao do heroi */
+/** adiciona a carta passada a mao do heroi 
+ * @param carta a carta a ser adicionada a mao do heroi
+ * @param valor quantidade de copias da carta a ser adicionada a mao do heroi
+*/
 public class PuxaCartaEsp extends PuxaCarta {
     private Carta carta;
 
@@ -31,7 +34,9 @@ public class PuxaCartaEsp extends PuxaCarta {
 
     @Override
     public void onCreate(Batalha batalha, Heroi heroi) {
-        heroi.getMaoAtual().addCartaEsp(this.carta.criaCopia());
+        for (int i = 0; i < this.valor; i++) {
+            heroi.getMaoAtual().addCartaEsp(this.carta.criaCopia());
+        }
     }
 
     @Override

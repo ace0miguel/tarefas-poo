@@ -9,8 +9,8 @@ import visual.Cor;
 
 /** puxa da pilha de compra valor cartas e adiciona a mao do heroi */
 public class PuxaCarta extends Instantaneo {
-
     protected int valor;
+    
     public PuxaCarta(String nome, String desc, int valor){
         super(nome, desc);
         this.valor = valor;
