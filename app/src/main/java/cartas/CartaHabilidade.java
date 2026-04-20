@@ -4,7 +4,6 @@ import entidades.Entidade;
 import entidades.Heroi;
 import entidades.Inimigo;
 import telas.eventos.combate.Batalha;
-import visual.Cor;
 
 /*
 Cartas que aplicam efeitos; não causam dano direto.

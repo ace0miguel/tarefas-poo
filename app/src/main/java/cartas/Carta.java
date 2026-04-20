@@ -126,7 +126,7 @@ public abstract class Carta {
     /** retorna o nome colorido baseado na raridade da carta */
     public String getNomeRaridade(){
         return switch (raridade) {
-            case 1 -> Cor.txtReset(this.nome);
+            case 1 -> Cor.txtAzulClaro(this.nome);
             case 2 -> Cor.txtVerde(this.nome);
             case 3 -> Cor.txtLaranja(this.nome);
             case 4 -> Cor.txtRosa(this.nome);
@@ -188,6 +188,11 @@ public abstract class Carta {
 
     public List<String> getTags() {
         return tags;
+    }
+
+    /** retorna o preço de compra na loja, baseado na raridade. */
+    public int getPreco() {
+        return this.raridade * 45;
     }
 
     /** retorna todas as tags que a carta nao tem e que podem ser compradas */
@@ -384,5 +389,9 @@ public abstract class Carta {
 
     public boolean isInata() {
         return inata;
+    }
+
+    public String descricaoLoja() {
+        return this.descricao() + Cor.amarelo + " > " + Cor.reset + "[ " + Cor.amareloClaro + this.getPreco() + Cor.reset + " ] reais" + Cor.amarelo + " <"+ Cor.reset + "\n";
     }
 }

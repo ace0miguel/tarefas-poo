@@ -6,8 +6,8 @@ import telas.eventos.combate.Batalha;
 public class AumentaResistItem extends ItemPassivo {
     private int valor;
 
-    public AumentaResistItem(String nome, String desc, int valor ) {
-        super(nome, desc);
+    public AumentaResistItem(String nome, String desc, int valor, int custo ) {
+        super(nome, desc, custo);
         this.valor = valor;
     }
 

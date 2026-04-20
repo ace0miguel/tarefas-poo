@@ -6,8 +6,8 @@ import telas.eventos.combate.Batalha;
 public class AumentaDanoItem extends ItemPassivo {
     private int valor;
 
-    public AumentaDanoItem(String nome, String desc, int valor) {
-        super(nome, desc);
+    public AumentaDanoItem(String nome, String desc, int valor, int custo) {
+        super(nome, desc, custo);
         this.valor = valor;
     }
 

@@ -44,19 +44,19 @@ public class FabricaItens {
     public static void carregar(){
         listaItensMoldes.clear();
 
-        facaAcougueiro = new EfeitoPorCusto("Faca de açougueiro", "cartas de ataque custo 1 aplicam um acumulo de sangramento adicional", sangramento, 1);
+        facaAcougueiro = new EfeitoPorCusto("Faca de açougueiro", "cartas de ataque custo 1 aplicam um acumulo de sangramento adicional", sangramento, 1, 95);
 
-        marmita = new CuraFimBatalha("Marmita", "cura 6 pontos de vida no fim da batalha", 6);
+        marmita = new CuraFimBatalha("Marmita", "cura 6 pontos de vida no fim da batalha", 6, 95);
 
-        amuletoVelho = new CartasInicioBatalha("Amuleto velho", "receba 2 cartas adicionais no inicio da batalha", 2);
+        amuletoVelho = new CartasInicioBatalha("Amuleto velho", "receba 2 cartas adicionais no inicio da batalha", 2, 70);
 
-        jarroTerra = new AumentaResistItem("Jarro de terra", "receba 10% de redução de dano", 10);
+        jarroTerra = new AumentaResistItem("Jarro de terra", "receba 10% de redução de dano", 10, 85);
 
-        item20Resist = new AumentaResistItem("Colete a prova de tudo", "receba 20% de redução de dano", 20);
+        item20Resist = new AumentaResistItem("Colete a prova de tudo", "receba 20% de redução de dano", 20, 115);
 
-        item10Dano = new AumentaDanoItem("Espada curta", "cause 10% de dano extra", 10);
+        item10Dano = new AumentaDanoItem("Espada curta", "cause 10% de dano extra", 10, 85);
 
-        item20Dano = new AumentaDanoItem("Espada longa", "cause 20% de dano extra", 20);
+        item20Dano = new AumentaDanoItem("Espada longa", "cause 20% de dano extra", 20, 115);
 
         // itens ativos 
 

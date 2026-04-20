@@ -3,8 +3,8 @@ package batalhaListeners.itens.passivos;
 public class CartasInicioBatalha extends ItemPassivo {
     int quantidade;
 
-    public CartasInicioBatalha(String nome, String descricao, int quantidade) {
-        super(nome, descricao);
+    public CartasInicioBatalha(String nome, String descricao, int quantidade, int custo) {
+        super(nome, descricao, custo);
         this.quantidade = quantidade;
     }
 

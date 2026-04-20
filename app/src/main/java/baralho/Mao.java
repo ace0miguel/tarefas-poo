@@ -9,8 +9,6 @@ import cartas.CartaHabilidade;
 import cartas.CartaMaldicao;
 import cartas.CartaPoder;
 import util.InputHandler;
-import visual.Cor;
-import visual.Textos;
 
 /* Início do turno : puxa 5 carta;
  tudo que voce nao usar vai pra pilha de descarte;

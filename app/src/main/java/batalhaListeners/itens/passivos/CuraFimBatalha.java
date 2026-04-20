@@ -7,8 +7,8 @@ import visual.Textos;
 public class CuraFimBatalha extends ItemPassivo {
     int cura;
 
-    public CuraFimBatalha(String nome, String descricao, int cura) {
-        super(nome, descricao);
+    public CuraFimBatalha(String nome, String descricao, int cura, int custo) {
+        super(nome, descricao, custo);
         this.cura = cura;
     }
 

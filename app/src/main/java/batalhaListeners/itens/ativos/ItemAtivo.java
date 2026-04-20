@@ -8,14 +8,12 @@ public class ItemAtivo extends Item{
     protected boolean selfCast; // se true, o item é usado no heroi
 
     public ItemAtivo(String nome, String descricao, int custo, boolean selfCast) {
-        super(nome, descricao);
+        super(nome, descricao, custo);
         this.selfCast = selfCast;
-        this.custo = (custo);
     }
 
     public ItemAtivo(ItemAtivo copia) {
         super(copia);
-        this.custo = copia.custo;
         this.selfCast = copia.selfCast;
     }
 
@@ -43,9 +41,5 @@ public class ItemAtivo extends Item{
     @Override
     public String toString() {
         return this.nome + ": " + this.descricao;
-    }
-
-    public String descricaoLoja() {
-        return this.nome + " (Custo: " + this.custo + "): " + this.descricao;
     }
 }

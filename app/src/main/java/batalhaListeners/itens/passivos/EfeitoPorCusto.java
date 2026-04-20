@@ -7,24 +7,24 @@ import entidades.Entidade;
 import entidades.Heroi;
 import telas.eventos.combate.Batalha;
 
-/** adiciona um efeito ao utilizar cartas ataque de um custo especifico
+/** adiciona um efeito ao utilizar cartas ataque de um custoEnergia especifico
  * @param efeito o efeito a ser aplicadodo
- * @param custo o custo das cartas que vao ativar o efeito
+ * @param custoEnergia o custoEnergia das cartas que vao ativar o efeito
  */
 public class EfeitoPorCusto extends ItemPassivo {
     private Efeito efeito;
-    private int custo;
+    private int custoEnergia;
 
-    public EfeitoPorCusto(String nome, String descricao, Efeito efeito, int custo) {
-        super(nome, descricao);
+    public EfeitoPorCusto(String nome, String descricao, Efeito efeito, int custoEnergia, int custo) {
+        super(nome, descricao, custo);
         this.efeito = efeito;
-        this.custo = custo;
+        this.custoEnergia = custoEnergia;
     }
 
     public EfeitoPorCusto(EfeitoPorCusto copia) {
         super(copia);
         this.efeito = copia.efeito;
-        this.custo = copia.custo;
+        this.custoEnergia = copia.custoEnergia;
     }
 
     @Override
@@ -36,13 +36,13 @@ public class EfeitoPorCusto extends ItemPassivo {
         return efeito;
     }
 
-    public int getCusto() {
-        return custo;
+    public int getCustoEnergia() {
+        return custoEnergia;
     }
 
     @Override
     public void onHit(Carta carta, Heroi heroi, Entidade alvo, Batalha batalha) {
-        if (carta.getCusto() == this.custo && carta instanceof cartas.CartaAtaque) {
+        if (carta.getCusto() == this.custoEnergia && carta instanceof cartas.CartaAtaque) {
             for (int i = 0; i < ((CartaAtaque) carta).getAcertos(); i++) {
                 efeito.setAdicionar(alvo, batalha);
             }

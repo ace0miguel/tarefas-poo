@@ -619,9 +619,9 @@ public class Batalha extends Evento {
         escolhas.set(escolhas.size() - 1, escolhas.get(escolhas.size() - 1) + "\n"); 
 
         // adiciona as outras opçoes de escolha na lista
-        escolhas.add(Cor.azulClaro + "Itens" + Cor.reset + " ( " + Cor.amareloClaro + heroi.getListaItensAtivos().size() + Cor.reset + " )");
-        escolhas.add(Cor.verdeClaro + "Ver pilha de compra (embaralhada) " + Cor.cinza + "( " + Cor.amareloClaro + pilhaCompra.getSize() + Cor.cinza + " )" + Cor.reset);
-        escolhas.add(Cor.vermelho + "Ver pilha de descarte " + Cor.cinza + "( " + Cor.amareloClaro + pilhaDescarte.getSize() + Cor.cinza + " )" + Cor.reset);
+        escolhas.add(Cor.azulClaro + "Itens ativos" + Cor.reset + " ( " + Cor.amareloClaro + heroi.getListaItensAtivos().size() + Cor.reset + " )");
+        escolhas.add(Cor.verdeClaro + "Pilha de compra (embaralhada) " + Cor.cinza + "( " + Cor.amareloClaro + pilhaCompra.getSize() + Cor.cinza + " )" + Cor.reset);
+        escolhas.add(Cor.vermelho + "Pilha de descarte " + Cor.cinza + "( " + Cor.amareloClaro + pilhaDescarte.getSize() + Cor.cinza + " )" + Cor.reset);
 
         //printa um menu de seleção com as opçoes (não retorna nada, o turnoHeroi que lida com a escolha)
         InputHandler.exibirMenuSelecao(escolhas, true, Cor.txtLaranja("- - - - - - = = = = = = - - - - - -"), "Encerrar turno", true);

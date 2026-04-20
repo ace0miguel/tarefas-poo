@@ -7,12 +7,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import cartas.Carta;
 import entidades.Heroi;
-import util.InputHandler;
-import util.Recompensas;
-import visual.Arte;
-import visual.Cor;
-import visual.Textos;
-
 import static fabricas.FabricaCartas.armadura;
 import static fabricas.FabricaCartas.bombaSuprema;
 import static fabricas.FabricaCartas.bombaVeneno;
@@ -33,7 +27,13 @@ import static fabricas.FabricaCartas.shieldao;
 import static fabricas.FabricaCartas.shieldinho;
 import static fabricas.FabricaCartas.tiro;
 import static fabricas.FabricaCartas.tiroEscopeta;
-import static fabricas.FabricaItens.*;
+import static fabricas.FabricaItens.amuletoVelho;
+import static fabricas.FabricaItens.marmita;
+import util.InputHandler;
+import util.Recompensas;
+import visual.Arte;
+import visual.Cor;
+import visual.Textos;
 
 /** permite passar cartas do inventário para o baralho ou, por um preço, remover cartas do baralho */
 public class DeckBuilder {
@@ -77,6 +77,8 @@ public class DeckBuilder {
                 heroi.addCarta(energizar);
 
                 Recompensas.ganharItemPassivoEsp(amuletoVelho, heroi);
+                
+                Recompensas.ganharDinheiro(60, heroi);
             }
             /* deck de dano direto */
             case 1 -> {
@@ -99,7 +101,8 @@ public class DeckBuilder {
                 heroi.addCarta(armadura);
 
                 Recompensas.ganharItemPassivoEsp(marmita, heroi);
-                
+
+                Recompensas.ganharDinheiro(60, heroi);
             }  
             // deck pra testar carta
             case 2 -> {
@@ -146,18 +149,17 @@ public class DeckBuilder {
                 // Recompensas.ganharItemPassivoEsp(marmita, heroi);
                 // Recompensas.ganharItemPassivoEsp(amuletoVelho, heroi);
 
-                Recompensas.ganharItemAtivoEsp(cigarro, heroi);
-                Recompensas.ganharItemAtivoEsp(cigarro, heroi);
-                Recompensas.ganharItemAtivoEsp(vape, heroi);
-                Recompensas.ganharItemAtivoEsp(vape, heroi);
-                Recompensas.ganharItemAtivoEsp(vape, heroi);
+                // Recompensas.ganharItemAtivoEsp(cigarro, heroi);
+                // Recompensas.ganharItemAtivoEsp(cigarro, heroi);
+                // Recompensas.ganharItemAtivoEsp(vape, heroi);
+                // Recompensas.ganharItemAtivoEsp(vape, heroi);
+                // Recompensas.ganharItemAtivoEsp(vape, heroi);
 
-                Recompensas.ganharItemAtivoEsp(pocaoCura40, heroi);
+                // Recompensas.ganharItemAtivoEsp(pocaoCura40, heroi);
 
-                Recompensas.ganharItemAtivoEsp(pocaoEnergia2, heroi);
-                Recompensas.ganharItemAtivoEsp(pocaoEnergia2, heroi);
+                // Recompensas.ganharItemAtivoEsp(pocaoEnergia2, heroi);
+                // Recompensas.ganharItemAtivoEsp(pocaoEnergia2, heroi);
                 
-
                 Recompensas.ganharDinheiro(300, heroi);
                 heroi.setEnergiaMax(60);
                 heroi.setTestMode(true);

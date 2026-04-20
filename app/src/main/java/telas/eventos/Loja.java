@@ -1,8 +1,5 @@
 package telas.eventos;
 
-import static fabricas.FabricaItens.*;
-import static visual.Textos.menuStatus;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -11,37 +8,51 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import fabricas.FabricaItens;
+import batalhaListeners.itens.Item;
 import batalhaListeners.itens.ativos.ItemAtivo;
+import batalhaListeners.itens.passivos.ItemPassivo;
 import cartas.Carta;
 import entidades.Heroi;
+import static fabricas.FabricaItens.listaItensAtivosMoldes;
+import static fabricas.FabricaItens.listaItensMoldes;
 import util.InputHandler;
 import util.Recompensas;
 import visual.Arte;
 import visual.Cor;
 import visual.Textos;
+import static visual.Textos.menuStatus;
 
 /** evento aleatório onde o jogador pode pagar pra se curar ou pra receber cartas aleatórias */
 public class Loja extends Evento{
-    List<String> opcoes = new ArrayList<>(Arrays.asList("Sessão de spa (cura)", "Pacotes de carta", "Itens", "Edição de tags"));
+    List<String> opcoesLoja = new ArrayList<>(Arrays.asList("Sessão de spa (cura)", "Cartas", "Itens", "Edição de tags"));
 
     
     @Override 
     public void iniciar (Heroi heroi){
-        List<ItemAtivo> itensDisponiveis = new ArrayList<>(listaItensAtivosMoldes);
+        // sorteio dos itens disponiveis na loja
+        List<Item> itensDisponiveis;
+        itensDisponiveis = new ArrayList<>(listaItensAtivosMoldes);
+        itensDisponiveis.addAll(listaItensMoldes);
         Collections.shuffle(itensDisponiveis);
-        itensDisponiveis = itensDisponiveis.subList(0, Math.min(3, itensDisponiveis.size())); // seleciona 3 itens aleatórios para oferecer na loja
+
+        itensDisponiveis = itensDisponiveis.subList(0, Math.min(5, itensDisponiveis.size())); // seleciona 5 itens aleatórios para oferecer na loja
+
+        // sorteio das cartas disponiveis na loja
+        
+        List<Carta> cartasDisponiveis = new ArrayList<>(fabricas.FabricaCartas.listaCartasMoldes);
+        Collections.shuffle(cartasDisponiveis);
+        cartasDisponiveis = cartasDisponiveis.subList(0, Math.min(5, cartasDisponiveis.size())); // seleciona 5 cartas aleatórias para oferecer na loja
         
 
         this.heroi = heroi;
         String titulo = Textos.colorirPartes(Arte.loja, Cor.reset, Cor.ciano, 1);
         while (true){
             Textos.limpaTela();
-            int escolha = InputHandler.selecionar(opcoes, true, titulo + Cor.txtAmareloClaro("\n\nVocê encontrou a loja! deseja comprar algo? "
+            int escolha = InputHandler.selecionar(opcoesLoja, true, titulo + Cor.txtAmareloClaro("\n\nVocê encontrou a loja! deseja comprar algo? "
             + menuStatus(heroi)));
             if (escolha == -1) break;
             switch (escolha) {
-                case 0 ->{
+                case 0 ->{ // CURA
                     List<String> opcoes = new ArrayList<>(Arrays.asList(
                     "Pacote básico (15 de vida, 10 reais)",
                     "Pacote medio (25 de vida, 25 reais)", 
@@ -65,13 +76,15 @@ public class Loja extends Evento{
                         }
                     }
                 }
-                case 1 -> {
+                case 1 -> { // CARTAS
                     List<String> opcoes = new ArrayList<>(Arrays.asList(
-                        "Booster pack comum (25 reais)", 
-                        "Booster pack incomum (55 reais)", 
-                        "Booster pack raro (100 reais)"));
+                        Cor.txtAzulClaro("Booster pack comum (25 reais)"), 
+                        Cor.txtVerde("Booster pack incomum (55 reais)"), 
+                        Cor.txtLaranja("Booster pack raro (100 reais)\n")));
+                    
+                        opcoes.addAll(cartasDisponiveis.stream().map(Carta::descricaoLoja).toList());
 
-                    int escolha3 = InputHandler.selecionar(opcoes, true, Cor.txtAmareloClaro("\n\nQual Booster deseja comprar? "+ menuStatus(heroi)));
+                    int escolha3 = InputHandler.selecionar(opcoes, true, Cor.txtAmareloClaro("\n\n O que deseja comprar? "+ menuStatus(heroi)));
                     if (escolha3 == -1) break;
                     switch (escolha3) {
                         case 0 -> {
@@ -83,9 +96,12 @@ public class Loja extends Evento{
                         case 2 -> {
                             compraBoosterPack(heroi, 3, 100);   
                         }
+                        default -> {
+                            compraCarta(heroi, cartasDisponiveis.get(escolha3 - 3), cartasDisponiveis.get(escolha3 - 3).getPreco());
+                        }
                     }
                 }
-                case 2-> {
+                case 2-> { // ITENS
                     List<String> opcoes = new ArrayList<>(itensDisponiveis.stream().map(i -> i.descricaoLoja()).toList());
 
                     int escolha2 = InputHandler.selecionar(opcoes, true, Cor.txtAmareloClaro("\n\nQual item deseja comprar? "+ menuStatus(heroi)));
@@ -129,10 +145,26 @@ public class Loja extends Evento{
         }  
     }
 
-    public void compraItem(Heroi heroi, ItemAtivo item, int preco) {
+    public void compraItem(Heroi heroi, Item item, int preco) {
         if (heroi.getDinheiro() >= preco) {
             Recompensas.gastarDinheiro(preco, heroi);
-            Recompensas.ganharItemAtivoEsp(item, heroi);
+
+            switch (item) {
+                case ItemAtivo i -> Recompensas.ganharItemAtivoEsp(i, heroi);
+                case ItemPassivo i -> Recompensas.ganharItemPassivoEsp(i, heroi);
+                default -> {
+                }
+            }
+        } else {
+            System.out.println(Cor.txtVermelho("Você não tem dinheiro suficiente!"));
+            InputHandler.esperar();
+        }  
+    }
+
+    public void compraCarta(Heroi heroi, Carta carta, int preco) {
+        if (heroi.getDinheiro() >= preco) {
+            Recompensas.gastarDinheiro(preco, heroi);
+            Recompensas.ganharCartaEsp(carta, heroi);
         } else {
             System.out.println(Cor.txtVermelho("Você não tem dinheiro suficiente!"));
             InputHandler.esperar();

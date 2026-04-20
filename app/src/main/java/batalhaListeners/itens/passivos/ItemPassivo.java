@@ -1,5 +1,4 @@
 package batalhaListeners.itens.passivos;
-import batalhaListeners.batalhaListener;
 import batalhaListeners.itens.Item;
 import entidades.Entidade;
 import entidades.Heroi;
@@ -8,8 +7,8 @@ import entidades.Heroi;
 public class ItemPassivo extends Item {
     protected Heroi alvo;
 
-    public ItemPassivo(String nome, String descricao) {
-        super(nome, descricao);
+    public ItemPassivo(String nome, String descricao, int custo) {
+        super(nome, descricao, custo);
     }
 
     public ItemPassivo(ItemPassivo copia) {

@@ -184,7 +184,8 @@ public class ArvoreEventos {
 
         // primeiro andar (batalha facil)
         if (profundidadeAtual == 0) { 
-            // adiciona aqui opcoes.add tipo evento que vc quer testar pra ir primeir
+            // adiciona aqui opcoes.add tipoNode que vc quer testar pra ir primeir
+            // opcoes.add(tipoNode.LOJA);
             opcoes.add(tipoNode.BATALHA_TRIVIAL);
         }    
         // ultimo andar (boss)
