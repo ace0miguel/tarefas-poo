@@ -10,13 +10,13 @@ import batalhaListeners.efeitos.buffs.AumentaResistencia;
 import batalhaListeners.efeitos.danosConstantes.DanoConstante;
 import batalhaListeners.efeitos.danosConstantes.Sangramento;
 import batalhaListeners.efeitos.danosConstantes.Veneno;
-import batalhaListeners.efeitos.instantaneos.AdicionaCarta;
-import batalhaListeners.efeitos.instantaneos.Descarta;
-import batalhaListeners.efeitos.instantaneos.EscolheCarta;
-import batalhaListeners.efeitos.instantaneos.Escudo;
-import batalhaListeners.efeitos.instantaneos.GanhaEnergia;
-import batalhaListeners.efeitos.instantaneos.Purificar;
-import batalhaListeners.efeitos.instantaneos.PuxaCarta;
+import batalhaListeners.efeitos.instantaneos.baralho.AdicionaCarta;
+import batalhaListeners.efeitos.instantaneos.baralho.Descarta;
+import batalhaListeners.efeitos.instantaneos.baralho.EscolheCarta;
+import batalhaListeners.efeitos.instantaneos.baralho.PuxaCarta;
+import batalhaListeners.efeitos.instantaneos.status.Escudo;
+import batalhaListeners.efeitos.instantaneos.status.GanhaEnergia;
+import batalhaListeners.efeitos.instantaneos.status.Purificar;
 import batalhaListeners.efeitos.latentes.EcoaDano;
 import batalhaListeners.efeitos.latentes.Energizar;
 import static fabricas.FabricaCartas.clubex;
@@ -25,7 +25,7 @@ import static fabricas.FabricaCartas.resenhax;
 public class FabricaEfeitos {
     public static List<Efeito> listaEfeitosMoldes = new ArrayList<>();
 
-    public static Efeito sangramento = new Sangramento("Sangramento", "Causa 2 pontos de dano por rodada ao alvo", 3, 2);
+    public static Efeito sangramento = new Sangramento("Sangramento", "Causa 1 ponto de dano por rodada ao alvo", 4, 1);
 
     public static Efeito veneno1 = new Veneno("Veneno", "Causa sua duraçao em dano por rodada ao alvo", 1, 1);
 

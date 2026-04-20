@@ -455,7 +455,8 @@ public class Batalha extends Evento {
         return copiados;
     }
 
-    /** retorna todos os inimigos e o heroi (não é copia) */
+    /** retorna todos os inimigos e o heroi (não é copia) (nao ta sendo usado ainda mas criei pq pode ser util)*/
+    @SuppressWarnings("unused")
     private List<Entidade> listaEntidades() {
         List<Entidade> entidades = new ArrayList<>();
         entidades.add(heroi);

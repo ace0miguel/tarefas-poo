@@ -8,7 +8,7 @@ import visual.Cor;
 public class Item implements batalhaListener {
     protected String nome;
     protected String descricao;
-    protected int custo = 0; // custo para comprar o item na loja
+    protected int custo = 0; // custo para comprar o item na loja, era melhor chamar preço pra ficar organizado mas agr ja tem coisa dms pra muda
 
     public Item(String nome, String descricao, int custo) {
         this.nome = nome;

@@ -1,10 +1,11 @@
-package batalhaListeners.efeitos.instantaneos;
+package batalhaListeners.efeitos.instantaneos.baralho;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import batalhaListeners.efeitos.Efeito;
+import batalhaListeners.efeitos.instantaneos.Instantaneo;
 import cartas.Carta;
 import entidades.Heroi;
 import telas.eventos.combate.Batalha;

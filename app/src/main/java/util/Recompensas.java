@@ -204,7 +204,7 @@ public class Recompensas {
         if (carta.getTags().size() == Carta.tipoTags.size())
             return carta;
 
-        String tagSorteada = RNGHandler.sorteiaDeLista(carta.tipoTags);
+        String tagSorteada = RNGHandler.sorteiaDeLista(Carta.tipoTags);
 
         while (true) {
             if (!carta.aplicarTag(tagSorteada, true)){

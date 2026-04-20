@@ -92,22 +92,22 @@ public class FabricaCartas {
         clubex.setEfeitoEmArea(true); clubex.setConsumir(true);
 
         // cartas ataque com efeito
-        corteProfundo = new CartaAtaqueComEfeito("Adaga pontiaguda", "aplica sangramento", 1, 4, sangramento, false);
+        corteProfundo = new CartaAtaqueComEfeito("Adaga pontiaguda", "aplica sangramento", 1, 4, false, sangramento);
         corteProfundo.setTipo(2);
         corteProfundo.setResenha(Cor.txtVermelho(Arte.CORTE)); corteProfundo.setRaridade(1);
 
-        corteVenenoso = new CartaAtaqueComEfeito("Adaga envenenada", "aplica dois acumulos de veneno", 1, 3, veneno, false);
+        corteVenenoso = new CartaAtaqueComEfeito("Adaga envenenada", "aplica dois acumulos de veneno", 1, 3, false, veneno);
         corteVenenoso.setTipo(2);
         corteVenenoso.setResenha(Cor.txtVerdeClaro(Arte.CORTE2)); corteVenenoso.setRaridade(1);
 
-        bombaVeneno = new CartaAtaqueComEfeito("BOMBA DE VENENO!", "jogue uma " + Cor.txtVerdeEscuro("BOMBA TÓXICA") + " que atinge TODOS os inimigos e aplica " + veneno.getNomeColorido(), 3, 6, veneno4, false);
+        bombaVeneno = new CartaAtaqueComEfeito("BOMBA DE VENENO!", "jogue uma " + Cor.txtVerdeEscuro("BOMBA TÓXICA") + " que atinge TODOS os inimigos e aplica " + veneno.getNomeColorido(), 3, 6, false, veneno4);
         bombaVeneno.setEfeitoEmArea(true); bombaVeneno.setRaridade(2);
 
-        desprezo = new CartaAtaqueComEfeito("Desprezo.", "causa muito dano porém irrita seu adversario", 4, 26, ego, false);
+        desprezo = new CartaAtaqueComEfeito("Desprezo.", "causa muito dano porém irrita seu adversario", 4, 26, false, ego);
         desprezo.setResenha(Arte.DESPREZO); desprezo.setRaridade(2);
 
-        presenteMaldito = new CartaAtaqueComEfeito("Presente sinistro", "Um presente de um anfitrião misterioso... " + Cor.txtVermelho("[Sacrifício: 5]"), 4, 24, sangramento, false); 
-        presenteMaldito.setRaridade(4); 
+        presenteMaldito = new CartaAtaqueComEfeito("Presente sinistro", "Um presente de um anfitrião misterioso... " + Cor.txtVermelho("[Sacrifício: 5]"), 4, 24, false, sangramento);
+        presenteMaldito.setRaridade(4);
         presenteMaldito.setConsumir(true); presenteMaldito.setSacrificio(5); presenteMaldito.setEfeitoEmArea(true);
 
         // cartas habilidade

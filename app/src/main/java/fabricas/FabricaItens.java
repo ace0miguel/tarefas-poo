@@ -14,6 +14,8 @@ import batalhaListeners.itens.passivos.AumentaResistItem;
 import batalhaListeners.itens.passivos.CartasInicioBatalha;
 import batalhaListeners.itens.passivos.CuraFimBatalha;
 import batalhaListeners.itens.passivos.EfeitoPorCusto;
+import batalhaListeners.itens.passivos.EfeitoPorCusto.TipoComparacao;
+
 import batalhaListeners.itens.passivos.ItemPassivo;
 import static fabricas.FabricaEfeitos.sangramento;
 
@@ -44,7 +46,7 @@ public class FabricaItens {
     public static void carregar(){
         listaItensMoldes.clear();
 
-        facaAcougueiro = new EfeitoPorCusto("Faca de açougueiro", "cartas de ataque custo 1 aplicam um acumulo de sangramento adicional", sangramento, 1, 95);
+        facaAcougueiro = new EfeitoPorCusto("Faca de açougueiro", "Cartas de ataque com custo menor ou igual a 1 aplicam um acumulo de sangramento.", sangramento, 1, TipoComparacao.MENOR, 95);
 
         marmita = new CuraFimBatalha("Marmita", "cura 6 pontos de vida no fim da batalha", 6, 95);
 

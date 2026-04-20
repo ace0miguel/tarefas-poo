@@ -1,6 +1,7 @@
-package batalhaListeners.efeitos.instantaneos;
+package batalhaListeners.efeitos.instantaneos.baralho;
 
 import batalhaListeners.efeitos.Efeito;
+import batalhaListeners.efeitos.instantaneos.Instantaneo;
 import cartas.Carta;
 import entidades.Heroi;
 import telas.eventos.combate.Batalha;

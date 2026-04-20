@@ -8,29 +8,35 @@ import telas.eventos.combate.Batalha;
 import visual.Cor;
 import visual.Textos;
 
-/** cartas que causam dano direto e aplicam um efeito */
+/** cartas que causam dano direto e aplicam um ou mais efeitos adicionais */
 public class CartaAtaqueComEfeito extends CartaAtaque {
-    private Efeito efeito;
+    private Efeito efeitos[];
 
-    public CartaAtaqueComEfeito(String nome, String descricao, int custo, int dano, Efeito efeito, boolean selfCast){
+    public CartaAtaqueComEfeito(String nome, String descricao, int custo, int dano, boolean selfCast, Efeito... efeitos){
         super(nome, descricao, custo, dano);
-        this.efeito = efeito;
+        this.efeitos = efeitos;
         this.setSelfCast(selfCast);
         
-        setDescricao(!this.getSelfCast() 
-        ? ("Aplica [ " + this.efeito.getNomeColorido() + " ]")
-        : ("Recebe [ " + this.efeito.getNomeColorido() + " ]")
-        );
+        // descrição automatica se tiver só 1 efeito
+        if (efeitos.length == 1) {
+            setDescricao(!this.getSelfCast() 
+            ? ("Aplica [ " + this.efeitos[0].getNomeColorido() + " ]")
+            : ("Recebe [ " + this.efeitos[0].getNomeColorido() + " ]")
+            );
+        }
     }
 
     public CartaAtaqueComEfeito(CartaAtaqueComEfeito copia) {
         super(copia);
-        this.efeito = copia.efeito;      
+        this.efeitos = copia.efeitos;      
 
-        setDescricao(!this.getSelfCast() 
-        ? ("Aplica [ " + this.efeito.getNomeColorido() + " ]")
-        : ("Recebe [ " + this.efeito.getNomeColorido() + " ]")
-        );
+        // descrição automatica se tiver só 1 efeito
+        if (efeitos.length == 1) {
+            setDescricao(!this.getSelfCast() 
+            ? ("Aplica [ " + this.efeitos[0].getNomeColorido() + " ]")
+            : ("Recebe [ " + this.efeitos[0].getNomeColorido() + " ]")
+            );
+        }
     }
 
     @Override
@@ -43,6 +49,7 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
             
             // resolve a questao do selfcast
             Entidade alvo = resolverAlvo(batalha);
+
             if (alvo == null) {
                 return;
             }
@@ -70,7 +77,7 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
             }
         }
 
-        if (aplicarEfeitos(heroi, alvo, batalha, efeito)) {
+        if (aplicarEfeitos(heroi, alvo, batalha, efeitos)) {
             this.setUsoCancelado(true);
             return;
         }
