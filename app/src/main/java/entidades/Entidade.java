@@ -264,4 +264,11 @@ public abstract class Entidade {
         ? ""+this.getNomeColorido()+ Cor.reset + " " + Textos.desenharBarraVida(this.getVida(), this.getVidaMax()) + " "+Cor.azul+" ("+this.getEscudo()+" de escudo)" + Cor.reset + "" + Cor.reset
         : ""+this.getNomeColorido()+ Cor.reset + " " + Textos.desenharBarraVida(this.getVida(), this.getVidaMax()) + Cor.reset + "" + Cor.reset ;
     }
+
+    @Override
+    public String toString() {
+        return this.getNomeColorido() + Cor.verde + " > " + Cor.cinza + "Vida: [" + this.getVida() + " / " + Cor.txtReset(String.valueOf(this.getVidaMax())) + Cor.cinza + " ]";
+    }
+
+    
 }

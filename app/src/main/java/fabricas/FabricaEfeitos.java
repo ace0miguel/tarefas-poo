@@ -11,6 +11,7 @@ import batalhaListeners.efeitos.danosConstantes.DanoConstante;
 import batalhaListeners.efeitos.danosConstantes.Sangramento;
 import batalhaListeners.efeitos.danosConstantes.Veneno;
 import batalhaListeners.efeitos.instantaneos.AdicionaCarta;
+import batalhaListeners.efeitos.instantaneos.Descarta;
 import batalhaListeners.efeitos.instantaneos.EscolheCarta;
 import batalhaListeners.efeitos.instantaneos.Escudo;
 import batalhaListeners.efeitos.instantaneos.GanhaEnergia;
@@ -64,6 +65,8 @@ public class FabricaEfeitos {
 
     public static Efeito ecoaDano50 = new EcoaDano("Eco Dolor", "Causa uma parte do dano acumulado no fim da duraçao", 4, 50);
 
+    public static Efeito descarta1 = new Descarta("Descarta uma carta", "Descarta uma carta", 1);
+
     public static void carregar(){
         listaEfeitosMoldes.clear();
 
@@ -73,6 +76,6 @@ public class FabricaEfeitos {
         listaEfeitosMoldes.addAll(Arrays.asList(sangramento, veneno, veneno1, ego, aumentaResistencia, 
             escudo4, escudo10, purificarEfeito, feridas, ganhaEnergia2, 
             ganhaEnergia1, ganhaEnergiaTest, efeitoPuxaCarta2, efeitoEnergizado, 
-            ganhaResenhax, ganhaClubex, escolheCarta, veneno4)); 
+            ganhaResenhax, ganhaClubex, escolheCarta, veneno4, descarta1)); 
     }
 }

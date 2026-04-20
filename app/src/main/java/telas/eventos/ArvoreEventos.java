@@ -317,7 +317,7 @@ public class ArvoreEventos {
 
         // gera a lista de eventos dos filhos do no atual
         List<tipoNode> eventosFilhos = escolherEvento(profundidade + 1);
-
+      
         int quantidadeOpcoes = n;
         if (eventosFilhos.size() < n) {
             quantidadeOpcoes = eventosFilhos.size();

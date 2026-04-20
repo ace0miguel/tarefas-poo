@@ -15,6 +15,7 @@ import static fabricas.FabricaCartas.corteDefensivo;
 import static fabricas.FabricaCartas.corteProfundo;
 import static fabricas.FabricaCartas.corteRapido;
 import static fabricas.FabricaCartas.corteVenenoso;
+import static fabricas.FabricaCartas.descartar;
 import static fabricas.FabricaCartas.ecoDolor;
 import static fabricas.FabricaCartas.egoCarta;
 import static fabricas.FabricaCartas.energiaSupremo;
@@ -144,6 +145,9 @@ public class DeckBuilder {
 
                 heroi.addCarta(mestreLaminasCarta);
                 heroi.addCarta(mestreLaminasCarta);
+
+                heroi.addCarta(descartar);
+                heroi.addCarta(descartar);
 
                 // Recompensas.ganharItemPassivoEsp(facaAcougueiro, heroi);
                 // Recompensas.ganharItemPassivoEsp(marmita, heroi);

@@ -2,41 +2,38 @@ package cartas;
 import batalhaListeners.efeitos.Efeito;
 import entidades.Entidade;
 import entidades.Heroi;
-import entidades.Inimigo;
 import telas.eventos.combate.Batalha;
 
 /*
-Cartas que aplicam efeitos; não causam dano direto.
+Cartas que aplicam efeito(s); não causam dano direto.
 */
 public class CartaHabilidade extends Carta // aplica um efeito em um alvo
 {
-    private Efeito efeito;
+    private Efeito efeitos[];
 
-    public CartaHabilidade(String nome, String descricao, int custo, Efeito efeito, boolean _selfCast){
+    public CartaHabilidade(String nome, String descricao, int custo, boolean _selfCast, Efeito... efeitos){
         super(nome, descricao, custo);
-        this.efeito = efeito;
+        this.efeitos = efeitos;
         this.setSelfCast(_selfCast);
-    }
-
-    public CartaHabilidade(String nome, String descricao, int custo, Efeito efeito, boolean _selfCast, int tipo){
-        super(nome, descricao, custo);
-        this.efeito = efeito;
-        this.setSelfCast(_selfCast);
-        this.tipo = tipo; 
     }
 
     public CartaHabilidade(CartaHabilidade copia) {
         super(copia);
-        this.efeito = copia.efeito;
+        this.efeitos = copia.efeitos;
     }
 
     @Override
     public void usar (Heroi heroi, Entidade alvo, Batalha batalha){
         int energiaAtual = heroi.getEnergia();      
         if(energiaAtual >= this.getCusto()) {
+            Entidade alvoReal = resolverAlvo(heroi, alvo, batalha);
+            if (alvoReal == null) {
+                return;
+            }
+
             heroi.receberDanoDireto(this.sacrificio);
             
-            aplicarEfeito(heroi, alvo, batalha);
+            aplicarEfeito(heroi, alvoReal, batalha);
 
             heroi.usarEnergia(this.getCusto());
         }
@@ -44,33 +41,14 @@ public class CartaHabilidade extends Carta // aplica um efeito em um alvo
 
     @Override
     public void aplicarEfeito(Heroi heroi, Entidade alvo, Batalha batalha) {
-        Efeito efeitoAplicado;
-
-        if (getSelfCast()) {
-            efeitoAplicado = efeito.adicionar(heroi, batalha);
-            if (efeitoAplicado != null && efeitoAplicado.getCancelarJogada()) {
-                this.setUsoCancelado(true);
-                return;
-            }
-        } else if (!efeitoEmArea){
-            efeitoAplicado = efeito.adicionar(alvo, batalha);
-            if (efeitoAplicado != null && efeitoAplicado.getCancelarJogada()) {
-                this.setUsoCancelado(true);
-                return;
-            }
-        } else {
-            for (Inimigo inimigo : batalha.getInimigos() ) {
-                efeitoAplicado = efeito.adicionar(inimigo, batalha);
-                if (efeitoAplicado != null && efeitoAplicado.getCancelarJogada()) {
-                    this.setUsoCancelado(true);
-                    return;
-                }
-            }
-        }
-
         printaResenha();
+
+        if (aplicarEfeitos(heroi, alvo, batalha, efeitos)) {
+            this.setUsoCancelado(true);
+        }
     }
 
+    @Override
     public String descricao(){
         StringBuilder retorno = iniciarDescricao();
 

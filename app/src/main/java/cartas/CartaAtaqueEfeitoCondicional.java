@@ -2,7 +2,7 @@ package cartas;
 
 import batalhaListeners.efeitos.Efeito;
 
-/** ainda nao ta implementado, mas tive a ideia e criei a classe aqui */
+/** ainda nao ta implementado, mas tive a ideia e criei a classe aqui ia ser daora */
 public class CartaAtaqueEfeitoCondicional extends CartaAtaqueComEfeito {
     private boolean condicao;
 

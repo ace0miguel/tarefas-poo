@@ -31,9 +31,14 @@ import telas.eventos.combate.Batalha;
         public void usar (Heroi heroi, Entidade alvo, Batalha batalha){
             int energiaAtual = heroi.getEnergia();
             if(energiaAtual >= this.getCusto()){
+                Entidade alvoReal = resolverAlvo(heroi, alvo, batalha);
+                if (alvoReal == null) {
+                    return;
+                }
+
                 heroi.usarEnergia(this.getCusto());
                 if (this.efeito != null){
-                    efeito.adicionar(alvo,batalha);
+                        efeito.adicionar(alvoReal,batalha);
                 }
                 printaResenha();
             }

@@ -19,7 +19,21 @@ public class Mao {
     private List<Carta> cartas = new ArrayList<>(); 
     private int cartasBonus = 0; // cartas extras a serem adicionadas no inicio do turno, depois de puxar as 5 cartas normais
 
+    // lista de cartas a remover no proximo loop ( nao da pra remover enquanto usa carta se n da erro! )
+    private List<Carta> remover = new ArrayList<>(); 
+
     Scanner ler = InputHandler.getLeitor();
+
+    public void limpaRemover(PilhaDescarte pilhaDescarte){
+        for (Carta carta : remover) {
+            removeCartaEsp(carta, pilhaDescarte);
+        }
+        remover.clear();
+    }
+
+    public void setRemover(Carta carta){
+        remover.add(carta);
+    }
 
     public int getCartasBonus() {
         return cartasBonus;
@@ -91,7 +105,7 @@ public class Mao {
         return quantMax;
     }
 
-    /** exibe uma lista de opçoes com as cartas da mão, valida a escolha e retorna o indice da carta escolhida */
+    /** retorna a lista de cartas */
     public List<Carta> mostrar(){ 
         return this.cartas;
     }
@@ -104,9 +118,16 @@ public class Mao {
         cartas.remove(opcao);   
     }
 
-    /** remove todas as cartas da mao e manda pra pilha de descarte
+    /** remove a carta passada da mao e adiciona a pilha de descarte
+     */
+    public void removeCartaEsp(Carta carta, PilhaDescarte pilhaDescarte){
+        pilhaDescarte.descarta(carta);
+        cartas.remove(carta);   
+    }
+
+
+    /** remove todas as cartas da mao e manda pra pilha de descarte (chamar essa funçao no fim do turno)
      * (não remove com tag manter)
-     * chamar essa funçao no fim do turno
      */
     public void limpa(PilhaDescarte pilhaDescarte){
         List<Carta> cartasParaRemover = cartas.stream().

@@ -186,9 +186,10 @@ public class InputHandler {
 
     /** imprime um menu utilizando a matriz de paginas e retorna a opção escolhida
      *  se for pra sair retorna -1.
+     * @param mensagem : mensagem a ser exibida acima do menu
      * @param exit : se false, não permite voltar do menu sem escolher.
      */
-    public static int menu(List<List<String>> matrizPaginas, AtomicInteger pagina, boolean exit){
+    public static int menu(List<List<String>> matrizPaginas, AtomicInteger pagina, String mensagem, boolean exit){
         while (true) { 
             // quando tirar o ultimo item de uma pagina ele volta sozinho pra anterior
             if (matrizPaginas.size() <= 0) 
@@ -199,7 +200,7 @@ public class InputHandler {
                 pagina.decrementAndGet();
 
             List<String> paginaAtual = matrizPaginas.get(pagina.get());
-            int opcao = InputHandler.selecionar(paginaAtual, true, "Página (" + (pagina.get() + 1) + ")");
+            int opcao = InputHandler.selecionar(paginaAtual, true, mensagem + Cor.txtCinza("[ Página (" + (pagina.get() + 1) + ") ]"));
 
             // -1: exit -> todas as cartas -> penultima e ultima: voltar e proxima
             if (opcao == -1) {
@@ -234,7 +235,23 @@ public class InputHandler {
      * @param exit : se false, não permite voltar do menu sem escolher.
      */
     public static int menu(List<List<String>> matrizPaginas, AtomicInteger pagina){
-        return menu(matrizPaginas, pagina, true);
+        return menu(matrizPaginas, pagina, "", true);
+    }
+
+    /** imprime um menu utilizando a matriz de paginas e retorna a opção escolhida
+     *  se for pra sair retorna -1.
+     * @param exit : se false, não permite voltar do menu sem escolher.
+     */
+    public static int menu(List<List<String>> matrizPaginas, AtomicInteger pagina, String mensagem){
+        return menu(matrizPaginas, pagina, mensagem, true);
+    }
+
+    /** imprime um menu utilizando a matriz de paginas e retorna a opção escolhida
+     *  se for pra sair retorna -1.
+     * @param exit : se false, não permite voltar do menu sem escolher.
+     */
+    public static int menu(List<List<String>> matrizPaginas, AtomicInteger pagina, boolean exit){
+        return menu(matrizPaginas, pagina, "", exit);
     }
 
     /** le um inteiro (input) e retorna */

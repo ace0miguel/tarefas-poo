@@ -41,7 +41,7 @@ public abstract class Acao {
 
         @Override
         public void anunciar(Inimigo executor, Heroi heroi){
-            Textos.printaBonito(Cor.amarelo + "> " + Cor.reset + executor.getNome() + Cor.cinza + " irá te atacar causando " + (executor.getDanoEfetivo()) + " pontos de dano.", 3, 2);
+            Textos.printaBonito(Cor.amarelo + "> " + Cor.reset + executor.getNome() + Cor.cinza + " irá te atacar causando " + (executor.getDanoEfetivo()) + " pontos de dano.", 1, 2);
         }
 
         @Override
@@ -65,7 +65,7 @@ public abstract class Acao {
 
         @Override
         public void anunciar(Inimigo executor, Heroi heroi) {
-            Textos.printaBonito(Cor.amarelo + "> " + Cor.reset + executor.getNome() + Cor.cinza + " irá te atacar causando " + (executor.getFracaoDanoEfetivo(2)) + " pontos de dano e aplicar " + efeito.getNomeColorido()  + ".", 3, 2);
+            Textos.printaBonito(Cor.amarelo + "> " + Cor.reset + executor.getNome() + Cor.cinza + " irá te atacar causando " + (executor.getFracaoDanoEfetivo(2)) + " pontos de dano e aplicar " + efeito.getNomeColorido()  + ".", 1, 2);
         }
 
         @Override
@@ -90,7 +90,7 @@ public abstract class Acao {
 
         @Override
         public void anunciar(Inimigo executor, Heroi heroi) {
-            Textos.printaBonito(Cor.amarelo + "> " + Cor.reset + executor.getNome() + Cor.cinza +  " irá te atacar causando " + (executor.getDanoEfetivo()) + " + (" + Cor.vermelho + danoVidaPerdida(heroi) + Cor.cinza  + ") pontos de dano.", 3, 2);
+            Textos.printaBonito(Cor.amarelo + "> " + Cor.reset + executor.getNome() + Cor.cinza +  " irá te atacar causando " + (executor.getDanoEfetivo()) + " + (" + Cor.vermelho + danoVidaPerdida(heroi) + Cor.cinza  + ") pontos de dano.", 1, 2);
         }
 
         @Override
@@ -114,7 +114,7 @@ public abstract class Acao {
 
         @Override
         public void anunciar(Inimigo executor, Heroi heroi) {
-            Textos.printaBonito(Cor.txtAmarelo("> ") + executor.getNome() + Cor.cinza + " irá utilizar " + efeito.getNomeColorido() + ".", 3, 2);
+            Textos.printaBonito(Cor.txtAmarelo("> ") + executor.getNome() + Cor.cinza + " irá utilizar " + efeito.getNomeColorido() + ".", 1, 2);
         }
 
         @Override
@@ -139,7 +139,7 @@ public abstract class Acao {
 
         @Override
         public void anunciar(Inimigo executor, Heroi heroi) {
-            Textos.printaBonito(Cor.amarelo + "> " + Cor.reset + executor.getNome() + Cor.cinza + " irá colocar uma " + Cor.txtVermelho("carta ") + Cor.cinza + "na sua pilha de compras.", 3, 2);
+            Textos.printaBonito(Cor.amarelo + "> " + Cor.reset + executor.getNome() + Cor.cinza + " irá colocar uma " + Cor.txtVermelho("carta ") + Cor.cinza + "na sua pilha de compras.", 1, 2);
         }
 
         @Override
@@ -181,7 +181,7 @@ public abstract class Acao {
 
         @Override
         public void anunciar(Inimigo executor, Heroi heroi) {
-            Textos.printaBonito(Cor.txtAmarelo("> ") + executor.getNome() + Cor.cinza + " irá aplicar o efeito " + efeito.getNomeColorido() + Cor.cinza + " em um " + Cor.txtAmarelo("aliado") + ".", 3, 2);
+            Textos.printaBonito(Cor.txtAmarelo("> ") + executor.getNome() + Cor.cinza + " irá aplicar o efeito " + efeito.getNomeColorido() + Cor.cinza + " em um " + Cor.txtAmarelo("aliado") + ".", 1, 2);
         }
 
         @Override
@@ -219,7 +219,7 @@ public abstract class Acao {
 
         @Override
         public void anunciar(Inimigo executor, Heroi heroi) {
-            Textos.printaBonito(Cor.txtAmarelo("> ") + executor.getNome() + Cor.cinza + " irá se multiplicar em " + fator + "!", 3, 2);
+            Textos.printaBonito(Cor.txtAmarelo("> ") + executor.getNome() + Cor.cinza + " irá se multiplicar em " + fator + "!", 1, 2);
         }
 
         @Override

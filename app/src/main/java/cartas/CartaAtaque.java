@@ -17,12 +17,6 @@ public class CartaAtaque extends Carta
         super(nome, descricao, custo);
         this.dano = dano;
     }
-    
-    public CartaAtaque(String nome, String descricao, int custo, int dano, int tipo){
-        super(nome, descricao, custo);
-        this.dano = dano;
-        this.tipo = tipo;
-    }
 
     public CartaAtaque(CartaAtaque copia) {
         super(copia);
@@ -35,9 +29,15 @@ public class CartaAtaque extends Carta
         if(energiaAtual >= this.getCusto()){
             acertos = 0;
 
+            Entidade alvoReal = resolverAlvo(heroi, alvo, batalha);
+            
+            if (alvoReal == null) {
+                return;
+            }
+
             heroi.receberDanoDireto(this.sacrificio);
 
-            aplicarEfeito(heroi, alvo, batalha);
+            aplicarEfeito(heroi, alvoReal, batalha);
 
             heroi.usarEnergia(this.getCusto());
         }

@@ -7,7 +7,7 @@ import entidades.Entidade;
 import entidades.Heroi;
 import telas.eventos.combate.Batalha;
 
-/** cartas que aplicam poderes (efeitos especiais, normalmente buffs permanentes dentro do combate atual) */
+/** cartas que aplicam poderes (buff permanente durante o combate atual, que normalmente acumulam). Por definiçao, sempre possuem a tag Consumir */
 public class CartaPoder extends Carta
 {
     private Poder poder;

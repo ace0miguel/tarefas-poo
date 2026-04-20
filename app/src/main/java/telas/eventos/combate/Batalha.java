@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import baralho.Mao;
@@ -14,7 +13,6 @@ import batalhaListeners.efeitos.Efeito;
 import batalhaListeners.itens.passivos.ItemPassivo;
 import batalhaListeners.poderes.Poder;
 import cartas.Carta;
-import cartas.CartaAtaqueComEfeito;
 import entidades.Entidade;
 import entidades.Heroi;
 import entidades.Inimigo;
@@ -43,6 +41,8 @@ public class Batalha extends Evento {
     private PilhaDescarte pilhaDescarte = new PilhaDescarte();
     private PilhaDescarte pilhaConsumir = new PilhaDescarte(); // <- pra cartas que nao voltam pra sua mao durante o combate
 
+    private Carta cartaEmUso; // guarta a carta sendo utilizada no momento
+
     // subscribers --------
     private ArrayList<batalhaListener> subscribers = new ArrayList<>();
     private ArrayList<batalhaListener> novosSubscribers = new ArrayList<>();
@@ -51,8 +51,6 @@ public class Batalha extends Evento {
     private ArrayList<Efeito> listaEfeitos = new ArrayList<>(); 
     private ArrayList<Poder> listaPoderes = new ArrayList<>();
     // -------------
-
-    Scanner ler = InputHandler.getLeitor();
 
     public Batalha(Inimigo... _inimigos){
         this.inimigos = new ArrayList<>(Arrays.asList(copiarInimigos(_inimigos)));
@@ -91,6 +89,11 @@ public class Batalha extends Evento {
         return mao;
     }
 
+    public Carta getCartaEmUso() {
+        return cartaEmUso;
+    }
+
+    
     /** retorna al ista de inimigos vivos convertidas pra array */
     public Inimigo[] inimigosAtuaisArray() {
         return inimigos.stream().filter(i -> i.estaVivo()).toArray(Inimigo[]::new);
@@ -240,7 +243,21 @@ public class Batalha extends Evento {
             }
 
             else if (escolha == mao.getSize() + 2) { // ver pilha de descarte
+                visual.Textos.limpaTela();
+                System.out.println(Cor.amareloClaro + "Pilha de descarte" + Cor.reset);
+                System.out.println();
+
                 pilhaDescarte.mostrar();
+                System.out.println();
+
+                Cor.printaCinzaLn("- - - - - - = = = = = = - - - - - -");
+
+                System.out.println();
+                System.out.println(Cor.roxo + "Cartas consumidas:" + Cor.reset);
+                System.out.println();
+
+                pilhaConsumir.mostrar();
+                InputHandler.esperar();
                 continue;
             }
 
@@ -253,8 +270,10 @@ public class Batalha extends Evento {
                 continue;
             }
 
-            if (usaCarta(escolha) == -1) // uso cancelado
+            if (usaCarta(escolha) == -1){ // uso cancelado
+                cartaEmUso = null;
                 continue;
+            }
 
             if (notificaMorte() == 0) {
                 return;
@@ -277,6 +296,7 @@ public class Batalha extends Evento {
             heroi.checkMeiaVida(heroi, heroi, this);
 
             addNovosInimigos();
+            mao.limpaRemover(pilhaDescarte);
         }            
 
         mao.limpa(pilhaDescarte);    
@@ -516,52 +536,6 @@ public class Batalha extends Evento {
         listaPoderes.removeIf(poder -> !subscribers.contains(poder));
     }
 
-    /** printa os inimigos vivos, valida a escolha e retorna o q vc escolheu. retorno -1: voltar*/
-    private int selecionarAlvo(){  // falta fazer uma opçao pra voltar caso ele mude de ideia sobre a carta!
-        int opcao = -1;
-        while (true) { 
-            int i = 0;
-            Textos.limpaTela();
-            Cor.printaAmareloClaro("Selecione o alvo:");
-            System.out.println();
-
-            System.out.println((Cor.amarelo + "0 - " + Cor.cinza + "Voltar."));
-
-            for (Inimigo inimigo : inimigos) {
-                if (inimigo.estaVivo()){
-                    Textos.sleep(30);
-                    System.out.println((Cor.amarelo + ""+ (i + 1) +" - "+inimigo.getNomeColorido()+""));
-                    i++;
-                }
-            }
-
-            System.out.println();
-
-            try {
-                opcao = ler.nextInt();
-                if (ler.hasNextLine()) {
-                ler.nextLine();
-            }
-            } catch (Exception e) {
-                if (ler.hasNextLine()) {
-                ler.nextLine();
-            }  
-            }
-            
-            if (opcao == 0) break;
-            
-            if ((opcao >= 0 && opcao <= inimigos.size() && inimigos.get(opcao-1).estaVivo())) 
-                break;
-
-            System.out.println();
-            Cor.printaAmarelo(Textos.escolhaInvalida(i));
-
-            InputHandler.esperar();
-        }
-        return opcao - 1; 
-    }
-    
-
     /** checa inimigos mortos. Se sim, notifica subscribers onDeath e remove o inimigo da lista.
      * depois adiciona novos subscribers pendentes.
      * @return tamanho da lista de inimigos (quantidade de inimigos vivos)
@@ -630,6 +604,7 @@ public class Batalha extends Evento {
 
     private int usaCarta(int escolha){
         Carta cartaEscolhida = mao.escolheCarta(escolha); 
+        cartaEmUso = cartaEscolhida;
 
         if (!cartaEscolhida.podeGastar(heroi)){
             System.out.println();
@@ -639,29 +614,11 @@ public class Batalha extends Evento {
             return -1;
         } 
 
-        Entidade alvoSelecionado = heroi; // se nao mudar o alvo é pq o alvo é si mesmo
+        cartaEscolhida.usar(heroi, heroi, this);
 
-        // se não for selfcast pergunta o alvo. Se for ataque com efeito selfcast ataca o alvo e aplica o efeito em si mesmo.
-        if ((cartaEscolhida.getSelfCast()) && !(cartaEscolhida instanceof CartaAtaqueComEfeito)) 
-            {
-            if (cartaEscolhida.temResenha())
-                Textos.sobeTela();
-
-            cartaEscolhida.usar(heroi, heroi, this);
-        } else 
-            {
-            int alvo = selecionarAlvo();
-            if (alvo == -1) 
-                { // -1 é o codigo pra exit
-                return -1;
-            } 
-
-            alvoSelecionado = inimigos.get(alvo);
-
-            if (cartaEscolhida.temResenha())
-                Textos.sobeTela();
-
-            cartaEscolhida.usar(heroi, alvoSelecionado, this); 
+        Entidade alvoSelecionado = cartaEscolhida.getAlvoDaJogada();
+        if (alvoSelecionado == null) {
+            alvoSelecionado = heroi;
         }
 
         if (cartaEscolhida.getUsoCancelado()) 
@@ -680,10 +637,7 @@ public class Batalha extends Evento {
         for (batalhaListener subscriber : subscribers)
             subscriber.onHit(cartaEscolhida, heroi, alvoSelecionado, this);
 
-        if (notificaMorte() == 0) {
-            return 0;
-        }
-
+        cartaEmUso = null;
         return 0;
     }
 

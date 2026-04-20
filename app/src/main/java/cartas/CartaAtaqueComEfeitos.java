@@ -7,29 +7,19 @@ import entidades.Inimigo;
 import telas.eventos.combate.Batalha;
 import visual.Cor;
 
-/** cartas que causam dano direto e aplicam um efeito */
-public class CartaAtaqueComEfeito extends CartaAtaque {
-    private Efeito efeito;
+/** cartas que causam dano direto e aplicam mais de um efeito */
+public class CartaAtaqueComEfeitos extends CartaAtaque {
+    private Efeito efeitos[];
 
-    public CartaAtaqueComEfeito(String nome, String descricao, int custo, int dano, Efeito efeito, boolean selfCast){
+    public CartaAtaqueComEfeitos(String nome, String descricao, int custo, int dano, boolean selfCast, Efeito... efeitos){
         super(nome, descricao, custo, dano);
-        this.efeito = efeito;
+        this.efeitos = efeitos;
         this.setSelfCast(selfCast);
-        
-        setDescricao(!this.getSelfCast() 
-        ? ("Aplica [ " + this.efeito.getNomeColorido() + " ]")
-        : ("Recebe [ " + this.efeito.getNomeColorido() + " ]")
-        );
     }
 
-    public CartaAtaqueComEfeito(CartaAtaqueComEfeito copia) {
+    public CartaAtaqueComEfeitos(CartaAtaqueComEfeitos copia) {
         super(copia);
-        this.efeito = copia.efeito;      
-
-        setDescricao(!this.getSelfCast() 
-        ? ("Aplica [ " + this.efeito.getNomeColorido() + " ]")
-        : ("Recebe [ " + this.efeito.getNomeColorido() + " ]")
-        );
+        this.efeitos = copia.efeitos;
     }
 
     @Override
@@ -37,17 +27,18 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
         int energiaAtual = heroi.getEnergia();
         if(energiaAtual >= this.getCusto()){
             acertos = 0;
-            
+
             // resolve a questao do selfcast
             Entidade alvoReal = resolverAlvo(heroi, alvo, batalha);
+            
             if (alvoReal == null) {
                 return;
             }
-            
+
             heroi.receberDanoDireto(this.sacrificio);
-            
+
             aplicarEfeito(heroi, alvoReal, batalha);
-    
+
             heroi.usarEnergia(this.getCusto());
         }
     }
@@ -57,15 +48,14 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
         printaResenha();
 
         if (!efeitoEmArea){
-                batalha.causarDano(alvo, this.getDano() + ((this.getDano() * heroi.getDanoExtra()) / 100), heroi);
-            }    
-        else {
+            batalha.causarDano(alvo, this.getDano() + ((this.getDano() * heroi.getDanoExtra()) / 100), heroi);
+        } else {
             for (Inimigo inimigo : batalha.getInimigos() ) {
                 batalha.causarDano(inimigo, this.getDano() + ((this.getDano() * heroi.getDanoExtra()) / 100), heroi);
             }
         }
 
-        if (aplicarEfeitos(heroi, alvo, batalha, efeito)) {
+        if (aplicarEfeitos(heroi, alvo, batalha, efeitos)) {
             this.setUsoCancelado(true);
             return;
         }
@@ -92,6 +82,6 @@ public class CartaAtaqueComEfeito extends CartaAtaque {
 
     @Override
     public Carta criaCopia() {
-        return new CartaAtaqueComEfeito(this);
+        return new CartaAtaqueComEfeitos(this);
     }
 }

@@ -3,9 +3,12 @@ package cartas;
 import java.util.ArrayList;
 import java.util.List;
 
+import batalhaListeners.efeitos.Efeito;
 import entidades.Entidade;
 import entidades.Heroi;
+import entidades.Inimigo;
 import telas.eventos.combate.Batalha;
+import util.InputHandler;
 import visual.Cor;
 import visual.Textos;
 
@@ -13,10 +16,11 @@ import visual.Textos;
 public abstract class Carta {
 
     private String nome;
-    private String descricao;
+    private String descricao;    
+
     /** custo em energia da carta */
     private int custo;
-    /** se true, o efeito associado a carta é aplicado em si mesmo */
+    /** se true, o efeito associado a carta é aplicado em si mesmo (mas caso seja ataque, o ataque ainda vai no inimigo so o efeito associado vai no heroi.) */
     private boolean selfCast;
     /** exibido ao utilizar a carta (de preferencia uma arte ascii) */
     private String resenha = "";
@@ -53,6 +57,7 @@ public abstract class Carta {
     1 - disparo
     2 - corte */
     protected int tipo = 0;
+    protected Entidade alvoDaJogada = null;
     protected boolean usoCancelado = false;
 
     /** raridades:
@@ -178,6 +183,10 @@ public abstract class Carta {
         return usoCancelado;
     }
 
+    public Entidade getAlvoDaJogada() {
+        return alvoDaJogada;
+    }
+
     public boolean getManter() {
         return manter;
     }
@@ -277,6 +286,69 @@ public abstract class Carta {
         this.usoCancelado = usoCancelado;
     }
 
+    /** serve principalmente pra resolver o comportamento diferente de selfcast em tipos diferentes de carta e o cancelamento de uso. */
+    protected Entidade resolverAlvo(Heroi heroi, Entidade alvo, Batalha batalha) {
+        this.usoCancelado = false;
+        this.alvoDaJogada = null;
+
+        if (this.getSelfCast() && !(this instanceof CartaAtaque)) {
+            this.alvoDaJogada = heroi;
+            return heroi;
+        }
+
+        List<Entidade> alvos = new ArrayList<>();
+        for (Inimigo inimigo : batalha.getInimigos()) {
+            if (inimigo.estaVivo()) {
+                alvos.add(inimigo);
+            }
+        }
+
+        int escolha = InputHandler.selecionar(alvos, true, Cor.txtAmareloClaro("Selecione o alvo:"));
+        if (escolha == -1) {
+            this.setUsoCancelado(true);
+            return null;
+        }
+
+        this.alvoDaJogada = alvos.get(escolha);
+        return this.alvoDaJogada;
+    }
+
+    /** aplica uma lista de efeitos ao alvo correto (selfcast, area, etc)
+     * @return true se algum dos feitos retornar cancelarJogada
+     */
+    protected boolean aplicarEfeitos(Heroi heroi, Entidade alvo, Batalha batalha, Efeito... efeitos) {
+        if (efeitos == null || efeitos.length == 0) {
+            return false;
+        }
+
+        if (getSelfCast()) {
+            return aplicarEfeitosEmAlvo(heroi, batalha, efeitos);
+        }
+
+        if (getEfeitoEmArea()) {
+            for (Inimigo inimigo : batalha.getInimigos()) {
+                if (aplicarEfeitosEmAlvo(inimigo, batalha, efeitos)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        return aplicarEfeitosEmAlvo(alvo, batalha, efeitos);
+    }
+
+    /** aplica uma lista de efeitos ao alvo recebido */
+    private boolean aplicarEfeitosEmAlvo(Entidade alvo, Batalha batalha, Efeito... efeitos) {
+        for (Efeito efeito : efeitos) {
+            Efeito efeitoAplicado = efeito.adicionar(alvo, batalha);
+            if (efeitoAplicado != null && efeitoAplicado.getCancelarJogada()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /** retorna false se ja tinha a tag */
     public boolean aplicarTag(String tag, boolean adicionar) {
         if (tags.contains(tag)) return false;
@@ -285,22 +357,17 @@ public abstract class Carta {
             case "Area" -> setEfeitoEmArea(adicionar);
             case "Consumir" -> setConsumir(adicionar);
             case "Manter" -> setManter(adicionar);
-            case "Sacrificio" -> {
-                if (!adicionar) {
-                    setSacrificio(0);
-                }
-            }
             case "Inata" -> setInata(adicionar);
         }
 
         return true;
     }
 
+    /** tira todas as tags */
     public void limpaTags(){
         setEfeitoEmArea(false);
         setConsumir(false);
         setManter(false);
-        setSacrificio(0);
         setInata(false);
     }
 
@@ -313,8 +380,9 @@ public abstract class Carta {
     /** imprime uma string ao utilizar a carta, se existir. */
     public void printaResenha(){
         if (!this.getResenha().equals("")){
+                Textos.sobeTela();
                 Textos.sleep(200);
-                Textos.printaLinhaDevagar(this.getResenha());
+                Textos.printaLinhaDevagar(this.getResenha(), 10);
                 Textos.sleep(600);
                 System.out.println();
             }
