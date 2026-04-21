@@ -6,7 +6,6 @@ import telas.eventos.ArvoreEventos;
 import telas.eventos.Evento;
 import util.InputHandler;
 import util.RNGHandler;
-import util.json.GerenciadorMapa;
 import visual.Arte;
 import visual.Cor;
 import visual.Textos;
@@ -41,6 +40,7 @@ public class Mapa {
         return primeiroLoop;
     }
 
+    // vai usado pelo gerenciador de mapa, o qual nao ta funcionando ainda 
     public void restaurarEstado(ArvoreEventos arvoreEventos, DefaultMutableTreeNode nodeInicial, DefaultMutableTreeNode nodeAtual, boolean primeiroLoop) {
         this.arvoreEventos = arvoreEventos;
         this.nodeInicial = nodeInicial;
@@ -113,7 +113,6 @@ public class Mapa {
     /** inicia o mapa, mandando o jogador pro primeiro nó */
     public void explorar() {
         while (true) { 
-            GerenciadorMapa.salvar(this);
             Textos.limpaTela();
 
             if (primeiroLoop){
@@ -125,7 +124,6 @@ public class Mapa {
                 InputHandler.esperar(Cor.cinza + "Pressione ENTER para ir para " + Cor.reset + getEvento());
                 getEvento().iniciar(heroi);
                 primeiroLoop = false;
-                GerenciadorMapa.salvar(this);
                 continue;
             }
             
@@ -148,7 +146,6 @@ public class Mapa {
             irPara(escolha);
 
             getEvento().iniciar(heroi);
-            GerenciadorMapa.salvar(this);
         }
     }
 
