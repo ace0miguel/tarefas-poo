@@ -18,6 +18,7 @@ public class Heroi extends Entidade {
     private int energia;
     private int energiaMax;
     private int energiaBonus = 0; // energia extra a ganhar no começo da rodada
+    private boolean manterEnergia = false; // se true, a energia nao e perdida no fim da rodada
 
     private int dinheiro = 0; 
 
@@ -52,6 +53,10 @@ public class Heroi extends Entidade {
 
     public int getEnergiaBonus() {
         return energiaBonus;
+    }
+
+    public boolean isManterEnergia() {
+        return manterEnergia;
     }
 
     public Mao getMaoAtual() {
@@ -111,6 +116,23 @@ public class Heroi extends Entidade {
         }
     }
 
+    public void mostrarItensPassivos() {
+        if (listaItensPassivos.isEmpty()) {
+            System.out.println("Voce nao tem itens passivos.");
+            InputHandler.esperar();
+            return;
+        }
+
+        visual.Textos.limpaTela();
+        System.out.println("Itens:");
+        System.out.println();
+
+        for(int i = 0; i < listaItensPassivos.size(); i++) {
+            System.out.println(listaItensPassivos.get(i));
+            System.out.println();
+        }
+    }
+
     public void usarItemAtivo(int i, Batalha batalha){
         if (listaItensAtivos.get(i).usar(batalha) == -1) 
             return;
@@ -134,6 +156,10 @@ public class Heroi extends Entidade {
 
     public void setEnergiaBonus(int energiaBonus) {
         this.energiaBonus = energiaBonus;
+    }
+
+    public void setManterEnergia(boolean manterEnergia) {
+        this.manterEnergia = manterEnergia;
     }
 
     public void setCartasBonus(int cartasBonus) {
@@ -204,13 +230,13 @@ public class Heroi extends Entidade {
     }
     // ----
 
-
     public void usarEnergia(int custo){
         this.energia -= custo;
     }
 
     public void resetarEnergia(){
-        this.energia = energiaMax;
+        int energiaRestante = this.energia;
+        this.energia = energiaMax + ((manterEnergia) ? energiaRestante : 0);
     }
 
     public void ganhaEnergia(int valor){
@@ -223,7 +249,7 @@ public class Heroi extends Entidade {
     public String statusEnergia(){
         if (this.energia > this.energiaMax){ // da pra passar do max com cartas
             Cor.setRosa();
-            return "ENERGIA!!! ("+this.energia+"/"+this.energiaMax+")" + Cor.reset;
+            return "ENERGIA!!! [ "+this.energia+"/"+this.energiaMax+" ]" + Cor.reset;
         }
         else if (this.energia > 3)
             Cor.setVerde();
@@ -234,7 +260,7 @@ public class Heroi extends Entidade {
         else 
             Cor.setCinza();
 
-        return "Energia ("+this.energia+"/"+this.energiaMax+")" + Cor.reset;
+        return "Energia [ "+this.energia+"/"+this.energiaMax+" ]" + Cor.reset;
     }
 
     // adicionam e removem cartas do baralho
@@ -285,13 +311,15 @@ public class Heroi extends Entidade {
         InputHandler.esperar();
     }
 
-    /** aplica os bonus de inicio de rodadae reseta */
+    /** aplica os bonus de inicio de rodada e reseta */
     public void aplicaBonus(){
+        ganharEscudo(this.escudoBonus);
+        escudoBonus = 0;
         ganhaEnergia(this.energiaBonus);
         energiaBonus = 0; 
     }
 
-    /** reseta o estado do heroi e soma a energia bonus */
+    /** organiza o estado do heroi entre rodadas */
     @Override
     public void passaRodada(){
         resetarBonus();

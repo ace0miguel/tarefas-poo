@@ -41,7 +41,6 @@ public class Descarta extends Instantaneo {
             cartasDescartaveis.remove(cartaEmUso);
         }
 
-        // A carta em uso nunca pode ser descartada por esse efeito.
         if (cartasDescartaveis.size() < this.quantidade) {
             System.out.println("Não há cartas suficientes para descartar!");
             InputHandler.esperar();

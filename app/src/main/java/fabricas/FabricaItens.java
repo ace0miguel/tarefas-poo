@@ -1,7 +1,8 @@
 package fabricas;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import batalhaListeners.itens.ativos.EscolheCartaItem;
@@ -15,8 +16,10 @@ import batalhaListeners.itens.passivos.CartasInicioBatalha;
 import batalhaListeners.itens.passivos.CuraFimBatalha;
 import batalhaListeners.itens.passivos.EfeitoPorCusto;
 import batalhaListeners.itens.passivos.EfeitoPorCusto.TipoComparacao;
-
+import batalhaListeners.itens.passivos.EscudoInicioBatalha;
 import batalhaListeners.itens.passivos.ItemPassivo;
+import batalhaListeners.itens.passivos.ManterEnergia;
+import batalhaListeners.itens.passivos.ManterEscudo;
 import static fabricas.FabricaEfeitos.sangramento;
 
 public class FabricaItens {
@@ -28,11 +31,13 @@ public class FabricaItens {
     public static ItemPassivo item20Resist;
     public static ItemPassivo item10Dano;
     public static ItemPassivo item20Dano;
+    public static ItemPassivo itemManterEnergia;
+    public static ItemPassivo itemManterEscudo;
+    public static ItemPassivo item10EscudoInicial;
 
     public static ItemAtivo pocaoCura20;
     public static ItemAtivo pocaoCura30;
     public static ItemAtivo pocaoCura40;
-
     public static ItemAtivo pocaoEnergia2;
     public static ItemAtivo pocaoEnergia3;
 
@@ -40,33 +45,88 @@ public class FabricaItens {
     public static ItemAtivo vape;
 
 
-    public static List<ItemPassivo> listaItensMoldes = new ArrayList<>();
-    public static List<ItemAtivo> listaItensAtivosMoldes = new ArrayList<>();
+    public static List<ItemPassivo> listaItensPassivos = new ArrayList<>();
+    public static List<ItemAtivo> listaItensAtivos = new ArrayList<>();
+
+    // metodos pra atualizar as listas de itens automaticamente, feitos com ajuda de ia, igual o do fabricaCartas
+
+    private static void atualizarListaItensPassivos() {
+        listaItensPassivos.clear();
+
+        for (Field field : FabricaItens.class.getDeclaredFields()) {
+            if (!Modifier.isStatic(field.getModifiers())) {
+                continue;
+            }
+
+            if (!ItemPassivo.class.isAssignableFrom(field.getType())) {
+                continue;
+            }
+
+            try {
+                ItemPassivo item = (ItemPassivo) field.get(null);
+                if (item != null) {
+                    listaItensPassivos.add(item);
+                }
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException("Erro ao montar lista de itens passivos", e);
+            }
+        }
+    }
+
+    private static void atualizarListaItensAtivos() {
+        listaItensAtivos.clear();
+
+        for (Field field : FabricaItens.class.getDeclaredFields()) {
+            if (!Modifier.isStatic(field.getModifiers())) {
+                continue;
+            }
+
+            if (!ItemAtivo.class.isAssignableFrom(field.getType())) {
+                continue;
+            }
+
+            try {
+                ItemAtivo item = (ItemAtivo) field.get(null);
+                if (item != null) {
+                    listaItensAtivos.add(item);
+                }
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException("Erro ao montar lista de itens ativos", e);
+            }
+        }
+    }
+
 
     public static void carregar(){
-        listaItensMoldes.clear();
+        // itens passivos
 
-        facaAcougueiro = new EfeitoPorCusto("Faca de açougueiro", "Cartas de ataque com custo menor ou igual a 1 aplicam um acumulo de sangramento.", sangramento, 1, TipoComparacao.MENOR, 95);
+        facaAcougueiro = new EfeitoPorCusto("Faca de açougueiro", "Cartas de ataque com custo menor ou igual a 1 aplicam um acumulo de sangramento.", sangramento, 2, TipoComparacao.MENOR, 95);
 
-        marmita = new CuraFimBatalha("Marmita", "cura 6 pontos de vida no fim da batalha", 6, 95);
+        marmita = new CuraFimBatalha("Marmita", "Cura 6 pontos de vida no fim da batalha", 6, 95);
 
-        amuletoVelho = new CartasInicioBatalha("Amuleto velho", "receba 2 cartas adicionais no inicio da batalha", 2, 70);
+        amuletoVelho = new CartasInicioBatalha("Amuleto velho", "Receba 2 cartas adicionais no inicio da batalha", 2, 70);
 
-        jarroTerra = new AumentaResistItem("Jarro de terra", "receba 10% de redução de dano", 10, 85);
+        jarroTerra = new AumentaResistItem("Jarro de terra", "Receba 20% de dano reduzido", 20, 85);
 
-        item20Resist = new AumentaResistItem("Colete a prova de tudo", "receba 20% de redução de dano", 20, 115);
+        item20Resist = new AumentaResistItem("Colete a prova de tudo", "Receba 30% dano reduzido", 30, 115);
 
-        item10Dano = new AumentaDanoItem("Espada curta", "cause 10% de dano extra", 10, 85);
+        item10Dano = new AumentaDanoItem("Espada curta", "Cause 20% de dano extra", 20, 85);
 
-        item20Dano = new AumentaDanoItem("Espada longa", "cause 20% de dano extra", 20, 115);
+        item20Dano = new AumentaDanoItem("Espada longa", "Cause 30% de dano extra", 30, 115);
+
+        itemManterEnergia = new ManterEnergia("Banana Prata", "Mantenha a energia restante no fim de cada rodada.", 100);
+
+        item10EscudoInicial = new EscudoInicioBatalha("Estandarte", "Receba 10 pontos de escudo no inicio da batalha.", 10, 90);
+
+        itemManterEscudo = new ManterEscudo("Boneco do luva de pedreiro", "Mantenha o escudo restante no fim de cada rodada.", 100);
 
         // itens ativos 
 
-        pocaoCura20 = new PocaoVida("Poção de cura P", "Recupere 20 pontos de vida", 25, 20);
+        pocaoCura20 = new PocaoVida("Poção de cura P", "Recupere 20 pontos de vida", 60, 20);
 
-        pocaoCura30 = new PocaoVida("Poção de cura M", "Recupere 30 pontos de vida", 30, 30);
+        pocaoCura30 = new PocaoVida("Poção de cura M", "Recupere 30 pontos de vida", 80, 30);
 
-        pocaoCura40 = new PocaoVida("Poção de cura G", "Recupere 40 pontos de vida", 40, 40);
+        pocaoCura40 = new PocaoVida("Poção de cura G", "Recupere 40 pontos de vida", 110, 40);
 
         pocaoEnergia2 = new PocaoEnergia("Pocão de energia P", "Ganhe 2 pontos de energia", 30, 2);
 
@@ -76,9 +136,7 @@ public class FabricaItens {
 
         vape = new EscolheCartaItem("Vape", "Escolha uma carta para puxar da pilha de compra", 35);
 
-        // listas 
-        
-        listaItensMoldes.addAll(Arrays.asList(facaAcougueiro, marmita, amuletoVelho, jarroTerra, item20Resist, item10Dano, item20Dano));
-        listaItensAtivosMoldes.addAll(Arrays.asList(pocaoCura20, pocaoCura30, pocaoCura40, pocaoEnergia2, pocaoEnergia3, cigarro, vape));
+        atualizarListaItensPassivos();
+        atualizarListaItensAtivos();
     }
 }

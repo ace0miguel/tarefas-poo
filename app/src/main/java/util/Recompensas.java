@@ -8,10 +8,11 @@ import batalhaListeners.itens.Item;
 import batalhaListeners.itens.ativos.ItemAtivo;
 import batalhaListeners.itens.passivos.ItemPassivo;
 import cartas.Carta;
+import cartas.Carta.raridades;
 import entidades.Heroi;
-import static fabricas.FabricaCartas.listaCartasMoldes;
-import static fabricas.FabricaItens.listaItensMoldes;
-import static fabricas.FabricaItens.listaItensAtivosMoldes;
+import static fabricas.FabricaCartas.cartasEncontraveis;
+import static fabricas.FabricaItens.listaItensAtivos;
+import static fabricas.FabricaItens.listaItensPassivos;
 import visual.Cor;
 import visual.Textos;
 
@@ -56,9 +57,9 @@ public class Recompensas {
 
     /** concede um item ativo aleatorio unico */
     public static boolean ganharItemAtivo(Heroi heroi) {
-        int sorteado = RNGHandler.getGen().nextInt(listaItensAtivosMoldes.size());
+        int sorteado = RNGHandler.getGen().nextInt(listaItensAtivos.size());
 
-        ItemAtivo escolhido = listaItensAtivosMoldes.get(sorteado);
+        ItemAtivo escolhido = listaItensAtivos.get(sorteado);
 
         heroi.addItemAtivo(escolhido);
 
@@ -79,7 +80,7 @@ public class Recompensas {
      * @param heroi o heroi que recebera as cartas
      * @param pool a lista de cartas a ser considerada para a escolha
      */
-    public static void ganharCartas(int raridade, int quantidade, Heroi heroi, List<Carta> pool){
+    public static void ganharCartas(raridades raridade, int quantidade, Heroi heroi, List<Carta> pool){
         System.out.println(Cor.txtAmareloClaro("Você ganhou:")); Textos.sleep(500);
         System.out.println();
 
@@ -101,7 +102,7 @@ public class Recompensas {
      * @param quantidade a quantidade de cartas a serem concedidas
      * @param heroi o heroi que recebera as cartas
      */
-    public static void ganharCartas(int raridade, int quantidade, Heroi heroi){
+    public static void ganharCartas(raridades raridade, int quantidade, Heroi heroi){
         ganharCartas(raridade, quantidade, heroi, poolTodasCartas);
     }
 
@@ -110,7 +111,7 @@ public class Recompensas {
      * @param heroi o heroi que recebera a carta
      * @param pool a lista de cartas a ser considerada para a escolha
      */
-    public static void ganharCarta(int raridade, Heroi heroi, List<Carta> pool){
+    public static void ganharCarta(raridades raridade, Heroi heroi, List<Carta> pool){
         System.out.println(Cor.txtAmareloClaro("Você ganhou:")); Textos.sleep(500);
         System.out.println();
 
@@ -127,7 +128,7 @@ public class Recompensas {
      * @param raridade a raridade minima das carta
      * @param heroi o heroi que recebera a carta
      */
-    public static void ganharCarta(int raridade, Heroi heroi){
+    public static void ganharCarta(raridades raridade, Heroi heroi){
         ganharCarta(raridade, heroi, poolTodasCartas);
     }
 
@@ -150,7 +151,7 @@ public class Recompensas {
      * @param raridade a raridade minima das cartas a serem escolhidas
      * @param quantidade a quantidade de opcoes
      */
-    public static void ganharOpcoes(int raridade, int quantidade, Heroi heroi){
+    public static void ganharOpcoes(raridades raridade, int quantidade, Heroi heroi){
         Carta cartaEscolhida = escolheCarta(raridade, quantidade);
         ganharCartaEsp(cartaEscolhida, heroi);
     }
@@ -173,14 +174,14 @@ public class Recompensas {
     /** reseta o pool global de itens unicos da run */
     public static void resetarPoolItens() {
         poolItensUnicos.clear();
-        poolItensUnicos.addAll(listaItensMoldes);
+        poolItensUnicos.addAll(listaItensPassivos);
     }
     
 
     /** reseta o pool global de cartas */
     public static void resetarPoolCartas() {
         poolTodasCartas.clear();
-        poolTodasCartas.addAll(listaCartasMoldes);
+        poolTodasCartas.addAll(cartasEncontraveis);
     }
 
     public static int getQuantidadeItensDisponiveis() {
@@ -258,11 +259,11 @@ public class Recompensas {
      * @param raridade a raridade minima da carta a ser retornada (1 - comum, 2 - incomum, 3 - rara, 4 - especial)
      * @param pool a lista de cartas a ser considerada para a escolha
      */
-    private static Carta cartaAleatoria(int raridade, List<Carta> pool){
+    private static Carta cartaAleatoria(raridades raridade, List<Carta> pool){
         List<Carta> listaRecompensas = new ArrayList<>();
         for(Carta c : pool)
         {
-            if (c.getRaridade() >= raridade) 
+            if (c.getRaridade() >= raridade.getValor()) 
             {           
                 for(int i = 0; i < 5 - c.getRaridade(); i++)
                 {
@@ -280,11 +281,11 @@ public class Recompensas {
      * @param quantidade a quantidade de cartas a ser retornada
      * @param pool a lista de cartas a ser considerada para a escolha
      */
-    private static List<Carta> cartasAleatorias(int raridade, int quantidade, List<Carta> pool){
+    private static List<Carta> cartasAleatorias(raridades raridade, int quantidade, List<Carta> pool){
         List<Carta> listaRecompensas = new ArrayList<>();
         for(Carta c : pool)
         {
-            if (c.getRaridade() >= raridade) 
+            if (c.getRaridade() >= raridade.getValor()) 
             {
                 for(int i = 0; i < 5 - c.getRaridade(); i++)
                 {
@@ -312,7 +313,7 @@ public class Recompensas {
      * @param raridade a raridade minima das cartas a serem exibidas
      * @param quantidade a quantidade de cartas a serem exibidas
      */
-    private static Carta escolheCarta(int raridade, int quantidade){
+    private static Carta escolheCarta(raridades raridade, int quantidade){
         List<Carta> cartas = cartasAleatorias(raridade, quantidade, poolTodasCartas);
         Carta[] cartasArray = new Carta[cartas.size()];
         for (int i = 0; i < cartas.size(); i++) 

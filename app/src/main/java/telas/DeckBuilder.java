@@ -7,11 +7,24 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import cartas.Carta;
 import entidades.Heroi;
-
-import static fabricas.FabricaCartas.*;
+import static fabricas.FabricaCartas.bomba;
+import static fabricas.FabricaCartas.bombaSuprema;
+import static fabricas.FabricaCartas.bombaVeneno;
+import static fabricas.FabricaCartas.chuvaLaminas;
+import static fabricas.FabricaCartas.clarividencia;
+import static fabricas.FabricaCartas.corteProfundo;
+import static fabricas.FabricaCartas.corteVenenoso;
+import static fabricas.FabricaCartas.ecoDolor;
+import static fabricas.FabricaCartas.espada;
+import static fabricas.FabricaCartas.freestyle;
+import static fabricas.FabricaCartas.ganancia;
+import static fabricas.FabricaCartas.mestreLaminasCarta;
+import static fabricas.FabricaCartas.reciclagem;
+import static fabricas.FabricaCartas.shieldinho;
+import static fabricas.FabricaCartas.tiro;
+import static fabricas.FabricaCartas.tiroEscopeta;
 import static fabricas.FabricaItens.amuletoVelho;
 import static fabricas.FabricaItens.marmita;
-import static fabricas.FabricaItens.vape;
 import util.InputHandler;
 import util.Recompensas;
 import visual.Arte;
@@ -20,22 +33,28 @@ import visual.Textos;
 
 /** permite passar cartas do inventário para o baralho ou, por um preço, remover cartas do baralho */
 public class DeckBuilder {
-    private static List<String> decksPadrao = new ArrayList<>(); // decks padrao pra testagem ate ter o deckbuilder de vdd
-    private static List<String> menuInicial = new ArrayList<>(Arrays.asList("inventario", "baralho " + Cor.txtAmareloClaro("(50 dolares pra remover)")));
+    private static final List<String> DECKS_PADRAO = new ArrayList<>(); // decks padrao pra testagem ate ter o deckbuilder de vdd
+
+    private static final List<String> OPCOES_MENU_INICIAL = new ArrayList<>(Arrays.asList(
+    "inventario de cartas", 
+    "baralho " + Cor.txtAmareloClaro("(50 dolares pra remover)"),
+    "inventario de itens ativos",
+    "inventario de itens passivos"
+    ));
 
     // limite minimo de cartas q vc precisa ter no baralho pra poder sair daqui.
-    private static int limiteMinimoCartas = 10;
+    private static final int LIMITE_MINIMO_DE_CARTAS = 10;
 
 
-    /** exibe os decks padrao ja montados */
+    /** exibe uma escolha entre os decks iniciais */
     public static void mostrarDecksPadrao(Heroi heroi){
-        // nomes dos decks padrao
-        decksPadrao.add(Cor.txtVermelho("Kit tramontina" + Cor.reset + " +" + Cor.rosa +" amuleto velho"));
-        decksPadrao.add(Cor.txtAmarelo("Kit john wick" + Cor.reset + " +" + Cor.rosa +" marmita"));
-        decksPadrao.add(Cor.txtCinza("Terceira opçao secreta (DECK DE TESTE, ATIVA O MODO DEBUG)"));
+
+        DECKS_PADRAO.add(Cor.txtVermelho("Kit tramontina" + Cor.reset + " + " + Cor.rosa +"amuleto velho"));
+        DECKS_PADRAO.add(Cor.txtAmarelo("Kit john wick" + Cor.reset + " + " + Cor.rosa +"marmita"));
+        DECKS_PADRAO.add(Cor.txtCinza("Terceira opçao secreta (DECK DE TESTE, ATIVA O MODO DEBUG)"));
 
         Textos.limpaTela();
-        int escolha = InputHandler.selecionar(decksPadrao, Cor.reset + "Escolha um kit inicial: \n" + Cor.txtCinza("(voce ira ganhar mais carts pra personalizar depois!)")); 
+        int escolha = InputHandler.selecionar(DECKS_PADRAO, Cor.reset + "Escolha um kit inicial: \n" + Cor.txtCinza("(voce ira ganhar mais carts pra personalizar depois!)")); 
 
         switch (escolha){
             /** deck inicial baseado em cortes */
@@ -48,20 +67,17 @@ public class DeckBuilder {
                 heroi.addCarta(corteVenenoso);
                 heroi.addCarta(corteProfundo);
 
-                heroi.addCarta(shieldao);
-                heroi.addCarta(shieldao);
-
+                heroi.addCarta(shieldinho);
+                heroi.addCarta(shieldinho);
                 heroi.addCarta(shieldinho);
                 heroi.addCarta(shieldinho);
 
-                heroi.addCarta(energizar1);
                 heroi.addCarta(reciclagem);
-
                 heroi.addCarta(chuvaLaminas);
 
                 Recompensas.ganharItemPassivoEsp(amuletoVelho, heroi);
                 
-                Recompensas.ganharDinheiro(60, heroi);
+                Recompensas.ganharDinheiro(80, heroi);
             }
             /* deck de dano direto */
             case 1 -> {
@@ -74,19 +90,16 @@ public class DeckBuilder {
                 heroi.addCarta(tiroEscopeta);     
                 
                 heroi.addCarta(bomba);
+                heroi.addCarta(bombaVeneno);
 
                 heroi.addCarta(shieldinho);
                 heroi.addCarta(shieldinho);
-
-                heroi.addCarta(shieldao);
-                heroi.addCarta(shieldao);
-
-                heroi.addCarta(egoCarta);
-                heroi.addCarta(armadura);
+                heroi.addCarta(shieldinho);
+                heroi.addCarta(shieldinho);
 
                 Recompensas.ganharItemPassivoEsp(marmita, heroi);
 
-                Recompensas.ganharDinheiro(60, heroi);
+                Recompensas.ganharDinheiro(80, heroi);
             }  
             // deck pra testar carta
             case 2 -> {
@@ -96,37 +109,20 @@ public class DeckBuilder {
 
                 heroi.addCarta(mestreLaminasCarta);
                 heroi.addCarta(mestreLaminasCarta);
-
-                heroi.addCarta(bombaVeneno);
-                heroi.addCarta(bombaVeneno);
-                heroi.addCarta(bombaVeneno);
-                heroi.addCarta(bombaVeneno);
                 
                 heroi.addCarta(bombaSuprema);
-           
-                heroi.addCarta(puxaCarta);
-                heroi.addCarta(puxaCarta); 
                 
                 heroi.addCarta(corteProfundo);
                 heroi.addCarta(corteVenenoso);
-
-                heroi.addCarta(energiaSupremo);
                 
-                heroi.addCarta(pactoSangue);
-                heroi.addCarta(pactoSangue);
-                heroi.addCarta(pactoSangue);
-                heroi.addCarta(pactoSangue);
+                heroi.addCarta(clarividencia);
+                heroi.addCarta(clarividencia);
+                heroi.addCarta(clarividencia);
+                heroi.addCarta(clarividencia);
 
-
-                heroi.addCarta(presenteMaldito);
-                heroi.addCarta(presenteMaldito);
-                heroi.addCarta(presenteMaldito);
-
-                heroi.addCarta(contratoSangue);
-                heroi.addCarta(contratoSangue);
-
-                heroi.addCarta(mestreLaminasCarta);
-                heroi.addCarta(mestreLaminasCarta);
+                heroi.addCarta(ganancia);
+                heroi.addCarta(ganancia);
+                heroi.addCarta(ganancia);
 
                 heroi.addCarta(reciclagem);
                 heroi.addCarta(reciclagem);
@@ -135,21 +131,19 @@ public class DeckBuilder {
                 heroi.addCarta(freestyle);
                 heroi.addCarta(freestyle);
 
+                // Recompensas.ganharItemPassivoEsp(itemManterEnergia, heroi);
+                // Recompensas.ganharItemPassivoEsp(itemManterEscudo, heroi);
+                // Recompensas.ganharItemPassivoEsp(item10EscudoInicial, heroi);
                 // Recompensas.ganharItemPassivoEsp(facaAcougueiro, heroi);
-                // Recompensas.ganharItemPassivoEsp(marmita, heroi);
-                // Recompensas.ganharItemPassivoEsp(amuletoVelho, heroi);
 
-                // Recompensas.ganharItemAtivoEsp(cigarro, heroi);
-                // Recompensas.ganharItemAtivoEsp(cigarro, heroi);
-                
-                heroi.addItemAtivo(vape);
-                heroi.addItemAtivo(vape);
-                heroi.addItemAtivo(vape);
+                // heroi.addItemAtivo(vape);
+                // heroi.addItemAtivo(vape);
+                // heroi.addItemAtivo(vape);
+                // heroi.addItemAtivo(cigarro);
+                // heroi.addItemAtivo(cigarro);
+                // heroi.addItemAtivo(cigarro);
 
-                // Recompensas.ganharItemAtivoEsp(pocaoCura40, heroi);
-
-                // Recompensas.ganharItemAtivoEsp(pocaoEnergia2, heroi);
-                // Recompensas.ganharItemAtivoEsp(pocaoEnergia2, heroi);
+                // heroi.addItemPassivo(amuletoVelho);
                 
                 Recompensas.ganharDinheiro(300, heroi);
                 heroi.setEnergiaMax(60);
@@ -165,33 +159,49 @@ public class DeckBuilder {
      */
     public static void iniciar(Heroi heroi){
         while (true){
-            int opcao = InputHandler.selecionar(menuInicial, true, Cor.txtAmareloClaro(Arte.deckBuilder) + "\n" + Textos.menuStatus(heroi), "voltar para o mapa.");
+            int opcao = InputHandler.selecionar(OPCOES_MENU_INICIAL, true, Cor.txtAmareloClaro(Arte.deckBuilder) + "\n" + Textos.menuStatus(heroi), "voltar para o mapa.");
 
             // escolheu voltar, sai do loop. mas so se tiver acima do limite minimo.
             if (opcao == -1) {
-                if (heroi.getBaralho().size() >= limiteMinimoCartas) 
+                if (heroi.getBaralho().size() >= LIMITE_MINIMO_DE_CARTAS) 
                     break;
                 else{
                     System.out.println("eu nao vou te deixar sair daqui com menos de 10 cartas nesse baralho.");
                     InputHandler.esperar();
                 }
             }
-            // 0 -> inventario
-            else if (opcao == 0) {
-                if (heroi.getInventarioCartas().size() > 0) 
-                    menuCartas(heroi, false);
-                else{
-                    System.out.println("Voce nao possui cartas no seu inventario.");
-                    InputHandler.esperar();
+            switch (opcao) {
+                // 0 -> inventario de cartas
+                case 0 -> {
+                    if (!heroi.getInventarioCartas().isEmpty()) 
+                        menuCartas(heroi, false);
+                    else {
+                        System.out.println("Voce nao possui cartas no seu inventario.");
+                        InputHandler.esperar();
+                    }
                 }
-            }
-            // 1 -> baralho
-            else if (opcao == 1) {
-                if (heroi.getBaralho().size() > 0) 
-                    menuCartas(heroi, true);
-                else{
-                    System.out.println("Voce nao possui cartas no seu baralho.");
-                    InputHandler.esperar();
+                // 1 -> baralho
+                case 1 -> {
+                    if (!heroi.getBaralho().isEmpty()) 
+                        menuCartas(heroi, true);
+                    else {
+                        System.out.println("Voce nao possui cartas no seu baralho.");
+                        InputHandler.esperar();
+                    }
+                }
+                // 2 -> inventario de itens ativos
+                case 2 -> {
+                    heroi.mostrarItensAtivos();
+
+                    if (!heroi.getListaItensAtivos().isEmpty())
+                        InputHandler.esperar();
+                }
+                // 3 -> inventario de itens passivos
+                case 3 -> {
+                    heroi.mostrarItensPassivos();
+
+                    if (!heroi.getListaItensPassivos().isEmpty())
+                        InputHandler.esperar();
                 }
             }
         }

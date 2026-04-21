@@ -1,7 +1,6 @@
 package fabricas;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import batalhaListeners.efeitos.Efeito;
@@ -13,6 +12,7 @@ import batalhaListeners.efeitos.danosConstantes.Veneno;
 import batalhaListeners.efeitos.instantaneos.baralho.AdicionaCarta;
 import batalhaListeners.efeitos.instantaneos.baralho.Descarta;
 import batalhaListeners.efeitos.instantaneos.baralho.EscolheCarta;
+import batalhaListeners.efeitos.instantaneos.baralho.Ganancia;
 import batalhaListeners.efeitos.instantaneos.baralho.PuxaCarta;
 import batalhaListeners.efeitos.instantaneos.baralho.PuxaCartaEsp;
 import batalhaListeners.efeitos.instantaneos.status.Escudo;
@@ -21,7 +21,8 @@ import batalhaListeners.efeitos.instantaneos.status.Purificar;
 import batalhaListeners.efeitos.instantaneos.status.RecebeDanoPuro;
 import batalhaListeners.efeitos.latentes.EcoaDano;
 import batalhaListeners.efeitos.latentes.Energizar;
-import static fabricas.FabricaCartas.*;
+import static fabricas.FabricaCartas.adaga;
+import static fabricas.FabricaCartas.clubex;
 import static fabricas.FabricaCartas.resenhax;
 
 public class FabricaEfeitos {
@@ -57,9 +58,9 @@ public class FabricaEfeitos {
 
     public static Efeito ganhaEnergiaTest = new GanhaEnergia("Ganho de energia (60)", "Ganha 60 pontos de energia", 60);
     // novos efeitos
-    public static Efeito efeitoPuxaCarta2 = new PuxaCarta("Puxa duas cartas", "Puxa duas cartas", 2);
+    public static Efeito puxaCarta2 = new PuxaCarta("Puxa duas cartas", "Puxa duas cartas", 2);
 
-    public static Efeito efeitoEnergizado = new Energizar("Energizado", "Ganhe um pontos de energia por acumulo na proxima rodada", 1, 1);
+    public static Efeito energizado = new Energizar("Energizado", "Ganhe dois pontos de energia por acumulo na proxima rodada", 1, 2);
 
     public static AdicionaCarta ganhaResenhax = new AdicionaCarta("Resenhax", "Recebe um resenhax", null); 
        
@@ -75,15 +76,10 @@ public class FabricaEfeitos {
 
     public static Efeito ganhaAdaga = new PuxaCartaEsp("Adagas", "Receba 1 adaga", 1, adaga);
 
-    public static void carregar(){
-        listaEfeitosMoldes.clear();
+    public static Efeito gananciaEfeito = new Ganancia("Ganancia", "Descarte todas as suas cartas e puxe a mesma quantidade da sua pilha de compras");
 
+    public static void carregar(){
         ganhaResenhax.setCarta(resenhax);
         ganhaClubex.setCarta(clubex);
-
-        listaEfeitosMoldes.addAll(Arrays.asList(sangramento, veneno, veneno1, ego, aumentaResistencia, 
-            escudo4, escudo10, purificarEfeito, feridas, ganhaEnergia2, 
-            ganhaEnergia1, ganhaEnergiaTest, efeitoPuxaCarta2, efeitoEnergizado, 
-            ganhaResenhax, ganhaClubex, escolheCarta, veneno4, descarta1)); 
     }
 }

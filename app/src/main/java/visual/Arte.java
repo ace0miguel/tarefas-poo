@@ -365,7 +365,7 @@ public static String mapaSemSombra  = Cor.marromClaro + """
                      ▀                                          
 """ + Cor.reset;
 
-public static String mapa = Cor.ciano + """                                                       
+public static String mapa = Cor.azulClaro + """                                                       
  ▄▄▄     ▄▄▄                                                          
   ███▄ ▄███                                               █▄   
   ██ ▀█▀ ██                       ▄              ▄        ██ ▀▀

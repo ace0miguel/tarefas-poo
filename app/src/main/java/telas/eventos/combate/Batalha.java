@@ -13,6 +13,7 @@ import batalhaListeners.efeitos.Efeito;
 import batalhaListeners.itens.passivos.ItemPassivo;
 import batalhaListeners.poderes.Poder;
 import cartas.Carta;
+import cartas.Carta.raridades;
 import entidades.Entidade;
 import entidades.Heroi;
 import entidades.Inimigo;
@@ -41,13 +42,11 @@ public class Batalha extends Evento {
     private PilhaDescarte pilhaDescarte = new PilhaDescarte();
     private PilhaDescarte pilhaConsumir = new PilhaDescarte(); // <- pra cartas que nao voltam pra sua mao durante o combate
 
-    private Carta cartaEmUso; // guarta a carta sendo utilizada no momento
+    private Carta cartaEmUso; // guarda a carta sendo utilizada no momento
 
     // subscribers --------
     private ArrayList<batalhaListener> subscribers = new ArrayList<>();
     private ArrayList<batalhaListener> novosSubscribers = new ArrayList<>();
-
-    // listas pra printar o estado da batalha
     private ArrayList<Efeito> listaEfeitos = new ArrayList<>(); 
     private ArrayList<Poder> listaPoderes = new ArrayList<>();
     // -------------
@@ -679,26 +678,26 @@ public class Batalha extends Evento {
         // recompensa baseada na dificuldade total da batalha
         switch (getNivelDificuldade()) {
             case 1 -> {
-                Recompensas.ganharOpcoes(1, 3, heroi);
+                Recompensas.ganharOpcoes(raridades.COMUM, 3, heroi);
             }
             case 2 -> {
-                Recompensas.ganharOpcoes(1, 3, heroi);
+                Recompensas.ganharOpcoes(raridades.COMUM, 3, heroi);
                 Recompensas.ganharItemAtivo(heroi);
             }
             case 3 -> {
-                Recompensas.ganharCartas(1, 3, heroi);
-                Recompensas.ganharOpcoes(2, 3, heroi);
+                Recompensas.ganharCartas(raridades.COMUM, 3, heroi);
+                Recompensas.ganharOpcoes(raridades.INCOMUM, 3, heroi);
                 Recompensas.ganharItemAtivo(heroi);   
             }
             case 4 -> {
-                Recompensas.ganharCartas(2, 3, heroi);
-                Recompensas.ganharOpcoes(2, 5, heroi);
+                Recompensas.ganharCartas(raridades.INCOMUM, 3, heroi);
+                Recompensas.ganharOpcoes(raridades.INCOMUM, 5, heroi);
                 Recompensas.ganharItemAtivo(heroi); 
                 Recompensas.ganharItemPassivo(heroi);  
             }
             case 5 -> {
-                Recompensas.ganharCartas(3, 5, heroi);
-                Recompensas.ganharOpcoes(3, 3, heroi);
+                Recompensas.ganharCartas(raridades.RARA, 5, heroi);
+                Recompensas.ganharOpcoes(raridades.RARA, 3, heroi);
                 Recompensas.ganharItemAtivo(heroi);
                 Recompensas.ganharItemPassivo(heroi);
             }

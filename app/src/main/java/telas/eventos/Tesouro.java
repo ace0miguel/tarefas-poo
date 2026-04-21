@@ -1,5 +1,6 @@
 package telas.eventos;
 
+import cartas.Carta.raridades;
 import entidades.Heroi;
 import util.Recompensas;
 import visual.Arte;
@@ -34,7 +35,7 @@ public class Tesouro extends Evento {
         //     default -> Textos.printaBonito("Você encontrou um tesouro comum!", 10, 2);
         // }
 
-        Recompensas.ganharCartas(2, 5, heroi);
+        Recompensas.ganharCartas(raridades.INCOMUM, 5, heroi);
         Recompensas.ganharItemAtivo(heroi);
         Recompensas.ganharItemAtivo(heroi);
         Recompensas.ganharItemPassivo(heroi);

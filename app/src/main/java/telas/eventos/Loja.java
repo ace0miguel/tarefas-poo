@@ -12,9 +12,10 @@ import batalhaListeners.itens.Item;
 import batalhaListeners.itens.ativos.ItemAtivo;
 import batalhaListeners.itens.passivos.ItemPassivo;
 import cartas.Carta;
+import cartas.Carta.raridades;
 import entidades.Heroi;
-import static fabricas.FabricaItens.listaItensAtivosMoldes;
-import static fabricas.FabricaItens.listaItensMoldes;
+import static fabricas.FabricaItens.listaItensAtivos;
+import static fabricas.FabricaItens.listaItensPassivos;
 import util.InputHandler;
 import util.Recompensas;
 import visual.Arte;
@@ -31,15 +32,15 @@ public class Loja extends Evento{
     public void iniciar (Heroi heroi){
         // sorteio dos itens disponiveis na loja
         List<Item> itensDisponiveis;
-        itensDisponiveis = new ArrayList<>(listaItensAtivosMoldes);
-        itensDisponiveis.addAll(listaItensMoldes);
+        itensDisponiveis = new ArrayList<>(listaItensAtivos);
+        itensDisponiveis.addAll(listaItensPassivos);
         Collections.shuffle(itensDisponiveis);
 
         itensDisponiveis = itensDisponiveis.subList(0, Math.min(5, itensDisponiveis.size())); // seleciona 5 itens aleatórios para oferecer na loja
 
         // sorteio das cartas disponiveis na loja
         
-        List<Carta> cartasDisponiveis = new ArrayList<>(fabricas.FabricaCartas.listaCartasMoldes);
+        List<Carta> cartasDisponiveis = new ArrayList<>(fabricas.FabricaCartas.cartasEncontraveis);
         Collections.shuffle(cartasDisponiveis);
         cartasDisponiveis = cartasDisponiveis.subList(0, Math.min(5, cartasDisponiveis.size())); // seleciona 5 cartas aleatórias para oferecer na loja
         
@@ -88,13 +89,13 @@ public class Loja extends Evento{
                     if (escolha3 == -1) break;
                     switch (escolha3) {
                         case 0 -> {
-                            compraBoosterPack(heroi, 1, 25);
+                            compraBoosterPack(heroi, raridades.COMUM, 25);
                         }
                         case 1 -> {
-                            compraBoosterPack(heroi, 2, 55); 
+                            compraBoosterPack(heroi, raridades.INCOMUM, 55); 
                         }
                         case 2 -> {
-                            compraBoosterPack(heroi, 3, 100);   
+                            compraBoosterPack(heroi, raridades.RARA, 100);   
                         }
                         default -> {
                             compraCarta(heroi, cartasDisponiveis.get(escolha3 - 3), cartasDisponiveis.get(escolha3 - 3).getPreco());
@@ -125,7 +126,7 @@ public class Loja extends Evento{
         }
     }
 
-    public void compraBoosterPack(Heroi heroi, int raridade, int preco) {
+    public void compraBoosterPack(Heroi heroi, raridades raridade, int preco) {
         if (heroi.getDinheiro() >= preco) {
             Recompensas.gastarDinheiro(preco, heroi);
             Recompensas.ganharCartas(raridade, 3, heroi);

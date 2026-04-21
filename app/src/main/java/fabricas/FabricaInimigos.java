@@ -1,14 +1,22 @@
 package fabricas;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import entidades.Inimigo;
+import static fabricas.FabricaCartas.beberVeneno;
+import static fabricas.FabricaCartas.ferida;
+import static fabricas.FabricaCartas.nada;
+import static fabricas.FabricaCartas.sangrar;
+import static fabricas.FabricaEfeitos.aumentaResistencia;
+import static fabricas.FabricaEfeitos.ego;
+import static fabricas.FabricaEfeitos.escudo10;
+import static fabricas.FabricaEfeitos.sangramento;
+import static fabricas.FabricaEfeitos.veneno;
+import static fabricas.FabricaEfeitos.veneno1;
 import util.Acao;
-
-import static fabricas.FabricaCartas.*;
-import static fabricas.FabricaEfeitos.*;
 
 public class FabricaInimigos {
     public static Inimigo barbossa;
@@ -23,10 +31,33 @@ public class FabricaInimigos {
     public static Inimigo amoeba;
     public static Inimigo kungFuPanda;
 
-    public static List<Inimigo> listaInimigosMoldes = new ArrayList<>();
+    public static List<Inimigo> listaTodosInimigos = new ArrayList<>();
+
+    private static void atualizarListaTodosInimigos() {
+        listaTodosInimigos.clear();
+
+        for (Field field : FabricaCartas.class.getDeclaredFields()) {
+            if (!Modifier.isStatic(field.getModifiers())) {
+                continue;
+            }
+
+            if (!Inimigo.class.isAssignableFrom(field.getType())) {
+                continue;
+            }
+
+            try {
+                Inimigo inimigo = (Inimigo) field.get(null);
+                if (inimigo != null) {
+                    listaTodosInimigos.add(inimigo);
+                }
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException("Erro ao montar lista de moldes de cartas", e);
+            }
+        }
+    }
 
     public static void carregar(){
-        listaInimigosMoldes.clear();
+        listaTodosInimigos.clear();
 
         // tier 1 -----------------
         endrick = new Inimigo("Endrick", 30, 8,
@@ -84,7 +115,6 @@ public class FabricaInimigos {
             new Acao.ReceberEfeito(aumentaResistencia), new Acao.ReceberEfeito(ego), new Acao.AtacarEfeito(sangramento), new Acao.AtacarVidaPerdida()
         ); paulAtreidesSupremo.setTier(5); paulAtreidesSupremo.setAcaoMeiaVida(new Acao.ReceberEfeito(escudo10));
 
-        listaInimigosMoldes.addAll(Arrays.asList(barbossa, loudCoringa, endrick, drake, 
-            paulAtreides, sabrinaCarpenter, tripleT, kungFuPanda, loudSacy, amoeba, paulAtreidesSupremo));
+        atualizarListaTodosInimigos();
     }
 }

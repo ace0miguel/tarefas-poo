@@ -16,6 +16,29 @@ import visual.Textos;
 // as classes filhas representam os diferentes tipos de carta, baseados nos tipos do jogo slay the spire.
 public abstract class Carta {
 
+    public enum raridades {
+        COMUM(1, Cor.azulClaro),
+        INCOMUM(2, Cor.verde),
+        RARA(3, Cor.laranja),
+        ESPECIAL(4, Cor.rosa),
+        IMPOSSIVEL(99, Cor.vermelho);
+
+        private final int valor;
+        private final String cor;
+
+        raridades(int valor, String cor) {
+            this.valor = valor;
+            this.cor = cor;
+        }
+        public int getValor() {
+            return valor;
+        }
+
+        public String getCor() {
+            return cor;
+        }
+    };
+
     private String nome;
     private String descricao;    
 
@@ -57,7 +80,6 @@ public abstract class Carta {
         "Manter",
         "Inata"
     );
-    
 
     /** tipos de ação:
     0 - nenhum
@@ -67,12 +89,8 @@ public abstract class Carta {
     protected Entidade alvoDaJogada = null;
     protected boolean usoCancelado = false;
 
-    /** raridades:
-    1 - comum
-    2 - incomum 
-    3 - rara
-    4 - especial ? */
-    protected int raridade = 1;
+    // define a raridade da carta, usada em sorteios e no preço da loja. caso nao seja definida, vem como impossivel.
+    protected raridades raridade = raridades.IMPOSSIVEL;
 
     public Carta(String nome, String descricao, int custo){
         this.nome = nome;
@@ -140,13 +158,7 @@ public abstract class Carta {
 
     /** retorna o nome colorido baseado na raridade da carta */
     public String getNomeRaridade(){
-        return switch (raridade) {
-            case 1 -> Cor.txtAzulClaro(this.nome);
-            case 2 -> Cor.txtVerde(this.nome);
-            case 3 -> Cor.txtLaranja(this.nome);
-            case 4 -> Cor.txtRosa(this.nome);
-            default -> Cor.txtCinza(this.nome);
-        };
+       return this.raridade.cor + this.nome + Cor.reset;
     }
 
     public int getCusto(){
@@ -186,7 +198,7 @@ public abstract class Carta {
     }
 
     public int getRaridade() {
-        return raridade;
+        return raridade.getValor();
     }
 
     public boolean getUsoCancelado() {
@@ -211,7 +223,7 @@ public abstract class Carta {
 
     /** retorna o preço de compra na loja, baseado na raridade. */
     public int getPreco() {
-        return this.raridade * 45;
+        return this.raridade.getValor() * 45;
     }
 
     /** retorna todas as tags que a carta nao tem e que podem ser compradas */
@@ -305,7 +317,7 @@ public abstract class Carta {
         this.sacrificio = sacrificio;
     }
 
-    public void setRaridade(int raridade) {
+    public void setRaridade(raridades raridade) {
         this.raridade = raridade;
     }
 

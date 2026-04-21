@@ -50,4 +50,8 @@ public class Item implements batalhaListener {
         return "[ " + this.getNomeColorido() + " (Custo: " + this.custo + "): [ " + (this instanceof ItemAtivo ?  Cor.txtAzulClaro("Ativo") : Cor.txtRosa("Passivo")) + " ] - " + this.descricao + " ]";
     }
 
+    @Override
+    public String toString() {
+        return this.nome + ": " + this.descricao;
+    }
 }

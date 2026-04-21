@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import cartas.Carta.raridades;
 import entidades.Heroi;
 import util.InputHandler;
 import util.Recompensas;
@@ -29,7 +30,7 @@ public class Fogueira extends Evento{
             }
             case 1 ->
             {
-                Recompensas.ganharCartas(1,3,heroi);
+                Recompensas.ganharCartas(raridades.COMUM,3,heroi);
                 break;
             }
         }

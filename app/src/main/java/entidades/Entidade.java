@@ -10,9 +10,12 @@ public abstract class Entidade {
     protected String nome;
     protected int vida;
     protected int vidaMax;
-    private int escudo = 0;
 
-    // buffs (serao utilizados em porcentagem, mas aqui guarda o valor inteiro pra facilitar)
+    protected int escudo = 0;
+    protected int escudoBonus = 0; // escudo extra a ganhar no começo da rodada
+    protected boolean manterEscudo = false; // se true, o escudo nao e perdido no fim da rodada
+
+    // buffs em porcentagem (20 = 20%)
     private int danoExtra = 0; // aumenta em todo dano causado diretamente
     private int resistencia = 0; // reduz de todo dano recebido diretamente
     
@@ -59,6 +62,14 @@ public abstract class Entidade {
         return this.escudo;
     }
 
+    public int getEscudoBonus() {
+        return escudoBonus;
+    }
+
+    public boolean isManterEscudo() {
+        return manterEscudo;
+    }
+
     public int getDanoExtra() {
         return danoExtra;
     }
@@ -100,6 +111,14 @@ public abstract class Entidade {
 
     public void setEscudo(int escudo) {
         this.escudo = escudo;
+    }
+
+    public void setEscudoBonus(int escudoBonus) {
+        this.escudoBonus = escudoBonus;
+    }
+
+    public void setManterEscudo(boolean manterEscudo) {
+        this.manterEscudo = manterEscudo;
     }
 
     public void setNome(String nome) {
@@ -233,12 +252,10 @@ public abstract class Entidade {
         this.escudo += bonus;
     }
 
-    public void resetarEscudo(){
-        this.escudo = 0;
-    }
-
     public void resetarBonus(){ 
-        this.escudo = 0;
+        int escudoAtual = this.escudo;
+
+        this.escudo = this.manterEscudo ? escudoAtual : 0;
         this.purificar = false;
     }
 
