@@ -6,12 +6,14 @@ import telas.eventos.ArvoreEventos;
 import telas.eventos.Evento;
 import util.InputHandler;
 import util.RNGHandler;
+import util.json.GerenciadorMapa;
 import visual.Arte;
 import visual.Cor;
 import visual.Textos;
 
 public class Mapa {
     private Heroi heroi;
+    private boolean primeiroLoop = true;
 
     public Mapa(Heroi _heroi){
         this.heroi = _heroi;
@@ -22,6 +24,29 @@ public class Mapa {
     // gera a raiz da arvore
     DefaultMutableTreeNode nodeInicial = new DefaultMutableTreeNode(arvoreEventos.escolherEvento(0).get(0));
     DefaultMutableTreeNode nodeAtual = nodeInicial; // eu to chamando de node pq noAtual ia ficar muito feio
+
+    public ArvoreEventos getArvoreEventos() {
+        return arvoreEventos;
+    }
+
+    public DefaultMutableTreeNode getNodeInicial() {
+        return nodeInicial;
+    }
+
+    public DefaultMutableTreeNode getNodeAtual() {
+        return nodeAtual;
+    }
+
+    public boolean getPrimeiroLoop() {
+        return primeiroLoop;
+    }
+
+    public void restaurarEstado(ArvoreEventos arvoreEventos, DefaultMutableTreeNode nodeInicial, DefaultMutableTreeNode nodeAtual, boolean primeiroLoop) {
+        this.arvoreEventos = arvoreEventos;
+        this.nodeInicial = nodeInicial;
+        this.nodeAtual = nodeAtual;
+        this.primeiroLoop = primeiroLoop;
+    }
     
     /** gera os filhos da posiçao passada e printa um menu de seleçao com seus eventos. (usar quando gerando os filhos dinamicamente) */
     public int criarCaminhos(DefaultMutableTreeNode posicaoAtual){ 
@@ -87,10 +112,8 @@ public class Mapa {
 
     /** inicia o mapa, mandando o jogador pro primeiro nó */
     public void explorar() {
-
-        boolean primeiroLoop = true; // se quiser pular a primeira luta por motivos de teste so deixar false aqui (lembra de arruma dps)
-
         while (true) { 
+            GerenciadorMapa.salvar(this);
             Textos.limpaTela();
 
             if (primeiroLoop){
@@ -102,6 +125,7 @@ public class Mapa {
                 InputHandler.esperar(Cor.cinza + "Pressione ENTER para ir para " + Cor.reset + getEvento());
                 getEvento().iniciar(heroi);
                 primeiroLoop = false;
+                GerenciadorMapa.salvar(this);
                 continue;
             }
             
@@ -124,6 +148,7 @@ public class Mapa {
             irPara(escolha);
 
             getEvento().iniciar(heroi);
+            GerenciadorMapa.salvar(this);
         }
     }
 

@@ -18,6 +18,7 @@ public class App {
         // opcoesMenuInicial.add("Iniciar avebtura");
         // opcoesMenuInicial.add("Sair");
 
+        // Heroi heroi = util.json.GerenciadorHeroi.carregar();
     
         // heroi ----------- (4 de energia max pq assim 5 cartas de 1 de energia nao da pra resetar a mao)
         Heroi heroi = new Heroi("Capitão Jack Sparrow", 90, 4);
@@ -26,7 +27,6 @@ public class App {
         // DeckBuilder.mostrarDecksPadrao(heroi);
         // DeckBuilder.iniciar(heroi); 
 
-        
         FabricaCartas.carregar();
         FabricaEfeitos.carregar();
         FabricaInimigos.carregar();
@@ -43,22 +43,6 @@ public class App {
         System.out.println();
         
         InputHandler.esperar(Cor.txtAmareloClaro("Pressione ENTER para partir em busca do Pérola Negra!"));
-
-        // ----------------------------
-        
-        // menu inicial (tava meio redundante ai eu comentei) ------------
-
-        // int escolhaMenuInicial = InputHandler.selecionar(opcoesMenuInicial, Arte.tituloSombreado);
-    
-        // switch (escolhaMenuInicial) {
-        //     case 0: //inicia o jogo
-        //         break;
-        //     case 1:
-        //         System.out.println("Saindo do jogo...");
-        //         Textos.sleep(500);
-        //         System.exit(0);
-        //         return;
-        // }
     
         // inicio do jogo  ------------
         Mapa mapa = new Mapa(heroi);
