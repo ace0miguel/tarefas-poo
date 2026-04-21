@@ -40,13 +40,9 @@ public class FabricaCartas {
     public static Carta tiroCanhao;
     public static Carta corteProfundo;
     public static Carta corteVenenoso;
-    public static Carta desprezo;
-    public static Carta armadura;
     public static Carta shieldinho;
     public static Carta shieldao;
     public static Carta purificar;
-    public static Carta egoCarta;
-    public static Carta dedoNervosoCarta;
     public static Carta mestreLaminasCarta;
     // novas cartas
     public static Carta ganancia;
