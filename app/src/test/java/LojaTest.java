@@ -31,7 +31,7 @@ public class LojaTest {
         
         // Testando apenas a compra BEM SUCEDIDA, pois a tentativa de 
         // compra sem dinheiro engatilha InputHandler.esperar(), pausando o Gradle
-        loja.compraPoção(h, 25, 40); 
+        loja.compraCura(h, 25, 40); 
         
         assertEquals(60, h.getDinheiro()); // Gastou 40 dos 100 reais (sobram 60)
         assertEquals(45, h.getVida());     // Curou 25 (de 20 para 45 de vida)

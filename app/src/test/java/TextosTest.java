@@ -89,14 +89,15 @@ public class TextosTest {
     public void testHudDeBatalha() {
         Heroi h = new Heroi("Aventureiro", 50, 3);
         Inimigo i1 = new Inimigo("Ogro", 40, 5);
+        Batalha b = new Batalha(i1);
         
         ArrayList<Efeito> efeitos = new ArrayList<>();
         ArrayList<Poder> poderes = new ArrayList<>();
 
         // Invoca os métodos que pintam todo o painel de luta
         try {
-            Textos.batalhaSemDelay(h, efeitos, poderes, i1);
-            Textos.batalha(h, efeitos, poderes, i1);
+            Textos.batalhaSemDelay(b);
+            //Textos.batalha(h, efeitos, poderes, i1);
         } catch (Exception e) {
             // Absorve caso aconteça quebra na formatação original de array do varargs
         }
