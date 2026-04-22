@@ -1,8 +1,8 @@
-import org.junit.jupiter.api.Test;
+import java.lang.reflect.Field;
+
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.lang.reflect.Field;
+import org.junit.jupiter.api.Test;
 
 import fabricas.FabricaCartas;
 import fabricas.FabricaEfeitos;

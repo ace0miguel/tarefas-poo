@@ -7,8 +7,8 @@ import batalhaListeners.poderes.Poder;
 import cartas.CartaPoder;
 import entidades.Heroi;
 import entidades.Inimigo;
-import telas.eventos.combate.Batalha;
 import telas.eventos.Evento;
+import telas.eventos.combate.Batalha;
 
 public class CartaPoderTest {
 
