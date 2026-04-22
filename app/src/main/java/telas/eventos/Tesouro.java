@@ -7,7 +7,7 @@ import visual.Arte;
 import visual.Cor;
 import visual.Textos;
 
-/** ganha uma boa recompensa. no momento um pacote de cartas incomum, mas quando tiver item vai ser item. */
+/** evento onde o heroi ganha um pacote de cartas incomum e alguns itens */
 public class Tesouro extends Evento {
     @Override
     public void iniciar(Heroi heroi) {

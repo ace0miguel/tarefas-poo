@@ -3,6 +3,7 @@ package batalhaListeners.itens.passivos;
 import entidades.Heroi;
 import telas.eventos.combate.Batalha;
 
+/** concede um aumento permanente de dano */
 public class AumentaDanoItem extends ItemPassivo {
     private int valor;
 

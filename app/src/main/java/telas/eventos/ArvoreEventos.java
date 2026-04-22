@@ -40,7 +40,7 @@ public class ArvoreEventos {
     public final static List<Evento> batalhasElite = new ArrayList<>(); // tipo de batalha mais dificil no meio do mapa
     public final static List<Evento> batalhasFinais = new ArrayList<>(); // batalhas de fim de andar(ato, mundo, sla como vai chamar ainda)
 
-    // nao consegui implementar ainda mas acho q consta
+    /** tipos de nós */
     public enum tipoNode {
         // BATALHAS !
         BATALHA_TRIVIAL(batalhasTriviais, Cor.azul + "Batalha trivial"),

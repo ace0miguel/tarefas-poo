@@ -4,6 +4,9 @@ import entidades.Heroi;
 import telas.eventos.combate.Batalha;
 import visual.Textos;
 
+/** cura o heroi no final da batalha
+ * @param cura a quantidade de vida que o heroi vai recuperar no final da batalha
+ */
 public class CuraFimBatalha extends ItemPassivo {
     int cura;
 

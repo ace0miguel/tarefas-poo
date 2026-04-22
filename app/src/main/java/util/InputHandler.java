@@ -7,6 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import visual.Cor;
 import visual.Textos;
 
+/** classe responsável por lidar com as entradas do usuário */
 public class InputHandler {
     private static final Scanner leitor = new Scanner(System.in);
 

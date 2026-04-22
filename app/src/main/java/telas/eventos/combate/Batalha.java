@@ -98,8 +98,6 @@ public class Batalha extends Evento {
         return inimigos.stream().filter(i -> i.estaVivo()).toArray(Inimigo[]::new);
     }
 
-    
-
     /** aplica dano mitigado e notifica o alvo com a vida perdida */
     public int causarDano(Entidade alvo, int dano, Entidade atacante){
         int vidaPerdida = alvo.receberDanoRetornandoVidaPerdida(dano);
@@ -128,7 +126,7 @@ public class Batalha extends Evento {
         }
     }
 
-    /** adiciona um efeito na lista de efeitos e notifica onCreate */
+    /** adiciona um subscriber na lista de subscribers e notifica onCreate */
     public void adicionarSubscriber(batalhaListener novoSubscriber) { 
         for (batalhaListener subscriber : subscribers) {
             if (subscriber.addStack(this, novoSubscriber)){
@@ -158,6 +156,7 @@ public class Batalha extends Evento {
         }
     }
 
+    /** adiciona um subscriber em uma lista separada, para ser colocado na batalha quando possivel. */
     public void adicionarFuturoSubscriber(batalhaListener novo) {
         novosSubscribers.add(novo);
     }
@@ -171,7 +170,7 @@ public class Batalha extends Evento {
         inicializaHeroi();
 
         // inicializa a pilha de compras (recebe o baralho e embaralha)
-        pilhaCompra.addBaralho(new ArrayList<>(heroi.getBaralho()));
+        pilhaCompra.addCartas(new ArrayList<>(heroi.getBaralho()));
         pilhaCompra.shuffleStack();
         
         turno = 0; // 0: turno do heroi 
@@ -305,7 +304,6 @@ public class Batalha extends Evento {
         passaTurno();
     }
 
-
     private void turnoInimigos(){
         Textos.limpaTela();
         Textos.printaBonito(Cor.txtCinza(Arte.bordaHud9), 2,2); Textos.sleep(sleepFimRodada);
@@ -367,6 +365,7 @@ public class Batalha extends Evento {
     }
 
 
+    /** atualiza os estados entre as rodadas e exibe as mensagens. */
     private void passaRodada(){
         heroi.resetEfeitos();
 
@@ -421,6 +420,7 @@ public class Batalha extends Evento {
         heroi.passaRodada(); // remove os bonus que acabam (escudo, etc) e reseta energia
     }
 
+    /** adiciona os itens passivos na batalha */
     private void inicializaItens(){
         for (ItemPassivo item : heroi.getListaItensPassivos()) {
             item.setAlvo(heroi);
@@ -428,6 +428,7 @@ public class Batalha extends Evento {
         }
     }
 
+    /** inicializa o estado do heroi para a batalha */
     private void inicializaHeroi(){
         // passa a referencia da mao e das pilhas pro heroi
         heroi.setMaoAtual(mao); 
@@ -491,7 +492,7 @@ public class Batalha extends Evento {
         novosInimigos.clear();
     }
 
-    /** adiciona novos subscribers */
+    /** adiciona os novos subscribers e apaga a lista */
     private void addNovosSubscribers() {
         if (novosSubscribers.isEmpty()) {
             return;
@@ -543,7 +544,7 @@ public class Batalha extends Evento {
      * depois adiciona novos subscribers pendentes.
      * @return tamanho da lista de inimigos (quantidade de inimigos vivos)
      */
-    private int notificaMorte(){
+    public int notificaMorte(){
 
         // ve se morreu todo mundo ou se so sobraram inimigos passivos e ja retorna
         boolean todosMortos = true;
@@ -634,7 +635,7 @@ public class Batalha extends Evento {
         }
 
         // cartas com a flag consumir vao pra pilha secundaria e nao voltam pra pilha de compras (normalmente)
-        if (cartaEscolhida.getConsumir())
+        if (cartaEscolhida.isConsumir())
             mao.removeCarta(escolha, pilhaConsumir);
         else 
             mao.removeCarta(escolha, pilhaDescarte);
@@ -658,6 +659,7 @@ public class Batalha extends Evento {
         return 1;
     }
 
+    /** printa a parte principal da hud de batalha, com o titulo as bordas e os status das entidades. */
     private void printaBatalha (boolean primeiroLoop){
         if (primeiroLoop && !heroi.getTestMode()){
             Textos.batalha(this);

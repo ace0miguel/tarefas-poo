@@ -3,6 +3,7 @@ package batalhaListeners.itens.passivos;
 import entidades.Heroi;
 import telas.eventos.combate.Batalha;
 
+/** concede um aumento permanente de resistencia */
 public class AumentaResistItem extends ItemPassivo {
     private int valor;
 

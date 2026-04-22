@@ -199,6 +199,9 @@ public class Heroi extends Entidade {
         this.testMode = testMode;
     }
 
+    // - - -- - - -- - - - -- - 
+
+    /** resolve o estado do heroi no fim da batalha */
     public void fimBatalhaReset(){
         setCartasBonus(0);
         this.energiaBonus = 0;

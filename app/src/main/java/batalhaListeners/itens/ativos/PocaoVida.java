@@ -1,7 +1,7 @@
 package batalhaListeners.itens.ativos;
 
 import telas.eventos.combate.Batalha;
-
+/** ganha vida instananeamente */
 public class PocaoVida extends ItemAtivo {
     private int valor;
 

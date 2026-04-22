@@ -2,6 +2,7 @@ package batalhaListeners.itens.ativos;
 
 import telas.eventos.combate.Batalha;
 
+/** ganha energia instananeamente */
 public class PocaoEnergia extends ItemAtivo {
     private int valor;
 

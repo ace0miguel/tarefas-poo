@@ -5,7 +5,7 @@ import entidades.Entidade;
 import telas.eventos.combate.Batalha;
 import visual.Cor;
 
-/* aplica um efeito no heroi, duraçao infinita, nao volta pra pilha descarte ao ser usado. Normalmente stacka */
+/* aplica um efeito no heroi, duraçao infinita, a carta nao volta pra pilha descarte ao ser usada. Normalmente stacka */
 public abstract class Poder implements batalhaListener{
 
     private String nome;

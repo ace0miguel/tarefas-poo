@@ -3,6 +3,7 @@ package util;
 import java.util.List;
 import java.util.Random;
 
+/** classe responsável por lidar com geração de números aleatórios, ou aleatoriedade em geral. */
 public class RNGHandler {
     private static Random gen = new Random();
 

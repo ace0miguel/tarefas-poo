@@ -38,14 +38,19 @@ public class Mao {
         return cartasBonus;
     }
 
+    /** define a quantidade de cartas adicionais a serem puxadas na proxima rodada */
     public void setCartasBonus(int cartasBonus) {
         this.cartasBonus = cartasBonus;
     }
 
+    /** adiciona uma carta da pilha de compras a mao */
     public void addCarta(PilhaCompra pilhaCompra, PilhaDescarte pilhaDescarte){
         cartas.add(pilhaCompra.puxaCarta(pilhaDescarte));
     }
     
+    /** adiciona n cartas da pilha de compras a mao
+     * @param quantidade = numero de cartas a adicionar
+     */
     public void addCartas(PilhaCompra pilhaCompra, PilhaDescarte pilhaDescarte, int quantidade){
         for (int i = 0; i < quantidade; i++) // adiciona n cartas a mao
             this.addCarta(pilhaCompra, pilhaDescarte); 
@@ -56,8 +61,9 @@ public class Mao {
         this.cartas.add(carta);
     }
 
+    /** adiciona 5 cartas a mao. nao ta sendo usada no momento, substituida pelo completaCinco, mas talvez compense trocar devolta. */
     public void addCinco(PilhaCompra pilhaCompra, PilhaDescarte pilhaDescarte){
-        for (int i = 0; i < 5; i++) // adiciona 5 cartas à mão
+        for (int i = 0; i < 5; i++)
             this.addCarta(pilhaCompra, pilhaDescarte);
     }
 
@@ -78,7 +84,7 @@ public class Mao {
         List<Carta> obrigatorias = new ArrayList<>();
         
         for (Carta carta : pilhaCompra.getPilha()) {
-            if (carta.getInata()) {
+            if (carta.isInata()) {
                 obrigatorias.add(carta);
             }
         }
@@ -109,32 +115,32 @@ public class Mao {
         return this.cartas;
     }
 
-    /** remove a carta de indice opçao da mao e manda pra pilha de descarte
-     *  (chamar essa funçao aqui so quando a carta realmente for USADA)
+    /** remove a carta de INDICE opçao da mao e manda pra pilha de descarte (chamado apos USAR a carta)
      */
     public void removeCarta(int opcao, PilhaDescarte pilhaDescarte){
         pilhaDescarte.descarta(cartas.get(opcao));
         cartas.remove(opcao);   
     }
 
-    /** remove a carta por REFERENCIA passada da mao e adiciona a pilha de descarte
+    /** remove a carta por REFERENCIA passada da mao e adiciona a pilha de descarte (chamado apos USAR a carta)
      */
     public void removeCartaEsp(Carta carta, PilhaDescarte pilhaDescarte){
         pilhaDescarte.descarta(carta);
         cartas.remove(carta);   
     }
 
-    /** joga um carta fora durante o turno, e deixa setado pra chamar onDiscard  (CHAMAR QUANDO UMA CARTA FOR DESCARTADA SEM SER USADA)*/
+
+    /** joga um carta fora durante o turno, e deixa setado pra chamar onDiscard (chamado apor DESCARTAR a carta sem usar)*/
     public void descartar(Carta carta){
         remover.add(carta);
     }
 
-    /** chama onLimpar em todas as cartas da mao e manda pra pilha de descarte (chamar essa funçao no fim do turno)
+    /** chama onLimpar em todas as cartas da mao e manda pra pilha de descarte (chamar no final do turno, limpando as cartas restantes)
      * (não remove com tag manter)
      */
     public void limpa(Batalha batalha){
         List<Carta> cartasParaRemover = cartas.stream().
-        filter(carta -> !carta.getManter()).toList();
+        filter(carta -> !carta.isManter()).toList();
 
         for (Carta carta : cartasParaRemover) {
             carta.onLimpar(batalha);

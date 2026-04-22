@@ -3,7 +3,7 @@ package batalhaListeners.itens.ativos;
 import batalhaListeners.itens.Item;
 import telas.eventos.combate.Batalha;
 
-/** ao contrario dos passivos nao sao unicos */
+/** fazem uma açao instantaneamente durante uma batalha, e ao contrario dos passivos nao sao unicos */
 public class ItemAtivo extends Item{
     protected boolean selfCast; // se true, o item é usado no heroi
 

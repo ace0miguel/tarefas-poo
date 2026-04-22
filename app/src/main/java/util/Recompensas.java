@@ -2,7 +2,9 @@ package util;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import batalhaListeners.itens.Item;
 import batalhaListeners.itens.ativos.ItemAtivo;
@@ -173,8 +175,24 @@ public class Recompensas {
 
     /** reseta o pool global de itens unicos da run */
     public static void resetarPoolItens() {
+        resetarPoolItens(null);
+    }
+
+    /** reseta o pool global de itens unicos, removendo itens passivos que o heroi ja possui */
+    public static void resetarPoolItens(Heroi heroi) {
         poolItensUnicos.clear();
         poolItensUnicos.addAll(listaItensPassivos);
+
+        if (heroi == null || heroi.getListaItensPassivos().isEmpty()) {
+            return;
+        }
+
+        Set<String> nomesItensDoHeroi = new HashSet<>();
+        for (ItemPassivo item : heroi.getListaItensPassivos()) {
+            nomesItensDoHeroi.add(item.getNome());
+        }
+
+        poolItensUnicos.removeIf(item -> nomesItensDoHeroi.contains(item.getNome()));
     }
     
 

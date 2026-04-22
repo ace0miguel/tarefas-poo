@@ -37,12 +37,13 @@ public class PilhaCompra {
         cartas.remove(c);
     }
 
-    public void addBaralho(List<Carta> baralho){
+    public void addCartas(List<Carta> _cartas){
         cartas.clear();
-        cartas.addAll(baralho);
+        cartas.addAll(_cartas);
     }
+    /**  embaralha a pilha de compras*/
 
-    public void shuffleStack(){ // embaralha a pilha de compras
+    public void shuffleStack(){ 
         Collections.shuffle(this.cartas);
     }
 

@@ -31,7 +31,7 @@ import visual.Arte;
 import visual.Cor;
 import visual.Textos;
 
-/** permite passar cartas do inventário para o baralho ou, por um preço, remover cartas do baralho */
+/** permite passar cartas do inventário para o baralho ou, por um preço, remover cartas do baralho. tambem gerencia o deck inicial */
 public class DeckBuilder {
     private static final List<String> DECKS_PADRAO = new ArrayList<>(); // decks padrao pra testagem ate ter o deckbuilder de vdd
 

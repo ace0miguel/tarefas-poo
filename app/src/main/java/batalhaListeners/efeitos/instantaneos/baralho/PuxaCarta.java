@@ -4,10 +4,8 @@ import batalhaListeners.efeitos.Efeito;
 import batalhaListeners.efeitos.instantaneos.Instantaneo;
 import entidades.Heroi;
 import telas.eventos.combate.Batalha;
-import util.InputHandler;
-import visual.Cor;
 
-/** puxa da pilha de compra valor cartas e adiciona a mao do heroi */
+/** puxa da pilha de compra (valor) cartas e adiciona a mao do heroi */
 public class PuxaCarta extends Instantaneo {
     protected int valor;
     

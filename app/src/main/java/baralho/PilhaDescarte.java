@@ -12,16 +12,17 @@ public class PilhaDescarte {
         cartas.add(c);
     }
 
+    /** remove uma carta da pilha e adiciona a mao */
     public void recupera(Carta c, Mao mao){
         mao.addCartaEsp(c);
         cartas.remove(c);
     }
 
+    /** remove a ultima carta da pilha e adiciona a mao */
     public void recuperaUltima(Mao mao){
-        if (cartas.size() > 0) {
-            Carta c = cartas.get(cartas.size() - 1);
+        if (!cartas.isEmpty()) {
+            Carta c = cartas.removeLast();
             mao.addCartaEsp(c);
-            cartas.remove(cartas.size() - 1);
         }
     }
 

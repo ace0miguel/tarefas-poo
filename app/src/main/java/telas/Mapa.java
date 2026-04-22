@@ -7,6 +7,7 @@ import telas.eventos.ArvoreEventos.tipoNode;
 import telas.eventos.Evento;
 import util.InputHandler;
 import util.RNGHandler;
+import util.Recompensas;
 import visual.Arte;
 import visual.Cor;
 import visual.Textos;
@@ -19,7 +20,7 @@ public class Mapa {
         this.heroi = _heroi;
     }
 
-    ArvoreEventos arvoreEventos = new ArvoreEventos(3, 11); // QUANTIDADE TOTAL DE ILHAS/ANDARES: P + 1 (COMEÇA DO PROFUNDIDADE 0)
+    ArvoreEventos arvoreEventos = new ArvoreEventos(3, 12); // QUANTIDADE TOTAL DE ILHAS/ANDARES: P + 1 (COMEÇA DO PROFUNDIDADE 0)
 
     // gera a raiz da arvore
     DefaultMutableTreeNode nodeInicial = new DefaultMutableTreeNode(arvoreEventos.escolherEvento(0).get(0));
@@ -113,6 +114,7 @@ public class Mapa {
 
             if (primeiroLoop){
                 DeckBuilder.mostrarDecksPadrao(heroi);
+                Recompensas.resetarPoolItens(heroi);
                 
                 Textos.printaLinhaDevagar(Arte.mapa);
                 Textos.printaLinhaDevagar(bordaHudFinal);

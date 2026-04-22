@@ -5,6 +5,7 @@ import batalhaListeners.itens.ativos.ItemAtivo;
 import batalhaListeners.itens.passivos.ItemPassivo;
 import visual.Cor;
 
+/** itens podem ser divididos em duas categorias: ativos aplicam um efeito instantaneo, passivos concedem um bonus permanente. */
 public class Item implements batalhaListener {
     protected String nome;
     protected String descricao;

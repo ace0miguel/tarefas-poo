@@ -1,5 +1,6 @@
 package batalhaListeners.itens.passivos;
 
+/** concede cartas iniciais na primeira rodada */
 public class CartasInicioBatalha extends ItemPassivo {
     int quantidade;
 

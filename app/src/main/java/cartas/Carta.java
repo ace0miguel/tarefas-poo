@@ -60,9 +60,10 @@ public abstract class Carta {
     /** lista de tags que sao exibidas antes da descriçao da carta */
     protected List<String> tags = new ArrayList<>();
 
-    /** lista publica static que guarda todas as tags existentes e que podem ser compradas */
+    /** lista publica static que guarda todas as tags existentes e que podem ser compradas ingame */
     public List<String> tagsCompraveis = new ArrayList<>(List.of("Area", "Consumir", "Manter", "Inata"));
 
+    /** lista que guarda todas as tags que podem ser removidas ingame */
     public List<String> tagsRemoviveis = new ArrayList<>(List.of("Area", "Consumir", "Manter", "Inata"));
 
     /** true: afeta TODOS os inimigos */
@@ -74,6 +75,7 @@ public abstract class Carta {
     /** true: sempre aparece na primeira mão em cada batalha */
     protected boolean inata = false;
 
+    //todas as tags que existem (atualizar pra enum qnd possivel!)
     public static List<String> tipoTags = List.of(
         "Area",
         "Consumir",
@@ -81,7 +83,7 @@ public abstract class Carta {
         "Inata"
     );
 
-    /** tipos de ação:
+    /** tipos de ação:(atualizar pra enum quando possivel!)
     0 - nenhum
     1 - disparo
     2 - corte */
@@ -147,11 +149,12 @@ public abstract class Carta {
         return Cor.reset;
     }
 
-    /** retorna o nome colorido baseado no tipo da carta */
+    
     public String getNome(){
         return this.nome;
     }
 
+    /** retorna o nome colorido baseado no tipo da carta */
     public String getNomeColorido(){
         return corTipo() + this.nome + Cor.reset;
     }
@@ -181,11 +184,11 @@ public abstract class Carta {
         return resenha;
     }
 
-    public boolean getEfeitoEmArea(){
+    public boolean isEfeitoEmArea(){
         return this.efeitoEmArea;
     }
 
-    public boolean getConsumir(){
+    public boolean isConsumir(){
         return this.consumir;
     }
 
@@ -209,11 +212,11 @@ public abstract class Carta {
         return alvoDaJogada;
     }
 
-    public boolean getManter() {
+    public boolean isManter() {
         return manter;
     }
 
-    public boolean getInata() {
+    public boolean isInata() {
         return inata;
     }
 
@@ -357,7 +360,7 @@ public abstract class Carta {
         return this.alvoDaJogada;
     }
 
-    /** aplica uma lista de efeitos ao alvo correto (selfcast, area, etc)
+    /** avalia o alvo correto (selfcast, area, alvo especifico) e aplica uma lista de efeitos.
      * @return true se algum dos feitos retornar cancelarJogada
      */
     protected boolean aplicarEfeitos(Heroi heroi, Entidade alvo, Batalha batalha, Efeito... efeitos) {
@@ -369,7 +372,7 @@ public abstract class Carta {
             return aplicarEfeitosEmAlvo(heroi, batalha, efeitos);
         }
 
-        if (getEfeitoEmArea()) {
+        if (isEfeitoEmArea()) {
             for (Inimigo inimigo : batalha.getInimigos()) {
                 if (aplicarEfeitosEmAlvo(inimigo, batalha, efeitos)) {
                     return true;
@@ -431,7 +434,8 @@ public abstract class Carta {
             }
     }
 
-    /** Helpers para centralizar a montagem de descricao nas subclasses. */
+    /** helpers para centralizar a montagem de descricao nas subclasses. -------------- */
+
     protected StringBuilder iniciarDescricao() {
         return new StringBuilder(Cor.vinho + ("[ ")).append(Cor.reset).append(this.getNomeColorido());
     }
@@ -461,6 +465,8 @@ public abstract class Carta {
     protected String finalizarDescricao(StringBuilder retorno) {
         return retorno.append(Cor.vinho).append(" ]").toString();
     }
+
+    // ---------------------------------------------
 
     /** verifica se o heroi tem energia. Se sim, aplica o efeito da carta e subtrai o custo da energia. */
     public abstract void usar(Batalha batalha);
@@ -498,9 +504,6 @@ public abstract class Carta {
         return tagsRemoviveis;
     }
 
-    public boolean isInata() {
-        return inata;
-    }
 
     /** chamado quando a carta vai ser descartada: aplica os efeitos na lista efeitosOnDiscard, marcando o heroi como alvo.
      * não precisa ter chamada de alvo, efeitos on discard ou vao aplicar no heroi ou em todos.
@@ -536,8 +539,11 @@ public abstract class Carta {
         aplicarEfeitosEmAlvo(batalha.getHeroi(), batalha, efeitos);
     }
 
+    /** descriçao pra ser usada na loja */
     public String descricaoLoja() {
-        return this.descricao() + Cor.amarelo + " > " + Cor.reset + "[ " + Cor.amareloClaro + this.getPreco() + Cor.reset + " ] reais" + Cor.amarelo + " <"+ Cor.reset + "\n";
+        return this.descricao() + Cor.amarelo + " > " + Cor.reset + "[ " + 
+        Cor.amareloClaro + this.getPreco() + Cor.reset + " ] reais" + 
+        Cor.amarelo + " <"+ Cor.reset + "\n";
     }
 }
     
