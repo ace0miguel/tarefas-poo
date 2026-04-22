@@ -1,11 +1,11 @@
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+
+import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import visual.Cor;
 
@@ -16,13 +16,11 @@ public class CorTest {
 
     @BeforeEach
     public void setUp() {
-        // Redireciona os prints do terminal para capturarmos no teste
         System.setOut(new PrintStream(conteudoSaida));
     }
 
     @AfterEach
     public void tearDown() {
-        // Restaura o terminal ao normal
         System.setOut(saidaOriginal);
     }
 
@@ -38,7 +36,7 @@ public class CorTest {
         assertEquals(Cor.vinho + texto + Cor.reset, Cor.txtVinho(texto));
         assertEquals(Cor.marrom + texto + Cor.reset, Cor.txtMarrom(texto));
         
-        // Cobre também os retornos direto das outras cores para %
+
         Cor.txtPreto(texto);
         Cor.txtCiano(texto);
         Cor.txtRosa(texto);
@@ -54,10 +52,10 @@ public class CorTest {
 
         Cor.printaVerdeClaroLn("Vida");
         assertTrue(conteudoSaida.toString().contains(Cor.verdeClaro + "Vida" + Cor.reset));
-        // O método "Ln" adiciona uma quebra de linha (\n ou \r\n dependendo do SO)
+
         assertTrue(conteudoSaida.toString().endsWith(System.lineSeparator()));
         
-        // Chamadas genéricas para cobrir as linhas
+
         Cor.printaAzulEscuro("A");
         Cor.printaMarromClaroLn("B");
         Cor.printaPreto("C");
@@ -77,7 +75,7 @@ public class CorTest {
         Cor.reset();
         assertEquals(Cor.reset, conteudoSaida.toString());
         
-        // Chamadas para cobrir linhas restantes
+
         Cor.setPreto();
         Cor.setCiano();
         Cor.setRoxo();

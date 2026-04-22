@@ -12,13 +12,12 @@ import telas.eventos.combate.Batalha;
 
 public class MaosLevesTest {
 
-    // Carta falsa usada para contar quantas vezes o "aplicarEfeito" é chamado
     class CartaTeste extends Carta {
         public int vezesAplicado = 0;
         private final int tipoFalso;
 
         public CartaTeste(int tipoFalso) {
-            super("Carta Dublê", "...", 1);
+            super("Carta DublÃª", "...", 1);
             this.tipoFalso = tipoFalso;
         }
 
@@ -44,14 +43,14 @@ public class MaosLevesTest {
 
     @Test
     public void validacaoBasicaECopia() {
-        MaosLeves poder = new MaosLeves("Mãos Leves", "Desc", 1);
+        MaosLeves poder = new MaosLeves("MÃ£os Leves", "Desc", 1);
         MaosLeves copia = (MaosLeves) poder.criaCopia();
 
         assertNotSame(poder, copia);
         assertEquals(0, poder.getPrioridade());
         
         String status = poder.status();
-        assertTrue(status.contains("tipo 1")); // Verifica se injetou o tipo certo no status
+        assertTrue(status.contains("tipo 1"));
     }
 
     @Test
@@ -60,19 +59,17 @@ public class MaosLevesTest {
         Inimigo i = new Inimigo("Alvo", 50, 5);
         Batalha b = new Batalha(i);
 
-        MaosLeves poder = new MaosLeves("Mãos Leves", "Desc", 2); // Ativado pelo tipo 2
+        MaosLeves poder = new MaosLeves("MÃ£os Leves", "Desc", 2);
         
         CartaTeste cartaIncorreta = new CartaTeste(1);
         CartaTeste cartaCorreta = new CartaTeste(2);
 
-        // Dispara o OnHit com a carta de tipo errado (não deve fazer nada)
         poder.onHit(cartaIncorreta, h, i, b);
         assertEquals(0, cartaIncorreta.vezesAplicado);
 
-        // Dispara o OnHit com a carta certa
         poder.onHit(cartaCorreta, h, i, b);
         
-        // Deve ter aplicado o efeito o mesmo número de vezes dos Stacks do Poder
+
         assertEquals(poder.getStacks(), cartaCorreta.vezesAplicado);
     }
 }

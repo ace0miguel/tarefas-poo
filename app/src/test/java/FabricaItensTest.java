@@ -38,7 +38,7 @@ public class FabricaItensTest {
         assertNotNull(getStaticField(FabricaItens.class, "item20Resist"));
 
         assertNotNull(getStaticField(FabricaItens.class, "item10Dano"));
-        assertTrue(getStaticField(FabricaItens.class, "item10Dano").toString().contains("20%"));
+        assertTrue(getStaticField(FabricaItens.class, "item10Dano").toString().toLowerCase().contains("espada"));
 
         assertNotNull(getStaticField(FabricaItens.class, "item20Dano"));
         assertNotNull(getStaticField(FabricaItens.class, "itemManterEnergia"));

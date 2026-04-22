@@ -4,50 +4,50 @@ import entidades.Heroi;
 
 public class HeroiTest {
 
-    @Test // Isso avisa o JUnit que o método abaixo é um teste
+    @Test
     public void danoAbsorvidoPorEscudo() {
-        // 1. Preparar: Cria um heroi com nome, 10 de vida e 3 de energia
+
         Heroi h = new Heroi("Teste", 10, 3); 
-        h.setEscudo(5); // e adiciona os 5 de escudo
+        h.setEscudo(5);
         
-        // 2. Agir: Herói toma 3 de dano
+
         h.receberDano(3); 
         
-        // 3. Conferir: A vida do herói tem que continuar 10.
+
         assertEquals(10, h.getVida()); 
     }
 
     @Test
     public void gerenciarEnergia() {
         Heroi h = new Heroi("Teste", 10, 3);
-        assertEquals(3, h.getEnergia()); // Começa com 3
+        assertEquals(3, h.getEnergia());
         
         h.usarEnergia(2);
-        assertEquals(1, h.getEnergia()); // Gastou 2, sobra 1
+        assertEquals(1, h.getEnergia());
         
         h.ganhaEnergia(1);
-        assertEquals(2, h.getEnergia()); // Ganhou 1, fica com 2
+        assertEquals(2, h.getEnergia());
         
         h.resetarEnergia();
-        assertEquals(3, h.getEnergia()); // Reseta para o máximo (3)
+        assertEquals(3, h.getEnergia());
     }
 
     @Test
     public void curarVidaNaoPassaMaximo() {
-        Heroi h = new Heroi("Teste", 50, 3); // Vida máxima é 50
-        h.receberDano(20); // Vida cai para 30
+        Heroi h = new Heroi("Teste", 50, 3);
+        h.receberDano(20);
         
         h.addVida(10);
-        assertEquals(40, h.getVida()); // Curou 10, vai para 40
+        assertEquals(40, h.getVida());
         
         h.addVida(100); 
-        assertEquals(50, h.getVida()); // Tentou curar além do máximo, trava em 50
+        assertEquals(50, h.getVida());
     }
 
     @Test
     public void gerenciarDinheiro() {
         Heroi h = new Heroi("Teste", 10, 3);
-        assertEquals(0, h.getDinheiro()); // Começa zerado
+        assertEquals(0, h.getDinheiro());
         
         h.addDinheiro(50);
         assertEquals(50, h.getDinheiro());
@@ -60,17 +60,17 @@ public class HeroiTest {
     public void passarTurnoZeraEscudoEBuffs() {
         Heroi h = new Heroi("Cavaleiro", 50, 3);
         
-        // Simula o herói ganhando escudo e ativando um buff no turno dele
+
         h.ganharEscudo(15);
         h.setPurificar(true);
         
         assertEquals(15, h.getEscudo());
         assertEquals(true, h.getPurificar());
         
-        // Simula a passagem de turno (fim do turno do herói)
+
         h.passaTurno();
         
-        // Tudo isso deve ser resetado para o próximo turno
+
         assertEquals(0, h.getEscudo());
         assertEquals(false, h.getPurificar());
     }
