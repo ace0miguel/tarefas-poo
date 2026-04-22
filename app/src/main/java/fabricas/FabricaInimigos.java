@@ -36,7 +36,7 @@ public class FabricaInimigos {
     private static void atualizarListaTodosInimigos() {
         listaTodosInimigos.clear();
 
-        for (Field field : FabricaCartas.class.getDeclaredFields()) {
+        for (Field field : FabricaInimigos.class.getDeclaredFields()) {
             if (!Modifier.isStatic(field.getModifiers())) {
                 continue;
             }

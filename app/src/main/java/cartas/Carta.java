@@ -398,7 +398,8 @@ public abstract class Carta {
 
     /** retorna false se ja tinha a tag */
     public boolean aplicarTag(String tag, boolean adicionar) {
-        if (tags.contains(tag)) return false;
+        if (adicionar && tags.contains(tag)) return false;
+        if (!adicionar && !tags.contains(tag)) return false;
 
         switch (tag) {
             case "Area" -> setEfeitoEmArea(adicionar);

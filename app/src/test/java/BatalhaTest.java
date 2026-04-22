@@ -9,14 +9,16 @@ public class BatalhaTest {
 
     @Test
     public void calcularDificuldadeENivelNormal() {
+        // Prepara 2 inimigos, um tier 1 e outro tier 2
         Inimigo i1 = new Inimigo("Ratinho", 10, 2);
         i1.setTier(1);
         Inimigo i2 = new Inimigo("Lobo", 20, 5);
         i2.setTier(2);
 
+        // Agir
         Batalha batalha = new Batalha(i1, i2);
 
-
+        // Conferir: a dificuldade total é a soma dos tiers (1 + 2 = 3)
         assertEquals(3, batalha.getDificuldadeTotal());
         // Se a dificuldade total for menor que 6 (e >= 3), é nível 2 (Normal)
         assertEquals(2, batalha.getNivelDificuldade());
@@ -86,11 +88,10 @@ public class BatalhaTest {
     public void iniciarBatalhaSimuladaParaCobertura() {
         // Cuidado: Esse teste pode travar se o iniciar() tiver um loop infinito de Scanner.
         // Criei um herói muito forte que deve matar tudo rápido, se houver modo automático.
-        entidades.Heroi heroiForte = new entidades.Heroi("One Punch", 999, 99);
         Inimigo fraco = new Inimigo("Mosca", 1, 0); // Inimigo inofensivo
-        
-        Batalha b = new Batalha(fraco);
-        
+
+        new Batalha(fraco);
+
         // Se a batalha não travar em input de cartas, ela terminará rápido.
         // Se travar no ./gradlew test, você terá que comentar este teste específico!
         try {
@@ -104,7 +105,6 @@ public class BatalhaTest {
     public void simularUsoCartaSemEnergia() {
         Inimigo i1 = new Inimigo("Lobo", 20, 5);
         Batalha b = new Batalha(i1);
-        entidades.Heroi h = new entidades.Heroi("Teste", 30, 0); // Herói com 0 de energia
         
         b.adicionarInimigo(i1);
         

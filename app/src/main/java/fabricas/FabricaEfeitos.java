@@ -1,5 +1,7 @@
 package fabricas;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +29,29 @@ import static fabricas.FabricaCartas.resenhax;
 
 public class FabricaEfeitos {
     public static List<Efeito> listaEfeitosMoldes = new ArrayList<>();
+
+    private static void atualizarListaEfeitosMoldes() {
+        listaEfeitosMoldes.clear();
+
+        for (Field field : FabricaEfeitos.class.getDeclaredFields()) {
+            if (!Modifier.isStatic(field.getModifiers())) {
+                continue;
+            }
+
+            if (!Efeito.class.isAssignableFrom(field.getType())) {
+                continue;
+            }
+
+            try {
+                Efeito efeito = (Efeito) field.get(null);
+                if (efeito != null) {
+                    listaEfeitosMoldes.add(efeito);
+                }
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException("Erro ao montar lista de efeitos", e);
+            }
+        }
+    }
 
     public static Efeito sangramento = new Sangramento("Sangramento", "Causa 1 ponto de dano por rodada ao alvo", 4, 1);
 
@@ -81,5 +106,6 @@ public class FabricaEfeitos {
     public static void carregar(){
         ganhaResenhax.setCarta(resenhax);
         ganhaClubex.setCarta(clubex);
+        atualizarListaEfeitosMoldes();
     }
 }
