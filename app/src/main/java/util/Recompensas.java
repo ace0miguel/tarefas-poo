@@ -86,7 +86,7 @@ public class Recompensas {
         System.out.println(Cor.txtAmareloClaro("Você ganhou:")); Textos.sleep(500);
         System.out.println();
 
-        List<Carta> recompensa = Recompensas.cartasAleatorias(raridade, quantidade, pool);
+        List<Carta> recompensa = Recompensas.cartasAleatorias(raridade, quantidade, pool, false);
         
         for (Carta carta : recompensa) {
             Textos.printaBonito(carta.recompensa(), 5, 2);
@@ -215,6 +215,79 @@ public class Recompensas {
         InputHandler.esperar();
     }
 
+        /** retorna uma carta aleatoria
+     * @param raridade a raridade minima da carta a ser retornada (1 - comum, 2 - incomum, 3 - rara, 4 - especial)
+     * @param pool a lista de cartas a ser considerada para a escolha
+     */
+    public static Carta cartaAleatoria(raridades raridade, List<Carta> pool){
+        List<Carta> listaRecompensas = new ArrayList<>();
+        for(Carta c : pool)
+        {
+            if (c.getRaridade() >= raridade.getValor()) 
+            {           
+                for(int i = 0; i < 5 - c.getRaridade(); i++)
+                {
+                    listaRecompensas.add(c);
+                }
+            }
+        }
+
+        Collections.shuffle(listaRecompensas);
+        return listaRecompensas.get(0);
+    }
+
+    /** retorna cartas aleatorias
+     * @param raridade a raridade minima das cartas a serem retornadas (1 - comum, 2 - incomum, 3 - rara, 4 - especial)
+     * @param quantidade a quantidade de cartas a ser retornada
+     * @param pool a lista de cartas a ser considerada para a escolha
+     * @param naoRepetir se true, não adiciona cartas repetidas à lista de recompensas
+     */
+    public static List<Carta> cartasAleatorias(raridades raridade, int quantidade, List<Carta> pool, boolean naoRepetir){
+        List<Carta> listaRecompensas = new ArrayList<>();
+        for(Carta c : pool)
+        {
+            if (c.getRaridade() >= raridade.getValor()) 
+            {
+                for(int i = 0; i < 5 - c.getRaridade(); i++)
+                {
+                    if (naoRepetir)
+                        for (Carta k : listaRecompensas)
+                            if (k.getNome().equals(c.getNome()))
+                                continue;   
+                    
+                    listaRecompensas.add(c);
+                }
+            }
+        }
+
+        Collections.shuffle(listaRecompensas);
+        return listaRecompensas.subList(0, Math.min(quantidade, listaRecompensas.size()));
+    }
+
+    /** exibe um menu de seleçao com as cartas passadas e retorna a carta escolhida */
+    public static Carta menuCartas(Carta... cartas){
+        List<String> opcoes = new ArrayList<>();
+        for (Carta c : cartas) 
+        {
+            opcoes.add(c.toString());
+        }
+        int escolha = InputHandler.selecionar(opcoes, Cor.txtAmareloClaro("Escolha uma carta:"));
+        return cartas[escolha];
+    }
+
+    /** cria um menu de seleção para o usuario escolher uma carta
+     * @param raridade a raridade minima das cartas a serem exibidas
+     * @param quantidade a quantidade de cartas a serem exibidas
+     */
+    public static Carta escolheCarta(raridades raridade, int quantidade){
+        List<Carta> cartas = cartasAleatorias(raridade, quantidade, poolTodasCartas, true);
+        Carta[] cartasArray = new Carta[cartas.size()];
+        for (int i = 0; i < cartas.size(); i++) 
+        {
+            cartasArray[i] = cartas.get(i);
+        }
+        return menuCartas(cartasArray);
+    }
 
     // metodos privados ---------------------------------
 
@@ -271,74 +344,6 @@ public class Recompensas {
         Textos.limpaTela();
         System.out.println("Voce ganhou " + Cor.txtVerde(String.valueOf(valor)) + " pontos de vida!");
         InputHandler.esperar();
-    }
-
-    /** retorna uma carta aleatoria
-     * @param raridade a raridade minima da carta a ser retornada (1 - comum, 2 - incomum, 3 - rara, 4 - especial)
-     * @param pool a lista de cartas a ser considerada para a escolha
-     */
-    private static Carta cartaAleatoria(raridades raridade, List<Carta> pool){
-        List<Carta> listaRecompensas = new ArrayList<>();
-        for(Carta c : pool)
-        {
-            if (c.getRaridade() >= raridade.getValor()) 
-            {           
-                for(int i = 0; i < 5 - c.getRaridade(); i++)
-                {
-                    listaRecompensas.add(c);
-                }
-            }
-        }
-
-        Collections.shuffle(listaRecompensas);
-        return listaRecompensas.get(0);
-    }
-
-    /** retorna cartas aleatorias
-     * @param raridade a raridade minima das cartas a serem retornadas (1 - comum, 2 - incomum, 3 - rara, 4 - especial)
-     * @param quantidade a quantidade de cartas a ser retornada
-     * @param pool a lista de cartas a ser considerada para a escolha
-     */
-    private static List<Carta> cartasAleatorias(raridades raridade, int quantidade, List<Carta> pool){
-        List<Carta> listaRecompensas = new ArrayList<>();
-        for(Carta c : pool)
-        {
-            if (c.getRaridade() >= raridade.getValor()) 
-            {
-                for(int i = 0; i < 5 - c.getRaridade(); i++)
-                {
-                    listaRecompensas.add(c);
-                }
-            }
-        }
-
-        Collections.shuffle(listaRecompensas);
-        return listaRecompensas.subList(0, Math.min(quantidade, listaRecompensas.size()));
-    }
-
-    /** exibe um menu de seleçao com as cartas passadas e retorna a carta escolhida */
-    private static Carta menuCartas(Carta... cartas){
-        List<String> opcoes = new ArrayList<>();
-        for (Carta c : cartas) 
-        {
-            opcoes.add(c.toString());
-        }
-        int escolha = InputHandler.selecionar(opcoes, Cor.txtAmareloClaro("Escolha uma carta:"));
-        return cartas[escolha];
-    }
-
-    /** cria um menu de seleção para o usuario escolher uma carta
-     * @param raridade a raridade minima das cartas a serem exibidas
-     * @param quantidade a quantidade de cartas a serem exibidas
-     */
-    private static Carta escolheCarta(raridades raridade, int quantidade){
-        List<Carta> cartas = cartasAleatorias(raridade, quantidade, poolTodasCartas);
-        Carta[] cartasArray = new Carta[cartas.size()];
-        for (int i = 0; i < cartas.size(); i++) 
-        {
-            cartasArray[i] = cartas.get(i);
-        }
-        return menuCartas(cartasArray);
     }
 
     private static void imprimeGanhoDeItem(Item item) {

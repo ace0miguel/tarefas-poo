@@ -14,6 +14,8 @@ import batalhaListeners.itens.passivos.ItemPassivo;
 import cartas.Carta;
 import cartas.Carta.raridades;
 import entidades.Heroi;
+
+import static fabricas.FabricaCartas.cartasEncontraveis;
 import static fabricas.FabricaItens.listaItensAtivos;
 import static fabricas.FabricaItens.listaItensPassivos;
 import util.InputHandler;
@@ -25,9 +27,12 @@ import static visual.Textos.menuStatus;
 
 /** evento aleatório onde o jogador pode pagar pra se curar ou pra receber cartas aleatórias */
 public class Loja extends Evento{
-    List<String> opcoesLoja = new ArrayList<>(Arrays.asList("Sessão de spa (cura)", "Cartas", "Itens", "Edição de tags"));
+    List<String> opcoesLoja = new ArrayList<>(Arrays.asList(
+        "Sessão de spa (cura)", 
+        "Cartas", 
+        "Itens", 
+        "Edição de tags"));
 
-    
     @Override 
     public void iniciar (Heroi heroi){
         // sorteio dos itens disponiveis na loja
@@ -40,14 +45,12 @@ public class Loja extends Evento{
 
         // sorteio das cartas disponiveis na loja
         
-        List<Carta> cartasDisponiveis = new ArrayList<>(fabricas.FabricaCartas.cartasEncontraveis);
-        Collections.shuffle(cartasDisponiveis);
-        cartasDisponiveis = cartasDisponiveis.subList(0, Math.min(5, cartasDisponiveis.size())); // seleciona 5 cartas aleatórias para oferecer na loja
-        
+        List<Carta> cartasDisponiveis = Recompensas.cartasAleatorias(raridades.COMUM, 6, cartasEncontraveis, true);
 
         this.heroi = heroi;
         String titulo = Textos.colorirPartes(Arte.loja, Cor.reset, Cor.ciano, 1);
-        while (true){
+
+        while (true){ // loop principal
             Textos.limpaTela();
             int escolha = InputHandler.selecionar(opcoesLoja, true, titulo + Cor.txtAmareloClaro("\n\nVocê encontrou a loja! deseja comprar algo? "
             + menuStatus(heroi)));
@@ -79,7 +82,7 @@ public class Loja extends Evento{
                 }
                 case 1 -> { // CARTAS
                     List<String> opcoes = new ArrayList<>(Arrays.asList(
-                        Cor.txtAzulClaro("Booster pack comum (25 reais)"), 
+                        Cor.txtAzulClaro("Booster pack comum (35 reais)"), 
                         Cor.txtVerde("Booster pack incomum (55 reais)"), 
                         Cor.txtLaranja("Booster pack raro (100 reais)\n")));
                     
@@ -89,7 +92,7 @@ public class Loja extends Evento{
                     if (escolha3 == -1) break;
                     switch (escolha3) {
                         case 0 -> {
-                            compraBoosterPack(heroi, raridades.COMUM, 25);
+                            compraBoosterPack(heroi, raridades.COMUM, 35);
                         }
                         case 1 -> {
                             compraBoosterPack(heroi, raridades.INCOMUM, 55); 
