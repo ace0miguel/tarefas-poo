@@ -352,7 +352,7 @@ public class Batalha extends Evento {
     }
 
     /** troca de turno e se voltar pra vez do heroi chama o passaRodada  */
-    private void passaTurno(){
+    public void passaTurno(){
         turno = (turno == 0) ? 1 : 0;
 
         if (notificaMorte() == 0) {
