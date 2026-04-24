@@ -82,6 +82,37 @@ classDiagram
     class Batalha {
     }
 
+    class FabricaCartas {
+        +List~Carta~ cartasEncontraveis
+        +carregar() void
+    }
+
+    class FabricaEfeitos {
+        +List~Efeito~ listaEfeitosMoldes
+        +carregar() void
+    }
+
+    class FabricaInimigos {
+        +List~Inimigo~ listaTodosInimigos
+        +carregar() void
+    }
+
+    class FabricaItens {
+        +List~ItemPassivo~ listaItensPassivos
+        +List~ItemAtivo~ listaItensAtivos
+        +carregar() void
+    }
+
+    class FabricaPoderes {
+        +carregar() void
+    }
+
+    class ItemAtivo {
+    }
+
+    class ItemPassivo {
+    }
+
     Carta <|-- CartaAtaque
     CartaAtaque <|-- CartaAtaqueComEfeito
     Carta <|-- CartaHabilidade
@@ -101,3 +132,16 @@ classDiagram
     CartaHabilidade ..> Efeito : efeitos
     CartaMaldicao ..> Efeito : efeito
     CartaPoder ..> Poder : poder
+
+    FabricaCartas ..> Carta : cria
+    FabricaCartas ..> FabricaEfeitos : usa
+    FabricaCartas ..> FabricaPoderes : usa
+    FabricaEfeitos ..> Efeito : cria
+    FabricaEfeitos ..> Carta : referencia
+    FabricaInimigos ..> Inimigo : cria
+    FabricaInimigos ..> Carta : referencia
+    FabricaInimigos ..> Efeito : referencia
+    FabricaItens ..> ItemPassivo : cria
+    FabricaItens ..> ItemAtivo : cria
+    FabricaItens ..> Efeito : referencia
+    FabricaPoderes ..> Poder : cria
