@@ -383,9 +383,23 @@ public class Textos {
         return texto; 
     }
     
-    // Recorta do início (0) até chegar no espaço!
     return texto.substring(0, primeiroEspaco); 
-}
+    }
+
+    /** quebra o texto em linhas de no máximo maxChars caracteres  
+     * @param texto : texto a ser quebrado
+     * @param maxChars : quantidade máxima de caracteres por linha
+     */
+    public static String wrapText(String texto, int maxChars) {
+        StringBuilder sb = new StringBuilder(texto);
+        int i = 0;
+        while (i + maxChars < sb.length() && (i = sb.lastIndexOf(" ", i + maxChars)) != -1) {
+            sb.replace(i, i + 1, "\n");
+            i += maxChars;
+        }
+        return sb.toString();
+    }
+
 
     /* BARQUINHO Q EU TINHA FEITO PRA HUD ANTIGA TO COM DÓ DE APAGAR DEU MO TRABALHO :(
 

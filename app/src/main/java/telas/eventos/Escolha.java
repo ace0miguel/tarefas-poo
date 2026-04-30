@@ -1,12 +1,13 @@
-package telas.eventos.escolhas;
+package telas.eventos;
 
 import java.util.List;
 
 import entidades.Heroi;
-import telas.eventos.Evento;
 import util.InputHandler;
 import visual.Cor;
 import visual.Textos;
+
+
 
 /** evento curto, que apresenta uma escolha ao jogador (ganhar recompensa, talvez perder algo, etc) */
 public abstract class Escolha extends Evento{
@@ -23,8 +24,8 @@ public abstract class Escolha extends Evento{
     public void iniciar(Heroi heroi) {
         this.heroi = heroi;  
         Textos.limpaTela();
-
-        escolha = InputHandler.selecionar(opcoes, descricao);
+        
+        escolha = InputHandler.selecionar(opcoes, Textos.wrapText(descricao, 110));
 
         realizarEscolha(escolha);
     }

@@ -154,7 +154,7 @@ public class Recompensas {
      * @param heroi o heroi que recebera a maldicao
     */
     public static void ganharMaldicao(Carta carta, Heroi heroi){
-        System.out.println(Cor.txtVermelho("Você recebeu a maldição: " + carta.getNomeColorido() + Cor.reset + "!")); Textos.sleep(500);
+        System.out.println(Cor.txtRoxo("Você recebeu a maldição: [ " + carta.getNomeColorido() + Cor.roxo + " ] !" + Cor.reset)); Textos.sleep(500);
         System.out.println();
    
         Textos.printaBonito(carta.recompensa(), 5, 2);

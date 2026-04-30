@@ -112,7 +112,7 @@ public class Mapa {
             Textos.limpaTela();
 
             if (!heroi.estaVivo()){
-                Textos.printaBonito(Arte.VOCEMORREU, 2, 2);
+                Textos.printaBonito(Arte.VOCEMORREU, 21, 2);
                 System.exit(0);
             }
 

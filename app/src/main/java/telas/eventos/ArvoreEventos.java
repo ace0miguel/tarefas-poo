@@ -20,7 +20,6 @@ import static fabricas.FabricaInimigos.paulAtreides;
 import static fabricas.FabricaInimigos.paulAtreidesSupremo;
 import static fabricas.FabricaInimigos.sabrinaCarpenter;
 import telas.eventos.combate.Batalha;
-import telas.eventos.escolhas.Escolha;
 import util.RNGHandler;
 import visual.Cor;
 
@@ -154,13 +153,9 @@ public class ArvoreEventos {
 
         // eventos neutros
         eventosNeutros.clear();
-        // eventosNeutros.add(tigrinho.criaCopia());
-        // eventosNeutros.add(tesouro.criaCopia());
-        // eventosNeutros.add(fogueira.criaCopia());
-        // eventosNeutros.add(loja.criaCopia());
-        // eventosNeutros.addAll(batalhasMedias);
-        // eventosNeutros.addAll(batalhasDesafiadoras);
-        // eventosNeutros.addAll(batalhasTriviais);
+        eventosNeutros.add(tigrinho.criaCopia());
+        eventosNeutros.add(loja.criaCopia());
+        eventosNeutros.addAll(batalhasMedias);
         eventosNeutros.addAll(FabricaEscolhas.escolhasDisponiveis);
 
         // lojas
