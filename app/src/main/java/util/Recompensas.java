@@ -149,6 +149,21 @@ public class Recompensas {
         guardaOuEquipa(carta, heroi);
     }
 
+    /** concede uma maldicao especifica ao heroi e imprime uma mensagem bonitinha mostrando a maldicao ganha 
+     * @param carta a maldicao a ser concedida
+     * @param heroi o heroi que recebera a maldicao
+    */
+    public static void ganharMaldicao(Carta carta, Heroi heroi){
+        System.out.println(Cor.txtVermelho("Você recebeu a maldição: " + carta.getNomeColorido() + Cor.reset + "!")); Textos.sleep(500);
+        System.out.println();
+   
+        Textos.printaBonito(carta.recompensa(), 5, 2);
+
+        InputHandler.esperar();
+
+        heroi.addCarta(carta);
+    }
+
     /** concede uma escolha de cartas ao heroi, com uma raridade minima
      * @param raridade a raridade minima das cartas a serem escolhidas
      * @param quantidade a quantidade de opcoes
@@ -170,7 +185,11 @@ public class Recompensas {
 
     public static void ganharVida(int valor, Heroi heroi){
         heroi.addVida(valor);
-        imprimeGanhoVida(valor);
+
+        if (valor > 0)
+            imprimeGanhoVida(valor);
+        else
+            imprimePerdaVida(-valor);
     }
 
     /** reseta o pool global de itens unicos da run */
@@ -340,9 +359,15 @@ public class Recompensas {
         InputHandler.esperar();
     }
 
-    private static void  imprimeGanhoVida(int valor) {
+    private static void imprimeGanhoVida(int valor) {
         Textos.limpaTela();
         System.out.println("Voce ganhou " + Cor.txtVerde(String.valueOf(valor)) + " pontos de vida!");
+        InputHandler.esperar();
+    }
+
+    public static void imprimePerdaVida(int valor) {
+        Textos.limpaTela();
+        System.out.println("Voce perdeu " + Cor.txtVermelho(String.valueOf(valor)) + " pontos de vida!");
         InputHandler.esperar();
     }
 

@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import fabricas.FabricaEscolhas;
+
 import static fabricas.FabricaInimigos.amoeba;
 import static fabricas.FabricaInimigos.barbossa;
 import static fabricas.FabricaInimigos.drake;
@@ -18,6 +20,7 @@ import static fabricas.FabricaInimigos.paulAtreides;
 import static fabricas.FabricaInimigos.paulAtreidesSupremo;
 import static fabricas.FabricaInimigos.sabrinaCarpenter;
 import telas.eventos.combate.Batalha;
+import telas.eventos.escolhas.Escolha;
 import util.RNGHandler;
 import visual.Cor;
 
@@ -151,13 +154,14 @@ public class ArvoreEventos {
 
         // eventos neutros
         eventosNeutros.clear();
-        eventosNeutros.add(tigrinho.criaCopia());
-        eventosNeutros.add(tesouro.criaCopia());
-        eventosNeutros.add(fogueira.criaCopia());
-        eventosNeutros.add(loja.criaCopia());
-        eventosNeutros.addAll(batalhasMedias);
-        eventosNeutros.addAll(batalhasDesafiadoras);
-        eventosNeutros.addAll(batalhasTriviais);
+        // eventosNeutros.add(tigrinho.criaCopia());
+        // eventosNeutros.add(tesouro.criaCopia());
+        // eventosNeutros.add(fogueira.criaCopia());
+        // eventosNeutros.add(loja.criaCopia());
+        // eventosNeutros.addAll(batalhasMedias);
+        // eventosNeutros.addAll(batalhasDesafiadoras);
+        // eventosNeutros.addAll(batalhasTriviais);
+        eventosNeutros.addAll(FabricaEscolhas.escolhasDisponiveis);
 
         // lojas
         lojas.clear();
@@ -185,7 +189,7 @@ public class ArvoreEventos {
         // primeiro andar (batalha facil)
         if (profundidadeAtual == 0) { 
             // adiciona aqui opcoes.add tipoNode que vc quer testar pra ir primeir
-            // opcoes.add(tipoNode.LOJA);
+            opcoes.add(tipoNode.EVENTO_NEUTRO);
             opcoes.add(tipoNode.BATALHA_TRIVIAL);
         }    
         // ultimo andar (boss)

@@ -105,12 +105,17 @@ public class Mapa {
 
     /** inicia o mapa, mandando o jogador pro primeiro nó */
     public void explorar() {
-
         boolean primeiroLoop = true; // se quiser pular a primeira luta por motivos de teste so deixar false aqui (lembra de arruma dps)
         bordaHudFinal = Textos.colorirPartes(Arte.bordaHud4, Cor.azulClaro, Cor.azul, 1);
 
         while (true) { 
             Textos.limpaTela();
+
+            if (!heroi.estaVivo()){
+                Textos.printaBonito(Arte.VOCEMORREU, 2, 2);
+                System.exit(0);
+            }
+
 
             if (primeiroLoop){
                 DeckBuilder.mostrarDecksPadrao(heroi);

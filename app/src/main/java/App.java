@@ -1,6 +1,7 @@
 import entidades.Heroi;
 import fabricas.FabricaCartas;
 import fabricas.FabricaEfeitos;
+import fabricas.FabricaEscolhas;
 import fabricas.FabricaInimigos;
 import fabricas.FabricaItens;
 import fabricas.FabricaPoderes;
@@ -32,7 +33,8 @@ public class App {
         FabricaInimigos.carregar();
         FabricaItens.carregar();
         FabricaPoderes.carregar();
-        
+        FabricaEscolhas.carregar();
+
         Recompensas.resetarPoolItens();
 
         // tela de titulo ------------

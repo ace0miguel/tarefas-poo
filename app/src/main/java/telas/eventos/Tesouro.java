@@ -26,14 +26,7 @@ public class Tesouro extends Evento {
         abrirTesouro(heroi);
     }
     
-    public void abrirTesouro(Heroi heroi){
-        
-        // switch (sorteado) {
-        //     case 0 -> Textos.printaBonito("Você encontrou um tesouro raro!", 10, 2);
-        //     case 1 -> Textos.printaBonito("Você encontrou um tesouro épico!", 10, 2);
-        //     case 2 -> Textos.printaBonito("Você encontrou um tesouro lendário!", 10, 2);
-        //     default -> Textos.printaBonito("Você encontrou um tesouro comum!", 10, 2);
-        // }
+    public void abrirTesouro(Heroi heroi){  
 
         Recompensas.ganharCartas(raridades.INCOMUM, 5, heroi);
         Recompensas.ganharItemAtivo(heroi);

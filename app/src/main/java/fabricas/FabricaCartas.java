@@ -67,7 +67,8 @@ public class FabricaCartas {
     public static Carta espada;
     public static Carta adaga;
     public static Carta chuvaLaminas;
-    public static Carta sobrevivencia;
+    public static Carta sobrevivencia;  
+    public static Carta culpa;
 
     public static List<Carta> cartasEncontraveis = new ArrayList<>();
 
@@ -204,6 +205,9 @@ public class FabricaCartas {
 
         nada = new CartaMaldicao("Nada", "Não faz nada", 1);
         nada.setResenha(Cor.txtCinza(Arte.nada));
+
+        culpa = new CartaMaldicao("Culpa", "Receba 2 pontos de dano no fim da rodada.", 1);
+        culpa.setEfeitosOnLimpar(recebeDanoPuro2);
 
         // cartas pro deck de teste
         bombaSuprema = new CartaAtaque("BOMBA!!!!!!!!!", "joga uma bomba que atinge TODOS os inimigos!", 0, 150); bombaSuprema.setEfeitoEmArea(true); 

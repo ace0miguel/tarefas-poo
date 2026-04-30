@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import cartas.Carta;
+import cartas.CartaMaldicao;
 import entidades.Heroi;
 import static fabricas.FabricaCartas.bomba;
 import static fabricas.FabricaCartas.bombaSuprema;
@@ -228,18 +229,22 @@ public class DeckBuilder {
 
             // ve se e inventario ou baralho e troca de um pro outro
             if (baralho){
-                if (heroi.getDinheiro() < 5) {
+                if (heroi.getDinheiro() < 50) {
                     System.out.println("Dinheiro insuficiente");
                     InputHandler.esperar();
                     continue;
                 }
-                Recompensas.gastarDinheiro(5, heroi);
+                Recompensas.gastarDinheiro(50, heroi);
+
                 carta = heroi.getBaralho().get( posicaoCarta );
             }   
             else 
                 carta = heroi.getInventarioCartas().get( posicaoCarta );
 
             heroi.trocaCarta(carta);
+            if (carta instanceof CartaMaldicao) {
+                Recompensas.ganharDinheiro(50, heroi);
+            }
         }
     }
 }
