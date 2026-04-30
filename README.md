@@ -16,9 +16,18 @@ Você joga como Jack Sparrow e enfrenta encontros no mapa utilizando cartas. A i
 
 ## Eventos aleatórios
 
-- Fogueira: escolha entre se curar ou receber cartas!
-- Loja: mesma coisa, só que pagando! (Compensa se tiver com os dolares)
+- Fogueira: escolha entre se curar ou receber cartas! 
+ - Baseado no padrão de design "Façade", do site refactoring.guru
+ 
+- Loja: mesma coisa, só que pagando! (Tambem tem itens e edição de tags de cartas) (Compensa se tiver com os dolares)
+ - Baseado no padrão de design "Façade", do site refactoring.guru
+
 - Cassino: aposte vida ou dinheiro em um jogo de dados, em busca do dobro ou nada!
+ - Não é tão baseado em um padrão de design.
+
+- Tesouro: ganhe muitas cartas e itens!
+ - Baseado no padrão de design "Façade", do site refactoring.guru
+
 - GOLDEN FREDDY: sempre, ao viajar no mapa, voce pode receber uma surpresa...
 
 ## Cartas 
