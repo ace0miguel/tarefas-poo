@@ -28,7 +28,11 @@ Você joga como Jack Sparrow e enfrenta encontros no mapa utilizando cartas. A i
 - Tesouro: ganhe muitas cartas e itens!
  - Baseado no padrão de design "Façade", do site refactoring.guru
 
+- Escolha: ganhe algo mas perca algo em troca.
+ - Baseado no padrão de design "Template", do site refactoring.guru
+
 - GOLDEN FREDDY: sempre, ao viajar no mapa, voce pode receber uma surpresa...
+ - Não é realmente um evento da classe eventos, só um negocio q aparece pelo mapa.
 
 ## Cartas 
 
