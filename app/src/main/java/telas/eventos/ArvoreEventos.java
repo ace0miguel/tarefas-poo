@@ -8,7 +8,6 @@ import java.util.List;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import fabricas.FabricaEscolhas;
-
 import static fabricas.FabricaInimigos.amoeba;
 import static fabricas.FabricaInimigos.barbossa;
 import static fabricas.FabricaInimigos.drake;
@@ -184,7 +183,7 @@ public class ArvoreEventos {
         // primeiro andar (batalha facil)
         if (profundidadeAtual == 0) { 
             // adiciona aqui opcoes.add tipoNode que vc quer testar pra ir primeir
-            opcoes.add(tipoNode.EVENTO_NEUTRO);
+            // opcoes.add(tipoNode.EVENTO_NEUTRO);
             opcoes.add(tipoNode.BATALHA_TRIVIAL);
         }    
         // ultimo andar (boss)

@@ -27,7 +27,7 @@ public class FabricaEscolhas {
                     Recompensas.ganharDinheiro(150, heroi);
                     Recompensas.ganharMaldicao(FabricaCartas.culpa, heroi);
                 } else {
-                    // não faz nada, o jogador ignora a escolha
+                    // não faz nada, o jogador ignorou a escolha
                 }
             }
         };
@@ -43,7 +43,7 @@ public class FabricaEscolhas {
                     Recompensas.ganharDinheiro(150, heroi);
                     Recompensas.ganharVida(-15, heroi);
                 } else {
-                    // não faz nada, o jogador ignora a escolha
+                    // não faz nada, o jogador ignorou a escolha
                 }
             }
         };
